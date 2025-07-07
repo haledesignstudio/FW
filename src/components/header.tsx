@@ -378,25 +378,38 @@ const Header: React.FC = () => {
     return (
         <>
             {/* Header */}
-            <header className="w-full flex items-center justify-between bg-[#F9F7F2] px-[2%] py-[1vh] fixed top-0 left-0 z-50">
-                {/* Logo */}
-                <div className="relative w-[15vw] h-[10vh]">
-                    <Image
-                        src="/logo.png"
-                        alt="Logo"
-                        fill
-                        className="object-contain cursor-pointer"
-                        priority
-                    />
-                </div>
+            <header className="grid grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 
+            gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] 
+            auto-rows-[20vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]
+            items-start bg-[#F9F7F2] px-[2vh] pt-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:pt-[4vh] 
+            relative top-0 left-0 z-50">
 
-                {/* Toggle PNG Icon */}
-                <div className="flex items-center relative w-[2.5vw] h-[10vh]">
-                    <MenuIcon stage={stage} onClick={toggleMenu} />
+                {/* Logo: always first column */}
+                <Link href="/" passHref>
+                    <div className="relative col-span-1 aspect-[5/1] cursor-pointer">
+                        <Image
+                            src="/logo.png"
+                            alt="Logo"
+                            fill
+                            className="object-contain object-left-top"
+                            priority
+                        />
+                    </div>
+                </Link>
 
+                {/* Spacer: fills unused middle columns */}
+                <div className="hidden [@media(max-height:600px)_and_(max-width:768px)]:block [@media(max-height:600px)_and_(max-width:768px)]:col-span-2 
+                  [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4"></div>
+
+                {/* MenuIcon: last column */}
+                <div className="col-span-1 flex justify-end items-start">
+                    <div className="relative h-[20vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[25vh]">
+                        <MenuIcon stage={stage} onClick={toggleMenu} />
+                    </div>
                 </div>
 
             </header>
+
 
             {/* Menu Section */}
             <AnimatePresence>
@@ -407,7 +420,7 @@ const Header: React.FC = () => {
                         animate="visible"
                         exit="exit"
                         variants={menuVariants}
-                        className="w-screen h-[75vh] bg-[#F9F7F2] flex items-center justify-end fixed top-[11vh] left-0 z-40"
+                        className="w-screen h-[75vh] bg-[#F9F7F2] flex items-center justify-end fixed top-[20vh] left-0 z-60"
                     >
                         <div
                             className="relative h-full overflow-visible"

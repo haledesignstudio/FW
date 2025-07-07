@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -H 0.0.0.0",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
+  "dev": "next dev --turbopack -H 0.0.0.0",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "typegen": "sanity typegen generate --schema-path=./src/sanity/extract.json"
+},
+
   "dependencies": {
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.95.0",
