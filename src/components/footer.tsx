@@ -23,7 +23,7 @@ const items: GridItem[] = [
         colSpan: 1,
         rowSpan: 1,
         mobileColSpan: 2,
-        mobileRowSpan: 3,
+        mobileRowSpan: 2,
         landscapeColSpan: 4,
         landscapeRowSpan: 2,
     },
@@ -42,7 +42,7 @@ const items: GridItem[] = [
         colSpan: 1,
         rowSpan: 1,
         mobileColSpan: 2,
-        mobileRowSpan: 1,
+        mobileRowSpan: 2,
         landscapeColSpan: 4,
         landscapeRowSpan: 1,
     },
@@ -56,7 +56,7 @@ const items: GridItem[] = [
         colSpan: 1,
         rowSpan: 1,
         mobileColSpan: 2,
-        mobileRowSpan: 1,
+        mobileRowSpan: 2,
         landscapeColSpan: 2,
         landscapeRowSpan: 1,
     },
@@ -76,7 +76,7 @@ const items: GridItem[] = [
         colSpan: 1,
         rowSpan: 1,
         mobileColSpan: 2,
-        mobileRowSpan: 1,
+        mobileRowSpan: 2,
         landscapeColSpan: 4,
         landscapeRowSpan: 1,
     },
@@ -100,35 +100,54 @@ const items: GridItem[] = [
         colSpan: 2,
         rowSpan: 1,
         mobileColSpan: 1,
-        mobileRowSpan: 1,
+        mobileRowSpan: 2,
         landscapeColSpan: 1,
         landscapeRowSpan: 1,
     },
 ];
 
 const getGridClasses = (item: GridItem) => {
-    const mobileCol = `col-span-${item.mobileColSpan}`;
-    const mobileRow = `row-span-${item.mobileRowSpan}`;
-    const landscapeCol = `[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`;
-    const landscapeRow = `[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`;
-    const desktopCol = `[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`;
-    const desktopRow = `[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`;
+    const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col','justify-end'];
 
-    return `bg-[#F9F7F2] flex flex-col justify-end ${mobileCol} ${mobileRow} ${landscapeCol} ${landscapeRow} ${desktopCol} ${desktopRow}`;
+    // Mobile
+    if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
+        baseClasses.push('block', '[@media(max-width:767px)]:hidden');
+    } else {
+        baseClasses.push(`col-span-${item.mobileColSpan}`);
+        baseClasses.push(`row-span-${item.mobileRowSpan}`);
+    }
+
+    // Landscape
+    if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
+        baseClasses.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+    } else {
+        baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
+        baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+    }
+
+    // Desktop
+    if (item.colSpan === 0 || item.rowSpan === 0) {
+        baseClasses.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+    } else {
+        baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+        baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+    }
+
+    return baseClasses.join(' ');
 };
 
 // ✅ Exporting as Footer
 const Footer: React.FC = () => {
     return (
         <footer className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[20vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
-                {items.map((item) => (
-                    <div key={item.id} className={getGridClasses(item)}>
-                        {item.content}
-                    </div>
-                ))}
-            </div>
-        </footer>
+                <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+                    {items.map((item) => (
+                        <div key={item.id} className={getGridClasses(item)}>
+                            {item.content}
+                        </div>
+                    ))}
+                </div>
+            </footer>
     );
 };
 
