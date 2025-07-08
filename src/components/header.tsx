@@ -245,31 +245,33 @@ const menuItems = [
 
 
 const menuVariants: Variants = {
-    hidden: {
-        y: '-100%',
-        opacity: 0,
-        transition: {
-            duration: 0.6,
-            ease: [0.42, 0, 0.58, 1] // cubic bezier for easeInOut
-        }
-    },
-    visible: {
-        y: '0%',
-        opacity: 1,
-        transition: {
-            duration: 0.6,
-            ease: [0.42, 0, 0.58, 1]
-        }
-    },
-    exit: {
-        y: '-100%',
-        opacity: 0,
-        transition: {
-            duration: 0.5,
-            ease: [0.42, 0, 0.58, 1]
-        }
+  hidden: {
+    maxHeight: '0px', // use string, not number
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.42, 0, 0.58, 1]
     }
+  },
+  visible: {
+    maxHeight: '75vh',
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.42, 0, 0.58, 1]
+    }
+  },
+  exit: {
+    maxHeight: '0px',
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.42, 0, 0.58, 1]
+    }
+  }
 };
+
+
 
 
 
@@ -380,22 +382,20 @@ const Header: React.FC = () => {
             {/* Header */}
             <header className="grid grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 
             gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] 
-            auto-rows-[20vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]
+            auto-rows-[20vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[15vh]
             items-start bg-[#F9F7F2] px-[2vh] pt-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:pt-[4vh] 
             relative top-0 left-0 z-50">
 
                 {/* Logo: always first column */}
-                <Link href="/" passHref>
-                    <div className="relative col-span-1 aspect-[5/1] cursor-pointer">
-                        <Image
-                            src="/logo.png"
-                            alt="Logo"
-                            fill
-                            className="object-contain object-left-top"
-                            priority
-                        />
-                    </div>
-                </Link>
+                <div className="relative col-span-1 aspect-[5/1]">
+                    <Image
+                        src="/logo.png"
+                        alt="Logo"
+                        fill
+                        className="object-contain object-left-top cursor-pointer"
+                        priority
+                    />
+                </div>
 
                 {/* Spacer: fills unused middle columns */}
                 <div className="hidden [@media(max-height:600px)_and_(max-width:768px)]:block [@media(max-height:600px)_and_(max-width:768px)]:col-span-2 
@@ -420,7 +420,7 @@ const Header: React.FC = () => {
                         animate="visible"
                         exit="exit"
                         variants={menuVariants}
-                        className="w-screen h-[75vh] bg-[#F9F7F2] flex items-center justify-end fixed top-[20vh] left-0 z-60"
+                        className="w-screen h-[75vh] bg-[#F9F7F2] flex items-center justify-end relative left-0 z-40"
                     >
                         <div
                             className="relative h-full overflow-visible"
@@ -451,7 +451,7 @@ const Header: React.FC = () => {
                                         {info.isOdd && (
                                             <Link
                                                 href={item.href}
-                                                className="text-black text-[5vw] font-bold"
+                                                className="text-black text-[5vw] font-bold whitespace-nowrap"
                                                 style={{
                                                     writingMode: 'vertical-rl',
                                                     textOrientation: 'mixed',
