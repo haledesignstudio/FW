@@ -35,9 +35,6 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
   
   const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const bioRef = useRef<HTMLDivElement>(null);
   
   const [hoveredSpeaker, setHoveredSpeaker] = useState<Speaker | null>(null);
   const [currentRotation, setCurrentRotation] = useState(0);

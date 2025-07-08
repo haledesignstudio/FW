@@ -6,10 +6,37 @@ import CircularTextSlider from '@/components/CircularTextSlider';
 
 export const revalidate = 60; // Revalidate every minute
 
+// Type for the Sanity query result
+type SanityKeynoteSpeaker = {
+  _id: string;
+  name: string | null;
+  bio: string | null;
+  image: {
+    asset: {
+      _ref: string;
+      _type: 'reference';
+    } | null;
+    alt: string | null;
+  } | null;
+  position: string | null;
+  company: string | null;
+};
+
 async function getSpeakers(): Promise<Speaker[]> {
   try {
-    const speakers = await client.fetch(speakersQuery);
-    return speakers || [];
+    const speakers = await client.fetch<SanityKeynoteSpeaker[]>(speakersQuery);
+    // Transform the Sanity data to match Speaker type, handling null values
+    return speakers?.map((speaker: SanityKeynoteSpeaker) => ({
+      _id: speaker._id,
+      name: speaker.name || 'Unknown Speaker',
+      bio: speaker.bio || undefined,
+      image: speaker.image?.asset ? {
+        asset: speaker.image.asset,
+        alt: speaker.image.alt || undefined
+      } : undefined,
+      position: speaker.position || undefined,
+      company: speaker.company || undefined
+    })) || [];
   } catch (error) {
     console.error('Error fetching speakers:', error);
     return [];

@@ -11,7 +11,7 @@ import { motion, AnimatePresence, Variants } from 'framer-motion';
 const menuItems = [
     {
         label: 'HOME',
-        href: '/home',
+        href: '/',
         content: (
             <div className="text-left">
                 <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">

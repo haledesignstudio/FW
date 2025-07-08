@@ -52,7 +52,6 @@ export default function HorizontalAccordion({
         
         // Determine text color based on background
         const isLightBackground = item.color === '#ffffff' || item.color === '#FFFFFF';
-        const isDarkBackground = item.color === '#000000' || item.color === '#000';
         const textColor = isLightBackground ? 'text-black' : 'text-white';
         const verticalTextColor = isLightBackground ? 'text-black' : 'text-white';
         

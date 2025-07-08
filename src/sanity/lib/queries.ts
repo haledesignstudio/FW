@@ -73,3 +73,219 @@ export const keynoteQuery = defineQuery(`
 
 
 
+
+export const homePageQuery = defineQuery(`
+  *[_type == "homePage"][0] {
+    _id,
+    title,
+    seo,
+    signalsFromFuture,
+    mainHeadline,
+    growthSection,
+    videoSection {
+      backgroundImage {
+        asset,
+        alt
+      },
+      videoUrl
+    },
+    accordionSection {
+      benchmarkInnovation {
+        title,
+        description,
+        ctaText,
+        dashboardImage {
+          asset,
+          alt
+        },
+        backgroundColor
+      },
+      ourProcess {
+        title,
+        introText,
+        processColumns[] {
+          headline,
+          subheadline,
+          content
+        },
+        astronautImage {
+          asset,
+          alt
+        },
+        backgroundColor
+      },
+      caseStudies {
+        title,
+        headline,
+        subheadline,
+        caseStudyGrid[] {
+          asset,
+          alt
+        },
+        featuredCaseStudy {
+          image {
+            asset,
+            alt
+          },
+          title,
+          description,
+          readMoreLink
+        },
+        backgroundColor
+      }
+    }
+  }
+`);
+
+export const privacyPolicyQuery = defineQuery(`
+  *[_type == "privacyPolicyPage"][0] {
+    _id,
+    title,
+    seo {
+      metaTitle,
+      metaDescription
+    },
+    pageHeader {
+      mainTitle,
+      lastUpdated,
+      effectiveDate
+    },
+    interpretationAndDefinitionsSection {
+      sectionTitle,
+      interpretationContent,
+      definitionsContent
+    },
+    collectingAndUsingDataSection {
+      sectionTitle,
+      typesOfDataContent,
+      personalDataContent,
+      usageDataContent,
+      useOfDataContent,
+      retentionContent,
+      transferContent,
+      disclosureContent,
+      securityContent
+    },
+    childrensPrivacySection {
+      sectionTitle,
+      content
+    },
+    linksToOtherWebsitesSection {
+      sectionTitle,
+      content
+    },
+    changesToPolicySection {
+      sectionTitle,
+      content
+    },
+    contactUsSection {
+      sectionTitle,
+      content,
+      contactDetails {
+        email,
+        phone,
+        address,
+        website
+      }
+    }
+  }
+`);
+
+export const termsAndConditionsQuery = defineQuery(`
+  *[_type == "termsAndConditionsPage"][0] {
+    _id,
+    title,
+    seo {
+      metaTitle,
+      metaDescription
+    },
+    pageHeader {
+      mainTitle,
+      introText,
+      lastUpdated
+    },
+    cookiesSection {
+      sectionTitle,
+      content
+    },
+    licenseSection {
+      sectionTitle,
+      content
+    },
+    hyperlinksSection {
+      sectionTitle,
+      content
+    },
+    iframesSection {
+      sectionTitle,
+      content
+    },
+    contentLiabilitySection {
+      sectionTitle,
+      content
+    },
+    privacySection {
+      sectionTitle,
+      content
+    },
+    reservationOfRightsSection {
+      sectionTitle,
+      content
+    },
+    removalOfLinksSection {
+      sectionTitle,
+      content
+    },
+    disclaimerSection {
+      sectionTitle,
+      content
+    },
+    contactInformation {
+      sectionTitle,
+      contactText,
+      email,
+      address
+    }
+  }
+`);
+
+export const faqPageQuery = defineQuery(`
+  *[_type == "faqPage"][0] {
+    _id,
+    title,
+    seo {
+      metaTitle,
+      metaDescription
+    },
+    pageHeader {
+      mainTitle,
+      subtitle
+    },
+    faqs[] {
+      question,
+      answer,
+      category,
+      featured,
+      order,
+      lastUpdated
+    } | order(order asc),
+    searchSettings {
+      enableSearch,
+      enableCategoryFilter,
+      searchPlaceholder,
+      noResultsMessage
+    },
+    contactSection {
+      title,
+      description,
+      contactCTA {
+        buttonText,
+        buttonLink
+      },
+      alternativeContact {
+        text,
+        email
+      }
+    }
+  }
+`);

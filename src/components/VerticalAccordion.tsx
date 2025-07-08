@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
 export interface AccordionItem {
   id: string;
@@ -22,50 +22,88 @@ export default function VerticalAccordion({
   items, 
   className = '',
   tabHeight = 60,
-  expandedHeight = 400
 }: VerticalAccordionProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [activeIndices, setActiveIndices] = useState<number[]>([0]); // Allow multiple active tabs
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [previousActiveIndex, setPreviousActiveIndex] = useState<number | null>(0);
 
   const handleTabClick = (index: number) => {
     if (!isTransitioning) {
       setIsTransitioning(true);
-      setPreviousActiveIndex(activeIndex);
       
-      // If clicking the same tab, close it (set to null), otherwise open the new tab
-      setActiveIndex(index === activeIndex ? null : index);
+      // Toggle the tab in the active indices array
+      setActiveIndices(prev => {
+        if (prev.includes(index)) {
+          // If tab is active, remove it
+          return prev.filter(i => i !== index);
+        } else {
+          // If tab is not active, add it
+          return [...prev, index];
+        }
+      });
       
       // Reset transition state after animation completes
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 600);
+      }, 400);
     }
   };
 
   return (
-    <div className={`flex flex-col w-full max-w-2xl h-full max-h-[900px] mx-auto overflow-hidden rounded-lg shadow-2xl ${className}`}>
+    <div className={`flex flex-col w-full ${className}`} style={{ fontFamily: 'DT-H1, sans-serif' }}>
       {items.map((item, index) => {
-        const isActive = index === activeIndex;
-        const wasActive = index === previousActiveIndex;
-        const isClosing = wasActive && !isActive && isTransitioning;
+        const isActive = activeIndices.includes(index);
         
-        // Determine text color based on background
-        const isLightBackground = item.color === '#ffffff' || item.color === '#FFFFFF';
-        const isDarkBackground = item.color === '#000000' || item.color === '#000';
-        const textColor = isLightBackground ? 'text-black' : 'text-white';
-        const horizontalTextColor = isLightBackground ? 'text-black' : 'text-white';
+        // Assign text colors based on the design image
+        let textColor, horizontalTextColor;
+        
+        if (item.id === 'benchmark') {
+          // Dark background - white text
+          textColor = '#F9F7F2';
+          horizontalTextColor = '#F9F7F2';
+        } else if (item.id === 'process') {
+          // Red background - white text  
+          textColor = '#F9F7F2';
+          horizontalTextColor = '#F9F7F2';
+        } else if (item.id === 'case-studies') {
+          // Light beige background - black text
+          textColor = 'text-black';
+          horizontalTextColor = 'text-black';
+        } else {
+          // Fallback
+          textColor = 'text-white';
+          horizontalTextColor = 'text-white';
+        }
+        
+        // Calculate individual tab heights and overlaps based on design requirements
+        let individualTabHeight;
+        let marginTopValue = '0';
+        
+        if (item.id === 'benchmark') {
+          // Larger tab for 2-line text
+          individualTabHeight = tabHeight * 1.5; // 1.5x normal height
+        } else {
+          // Normal height for single-line tabs
+          individualTabHeight = tabHeight;
+        }
+        
+        // Set specific overlaps for the stacked design
+        if (item.id === 'process') {
+          // "Our process" should be halfway up the "Benchmark" tab
+          marginTopValue = `${-tabHeight * 0.25}px`; // Overlap to position halfway up benchmark
+        } else if (item.id === 'case-studies') {
+          // "Case studies" should be visible at bottom, overlapping with our process bottom
+          marginTopValue = `${-tabHeight * 0.27}px`; // Moderate overlap to stay visible
+        }
         
         return (
-          <motion.div
+          <div
             key={item.id}
             className="relative cursor-pointer flex-shrink-0"
-            animate={{
-              height: isActive ? expandedHeight : tabHeight
-            }}
-            transition={{
-              duration: 0.6,
-              ease: [0.25, 0.1, 0.25, 1]
+            style={{
+              zIndex: isActive ? 999 : index + 1,
+              marginTop: marginTopValue,
+              position: 'relative',
+              minHeight: individualTabHeight + 'px'
             }}
             onClick={() => handleTabClick(index)}
           >
@@ -73,83 +111,55 @@ export default function VerticalAccordion({
             <div 
               className="absolute inset-0"
               style={{
-                backgroundColor: item.color || '#1a1a1a',
-                filter: isActive ? 'brightness(1)' : 'brightness(0.8)'
+                backgroundColor: item.color || '#232323'
               }}
             />
             
-            {/* Tab Title (Horizontal) */}
-            <motion.div
-              className="absolute top-0 left-0 w-full flex items-center justify-center z-10"
-              style={{ height: tabHeight }}
-              animate={{
-                opacity: isActive ? 0 : 1
+            {/* Tab Title (Horizontal) - Always visible, fixed position */}
+            <div
+              className="absolute top-0 left-0 w-full flex items-center z-20"
+              style={{ 
+                height: individualTabHeight, 
+                paddingLeft: '4vh',
+                justifyContent: 'flex-start',
+                alignItems: item.id === 'benchmark' ? 'flex-start' : 'center',
+                paddingTop: item.id === 'benchmark' ? '20px' : '0'
               }}
-              transition={{ duration: 0.3, delay: isActive ? 0 : 0.3 }}
             >
               <div 
-                className={`${horizontalTextColor} font-semibold text-lg tracking-wider`}
+                className={`${horizontalTextColor} font-bold text-[8vw] tracking-wider`}
+                style={{ 
+                  fontFamily: 'DT-H1, sans-serif',
+                  lineHeight: item.id === 'benchmark' ? '1.2' : '1'
+                }}
               >
                 {item.title}
               </div>
-            </motion.div>
+            </div>
 
             {/* Expanded Content */}
-            <AnimatePresence mode="wait">
-              {(isActive || isClosing) && (
-                <motion.div
-                  className={`absolute inset-0 flex flex-col justify-center p-8 ${textColor}`}
+            {isActive && (
+              <div
+                className={`w-full relative`}
+                style={{ 
+                  paddingLeft: '4vh',
+                  paddingRight: '4vh',
+                  paddingTop: individualTabHeight + 'px',
+                  paddingBottom: '4vh',
+                  zIndex: 1000
+                }}
+              >
+                <div 
+                  className={`text-[2vw] leading-relaxed`}
                   style={{ 
-                    overflow: 'hidden',
-                    height: isClosing ? '100%' : expandedHeight,
-                    bottom: isClosing ? 0 : 'auto',
-                    top: isClosing ? 'auto' : 0
-                  }}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ 
-                    opacity: isActive ? 1 : 0, 
-                    y: isActive ? 0 : (isClosing ? -50 : 30),
-                    scale: isActive ? 1 : 0.95
-                  }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ 
-                    duration: isActive ? 0.5 : 0.3,
-                    delay: isActive ? 0.35 : 0,
-                    ease: "easeOut"
+                    marginTop: '2vh',
+                    color: typeof textColor === 'string' && textColor.startsWith('#') ? textColor : '#000000'
                   }}
                 >
-                  {/* Content wrapper */}
-                  <div className="relative w-full h-full flex flex-col justify-center">
-                    <motion.h2 
-                      className={`text-3xl font-bold mb-4 ${textColor}`}
-                      style={{ minHeight: '2.5rem' }}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -10 }}
-                      transition={{ 
-                        duration: isActive ? 0.4 : 0.2,
-                        delay: isActive ? 0.45 : 0,
-                        ease: "easeOut"
-                      }}
-                    >
-                      {item.title}
-                    </motion.h2>
-                    
-                    <motion.div
-                      className={`text-lg leading-relaxed ${textColor}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -10 }}
-                      transition={{ 
-                        duration: isActive ? 0.4 : 0.2,
-                        delay: isActive ? 0.55 : 0,
-                        ease: "easeOut"
-                      }}
-                    >
-                      {item.content}
-                    </motion.div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  {item.content}
+                </div>
+              </div>
+            )}
 
             {/* Hover Effect */}
             <motion.div
@@ -158,7 +168,7 @@ export default function VerticalAccordion({
               whileHover={{ opacity: isActive ? 0 : 0.2 }}
               transition={{ duration: 0.2 }}
             />
-          </motion.div>
+          </div>
         );
       })}
     </div>

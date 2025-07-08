@@ -151,7 +151,7 @@ export default function NotFound() {
         if (mountRef.current && sceneRef.current.renderer.domElement) {
           try {
             mountRef.current.removeChild(sceneRef.current.renderer.domElement);
-          } catch (e) {
+          } catch {
             // Element might already be removed
           }
         }
@@ -187,7 +187,7 @@ export default function NotFound() {
               fontWeight: '700'
             }}
           >
-            404 / You've reached the end of the internet
+            404 / You&apos;ve reached the end of the internet
           </h1>
           <div 
             className="mb-4 sm:mb-6"
@@ -200,7 +200,7 @@ export default function NotFound() {
                 fontWeight: '300'
               }}
             >
-              The page you're looking for doesn't exist or may have been moved.
+              The page you&apos;re looking for doesn&apos;t exist or may have been moved.
             </p>
           </div>
 

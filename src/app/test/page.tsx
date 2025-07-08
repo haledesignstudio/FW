@@ -67,6 +67,12 @@ export default function Home() {
         >
           404 Page
         </a>
+        <a 
+          href="/grid" 
+          className="inline-block px-8 py-4 bg-green-600/20 backdrop-blur-md border border-green-400/30 rounded-lg text-white hover:bg-green-600/30 transition-all duration-300 font-roboto-medium"
+        >
+          Test Grid Page
+        </a>
       </div>
     </div>
   );

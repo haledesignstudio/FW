@@ -10,10 +10,10 @@ const menuItems: AccordionItem[] = [
       <div>
         <p className="mb-4">
           Discover the future of technology and innovation at FutureWorld. 
-          We bring together the brightest minds to explore what's next.
+          We bring together the brightest minds to explore what&apos;s next.
         </p>
         <p>
-          Join us as we shape tomorrow's world through cutting-edge research, 
+          Join us as we shape tomorrow&apos;s world through cutting-edge research, 
           breakthrough technologies, and visionary thinking.
         </p>
       </div>
@@ -27,7 +27,7 @@ const menuItems: AccordionItem[] = [
       <div>
         <p className="mb-4">
           Meet our world-class lineup of keynote speakers, industry leaders, 
-          and innovative researchers who are pushing the boundaries of what's possible.
+          and innovative researchers who are pushing the boundaries of what&apos;s possible.
         </p>
         <ul className="list-disc list-inside space-y-2">
           <li>Dr. Chris Kutarna - Futurist & Author</li>
