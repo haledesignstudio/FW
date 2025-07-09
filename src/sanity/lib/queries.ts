@@ -289,3 +289,59 @@ export const faqPageQuery = defineQuery(`
     }
   }
 `);
+
+export const insightsPageQuery = defineQuery(`
+  *[_type == "insightsPage"][0] {
+    title,
+    shareholderValueAnalytics {
+      title,
+      subheading,
+      contentText,
+      statement1,
+      statement2,
+      CTA1,
+      Mail1,
+      CTA2,
+      Mail2
+    },
+    mindbullets {
+      title,
+      subheading
+    },
+    keynotes {
+      topicSection {
+        topicSectionTitle,
+        topicSectionSubtitle,
+        topicContentText,
+        topicCTA1,
+        topicMail1,
+        topicCTA2
+      },
+      speakerSection {
+        speakerSectionTitle,
+        speakerSectionSubtitle,
+        speakerContentText,
+        speakerCTA1,
+        speakerMail1,
+        speakerCTA2
+      }
+    },
+    podcast {
+      title,
+      subheading
+    },
+    corporateVenturing {
+      title,
+      subheading,
+      contentText,
+      CTA1,
+      Mail1
+    },
+    theEdge {
+      title,
+      subheading,
+      contentText
+    }
+  }
+`);
+

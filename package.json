@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "next dev --turbopack -H 0.0.0.0",
-  "build": "next build",
-  "start": "next start",
-  "lint": "next lint",
-  "typegen": "sanity typegen generate --schema-path=./src/sanity/extract.json"
-},
-
+    "dev": "next dev --turbopack -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typegen": "sanity typegen generate --schema-path=./src/sanity/extract.json"
+  },
   "dependencies": {
+    "@portabletext/react": "^3.2.1",
     "@sanity/color-input": "^4.0.3",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.95.0",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/three": "^0.177.0",
     "framer-motion": "^12.23.0",
     "gsap": "^3.13.0",

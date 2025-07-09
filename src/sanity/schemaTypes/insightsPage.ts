@@ -13,45 +13,6 @@ const insightsPage = defineType({
       validation: (Rule) => Rule.required()
     }),
     defineField({
-      name: 'seo',
-      title: 'SEO Settings',
-      type: 'object',
-      fields: [
-        {
-          name: 'metaTitle',
-          title: 'Meta Title',
-          type: 'string',
-          validation: (Rule) => Rule.max(60)
-        },
-        {
-          name: 'metaDescription',
-          title: 'Meta Description',
-          type: 'text',
-          validation: (Rule) => Rule.max(160)
-        }
-      ]
-    }),
-    defineField({
-      name: 'pageHeader',
-      title: 'Page Header',
-      type: 'object',
-      fields: [
-        {
-          name: 'mainTitle',
-          title: 'Main Title',
-          type: 'string',
-          description: 'Main page heading',
-          validation: (Rule) => Rule.required()
-        },
-        {
-          name: 'subtitle',
-          title: 'Subtitle',
-          type: 'text',
-          description: 'Description text below the main title'
-        }
-      ]
-    }),
-    defineField({
       name: 'shareholderValueAnalytics',
       title: 'Shareholder Value Analytics',
       type: 'object',
@@ -66,7 +27,8 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'text',
+          type: 'array',
+          of: [{ type: 'block' }],
           description: 'Text below the section title'
         },
         {
@@ -77,23 +39,45 @@ const insightsPage = defineType({
           description: 'Main content for this section'
         },
         {
-          name: 'sectionImage',
-          title: 'Section Image',
-          type: 'image',
-          options: { hotspot: true }
+          name: 'statement1',
+          title: 'Statement 1',
+          type: 'array',
+          of: [{ type: 'block' }],
+          description: 'Main content for this section'
         },
         {
-          name: 'carouselItems',
-          title: 'Carousel Items',
+          name: 'statement2',
+          title: 'Statement 2',
           type: 'array',
-          of: [
-            {
-              type: 'reference',
-              to: [{ type: 'article' }]
-            }
-          ],
-          description: 'Articles to display in the carousel'
+          of: [{ type: 'block' }],
+          description: 'Main content for this section'
+        },
+
+        {
+          name: 'CTA1',
+          title: 'CTA 1',
+          type: 'string',
+          description: 'Text for first CTA button'
+        },
+        {
+          name: 'Mail1',
+          title: 'Mail 1',
+          type: 'string',
+          description: 'Email for first CTA button'
+        },
+        {
+          name: 'CTA2',
+          title: 'CTA 2',
+          type: 'string',
+          description: 'Text for second CTA button'
+        },
+                {
+          name: 'Mail2',
+          title: 'Mail 2',
+          type: 'string',
+          description: 'Email for second CTA button'
         }
+
       ]
     }),
     defineField({
@@ -111,41 +95,10 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'text',
-          description: 'Text below the section title'
-        },
-        {
-          name: 'contentText',
-          title: 'Content Text',
           type: 'array',
           of: [{ type: 'block' }],
-          description: 'Main content for this section'
+          description: 'Text below the section title'
         },
-        {
-          name: 'sectionImage',
-          title: 'Section Image',
-          type: 'image',
-          options: { hotspot: true }
-        },
-        {
-          name: 'carouselItems',
-          title: 'Carousel Items',
-          type: 'array',
-          of: [
-            {
-              type: 'reference',
-              to: [{ type: 'article' }]
-            }
-          ],
-          description: 'Articles to display in the carousel'
-        },
-        {
-          name: 'archiveReference',
-          title: 'Mindbullets Archive Reference',
-          type: 'string',
-          description: 'Placeholder: Will be updated to reference mindbullets archive when schema is created',
-          hidden: true
-        }
       ]
     }),
     defineField({
@@ -154,60 +107,96 @@ const insightsPage = defineType({
       type: 'object',
       fields: [
         {
-          name: 'title',
-          title: 'Section Title',
-          type: 'string',
-          initialValue: 'Keynotes',
-          validation: (Rule) => Rule.required()
-        },
-        {
-          name: 'subheading',
-          title: 'Subheading',
-          type: 'text',
-          description: 'Text below the section title'
-        },
-        {
-          name: 'contentText',
-          title: 'Content Text',
-          type: 'array',
-          of: [{ type: 'block' }],
-          description: 'Main content for this section'
-        },
-        {
-          name: 'sectionImage',
-          title: 'Section Image',
-          type: 'image',
-          options: { hotspot: true }
-        },
-        {
-          name: 'gridArticles',
-          title: 'Grid Articles',
-          type: 'array',
-          of: [
+          name: 'topicSection',
+          title: 'Keynote Topic Section',
+          type: 'object',
+          fields: [
             {
-              type: 'reference',
-              to: [{ type: 'article' }]
+              name: 'topicSectionTitle',
+              title: 'Topic Section Title',
+              type: 'string',
+              description: 'Heading for the keynote topics section'
+            },
+            {
+              name: 'topicSectionSubtitle',
+              title: 'Topic Section Subtitle',
+              type: 'array',
+              of: [{ type: 'block' }],
+              description: 'Subtitle/description for the topics section'
+            },
+            {
+              name: 'topicContentText',
+              title: 'Content Text',
+              type: 'array',
+              of: [{ type: 'block' }],
+              description: 'Main content for this section'
+            },
+
+            {
+              name: 'topicCTA1',
+              title: 'Topic CTA 1',
+              type: 'string',
+              description: 'Text for first CTA button'
+            },
+            {
+              name: 'topicMail1',
+              title: 'Topic Mail 1',
+              type: 'string',
+              description: 'Email for first CTA button'
+            },
+            {
+              name: 'topicCTA2',
+              title: 'Topic CTA 2',
+              type: 'string',
+              description: 'Text for second CTA button'
             }
-          ],
-          description: 'Articles to display in the grid layout'
+          ]
         },
+
         {
-          name: 'speakersSection',
+          name: 'speakerSection',
           title: 'Keynote Speakers Section',
           type: 'object',
           fields: [
             {
-              name: 'sectionTitle',
+              name: 'speakerSectionTitle',
               title: 'Speakers Section Title',
               type: 'string',
               description: 'Heading for the keynote speakers section'
             },
             {
-              name: 'sectionSubtitle',
+              name: 'speakerSectionSubtitle',
               title: 'Speakers Section Subtitle',
-              type: 'text',
+              type: 'array',
+              of: [{ type: 'block' }],
               description: 'Subtitle/description for the speakers section'
-            }
+            },
+            {
+              name: 'speakerContentText',
+              title: 'Content Text',
+              type: 'array',
+              of: [{ type: 'block' }],
+              description: 'Main content for this section'
+            },
+
+            {
+              name: 'speakerCTA1',
+              title: 'Topic CTA 1',
+              type: 'string',
+              description: 'Text for first CTA button'
+            },
+            {
+              name: 'speakerMail1',
+              title: 'Topic Mail 1',
+              type: 'string',
+              description: 'Email for first CTA button'
+            },
+            {
+              name: 'speakerCTA2',
+              title: 'Topic CTA 2',
+              type: 'string',
+              description: 'Text for second CTA button'
+            },
           ]
         }
       ]
@@ -227,34 +216,10 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'text',
-          description: 'Text below the section title'
-        },
-        {
-          name: 'contentText',
-          title: 'Content Text',
           type: 'array',
           of: [{ type: 'block' }],
-          description: 'Main content for this section'
+          description: 'Text below the section title'
         },
-        {
-          name: 'sectionImage',
-          title: 'Section Image',
-          type: 'image',
-          options: { hotspot: true }
-        },
-        {
-          name: 'carouselItems',
-          title: 'Carousel Items',
-          type: 'array',
-          of: [
-            {
-              type: 'reference',
-              to: [{ type: 'article' }]
-            }
-          ],
-          description: 'Podcast episodes/articles to display in the carousel'
-        }
       ]
     }),
     defineField({
@@ -272,7 +237,8 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'text',
+          type: 'array',
+          of: [{ type: 'block' }],
           description: 'Text below the section title'
         },
         {
@@ -283,23 +249,17 @@ const insightsPage = defineType({
           description: 'Main content for this section'
         },
         {
-          name: 'sectionImage',
-          title: 'Section Image',
-          type: 'image',
-          options: { hotspot: true }
+          name: 'CTA',
+          title: 'CTA',
+          type: 'string',
+          description: 'Text for first CTA button'
         },
         {
-          name: 'carouselItems',
-          title: 'Carousel Items',
-          type: 'array',
-          of: [
-            {
-              type: 'reference',
-              to: [{ type: 'article' }]
-            }
-          ],
-          description: 'Articles to display in the carousel'
-        }
+          name: 'Mail',
+          title: 'Mail',
+          type: 'string',
+          description: 'Email for first CTA button'
+        },
       ]
     }),
     defineField({
@@ -317,7 +277,8 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'text',
+          type: 'array',
+          of: [{ type: 'block' }],
           description: 'Text below the section title'
         },
         {
@@ -327,24 +288,6 @@ const insightsPage = defineType({
           of: [{ type: 'block' }],
           description: 'Main content for this section'
         },
-        {
-          name: 'sectionImage',
-          title: 'Section Image',
-          type: 'image',
-          options: { hotspot: true }
-        },
-        {
-          name: 'carouselItems',
-          title: 'Carousel Items',
-          type: 'array',
-          of: [
-            {
-              type: 'reference',
-              to: [{ type: 'article' }]
-            }
-          ],
-          description: 'Articles to display in the carousel'
-        }
       ]
     })
   ],
