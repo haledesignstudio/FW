@@ -157,14 +157,54 @@ export const privacyPolicyQuery = defineQuery(`
     },
     collectingAndUsingDataSection {
       sectionTitle,
-      typesOfDataContent,
-      personalDataContent,
-      usageDataContent,
-      useOfDataContent,
-      retentionContent,
-      transferContent,
-      disclosureContent,
-      securityContent
+      typesOfDataCollected {
+        subsectionTitle,
+        personalData {
+          title,
+          content
+        },
+        usageData {
+          title,
+          content
+        }
+      },
+      trackingTechnologiesAndCookies {
+        subsectionTitle,
+        introContent,
+        cookieTypes {
+          browserCookies,
+          flashCookies,
+          webBeacons
+        },
+        cookieCategories {
+          essentialCookies,
+          acceptanceCookies,
+          functionalityCookies
+        }
+      },
+      useOfPersonalData {
+        subsectionTitle,
+        purposes,
+        sharingScenarios
+      },
+      retentionOfPersonalData {
+        subsectionTitle,
+        content
+      },
+      transferOfPersonalData {
+        subsectionTitle,
+        content
+      },
+      disclosureOfPersonalData {
+        subsectionTitle,
+        businessTransactions,
+        lawEnforcement,
+        legalRequirements
+      },
+      securityOfPersonalData {
+        subsectionTitle,
+        content
+      }
     },
     childrensPrivacySection {
       sectionTitle,
@@ -180,13 +220,7 @@ export const privacyPolicyQuery = defineQuery(`
     },
     contactUsSection {
       sectionTitle,
-      content,
-      contactDetails {
-        email,
-        phone,
-        address,
-        website
-      }
+      content
     }
   }
 `);
@@ -239,12 +273,6 @@ export const termsAndConditionsQuery = defineQuery(`
     disclaimerSection {
       sectionTitle,
       content
-    },
-    contactInformation {
-      sectionTitle,
-      contactText,
-      email,
-      address
     }
   }
 `);
@@ -286,6 +314,61 @@ export const faqPageQuery = defineQuery(`
         text,
         email
       }
+    }
+  }
+`);
+
+export const insightsPageQuery = defineQuery(`
+  *[_type == "insightsPage"][0] {
+    title,
+    shareholderValueAnalytics {
+      title,
+      subheading,
+      contentText,
+      statement1,
+      statement2,
+      CTA1,
+      Mail1,
+      CTA2,
+      Mail2
+    },
+    mindbullets {
+      title,
+      subheading
+    },
+    keynotes {
+      topicSection {
+        topicSectionTitle,
+        topicSectionSubtitle,
+        topicContentText,
+        topicCTA1,
+        topicMail1,
+        topicCTA2
+      },
+      speakerSection {
+        speakerSectionTitle,
+        speakerSectionSubtitle,
+        speakerContentText,
+        speakerCTA1,
+        speakerMail1,
+        speakerCTA2
+      }
+    },
+    podcast {
+      title,
+      subheading
+    },
+    corporateVenturing {
+      title,
+      subheading,
+      contentText,
+      CTA1,
+      Mail1
+    },
+    theEdge {
+      title,
+      subheading,
+      contentText
     }
   }
 `);

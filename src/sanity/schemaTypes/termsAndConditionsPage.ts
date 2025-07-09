@@ -228,35 +228,6 @@ const termsAndConditionsPage = defineType({
           validation: (Rule) => Rule.required()
         }
       ]
-    }),
-    defineField({
-      name: 'contactInformation',
-      title: 'Contact Information',
-      type: 'object',
-      fields: [
-        {
-          name: 'sectionTitle',
-          title: 'Section Title',
-          type: 'string',
-          initialValue: 'Contact Information'
-        },
-        {
-          name: 'contactText',
-          title: 'Contact Text',
-          type: 'text',
-          description: 'Text about contacting regarding these terms'
-        },
-        {
-          name: 'email',
-          title: 'Contact Email',
-          type: 'email'
-        },
-        {
-          name: 'address',
-          title: 'Company Address',
-          type: 'text'
-        }
-      ]
     })
   ],
   preview: {
