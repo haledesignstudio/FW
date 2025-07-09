@@ -67,9 +67,9 @@ const items: GridItem[] = [
                 <li><a href="https://www.google.com">Contact</a></li>
                 <li><a href="https://www.openai.com">Keynotes</a></li>
                 <li><a href="https://www.github.com">Join us</a></li>
-                <li><a href="https://www.github.com">FAQs</a></li>
-                <li><a href="https://www.github.com">Privacy policy</a></li>
-                <li><a href="https://www.github.com">Terms and conditions</a></li>
+                <li><a href="/faq">FAQs</a></li>
+                <li><a href="/privacy-policy">Privacy policy</a></li>
+                <li><a href="/terms-conditions">Terms and conditions</a></li>
                 <li><a href="https://www.github.com">Shareholder Value Analytics</a></li>
             </ul>
         ),
