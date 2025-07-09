@@ -387,7 +387,7 @@ const Header: React.FC = () => {
             relative top-0 left-0 z-50">
 
                 {/* Logo: always first column */}
-                <div className="relative col-span-1 aspect-[5/1]">
+                <Link href="/" className="relative col-span-1 aspect-[5/1]">
                     <Image
                         src="/logo.png"
                         alt="Logo"
@@ -395,7 +395,7 @@ const Header: React.FC = () => {
                         className="object-contain object-left-top cursor-pointer"
                         priority
                     />
-                </div>
+                </Link>
 
                 {/* Spacer: fills unused middle columns */}
                 <div className="hidden [@media(max-height:600px)_and_(max-width:768px)]:block [@media(max-height:600px)_and_(max-width:768px)]:col-span-2 
