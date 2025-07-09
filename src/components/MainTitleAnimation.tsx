@@ -16,13 +16,11 @@ export default function MainTitleAnimation({
   delay = 500
 }: MainTitleAnimationProps) {
   const [displayedText, setDisplayedText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     
     const startTyping = () => {
-      setIsTyping(true);
       let currentIndex = 0;
       
       const typeNextChar = () => {
@@ -30,8 +28,6 @@ export default function MainTitleAnimation({
           setDisplayedText(text.slice(0, currentIndex + 1));
           currentIndex++;
           timeoutId = setTimeout(typeNextChar, typeSpeed);
-        } else {
-          setIsTyping(false);
         }
       };
       

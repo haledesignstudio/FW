@@ -8,6 +8,7 @@ import { shareholderValueAnalyticsQuery } from '@/sanity/lib/queries';
 import { keynoteQuery } from '@/sanity/lib/queries';
 import { insightsPageQuery } from '@/sanity/lib/queries';
 import { PortableText } from '@portabletext/react';
+import type { PortableTextBlock } from '@portabletext/types';
 
 type ShareholderValueAnalyticsContent = {
     headline: string;
@@ -55,10 +56,10 @@ type insightsPageContent = {
     title: string;
     shareholderValueAnalytics?: {
         title: string;
-        subheading?: any[];
-        contentText?: any[]; // Portable Text block
-        statement1?: any[];
-        statement2?: any[];
+        subheading?: PortableTextBlock[];
+        contentText?: PortableTextBlock[];
+        statement1?: PortableTextBlock[];
+        statement2?: PortableTextBlock[];
         CTA1?: string;
         Mail1?: string;
         CTA2?: string;
@@ -66,13 +67,13 @@ type insightsPageContent = {
     };
     mindbullets?: {
         title: string;
-        subheading?: any[];
+        subheading?: PortableTextBlock[];
     };
     keynotes?: {
         topicSection?: {
             topicSectionTitle?: string;
-            topicSectionSubtitle?: any[];
-            topicContentText?: any[];
+            topicSectionSubtitle?: PortableTextBlock[];
+            topicContentText?: PortableTextBlock[];
             topicCTA1?: string;
             topicMail1?: string;
             topicCTA2?: string;
@@ -80,7 +81,7 @@ type insightsPageContent = {
         speakerSection?: {
             speakerSectionTitle?: string;
             speakerSectionSubtitle?: string;
-            speakerContentText?: any[];
+            speakerContentText?: PortableTextBlock[];
             speakerCTA1?: string;
             speakerMail1?: string;
             speakerCTA2?: string;
@@ -88,19 +89,19 @@ type insightsPageContent = {
     };
     podcast?: {
         title: string;
-        subheading?: any[];
+        subheading?: PortableTextBlock[];
     };
     corporateVenturing?: {
         title: string;
-        subheading?: any[];
-        contentText?: any[];
+        subheading?: PortableTextBlock[];
+        contentText?: PortableTextBlock[];
         CTA?: string;
         Mail?: string;
     };
     theEdge?: {
         title: string;
-        subheading?: any[];
-        contentText?: any[];
+        subheading?: PortableTextBlock[];
+        contentText?: PortableTextBlock[];
     };
 };
 
@@ -255,7 +256,7 @@ export default function Page() {
                 id: 'analytics-3',
                 content: (
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
-                        <PortableText value={data.insights.shareholderValueAnalytics?.contentText} />
+                        <PortableText value={data.insights.shareholderValueAnalytics?.contentText || []} />
                     </div>
                 ),
                 colSpan: 2,
@@ -269,7 +270,7 @@ export default function Page() {
                 id: 'analytics-4',
                 content: (
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight">
-                        <PortableText value={data.insights.shareholderValueAnalytics?.subheading} />
+                        <PortableText value={data.insights.shareholderValueAnalytics?.subheading || []} />
                     </div>
                 ),
                 colSpan: 4,
@@ -293,7 +294,7 @@ export default function Page() {
                 id: 'analytics-6',
                 content: (
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
-                    <PortableText value={data.insights.shareholderValueAnalytics?.statement1} />
+                    <PortableText value={data.insights.shareholderValueAnalytics?.statement1 || []} />
                     </div>
                 ),
                 colSpan: 1,
@@ -307,7 +308,7 @@ export default function Page() {
                 id: 'analytics-7',
                 content: (
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
-                        <PortableText value={data.insights.shareholderValueAnalytics?.statement2} />
+                        <PortableText value={data.insights.shareholderValueAnalytics?.statement2 || []} />
                     </div>
                 ),
                 colSpan: 1,
@@ -425,7 +426,7 @@ export default function Page() {
                 id: 'mindbullets-3',
                 content:
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[6vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-graphik leading-[7vh]">
-                        <PortableText value={data.insights.mindbullets?.subheading} />
+                        <PortableText value={data.insights.mindbullets?.subheading || []} />
                     </div>,
 
                 colSpan: 3,
@@ -486,7 +487,7 @@ export default function Page() {
                 id: 'edge-3',
                 content:
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-roboto leading-[4vh]">
-                        <PortableText value={data.insights.theEdge?.contentText} />
+                        <PortableText value={data.insights.theEdge?.contentText || []} />
                     </div>,
 
                 colSpan: 2,
@@ -500,7 +501,7 @@ export default function Page() {
                 id: 'edge-4',
                 content:
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-graphik leading-[6vh]">
-                        <PortableText value={data.insights.theEdge?.subheading} />
+                        <PortableText value={data.insights.theEdge?.subheading || []} />
                     </div>,
 
                 colSpan: 3,
@@ -555,7 +556,7 @@ export default function Page() {
                 id: 'keynotes-4',
                 content: (
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
-                        <PortableText value={data.insights.keynotes?.topicSection?.topicContentText} />
+                        <PortableText value={data.insights.keynotes?.topicSection?.topicContentText || []} />
                     </div>
                 ),
                 colSpan: 2,
@@ -569,7 +570,7 @@ export default function Page() {
                 id: 'keynotes-5',
                 content: (
                     <div className="whitespace-pre-line text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4.25vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight">
-                        <PortableText value={data.insights.keynotes?.topicSection?.topicSectionSubtitle} />
+                        <PortableText value={data.insights.keynotes?.topicSection?.topicSectionSubtitle || []} />
                     </div>
                 ),
                 colSpan: 4,
@@ -702,7 +703,7 @@ export default function Page() {
                 id: 'podcast-3',
                 content:
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-graphik leading-[5vh]">
-                        <PortableText value={data.insights.podcast?.subheading} />
+                        <PortableText value={data.insights.podcast?.subheading || []} />
                     </div>,
 
                 colSpan: 3,
@@ -744,7 +745,7 @@ export default function Page() {
                 id: 'corporate-3',
                 content:
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-roboto leading-[4vh]">
-                        <PortableText value={data.insights.corporateVenturing?.contentText} />
+                        <PortableText value={data.insights.corporateVenturing?.contentText || []} />
                     </div>,
 
                 colSpan: 2,
@@ -758,7 +759,7 @@ export default function Page() {
                 id: 'corporate-4',
                 content:
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-graphik leading-[6vh]">
-                        <PortableText value={data.insights.corporateVenturing?.subheading} />
+                        <PortableText value={data.insights.corporateVenturing?.subheading || []} />
                     </div>,
 
                 colSpan: 3,
