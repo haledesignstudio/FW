@@ -154,9 +154,9 @@ export default function FAQClient({ faqData }: Props) {
           {faqData.faqs.map((faq, index) => (
             <div key={index} className="flex items-center h-auto">
               <div
-                className="self-start"
+                className="self-start transition-transform duration-300 ease-in-out"
                 style={{ 
-                  transform: 'rotate(90deg)',
+                  transform: selectedQuestion === index ? 'rotate(45deg)' : 'rotate(90deg)',
                 }}
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
