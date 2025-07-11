@@ -16,6 +16,7 @@ import project from './project'
 import caseStudy from './caseStudy'
 import mindbulletsArchive from './mindbulletsArchive'
 import mindbullet from './mindbullet'
+import podcast from './podcast'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -38,6 +39,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     caseStudy,
     mindbulletsArchive,
     mindbullet,
+    podcast,
     whatWeDo, shareholderValueAnalytics, keynote
   ],
 }
