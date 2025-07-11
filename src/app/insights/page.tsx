@@ -4,53 +4,52 @@ import React, { useEffect, useState } from 'react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { client } from '@/sanity/lib/client';
-import { shareholderValueAnalyticsQuery } from '@/sanity/lib/queries';
-import { keynoteQuery } from '@/sanity/lib/queries';
 import { insightsPageQuery } from '@/sanity/lib/queries';
 import { PortableText } from '@portabletext/react';
 import type { PortableTextBlock } from '@portabletext/types';
+import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 
-type ShareholderValueAnalyticsContent = {
-    headline: string;
-    question: string;
-    mainline: string;
-    statement1: string;
-    statement2: string;
-    cta1: string;
-    mail1: string;
-    cta2: string;
-    mail2: string;
-    embedLink: string;
-};
+const carouselItems = [
+  {
+    id: 'carousel-1',
+    image: '/placeholder-image.png',
+    heading: 'Moon colonists suspend mineral supply to Earth',
+    body: 'Chinese officials today announced they lost control of the Moon base, Yueling. Text that is used to check if the truncation abilities of my code are working or not working. Who knows?',
+    link: '#',
+  },
+  {
+    id: 'carousel-2',
+    image: '/menu-our-work.png',
+    heading: 'AI for President / The next Commander in Chief is an avatar',
+    body: 'When a Presidential decision can affect millions...',
+    link: '#',
+  },
+  {
+    id: 'carousel-3',
+    image: '/menu-people.png',
+    heading: 'Should we create Superman?',
+    body: 'New technologies to “reinvent” humanity spark global alarm...',
+    link: '#',
+  },
+  {
+    id: 'carousel-4',
+    image: '/menu-what-we-do.png',
+    heading: 'AI for President / The next Commander in Chief is an avatar',
+    body: 'When a Presidential decision can affect millions...',
+    link: '#',
+  },
+  {
+    id: 'carousel-5',
+    image: '/Privacy Policy.png',
+    heading: 'Should we create Superman?',
+    body: 'New technologies to “reinvent” humanity spark global alarm...',
+    link: '#',
+  },
+  
+];
 
-type keynoteContent = {
-    _id: string;
-    topicHeadline: string;
-    topicMainline: string;
-    topicStatement: string;
-    topicCTA1: string;
-    topicMail1: string;
-    topicCTA2: string;
-    topicCTA3: string;
-    topicMail3: string;
-    topicCarousel: {
-        topicCarouselImage: {
-            asset: {
-                _ref: string;
-                _type: 'reference';
-            };
-            alt: string;
-        };
-        topicCarouselHeadline: string;
-        topicCarouselDescription: string;
-    }[];
-    speakerHeadline: string;
-    speakerMainline: string;
-    speakerStatement: string;
-    speakerCTA1: string;
-    speakerMail1: string;
-    speakerCTA2: string;
-};
+
+
 
 type insightsPageContent = {
     title: string;
@@ -146,8 +145,6 @@ const getGridClasses = (item: GridItem) => {
 
 export default function Page() {
     const [data, setData] = useState<{
-        analytics: ShareholderValueAnalyticsContent;
-        keynotes: keynoteContent;
         insights: insightsPageContent;
     } | null>(null);
 
@@ -165,12 +162,10 @@ export default function Page() {
 
     useEffect(() => {
         Promise.all([
-            client.fetch<ShareholderValueAnalyticsContent>(shareholderValueAnalyticsQuery),
-            client.fetch<keynoteContent>(keynoteQuery),
             client.fetch<insightsPageContent>(insightsPageQuery),
         ])
-            .then(([analyticsResult, keynoteResult, insightsResult]) => {
-                setData({ analytics: analyticsResult, keynotes: keynoteResult, insights: insightsResult });
+            .then(([insightsResult]) => {
+                setData({insights: insightsResult });
                 setLoading(false);
             })
             .catch((error) => {
@@ -294,7 +289,7 @@ export default function Page() {
                 id: 'analytics-6',
                 content: (
                     <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
-                    <PortableText value={data.insights.shareholderValueAnalytics?.statement1 || []} />
+                        <PortableText value={data.insights.shareholderValueAnalytics?.statement1 || []} />
                     </div>
                 ),
                 colSpan: 1,
@@ -436,26 +431,7 @@ export default function Page() {
                 landscapeColSpan: 3,
                 landscapeRowSpan: 1,
             },
-            {
-                id: 'mindbullets-4',
-                content: <div className="bg-[#eee] p-6">Visual insight area</div>,
-                colSpan: 6,
-                rowSpan: 2,
-                mobileColSpan: 2,
-                mobileRowSpan: 1,
-                landscapeColSpan: 6,
-                landscapeRowSpan: 2,
-            },
-            {
-                id: 'mindbullets-5',
-                content: <div className="p-4">Key contributors and commentary</div>,
-                colSpan: 6,
-                rowSpan: 1,
-                mobileColSpan: 2,
-                mobileRowSpan: 1,
-                landscapeColSpan: 6,
-                landscapeRowSpan: 1,
-            },
+            
         ],
         edge: [
             {
@@ -597,11 +573,13 @@ export default function Page() {
                 content: (
                     <div className="flex flex-col justify-end h-full">
                         <a
-                            href={`mailto:${data.keynotes.topicMail1}?subject=${encodeURIComponent(data.keynotes.topicCTA1)}`}
-                            className="underline text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
+                            href={`mailto:${data.insights.keynotes?.topicSection?.topicMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.insights.keynotes?.topicSection?.topicCTA1 ?? '')}`}
+                            className="underline text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-graphik leading-[2vh]"
                         >
-                            {data.keynotes.topicCTA1}
+                            {data.insights.keynotes?.topicSection?.topicCTA1 ?? 'Get in Touch'}
                         </a>
+
+
                     </div>
                 ),
                 colSpan: 1,
@@ -619,7 +597,7 @@ export default function Page() {
                         <a
                             href="#our-speakers" className="underline text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
                         >
-                            {data.keynotes.topicCTA2}
+                            {data.insights.keynotes?.topicSection?.topicCTA2}
                         </a>
                     </div>
                 ),
@@ -707,6 +685,30 @@ export default function Page() {
                     </div>,
 
                 colSpan: 3,
+                rowSpan: 2,
+                mobileColSpan: 2,
+                mobileRowSpan: 1,
+                landscapeColSpan: 3,
+                landscapeRowSpan: 1,
+            },
+            {
+                id: 'podcast-4',
+                content:
+                    <></>,
+
+                colSpan: 3,
+                rowSpan: 2,
+                mobileColSpan: 2,
+                mobileRowSpan: 1,
+                landscapeColSpan: 3,
+                landscapeRowSpan: 1,
+            },
+            {
+                id: 'podcast-5',
+                content:
+                    <ResponsiveGridCarousel items={carouselItems} />,
+
+                colSpan: 6,
                 rowSpan: 2,
                 mobileColSpan: 2,
                 mobileRowSpan: 1,

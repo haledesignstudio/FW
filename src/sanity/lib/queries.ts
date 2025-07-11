@@ -157,54 +157,14 @@ export const privacyPolicyQuery = defineQuery(`
     },
     collectingAndUsingDataSection {
       sectionTitle,
-      typesOfDataCollected {
-        subsectionTitle,
-        personalData {
-          title,
-          content
-        },
-        usageData {
-          title,
-          content
-        }
-      },
-      trackingTechnologiesAndCookies {
-        subsectionTitle,
-        introContent,
-        cookieTypes {
-          browserCookies,
-          flashCookies,
-          webBeacons
-        },
-        cookieCategories {
-          essentialCookies,
-          acceptanceCookies,
-          functionalityCookies
-        }
-      },
-      useOfPersonalData {
-        subsectionTitle,
-        purposes,
-        sharingScenarios
-      },
-      retentionOfPersonalData {
-        subsectionTitle,
-        content
-      },
-      transferOfPersonalData {
-        subsectionTitle,
-        content
-      },
-      disclosureOfPersonalData {
-        subsectionTitle,
-        businessTransactions,
-        lawEnforcement,
-        legalRequirements
-      },
-      securityOfPersonalData {
-        subsectionTitle,
-        content
-      }
+      typesOfDataContent,
+      personalDataContent,
+      usageDataContent,
+      useOfDataContent,
+      retentionContent,
+      transferContent,
+      disclosureContent,
+      securityContent
     },
     childrensPrivacySection {
       sectionTitle,
@@ -220,7 +180,13 @@ export const privacyPolicyQuery = defineQuery(`
     },
     contactUsSection {
       sectionTitle,
-      content
+      content,
+      contactDetails {
+        email,
+        phone,
+        address,
+        website
+      }
     }
   }
 `);
@@ -273,6 +239,12 @@ export const termsAndConditionsQuery = defineQuery(`
     disclaimerSection {
       sectionTitle,
       content
+    },
+    contactInformation {
+      sectionTitle,
+      contactText,
+      email,
+      address
     }
   }
 `);
@@ -362,8 +334,8 @@ export const insightsPageQuery = defineQuery(`
       title,
       subheading,
       contentText,
-      CTA1,
-      Mail1
+      CTA,
+      Mail
     },
     theEdge {
       title,
@@ -372,3 +344,17 @@ export const insightsPageQuery = defineQuery(`
     }
   }
 `);
+
+export const podcastQuery = defineQuery(`
+  *[_type == "podcast"] | order(_createdAt desc) {
+    _id,
+    headline,
+    description,
+    embedLink,
+    headerImage {
+      asset,
+      alt
+    }
+  }
+`);
+
