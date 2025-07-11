@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 // Type definitions for the terms & conditions data
 interface TermsSection {
@@ -121,46 +122,47 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
             >
             <button
                 onClick={() => setSelectedCategory(category.key)}
-                className={`text-left w-full h-auto py-2 pointer-events-auto relative z-50 cursor-pointer ${
-                selectedCategory === category.key ? 'text-black' : 'text-gray-600'
-                }`}
+                className={`text-left w-full h-auto py-2 pointer-events-auto relative z-50 cursor-pointer bg-transparent border-none outline-none font-normal`}
+                style={{ background: 'none' }}
             >
-            <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
-              {category.shortLabel}
-            </span>
-            {selectedCategory === category.key && (
-              <div className="h-[0.5vh] bg-black mt-[1vh] w-full"></div>
-            )}
-          </button>
-          
-          {/* Additional categories for first 3 columns - positioned at bottom */}
-          {index < 3 && secondRowCategories[index] && (
-            <div className="mt-auto">
-              <button
-                onClick={() => setSelectedCategory(secondRowCategories[index].key)}
-                className={`text-left w-full h-auto py-2 pointer-events-auto relative z-20 cursor-pointer ${
-                  selectedCategory === secondRowCategories[index].key
-                    ? 'text-black'
-                    : 'text-gray-600'
-                }`}
+              <UnderlineOnHoverAnimation
+                className={
+                  `${selectedCategory === category.key ? 'text-black  font-normal underline-active' : 'text-gray-600  font-normal'}`
+                }
               >
-                <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
-                  {secondRowCategories[index].shortLabel}
+                <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal">
+                  {category.shortLabel}
                 </span>
-                {selectedCategory === secondRowCategories[index].key && (
-                  <div className="h-[0.5vh] bg-black mt-[1vh] w-full"></div>
-                )}
-              </button>
-            </div>
-          )}
-        </div>
-      ),
-      colSpan: 1,
-      rowSpan: 1,
-      mobileColSpan: 1,
-      mobileRowSpan: 1,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 1,
+              </UnderlineOnHoverAnimation>
+            </button>
+            {/* Additional categories for first 3 columns - positioned at bottom */}
+            {index < 3 && secondRowCategories[index] && (
+              <div className="mt-auto">
+                <button
+                  onClick={() => setSelectedCategory(secondRowCategories[index].key)}
+                  className={`text-left w-full h-auto py-2 pointer-events-auto relative z-20 cursor-pointer bg-transparent border-none outline-none font-normal`}
+                  style={{ background: 'none' }}
+                >
+                  <UnderlineOnHoverAnimation
+                    className={
+                      `${selectedCategory === secondRowCategories[index].key ? 'text-black font-normal underline-active' : 'text-gray-600 font-normal'}`
+                    }
+                  >
+                    <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal">
+                      {secondRowCategories[index].shortLabel}
+                    </span>
+                  </UnderlineOnHoverAnimation>
+                </button>
+              </div>
+            )}
+          </div>
+        ),
+        colSpan: 1,
+        rowSpan: 1,
+        mobileColSpan: 1,
+        mobileRowSpan: 1,
+        landscapeColSpan: 1,
+        landscapeRowSpan: 1,
     })),
     // Category header - Left side (columns 1-2, row 2) - anchored to bottom left
     {
@@ -254,6 +256,18 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
       landscapeRowSpan: 2,
     },
   ];
+
+  // Add this style to the page (or global CSS if preferred):
+  if (typeof window !== 'undefined' && !document.getElementById('underline-active-style')) {
+    const style = document.createElement('style');
+    style.id = 'underline-active-style';
+    style.innerHTML = `
+      .underline-active.nav-link-ltr::before {
+        width: 100% !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
 
   return (
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">

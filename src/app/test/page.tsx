@@ -1,4 +1,5 @@
 import TextAnimation from '@/components/TextAnimation';
+import CountingAnimation from '@/components/countingAnimation';
 
 export default function Home() {
   return (
@@ -46,6 +47,62 @@ export default function Home() {
           letterDelay={0.08}
           duration={0.7}
         />
+      </div>
+
+      {/* Counting Animation Test Section */}
+      <div className="mt-16 w-full max-w-6xl">
+        <h2 className="text-3xl font-roboto-bold text-center mb-12">
+          <TextAnimation 
+            text="Our Impact in Numbers"
+            delay={8}
+            letterDelay={0.05}
+            duration={0.6}
+          />
+        </h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Corporate Partners */}
+          <div className="text-center">
+            <div className="flex items-center justify-center">
+              <CountingAnimation target={20} fontSize="60px" className="text-blue-400" />
+              <span className="text-blue-400 text-6xl font-bold">+</span>
+            </div>
+            <p className="text-lg font-roboto mt-2">Corporate partners</p>
+          </div>
+          
+          {/* Game-changing Opportunities */}
+          <div className="text-center">
+            <div className="flex items-center justify-center">
+              <CountingAnimation target={400} fontSize="60px" className="text-green-400" />
+              <span className="text-green-400 text-6xl font-bold">+</span>
+            </div>
+            <p className="text-lg font-roboto mt-2">Game-changing opportunities</p>
+          </div>
+          
+          {/* Value Propositions */}
+          <div className="text-center">
+            <div className="flex items-center justify-center">
+              <CountingAnimation target={40} fontSize="60px" className="text-yellow-400" />
+              <span className="text-yellow-400 text-6xl font-bold">+</span>
+            </div>
+            <p className="text-lg font-roboto mt-2">Value propositions</p>
+          </div>
+          
+          {/* Investment Cases */}
+          <div className="text-center">
+            <div className="flex items-center justify-center">
+              <CountingAnimation target={20} fontSize="60px" className="text-purple-400" />
+              <span className="text-purple-400 text-6xl font-bold">+</span>
+            </div>
+            <p className="text-lg font-roboto mt-2">Investment cases</p>
+          </div>
+          
+          {/* New Ventures */}
+          <div className="text-center lg:col-span-1 md:col-span-2 lg:col-start-2">
+            <CountingAnimation target={16} fontSize="60px" className="text-red-400" />
+            <p className="text-lg font-roboto mt-2">New ventures in commercialisation</p>
+          </div>
+        </div>
       </div>
 
       <div className="mt-12 flex gap-6">

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 // Type definitions for the privacy policy data
 interface PersonalDataSection {
@@ -364,18 +365,18 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
   >
     <button
       onClick={() => setSelectedCategory(category.key)}
-      className={`w-full h-auto flex items-start justify-start text-left pointer-events-auto relative z-50 cursor-pointer ${
-        selectedCategory === category.key ? 'text-black' : 'text-gray-600'
-      }`}
+      className={`w-full h-auto flex items-start justify-start text-left pointer-events-auto relative z-50 cursor-pointer bg-transparent border-none outline-none font-normal`}
       style={{ padding: 0, margin: 0 }}
     >
-      <span
-        className={`text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full ${
-          selectedCategory === category.key ? 'border-b-4 border-black' : ''
-        }`}
+      <UnderlineOnHoverAnimation
+        className={selectedCategory === category.key ? 'text-black font-normal underline-active' : 'text-gray-600 font-normal'}
       >
-        {category.shortLabel}
-      </span>
+        <span
+          className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full"
+        >
+          {category.shortLabel}
+        </span>
+      </UnderlineOnHoverAnimation>
     </button>
   </div>
       ),
