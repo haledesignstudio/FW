@@ -19,7 +19,6 @@ export default function CountingAnimation({
   
   useEffect(() => {
     const startTime = Date.now();
-    const endTime = startTime + duration;
     
     const updateCount = () => {
       const now = Date.now();

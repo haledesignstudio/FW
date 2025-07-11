@@ -6,10 +6,21 @@ import { client } from '@/sanity/lib/client';
 import { termsAndConditionsQuery } from '@/sanity/lib/queries';
 import TermsAndConditionsClient from './terms-conditions';
 
+// Type definition for metadata extraction
+interface TermsAndConditionsMetadata {
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+  };
+  pageHeader?: {
+    mainTitle?: string;
+  };
+}
+
 // Generate metadata
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const data = await client.fetch(termsAndConditionsQuery);
+    const data = await client.fetch(termsAndConditionsQuery) as unknown as TermsAndConditionsMetadata;
     
     return {
       title: data?.seo?.metaTitle || data?.pageHeader?.mainTitle || 'Terms & Conditions',
@@ -25,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TermsAndConditionsPage() {
-  let termsData;
+  let termsData: unknown;
   
   try {
     termsData = await client.fetch(termsAndConditionsQuery);
@@ -53,7 +64,7 @@ export default async function TermsAndConditionsPage() {
   return (
     <>
       <Header />
-      <TermsAndConditionsClient termsData={termsData} />
+      <TermsAndConditionsClient termsData={termsData as Parameters<typeof TermsAndConditionsClient>[0]['termsData']} />
       <Footer />
     </>
   );

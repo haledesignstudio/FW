@@ -6,10 +6,21 @@ import { client } from '@/sanity/lib/client';
 import { privacyPolicyQuery } from '@/sanity/lib/queries';
 import PrivacyPolicyClient from './privacy-policy';
 
+// Type definition for metadata extraction
+interface PrivacyPolicyMetadata {
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+  };
+  pageHeader?: {
+    mainTitle?: string;
+  };
+}
+
 // Generate metadata
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const data = await client.fetch(privacyPolicyQuery);
+    const data = await client.fetch(privacyPolicyQuery) as unknown as PrivacyPolicyMetadata;
     
     return {
       title: data?.seo?.metaTitle || data?.pageHeader?.mainTitle || 'Privacy Policy',
@@ -25,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function PrivacyPolicyPage() {
-  let privacyData;
+  let privacyData: unknown;
   
   try {
     privacyData = await client.fetch(privacyPolicyQuery);
@@ -53,7 +64,7 @@ export default async function PrivacyPolicyPage() {
   return (
     <>
       <Header />
-      <PrivacyPolicyClient privacyData={privacyData} />
+      <PrivacyPolicyClient privacyData={privacyData as Parameters<typeof PrivacyPolicyClient>[0]['privacyData']} />
       <Footer />
     </>
   );

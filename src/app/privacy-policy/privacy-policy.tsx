@@ -4,81 +4,7 @@ import React, { useState } from 'react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
-// Type definitions for the privacy policy data
-interface PersonalDataSection {
-  title: string;
-  content: string;
-}
-
-interface UsageDataSection {
-  title: string;
-  content: string;
-}
-
-interface TypesOfDataCollected {
-  subsectionTitle: string;
-  personalData: PersonalDataSection;
-  usageData: UsageDataSection;
-}
-
-interface CookieTypes {
-  browserCookies?: string;
-  flashCookies?: string;
-  webBeacons?: string;
-}
-
-interface CookieCategories {
-  essentialCookies?: string;
-  acceptanceCookies?: string;
-  functionalityCookies?: string;
-}
-
-interface TrackingTechnologiesAndCookies {
-  subsectionTitle: string;
-  introContent: string;
-  cookieTypes: CookieTypes;
-  cookieCategories: CookieCategories;
-}
-
-interface UseOfPersonalData {
-  subsectionTitle: string;
-  purposes: string;
-  sharingScenarios: string;
-}
-
-interface RetentionOfPersonalData {
-  subsectionTitle: string;
-  content: string;
-}
-
-interface TransferOfPersonalData {
-  subsectionTitle: string;
-  content: string;
-}
-
-interface DisclosureOfPersonalData {
-  subsectionTitle: string;
-  businessTransactions?: string;
-  lawEnforcement?: string;
-  legalRequirements?: string;
-}
-
-interface SecurityOfPersonalData {
-  subsectionTitle: string;
-  content: string;
-}
-
-interface CollectingAndUsingDataSection {
-  sectionTitle: string;
-  typesOfDataCollected: TypesOfDataCollected;
-  trackingTechnologiesAndCookies: TrackingTechnologiesAndCookies;
-  useOfPersonalData: UseOfPersonalData;
-  retentionOfPersonalData: RetentionOfPersonalData;
-  transferOfPersonalData: TransferOfPersonalData;
-  disclosureOfPersonalData: DisclosureOfPersonalData;
-  securityOfPersonalData: SecurityOfPersonalData;
-}
-
+// Type definitions aligned with the actual Sanity query structure
 interface PrivacyPolicySection {
   sectionTitle: string;
   content?: string;
@@ -86,10 +12,22 @@ interface PrivacyPolicySection {
   definitionsContent?: string;
 }
 
+interface CollectingAndUsingDataSection {
+  sectionTitle: string;
+  typesOfDataContent?: string;
+  personalDataContent?: string;
+  usageDataContent?: string;
+  useOfDataContent?: string;
+  retentionContent?: string;
+  transferContent?: string;
+  disclosureContent?: string;
+  securityContent?: string;
+}
+
 interface PrivacyPolicyData {
   pageHeader: {
     mainTitle: string;
-    lastUpdated: string;
+    lastUpdated?: string;
     effectiveDate?: string;
   };
   interpretationAndDefinitionsSection: PrivacyPolicySection;
@@ -145,12 +83,12 @@ const categories = [
   { 
     key: 'interpretationAndDefinitionsSection', 
     label: 'Interpretation and Definitions',
-    shortLabel: 'Interpretation'
+    shortLabel: 'Interpretation and Definitions'
   },
   { 
     key: 'collectingAndUsingDataSection', 
     label: 'Collecting and Using Your Personal Data',
-    shortLabel: 'Data Collection'
+    shortLabel: 'Collecting and Using Your Personal Data'
   },
   { 
     key: 'childrensPrivacySection', 
@@ -160,17 +98,17 @@ const categories = [
   { 
     key: 'linksToOtherWebsitesSection', 
     label: 'Links to Other Websites',
-    shortLabel: 'External Links'
+    shortLabel: 'Links to Other Websites'
   },
   { 
     key: 'changesToPolicySection', 
     label: 'Changes to this Privacy Policy',
-    shortLabel: 'Policy Changes'
+    shortLabel: 'Changes to this Privacy Policy'
   },
   { 
     key: 'contactUsSection', 
     label: 'Contact Us',
-    shortLabel: 'Contact'
+    shortLabel: 'Contact Us'
   }
 ]
 
@@ -207,141 +145,100 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
       return (
         <div className="space-y-[3vh]">
           {/* Types of Data Collected */}
-          <div>
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-              {section.typesOfDataCollected.subsectionTitle}
-            </h3>
-            <div className="space-y-[2vh]">
-              <div>
-                <h4 className="text-[3.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-bold mb-[1vh]">
-                  {section.typesOfDataCollected.personalData.title}
-                </h4>
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  {section.typesOfDataCollected.personalData.content}
-                </p>
-              </div>
-              <div>
-                <h4 className="text-[3.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-bold mb-[1vh]">
-                  {section.typesOfDataCollected.usageData.title}
-                </h4>
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  {section.typesOfDataCollected.usageData.content}
-                </p>
-              </div>
+          {section.typesOfDataContent && (
+            <div>
+              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
+                Types of Data Collected
+              </h3>
+              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
+                {section.typesOfDataContent}
+              </p>
             </div>
-          </div>
+          )}
 
-          {/* Tracking Technologies and Cookies */}
-          <div>
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-              {section.trackingTechnologiesAndCookies.subsectionTitle}
-            </h3>
-            <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight mb-[2vh]">
-              {section.trackingTechnologiesAndCookies.introContent}
-            </p>
-            
-            {/* Cookie Types */}
-            <div className="space-y-[1vh] mb-[2vh]">
-              {section.trackingTechnologiesAndCookies.cookieTypes.browserCookies && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  {section.trackingTechnologiesAndCookies.cookieTypes.browserCookies}
-                </p>
-              )}
-              {section.trackingTechnologiesAndCookies.cookieTypes.flashCookies && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  {section.trackingTechnologiesAndCookies.cookieTypes.flashCookies}
-                </p>
-              )}
-              {section.trackingTechnologiesAndCookies.cookieTypes.webBeacons && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  {section.trackingTechnologiesAndCookies.cookieTypes.webBeacons}
-                </p>
-              )}
+          {/* Personal Data */}
+          {section.personalDataContent && (
+            <div>
+              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
+                Personal Data
+              </h3>
+              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
+                {section.personalDataContent}
+              </p>
             </div>
+          )}
 
-            {/* Cookie Categories */}
-            <div className="space-y-[1vh]">
-              {section.trackingTechnologiesAndCookies.cookieCategories.essentialCookies && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  {section.trackingTechnologiesAndCookies.cookieCategories.essentialCookies}
-                </p>
-              )}
-              {section.trackingTechnologiesAndCookies.cookieCategories.acceptanceCookies && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  {section.trackingTechnologiesAndCookies.cookieCategories.acceptanceCookies}
-                </p>
-              )}
-              {section.trackingTechnologiesAndCookies.cookieCategories.functionalityCookies && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  {section.trackingTechnologiesAndCookies.cookieCategories.functionalityCookies}
-                </p>
-              )}
+          {/* Usage Data */}
+          {section.usageDataContent && (
+            <div>
+              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
+                Usage Data
+              </h3>
+              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
+                {section.usageDataContent}
+              </p>
             </div>
-          </div>
+          )}
 
           {/* Use of Personal Data */}
-          <div>
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-              {section.useOfPersonalData.subsectionTitle}
-            </h3>
-            <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight mb-[1vh]">
-              {section.useOfPersonalData.purposes}
-            </p>
-            <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-              {section.useOfPersonalData.sharingScenarios}
-            </p>
-          </div>
-
-          {/* Other subsections */}
-          <div>
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-              {section.retentionOfPersonalData.subsectionTitle}
-            </h3>
-            <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-              {section.retentionOfPersonalData.content}
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-              {section.transferOfPersonalData.subsectionTitle}
-            </h3>
-            <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-              {section.transferOfPersonalData.content}
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-              {section.disclosureOfPersonalData.subsectionTitle}
-            </h3>
-            <div className="space-y-[1vh]">
-              {section.disclosureOfPersonalData.businessTransactions && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  <strong>Business Transactions:</strong> {section.disclosureOfPersonalData.businessTransactions}
-                </p>
-              )}
-              {section.disclosureOfPersonalData.lawEnforcement && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  <strong>Law Enforcement:</strong> {section.disclosureOfPersonalData.lawEnforcement}
-                </p>
-              )}
-              {section.disclosureOfPersonalData.legalRequirements && (
-                <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                  <strong>Legal Requirements:</strong> {section.disclosureOfPersonalData.legalRequirements}
-                </p>
-              )}
+          {section.useOfDataContent && (
+            <div>
+              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
+                Use of Personal Data
+              </h3>
+              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
+                {section.useOfDataContent}
+              </p>
             </div>
-          </div>
+          )}
 
-          <div>
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-              {section.securityOfPersonalData.subsectionTitle}
-            </h3>
-            <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-              {section.securityOfPersonalData.content}
-            </p>
-          </div>
+          {/* Retention of Personal Data */}
+          {section.retentionContent && (
+            <div>
+              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
+                Retention of Personal Data
+              </h3>
+              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
+                {section.retentionContent}
+              </p>
+            </div>
+          )}
+
+          {/* Transfer of Personal Data */}
+          {section.transferContent && (
+            <div>
+              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
+                Transfer of Personal Data
+              </h3>
+              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
+                {section.transferContent}
+              </p>
+            </div>
+          )}
+
+          {/* Disclosure of Personal Data */}
+          {section.disclosureContent && (
+            <div>
+              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
+                Disclosure of Personal Data
+              </h3>
+              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
+                {section.disclosureContent}
+              </p>
+            </div>
+          )}
+
+          {/* Security of Personal Data */}
+          {section.securityContent && (
+            <div>
+              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
+                Security of Personal Data
+              </h3>
+              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
+                {section.securityContent}
+              </p>
+            </div>
+          )}
         </div>
       )
     }
