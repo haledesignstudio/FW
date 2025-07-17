@@ -23,7 +23,13 @@ export const whatWeDoQuery = defineQuery(`
     mail,
     statement1,
     statement2,
-    statement3
+    statement3,
+    accordionHeading,
+    accordionItems[] {
+      title,
+      content,
+      color
+    }
   }
 `);
 
@@ -354,6 +360,131 @@ export const podcastQuery = defineQuery(`
     headerImage {
       asset,
       alt
+    }
+  }
+`);
+
+export const ourWorkQuery = defineQuery(`
+  *[_type == "ourWorkPage"][0] {
+    _id,
+    title,
+    mainTitle,
+    subtitle,
+    stats {
+      corporatePartners,
+      gameChangingOpportunities,
+      valuePropositions,
+      investmentCases,
+      newVenturesInCommercialisation
+    },
+    statLabels {
+      corporatePartnersLabel,
+      gameChangingOpportunitiesLabel,
+      valuePropositionsLabel,
+      investmentCasesLabel,
+      newVenturesInCommercialisationLabel
+    },
+    testimonials[] {
+      quote,
+      clientName,
+      clientTitle,
+      company
+    },
+    partneredBrands[] {
+      brandName,
+      brandLogo {
+        asset,
+        alt
+      }
+    },
+    accordion[] {
+      heading,
+      text,
+      image {
+        asset,
+        alt
+      },
+      color
+    }
+  }
+`);
+
+export const peoplePageQuery = defineQuery(`
+  *[_type == "peoplePage"][0] {
+    _id,
+    title,
+    seo,
+    pageHeader {
+      mainTitle,
+      subheading,
+      regularText
+    },
+    mainImage {
+      asset,
+      alt
+    },
+    sections {
+      subheading1,
+      leftSection {
+        heading,
+        text
+      },
+      rightSection {
+        heading,
+        text
+      },
+      sideText,
+      leftSection2 {
+        heading,
+        text
+      },
+      rightSection2 {
+        heading,
+        text
+      },
+      whyJoinUsSection {
+        mainHeading,
+        reasons[] {
+          heading,
+          text
+        }
+      },
+      carouselHeading,
+      carouselSidebar {
+        heading,
+        text,
+        linkText
+      }
+    }
+  }
+`);
+
+export const CONTACT_PAGE_QUERY = defineQuery(`
+  *[_type == "contactPage"][0] {
+    _id,
+    title,
+    seo {
+      metaTitle,
+      metaDescription
+    },
+    pageHeader {
+      mainTitle
+    },
+    officesSubheading,
+    officesAroundTheWorld[] {
+      name,
+      email,
+      image {
+        asset,
+        alt
+      }
+    },
+    keynoteSubheading,
+    bookingKeynote {
+      title,
+      subtitle,
+      text,
+      link
     }
   }
 `);

@@ -82,6 +82,44 @@ const ourWorkPage = defineType({
       ]
     }),
     defineField({
+      name: 'statLabels',
+      title: 'Statistics Labels',
+      type: 'object',
+      description: 'Custom labels for the statistics',
+      fields: [
+        {
+          name: 'corporatePartnersLabel',
+          title: 'Corporate Partners Label',
+          type: 'string',
+          initialValue: 'Corporate Partners'
+        },
+        {
+          name: 'gameChangingOpportunitiesLabel',
+          title: 'Game Changing Opportunities Label',
+          type: 'string',
+          initialValue: 'Game Changing Opportunities'
+        },
+        {
+          name: 'valuePropositionsLabel',
+          title: 'Value Propositions Label',
+          type: 'string',
+          initialValue: 'Value Propositions'
+        },
+        {
+          name: 'investmentCasesLabel',
+          title: 'Investment Cases Label',
+          type: 'string',
+          initialValue: 'Investment Cases'
+        },
+        {
+          name: 'newVenturesInCommercialisationLabel',
+          title: 'New Ventures in Commercialisation Label',
+          type: 'string',
+          initialValue: 'New Ventures in Commercialisation'
+        }
+      ]
+    }),
+    defineField({
       name: 'testimonials',
       title: 'Testimonials',
       type: 'array',
@@ -111,14 +149,6 @@ const ourWorkPage = defineType({
               title: 'Company',
               type: 'string',
               validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'clientImage',
-              title: 'Client Photo',
-              type: 'image',
-              options: {
-                hotspot: true
-              }
             }
           ]
         }
@@ -180,6 +210,23 @@ const ourWorkPage = defineType({
                 hotspot: true
               },
               validation: (Rule) => Rule.required()
+            },
+            {
+              name: 'color',
+              title: 'Background Color',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Light Beige', value: '#F9F7F2' },
+                  { title: 'Red', value: '#DC5A50' },
+                  { title: 'Dark Grey', value: '#232323' },
+                  { title: 'White', value: '#FFFFFF' },
+                  { title: 'Black', value: '#000000' }
+                ],
+                layout: 'radio'
+              },
+              validation: (Rule) => Rule.required(),
+              initialValue: '#F9F7F2'
             }
           ]
         }

@@ -178,7 +178,7 @@ export type SpeakersQueryResult = Array<{
   company: string | null;
 }>;
 // Variable: whatWeDoQuery
-// Query: *[_type == "whatWeDo"][0] {    _id,    heading,    mainline,    cta,    mail,    statement1,    statement2,    statement3  }
+// Query: *[_type == "whatWeDo"][0] {    _id,    heading,    mainline,    cta,    mail,    statement1,    statement2,    statement3,    accordionHeading,    accordionItems[] {      title,      content,      color    }  }
 export type WhatWeDoQueryResult = null;
 // Variable: shareholderValueAnalyticsQuery
 // Query: *[_type == "shareholderValueAnalytics"][0] {    _id,    headline,    question,    mainline,    statement1,    statement2,    cta1,    mail1,    cta2,    mail2,    embedLink  }
@@ -210,7 +210,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"keynoteSpeaker\"] | order(name asc) {\n    _id,\n    name,\n    bio,\n    image {\n      asset,\n      alt\n    },\n    position,\n    company\n  }\n": SpeakersQueryResult;
-    "\n  *[_type == \"whatWeDo\"][0] {\n    _id,\n    heading,\n    mainline,\n    cta,\n    mail,\n    statement1,\n    statement2,\n    statement3\n  }\n": WhatWeDoQueryResult;
+    "\n  *[_type == \"whatWeDo\"][0] {\n    _id,\n    heading,\n    mainline,\n    cta,\n    mail,\n    statement1,\n    statement2,\n    statement3,\n    accordionHeading,\n    accordionItems[] {\n      title,\n      content,\n      color\n    }\n  }\n": WhatWeDoQueryResult;
     "\n  *[_type == \"shareholderValueAnalytics\"][0] {\n    _id,\n    headline,\n    question,\n    mainline,\n    statement1,\n    statement2,\n    cta1,\n    mail1,\n    cta2,\n    mail2,\n    embedLink\n  }\n": ShareholderValueAnalyticsQueryResult;
     "\n  *[_type == \"keynote\"][0] {\n    _id,\n    topicHeadline,\n    topicMainline,\n    topicStatement,\n    topicCTA1,\n    topicMail1,\n    topicCTA2,\n    topicCTA3,\n    topicMail3,\n    topicCarousel[] {\n      topicCarouselImage {\n        asset,\n        alt\n      },\n      topicCarouselHeadline,\n      topicCarouselDescription\n    },\n    speakerHeadline,\n    speakerMainline,\n    speakerStatement,\n    speakerCTA1,\n    speakerMail1,\n    speakerCTA2\n  }\n": KeynoteQueryResult;
     "\n  *[_type == \"homePage\"][0] {\n    _id,\n    title,\n    seo,\n    signalsFromFuture,\n    mainHeadline,\n    growthSection,\n    videoSection {\n      backgroundImage {\n        asset,\n        alt\n      },\n      videoUrl\n    },\n    accordionSection {\n      benchmarkInnovation {\n        title,\n        description,\n        ctaText,\n        dashboardImage {\n          asset,\n          alt\n        },\n        backgroundColor\n      },\n      ourProcess {\n        title,\n        introText,\n        processColumns[] {\n          headline,\n          subheadline,\n          content\n        },\n        astronautImage {\n          asset,\n          alt\n        },\n        backgroundColor\n      },\n      caseStudies {\n        title,\n        headline,\n        subheadline,\n        caseStudyGrid[] {\n          asset,\n          alt\n        },\n        featuredCaseStudy {\n          image {\n            asset,\n            alt\n          },\n          title,\n          description,\n          readMoreLink\n        },\n        backgroundColor\n      }\n    }\n  }\n": HomePageQueryResult;

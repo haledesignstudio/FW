@@ -29,6 +29,11 @@ export default defineType({
       title: 'Statements',
       options: { collapsible: true, collapsed: false },
     },
+    {
+      name: 'accordion',
+      title: 'Accordion Section',
+      options: { collapsible: true, collapsed: false },
+    },
   ],
 
   fields: [
@@ -73,6 +78,43 @@ export default defineType({
       title: 'Statement 3',
       type: 'text',
       fieldset: 'statements',
+    }),
+    defineField({
+      name: 'accordionHeading',
+      title: 'Accordion Heading',
+      type: 'text',
+      fieldset: 'accordion',
+    }),
+    defineField({
+      name: 'accordionItems',
+      title: 'Accordion Items',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          {
+            name: 'title',
+            title: 'Title',
+            type: 'string',
+            validation: Rule => Rule.required()
+          },
+          {
+            name: 'content',
+            title: 'Content',
+            type: 'text',
+            validation: Rule => Rule.required()
+          },
+          {
+            name: 'color',
+            title: 'Background Color',
+            type: 'string',
+            description: 'Hex color code (e.g., #1a1a1a)',
+            validation: Rule => Rule.required()
+          }
+        ]
+      }],
+      fieldset: 'accordion',
+      validation: Rule => Rule.max(3).required()
     }),
   ],
 })

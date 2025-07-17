@@ -32,17 +32,23 @@ const contactPage = defineType({
       ]
     }),
     defineField({
-      name: 'mainTitle',
-      title: 'Main Title',
-      type: 'string',
-      description: 'Main page heading',
-      validation: (Rule) => Rule.required()
+      name: 'pageHeader',
+      title: 'Page Header',
+      type: 'object',
+      fields: [
+        {
+          name: 'mainTitle',
+          title: 'Main Title',
+          type: 'string',
+          validation: (Rule) => Rule.required()
+        }
+      ]
     }),
     defineField({
-      name: 'subtitle',
-      title: 'Subtitle',
-      type: 'text',
-      description: 'Description text below the main title'
+      name: 'officesSubheading',
+      title: 'Offices Subheading',
+      type: 'string',
+      description: 'Subheading for the offices section (row 3, columns 5-6)'
     }),
     defineField({
       name: 'officesAroundTheWorld',
@@ -79,6 +85,12 @@ const contactPage = defineType({
       ]
     }),
     defineField({
+      name: 'keynoteSubheading',
+      title: 'Keynote Section Subheading',
+      type: 'string',
+      description: 'Subheading for the keynote booking section'
+    }),
+    defineField({
       name: 'bookingKeynote',
       title: 'Booking a Keynote Section',
       type: 'object',
@@ -88,11 +100,6 @@ const contactPage = defineType({
           title: 'Section Title',
           type: 'string',
           validation: (Rule) => Rule.required()
-        },
-        {
-          name: 'subtitle',
-          title: 'Section Subtitle',
-          type: 'string'
         },
         {
           name: 'text',

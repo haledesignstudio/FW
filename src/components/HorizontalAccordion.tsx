@@ -12,29 +12,36 @@ export interface AccordionItem {
 }
 
 interface HorizontalAccordionProps {
-  items: AccordionItem[];
-  className?: string;
-  tabWidth?: number;
-  expandedWidth?: number;
+    items: AccordionItem[];
+    className?: string;
+    tabWidth?: number | string;
+    expandedWidth?: number;
+    onActiveChange?: (isActive: boolean) => void;
+    fullContainerWidth?: string;
 }
 
 export default function HorizontalAccordion({ 
   items, 
   className = '',
   tabWidth = 60,
-  expandedWidth = 400
+  onActiveChange,
+  fullContainerWidth = 'calc(200% + 4vh)'
 }: HorizontalAccordionProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [previousActiveIndex, setPreviousActiveIndex] = useState<number | null>(0);
 
   const handleTabClick = (index: number) => {
     if (!isTransitioning) {
       setIsTransitioning(true);
-      setPreviousActiveIndex(activeIndex);
       
       // If clicking the same tab, close it (set to null), otherwise open the new tab
-      setActiveIndex(index === activeIndex ? null : index);
+      const newActiveIndex = index === activeIndex ? null : index;
+      setActiveIndex(newActiveIndex);
+      
+      // Notify parent about state change
+      if (onActiveChange) {
+        onActiveChange(newActiveIndex !== null);
+      }
       
       // Reset transition state after animation completes
       setTimeout(() => {
@@ -44,23 +51,56 @@ export default function HorizontalAccordion({
   };
 
   return (
-    <div className={`flex h-96 w-full max-w-6xl mx-auto overflow-hidden rounded-lg shadow-2xl ${className}`}>
+    <div className={`flex h-full overflow-visible ${className}`} style={{ justifyContent: 'flex-end' }}>
+      {/* Calculate total width when closed and when expanded */}
       {items.map((item, index) => {
         const isActive = index === activeIndex;
-        const wasActive = index === previousActiveIndex;
-        const isClosing = wasActive && !isActive && isTransitioning;
+        
+        // Calculate width based on position and state
+        const closedWidth = tabWidth;
+        
+        // Handle different types of tabWidth for expansion calculation
+        let availableExpandedWidth: string;
+        if (typeof tabWidth === 'string') {
+          // If tabWidth is a string (calc), calculate expansion while preserving all tabs
+          // We need to ensure all tabs remain visible, so subtract space for all tabs except the expanded one
+          availableExpandedWidth = `calc(${fullContainerWidth} - (${tabWidth} * ${items.length - 1}))`;
+        } else {
+          // If tabWidth is a number, calculate as before
+          const totalTabsWidth = items.length * tabWidth;
+          availableExpandedWidth = `calc(${fullContainerWidth} - ${totalTabsWidth - tabWidth}px)`;
+        }
+        
+        const expandedTotalWidth = isActive ? availableExpandedWidth : closedWidth;
         
         // Determine text color based on background
-        const isLightBackground = item.color === '#ffffff' || item.color === '#FFFFFF';
-        const textColor = isLightBackground ? 'text-black' : 'text-white';
-        const verticalTextColor = isLightBackground ? 'text-black' : 'text-white';
+        const getTextColor = (bgColor: string | undefined) => {
+          const color = bgColor?.toLowerCase();
+          if (color === '#f9f7f2') {
+            return '#232323';
+          } else if (color === '#dc5a50') {
+            return '#F9F7F2';
+          } else if (color === '#232323') {
+            return '#F9F7F2';
+          } else {
+            // Default logic for other colors
+            return color === '#ffffff' ? '#000000' : '#ffffff';
+          }
+        };
+        
+        const textColor = getTextColor(item.color);
+        const verticalTextColor = textColor;
         
         return (
           <motion.div
             key={item.id}
             className="relative cursor-pointer flex-shrink-0"
+            style={{
+              overflow: 'hidden' // Ensure content doesn't overflow
+            }}
             animate={{
-              width: isActive ? expandedWidth : tabWidth
+              width: expandedTotalWidth,
+              zIndex: isActive ? 50 : 10
             }}
             transition={{
               duration: 0.6,
@@ -70,25 +110,30 @@ export default function HorizontalAccordion({
           >
             {/* Background Color */}
             <div 
-              className="absolute inset-0"
+              className="absolute inset-0 overflow-visible"
               style={{
                 backgroundColor: item.color || '#1a1a1a',
-                filter: isActive ? 'brightness(1)' : 'brightness(0.8)'
+                filter: isActive ? 'brightness(1)' : 'brightness(0.8)',
+                zIndex: isActive ? 50 : 10
               }}
             />
             
-            {/* Tab Title (Vertical) */}
+            {/* Tab Title (Vertical) - Always positioned at the right edge of this tab */}
             <motion.div
-              className="absolute left-0 top-0 h-full flex items-center justify-center z-10"
-              style={{ width: tabWidth }}
+              className="absolute top-0 h-full flex items-center justify-center z-20"
+              style={{ 
+                width: typeof tabWidth === 'string' ? tabWidth : `${tabWidth}px`,
+                right: 0 // Always anchor to the right of this tab
+              }}
               animate={{
                 opacity: isActive ? 0 : 1
               }}
               transition={{ duration: 0.3, delay: isActive ? 0 : 0.3 }}
             >
               <div 
-                className={`${verticalTextColor} font-semibold text-lg tracking-wider`}
+                className="font-semibold text-lg tracking-wider"
                 style={{
+                  color: verticalTextColor,
                   writingMode: 'vertical-rl',
                   textOrientation: 'mixed',
                   transform: 'rotate(180deg)'
@@ -100,52 +145,52 @@ export default function HorizontalAccordion({
 
             {/* Expanded Content */}
             <AnimatePresence mode="wait">
-              {(isActive || isClosing) && (
+              {isActive && (
                 <motion.div
-                  className={`absolute inset-0 flex flex-col justify-center p-8 ${textColor}`}
+                  className="absolute top-0 left-0 flex flex-col justify-center p-8 z-30"
                   style={{ 
-                    overflow: 'hidden',
-                    width: isClosing ? '100%' : expandedWidth,
-                    right: isClosing ? 0 : 'auto',
-                    left: isClosing ? 'auto' : 0
+                    color: textColor,
+                    height: '100%',
                   }}
-                  initial={{ opacity: 0, x: 30 }}
+                  initial={{ opacity: 0, width: 0 }}
                   animate={{ 
-                    opacity: isActive ? 1 : 0, 
-                    x: isActive ? 0 : (isClosing ? -50 : 30),
-                    scale: isActive ? 1 : 0.95
+                    opacity: 1,
+                    width: `calc(${availableExpandedWidth} - ${typeof tabWidth === 'string' ? tabWidth : `${tabWidth}px`})`,
                   }}
-                  exit={{ opacity: 0, scale: 0.9 }}
+                  exit={{ opacity: 0, width: 0 }}
                   transition={{ 
-                    duration: isActive ? 0.5 : 0.3,
-                    delay: isActive ? 0.35 : 0,
-                    ease: "easeOut"
+                    duration: 0.6,
+                    ease: [0.25, 0.1, 0.25, 1]
                   }}
                 >
                   {/* Content wrapper */}
-                  <div className="relative w-full h-full flex flex-col justify-center">
+                  <div className="relative w-full h-full flex flex-col justify-center overflow-hidden">
                     <motion.h2 
-                      className={`text-3xl font-bold mb-4 ${textColor}`}
-                      style={{ minHeight: '2.5rem' }}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -10 }}
+                      className="text-3xl font-bold mb-4"
+                      style={{ 
+                        minHeight: '2.5rem',
+                        color: textColor
+                      }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
                       transition={{ 
-                        duration: isActive ? 0.4 : 0.2,
-                        delay: isActive ? 0.45 : 0,
-                        ease: "easeOut"
+                        duration: 0.4,
+                        delay: 0.3,
+                        ease: [0.25, 0.1, 0.25, 1]
                       }}
                     >
                       {item.title}
                     </motion.h2>
                     
                     <motion.div
-                      className={`text-lg leading-relaxed ${textColor}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -10 }}
+                      className="text-lg leading-relaxed"
+                      style={{ color: textColor }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
                       transition={{ 
-                        duration: isActive ? 0.4 : 0.2,
-                        delay: isActive ? 0.55 : 0,
-                        ease: "easeOut"
+                        duration: 0.4,
+                        delay: 0.4,
+                        ease: [0.25, 0.1, 0.25, 1]
                       }}
                     >
                       {item.content}

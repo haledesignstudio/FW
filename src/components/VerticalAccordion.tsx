@@ -53,26 +53,27 @@ export default function VerticalAccordion({
       {items.map((item, index) => {
         const isActive = activeIndices.includes(index);
         
-        // Assign text colors based on the design image
-        let textColor, horizontalTextColor;
-        
-        if (item.id === 'benchmark') {
-          // Dark background - white text
-          textColor = '#F9F7F2';
-          horizontalTextColor = '#F9F7F2';
-        } else if (item.id === 'process') {
-          // Red background - white text  
-          textColor = '#F9F7F2';
-          horizontalTextColor = '#F9F7F2';
-        } else if (item.id === 'case-studies') {
-          // Light beige background - black text
-          textColor = 'text-black';
-          horizontalTextColor = 'text-black';
-        } else {
-          // Fallback
-          textColor = 'text-white';
-          horizontalTextColor = 'text-white';
-        }
+        // Determine text color based on background color
+        const getTextColor = (bgColor: string | undefined) => {
+          const color = bgColor?.toLowerCase();
+          if (color === '#f9f7f2') {
+            return '#232323';
+          } else if (color === '#dc5a50') {
+            return '#F9F7F2';
+          } else if (color === '#232323') {
+            return '#F9F7F2';
+          } else if (color === '#ffffff') {
+            return '#000000';
+          } else if (color === '#000000') {
+            return '#FFFFFF';
+          } else {
+            // Default logic for other colors
+            return color === '#ffffff' ? '#000000' : '#ffffff';
+          }
+        };
+
+        const textColor = getTextColor(item.color);
+        const horizontalTextColor = textColor;
         
         // Calculate individual tab heights and overlaps based on design requirements
         let individualTabHeight;
@@ -127,10 +128,11 @@ export default function VerticalAccordion({
               }}
             >
               <div 
-                className={`${horizontalTextColor} font-bold text-[8vw] tracking-wider`}
+                className="font-bold text-[8vw] tracking-wider"
                 style={{ 
                   fontFamily: 'DT-H1, sans-serif',
-                  lineHeight: item.id === 'benchmark' ? '1.2' : '1'
+                  lineHeight: item.id === 'benchmark' ? '1.2' : '1',
+                  color: horizontalTextColor
                 }}
               >
                 {item.title}
@@ -153,7 +155,7 @@ export default function VerticalAccordion({
                   className={`text-[2vw] leading-relaxed`}
                   style={{ 
                     marginTop: '2vh',
-                    color: typeof textColor === 'string' && textColor.startsWith('#') ? textColor : '#000000'
+                    color: textColor
                   }}
                 >
                   {item.content}

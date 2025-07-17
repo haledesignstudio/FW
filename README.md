@@ -299,7 +299,7 @@ Whenever a query or schema is added/changed. Run these commands
 ---
 
 ##  Deployment
-Since the project is linked to **GitHub + Vercel**, any **push to GitHub** will auto-deploy.
+Since the project is linked to **GitHub + Netlify**, any **push to GitHub** will auto-deploy.
 
 ### Steps:
 1. **Push changes** to GitHub:
