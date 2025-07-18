@@ -71,7 +71,8 @@ const getGridClasses = (item: GridItem) => {
   return baseClasses.join(' ');
 };
 
-export default async function CaseStudyPage({ params }: { params: { slug: string } }) {
+export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+  const awaitedParams = await params;
   const data = await client.fetch(
     groq`*[_type == "caseStudy" && slug.current == $slug][0]{
       title,
@@ -85,7 +86,7 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
       transformation,
       conclusion
     }`,
-    { slug: params.slug }
+    { slug: awaitedParams.slug }
   );
 
   if (!data) return <div className="text-red-500">Case study not found.</div>;
