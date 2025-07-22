@@ -3,28 +3,30 @@
 import React, { useState } from 'react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import { PortableText, PortableTextComponents } from '@portabletext/react';
+import { PortableTextBlock } from 'sanity';
 
 // Type definitions for the terms & conditions data
 interface TermsSection {
   sectionTitle: string
-  content: string
+  content: PortableTextBlock[];
 }
 
 interface TermsData {
   pageHeader: {
-    mainTitle: string
-    introText: string
-    lastUpdated?: string
-  }
-  cookiesSection: TermsSection
-  licenseSection: TermsSection
-  hyperlinksSection: TermsSection
-  iframesSection: TermsSection
-  contentLiabilitySection: TermsSection
-  privacySection: TermsSection
-  reservationOfRightsSection: TermsSection
-  removalOfLinksSection: TermsSection
-  disclaimerSection: TermsSection
+    mainTitle: string;
+    introText: PortableTextBlock[];
+    lastUpdated?: string;
+  };
+  cookiesSection: TermsSection;
+  licenseSection: TermsSection;
+  hyperlinksSection: TermsSection;
+  iframesSection: TermsSection;
+  contentLiabilitySection: TermsSection;
+  privacySection: TermsSection;
+  reservationOfRightsSection: TermsSection;
+  removalOfLinksSection: TermsSection;
+  disclaimerSection: TermsSection;
 }
 
 type GridItem = {
@@ -36,6 +38,24 @@ type GridItem = {
     mobileRowSpan?: number;
     landscapeColSpan?: number;
     landscapeRowSpan?: number;
+};
+
+const portableTextComponents: PortableTextComponents = {
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-6 mb-4 text-base">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal pl-6 mb-4 text-base">{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => <li className="mb-1">{children}</li>,
+    number: ({ children }) => <li className="mb-1">{children}</li>,
+  },
+  block: {
+    normal: ({ children }) => <p className="mb-2 text-base">{children}</p>,
+  },
 };
 
 const getGridClasses = (item: GridItem) => {
@@ -99,15 +119,13 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
   const [selectedCategory, setSelectedCategory] = useState(categories[0].key)
 
   const renderContent = () => {
-    const section = termsData[selectedCategory as keyof TermsData] as TermsSection
-    
-    if (!section || typeof section !== 'object' || !('sectionTitle' in section)) return null
-
+    const section = termsData[selectedCategory as keyof TermsData] as TermsSection;
+    if (!section || typeof section !== 'object' || !('sectionTitle' in section)) return null;
     return (
-      <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
-        {section.content}
-      </p>
-    )
+      <div className="prose max-w-none text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
+        <PortableText value={section.content} components={portableTextComponents} />
+      </div>
+    );
   }
 
   const items: GridItem[] = [
@@ -243,9 +261,9 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
       id: 12,
       content: (
         <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
-          <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh] leading-tight text-gray-700">
-            {termsData.pageHeader.introText}
-          </p>
+          <div className="prose max-w-none text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh] leading-tight text-gray-700">
+            <PortableText value={termsData.pageHeader.introText} components={portableTextComponents} />
+          </div>
         </div>
       ),
       colSpan: 2,

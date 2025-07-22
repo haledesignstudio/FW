@@ -3,25 +3,13 @@
 import React, { useState } from 'react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import { PortableText, PortableTextComponents } from '@portabletext/react';
+import { PortableTextBlock } from 'sanity';
 
 // Type definitions aligned with the actual Sanity query structure
 interface PrivacyPolicySection {
   sectionTitle: string;
-  content?: string;
-  interpretationContent?: string;
-  definitionsContent?: string;
-}
-
-interface CollectingAndUsingDataSection {
-  sectionTitle: string;
-  typesOfDataContent?: string;
-  personalDataContent?: string;
-  usageDataContent?: string;
-  useOfDataContent?: string;
-  retentionContent?: string;
-  transferContent?: string;
-  disclosureContent?: string;
-  securityContent?: string;
+  content: PortableTextBlock[];
 }
 
 interface PrivacyPolicyData {
@@ -31,7 +19,7 @@ interface PrivacyPolicyData {
     effectiveDate?: string;
   };
   interpretationAndDefinitionsSection: PrivacyPolicySection;
-  collectingAndUsingDataSection: CollectingAndUsingDataSection;
+  collectingAndUsingDataSection: PrivacyPolicySection;
   childrensPrivacySection: PrivacyPolicySection;
   linksToOtherWebsitesSection: PrivacyPolicySection;
   changesToPolicySection: PrivacyPolicySection;
@@ -47,6 +35,24 @@ type GridItem = {
     mobileRowSpan?: number;
     landscapeColSpan?: number;
     landscapeRowSpan?: number;
+};
+
+const portableTextComponents: PortableTextComponents = {
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-6 mb-4 text-base">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal pl-6 mb-4 text-base">{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => <li className="mb-1">{children}</li>,
+    number: ({ children }) => <li className="mb-1">{children}</li>,
+  },
+  block: {
+    normal: ({ children }) => <p className="mb-2 text-base">{children}</p>,
+  },
 };
 
 const getGridClasses = (item: GridItem) => {
@@ -120,136 +126,12 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
   const [selectedCategory, setSelectedCategory] = useState(categories[0].key)
 
   const renderContent = () => {
-    if (selectedCategory === 'interpretationAndDefinitionsSection') {
-      const section = privacyData.interpretationAndDefinitionsSection;
-      return (
-        <>
-          <div className="mb-[4vh]">
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[3vh] font-bold mb-[2vh]">Interpretation</h3>
-            <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
-              {section.interpretationContent}
-            </p>
-          </div>
-          <div>
-            <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[3vh] font-bold mb-[2vh]">Definitions</h3>
-            <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
-              {section.definitionsContent}
-            </p>
-          </div>
-        </>
-      )
-    }
-
-    if (selectedCategory === 'collectingAndUsingDataSection') {
-      const section = privacyData.collectingAndUsingDataSection;
-      return (
-        <div className="space-y-[3vh]">
-          {/* Types of Data Collected */}
-          {section.typesOfDataContent && (
-            <div>
-              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-                Types of Data Collected
-              </h3>
-              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                {section.typesOfDataContent}
-              </p>
-            </div>
-          )}
-
-          {/* Personal Data */}
-          {section.personalDataContent && (
-            <div>
-              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-                Personal Data
-              </h3>
-              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                {section.personalDataContent}
-              </p>
-            </div>
-          )}
-
-          {/* Usage Data */}
-          {section.usageDataContent && (
-            <div>
-              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-                Usage Data
-              </h3>
-              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                {section.usageDataContent}
-              </p>
-            </div>
-          )}
-
-          {/* Use of Personal Data */}
-          {section.useOfDataContent && (
-            <div>
-              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-                Use of Personal Data
-              </h3>
-              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                {section.useOfDataContent}
-              </p>
-            </div>
-          )}
-
-          {/* Retention of Personal Data */}
-          {section.retentionContent && (
-            <div>
-              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-                Retention of Personal Data
-              </h3>
-              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                {section.retentionContent}
-              </p>
-            </div>
-          )}
-
-          {/* Transfer of Personal Data */}
-          {section.transferContent && (
-            <div>
-              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-                Transfer of Personal Data
-              </h3>
-              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                {section.transferContent}
-              </p>
-            </div>
-          )}
-
-          {/* Disclosure of Personal Data */}
-          {section.disclosureContent && (
-            <div>
-              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-                Disclosure of Personal Data
-              </h3>
-              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                {section.disclosureContent}
-              </p>
-            </div>
-          )}
-
-          {/* Security of Personal Data */}
-          {section.securityContent && (
-            <div>
-              <h3 className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold mb-[2vh]">
-                Security of Personal Data
-              </h3>
-              <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight">
-                {section.securityContent}
-              </p>
-            </div>
-          )}
-        </div>
-      )
-    }
-
-    // For other sections, render simple content
     const section = privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection;
     return (
-      <p className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
-        {section.content}
-      </p>
-    )
+      <div className="prose max-w-none text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
+        <PortableText value={section.content} components={portableTextComponents}/>
+      </div>
+    );
   }
 
   const items: GridItem[] = [

@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Header from '@/components/header';
+import { HighlightText } from '@/components/HighlightText';
+import MainTitleAnimation from '@/components/MainTitleAnimation';
 import Footer from '@/components/footer';
 import HorizontalAccordion, { AccordionItem } from '@/components/HorizontalAccordion';
 
@@ -81,9 +83,7 @@ export default function WhatWeDo({ data }: WhatWeDoProps) {
         {
             id: 1,
             content: (
-                <p className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[12vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight">
-                    {data.heading}
-                </p>
+                <MainTitleAnimation text={data.heading} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[10vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight" />
             ),
             colSpan: 2,
             rowSpan: 1,
@@ -105,7 +105,7 @@ export default function WhatWeDo({ data }: WhatWeDoProps) {
         {
             id: 3,
             content: <p className="whitespace-pre-line text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight">
-                {data.mainline}
+                <HighlightText text={data.mainline} />
             </p>,
             colSpan: 3,
             rowSpan: 2,

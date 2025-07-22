@@ -16,6 +16,16 @@ type ContactPageContent = {
   pageHeader: {
     mainTitle: string;
   };
+  contactFormSubheading?: string;
+  contactFormIntro?: string;
+  contactForm?: {
+    namePlaceholder?: string;
+    emailPlaceholder?: string;
+    phonePlaceholder?: string;
+    companyPlaceholder?: string;
+    positionPlaceholder?: string;
+    messagePlaceholder?: string;
+  };
   officesSubheading?: string;
   officesAroundTheWorld: Array<{
     name: string;
@@ -35,147 +45,112 @@ type ContactPageContent = {
     text: string;
     link: string;
   };
+  mainImage?: {
+    asset: {
+      _ref: string;
+      _type: string;
+    };
+    alt?: string;
+  };
 };
 
 export default function Contact({ data }: { data: ContactPageContent }) {
-  const [hoveredImageIndex, setHoveredImageIndex] = useState<number | null>(null);
+  // Form state
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    position: '',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState<'idle'|'sending'|'sent'|'error'>('idle');
+
+  // Handlers
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      if (res.ok) {
+        setFormStatus('sent');
+        setForm({ name: '', email: '', phone: '', company: '', position: '', message: '' });
+      } else {
+        setFormStatus('error');
+      }
+    } catch {
+      setFormStatus('error');
+    }
+  };
 
   return (
     <>
       <Header />
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
-          
-          {/* ROW 1: Header (cols 1-2) + Empty (cols 3-6) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
-            <div className="h-full w-full flex items-start justify-start">
-              <div className="w-full max-w-full">
-                <MainTitleAnimation 
-                  text={data.pageHeader.mainTitle}
-                  typeSpeed={60}
-                  delay={500}
-                  className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
-                />
-              </div>
+        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+          {/* ROW 2: Main Title (col-span-3) + Subheading (col-span-3) */}
+          <div className="col-span-3 row-span-1 flex items-start bg-[#F9F7F2]">
+            <MainTitleAnimation 
+              text={data.pageHeader.mainTitle}
+              typeSpeed={60}
+              delay={500}
+              className="text-[4vh] font-bold leading-tight"
+            />
+          </div>
+          <div className="col-span-3 row-span-1 flex items-start bg-[#F9F7F2]">
+            <h2 className="text-[2.5vh] font-bold">{data.contactFormSubheading || 'Get in Touch'}</h2>
+          </div>
+          {/* ROWS 3-5: Image (col-span-6) */}
+          <div className="col-span-6 row-span-3 bg-[#F9F7F2] flex items-center justify-center">
+            {data.mainImage?.asset ? (
+              <img
+                src={urlFor(data.mainImage).url()}
+                alt={data.mainImage?.alt || 'Contact'}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img src="/placeholder-image.png" alt="Contact" className="w-full h-full object-cover" />
+            )}
+          </div>
+          {/* ROW 6: Text (col-span-2) */}
+          <div className="col-span-2 row-span-1 bg-[#F9F7F2] flex items-end justify-start">
+            <p className="text-[1.2vh] text-gray-700">{data.contactFormIntro || "We’d love to connect. We just need to know:"}</p>
+          </div>
+          {/* ROWS 7-8: Contact Form (col-span-1-5) + Submit Button (col-6) */}
+          <form className="col-span-5 row-span-2 bg-[#F9F7F2] flex flex-col justify-center p-6" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <input name="name" value={form.name} onChange={handleChange} placeholder={data.contactForm?.namePlaceholder || "Name and Surname"} className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2" required />
+              <input name="email" value={form.email} onChange={handleChange} placeholder={data.contactForm?.emailPlaceholder || "Email"} type="email" className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2" required />
+              <input name="phone" value={form.phone} onChange={handleChange} placeholder={data.contactForm?.phonePlaceholder || "Phone Number"} className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2" />
+              <input name="company" value={form.company} onChange={handleChange} placeholder={data.contactForm?.companyPlaceholder || "Company"} className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2" />
+              <input name="position" value={form.position} onChange={handleChange} placeholder={data.contactForm?.positionPlaceholder || "Position"} className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2" />
             </div>
-          </div>
-
-          {/* ROW 1: Empty (cols 3-6) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
-            <div></div>
-          </div>
-
-
-          {/* ROW 2: Images and expansion logic */}
-          {[0, 1, 2].map((i) => {
-            const isHovered = hoveredImageIndex === i;
-            // Image expands to cols i+1 and i+2 when hovered
-            const gridCol = isHovered ? `${i + 1} / span 2` : `${i + 1} / span 1`;
-            return (
-              <React.Fragment key={`row2-img-${i}`}>
-                <div
-                  className={`bg-[#F9F7F2] flex flex-col row-span-1 border border-gray-300 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-1`}
-                  style={{ gridColumn: gridCol }}
-                >
-                  <div
-                    className="h-full w-full relative cursor-pointer"
-                    onMouseEnter={() => setHoveredImageIndex(i)}
-                    onMouseLeave={() => setHoveredImageIndex(null)}
-                  >
-                    <img
-                      src={data.officesAroundTheWorld[i]?.image ? urlFor(data.officesAroundTheWorld[i].image.asset).url() : '/placeholder-image.png'}
-                      alt={data.officesAroundTheWorld[i]?.image?.alt || data.officesAroundTheWorld[i]?.name}
-                      className={`w-full h-full object-cover transition-transform duration-300 ${isHovered ? 'scale-105' : 'scale-100'}`}
-                    />
-                  </div>
-                </div>
-                {/* Info cell for top row images, appears at col i+2 when hovered */}
-                {isHovered && (
-                  <div
-                    className="bg-[#F9F7F2] h-full flex flex-col items-center justify-center p-4 border border-gray-300"
-                    style={{ gridRow: 2, gridColumn: i + 2 }}
-                  >
-                    <h3 className="text-[2vh] font-semibold mb-2 text-center text-black">
-                      {data.officesAroundTheWorld[i]?.name}
-                    </h3>
-                    <a
-                      href={`mailto:${data.officesAroundTheWorld[i]?.email}`}
-                      className="text-[1.5vh] underline hover:no-underline text-center text-black"
-                    >
-                      {data.officesAroundTheWorld[i]?.email}
-                    </a>
-                  </div>
-                )}
-              </React.Fragment>
-            );
-          })}
-          {/* Extra empty column for spacing between images and subheading (remains for layout, but info cell overlays here) */}
-          <div className="bg-[#F9F7F2] row-span-1 border border-gray-300" style={{ gridColumn: 4 }}></div>
-
-          {/* ROW 2: Offices Subheading (cols 5-6) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
-            <div className="h-full w-full flex items-center justify-start">
-              <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold">
-                {data.officesSubheading || "Our Offices"}
-              </h2>
-            </div>
-          </div>
-
-
-          {/* ROW 3: Images and expansion logic */}
-          {[3, 4, 5].map((i) => {
-            const isHovered = hoveredImageIndex === i;
-            // Image expands to cols i-2 and i-1 when hovered
-            const gridCol = isHovered ? `${i - 2} / span 2` : `${i - 2} / span 1`;
-            return (
-              <React.Fragment key={`row3-img-${i}`}>
-                <div
-                  className={`bg-[#F9F7F2] flex flex-col row-span-1 border border-gray-300 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-1`}
-                  style={{ gridColumn: gridCol }}
-                >
-                  <div
-                    className="h-full w-full relative cursor-pointer"
-                    onMouseEnter={() => setHoveredImageIndex(i)}
-                    onMouseLeave={() => setHoveredImageIndex(null)}
-                  >
-                    <img
-                      src={data.officesAroundTheWorld[i]?.image ? urlFor(data.officesAroundTheWorld[i].image.asset).url() : '/placeholder-image.png'}
-                      alt={data.officesAroundTheWorld[i]?.image?.alt || data.officesAroundTheWorld[i]?.name}
-                      className={`w-full h-full object-cover transition-transform duration-300 ${isHovered ? 'scale-105' : 'scale-100'}`}
-                    />
-                  </div>
-                </div>
-                {/* Info cell for bottom row images, appears at col i-1 in row 1 when hovered */}
-                {isHovered && (
-                  <div
-                    className="bg-[#F9F7F2] h-full flex flex-col items-center justify-center p-4 border border-gray-300"
-                    style={{ gridRow: 1, gridColumn: i - 1 }}
-                  >
-                    <h3 className="text-[2vh] font-semibold mb-2 text-center text-black">
-                      {data.officesAroundTheWorld[i]?.name}
-                    </h3>
-                    <a
-                      href={`mailto:${data.officesAroundTheWorld[i]?.email}`}
-                      className="text-[1.5vh] underline hover:no-underline text-center text-black"
-                    >
-                      {data.officesAroundTheWorld[i]?.email}
-                    </a>
-                  </div>
-                )}
-              </React.Fragment>
-            );
-          })}
-          {/* Extra empty column for spacing between images and subheading */}
-          <div className="bg-[#F9F7F2] row-span-1 border border-gray-300" style={{ gridColumn: 4 }}></div>
-
-          {/* ROW 4: Blank */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
-            <div></div>
+            <textarea name="message" value={form.message} onChange={handleChange} placeholder={data.contactForm?.messagePlaceholder || "Message"} className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 mb-4 col-span-2" rows={4} required />
+            {formStatus === 'sent' && <p className="text-green-600">Message sent!</p>}
+            {formStatus === 'error' && <p className="text-red-600">Error sending message. Please try again.</p>}
+          </form>
+          <div className="col-span-1 row-span-2 bg-[#F9F7F2] flex items-start justify-end">
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={() => document.querySelector('form')?.requestSubmit()}
+              onKeyPress={e => { if (e.key === 'Enter' || e.key === ' ') document.querySelector('form')?.requestSubmit(); }}
+              className="cursor-pointer text-[1.5vh] text-black font-semibold mt-4 mr-4 select-none underline"
+            >
+              Send
+            </span>
           </div>
 
           {/* ROW 5: Keynote Title (cols 1-3) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
-            <div className="h-full w-full flex items-center justify-start">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
+            <div className="h-full w-full flex items-start justify-start">
               <div className="w-full max-w-full">
                 <MainTitleAnimation 
                   text={data.bookingKeynote?.title || "Book a Keynote"}
@@ -188,13 +163,13 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           </div>
 
           {/* ROW 5: Empty (col 4) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div></div>
           </div>
 
           {/* ROW 5: Text + Link (cols 5-6) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
-            <div className="h-full w-full flex flex-col items-start justify-center">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
+            <div className="h-full w-full flex flex-col items-start justify-start">
               <p className="text-[1.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh] mb-4">
                 {data.bookingKeynote?.text || "Contact us to book a keynote speaker for your event."}
               </p>
@@ -208,8 +183,8 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           </div>
 
           {/* ROW 6: Keynote Subheading (cols 1-3) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
-            <div className="h-full w-full flex items-center justify-start">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
+            <div className="h-full w-full flex items-start justify-start">
               <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold">
                 {data.keynoteSubheading || "Keynote Speakers"}
               </h2>
@@ -217,7 +192,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           </div>
 
           {/* ROW 6: Empty (cols 4-6) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1 border border-gray-300">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div></div>
           </div>
 

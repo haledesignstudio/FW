@@ -140,29 +140,19 @@ export default function Home() {
         id: 1,
         content: (
             <>
+                <p className="text-[12vh] font-bold leading-tight text-black">We partner with large
+                    organisations to build new, future relevant businesses,
+                    and co-invest in these ventures</p>
             </>
         ),
-        colSpan: 6,
-        rowSpan: 1,
+        colSpan: 5,
+        rowSpan: 2,
         bgColor: '#F9F7F2'
     },
     {
         id: 2,
         content: (
             <>
-                <p className="text-[12vh] font-bold leading-tight text-black">We partner with large
-                    organisations to build new, future-relevant businesses,
-                    and co-invest in these ventures</p>
-            </>
-        ),
-        colSpan: 6,
-        rowSpan: 2,
-        bgColor: '#F9F7F2'
-    },
-    {
-        id: 3,
-        content: (
-            <>
             </>
         ),
         colSpan: 6,
@@ -170,7 +160,7 @@ export default function Home() {
         bgColor: '#F9F7F2'
     },
     {
-        id: 4,
+        id: 3,
         content: (
             <>
                 <h2 className="text-[5vh] font-bold leading-tight text-black">Growth isn&apos;t optional.</h2>
@@ -182,7 +172,7 @@ export default function Home() {
         bgColor: '#F9F7F2'
     },
     {
-        id: 5,
+        id: 4,
         content: (
             <>
                 <p className="text-[2vh] leading-tight text-black">It drives 71% of total shareholder returns and is the key to long-term relevance. We help you unlock this growth by creating business models that transcend traditional boundaries.</p>
@@ -193,7 +183,7 @@ export default function Home() {
         bgColor: '#F9F7F2'
     },
     {
-        id: 6,
+        id: 5,
         content: (
             <>
             </>
@@ -203,7 +193,7 @@ export default function Home() {
         bgColor: '#F9F7F2'
     },
     {
-        id: 7,
+        id: 6,
         content: (
             <>
                 <p className="text-[2vh] leading-tight font-bold underline text-black">Explore what this means for your business.</p>
@@ -214,7 +204,7 @@ export default function Home() {
         bgColor: '#F9F7F2'
     },
     {
-        id: 8,
+        id: 7,
         content: (
             <>
             </>
@@ -224,7 +214,7 @@ export default function Home() {
         bgColor: '#F9F7F2'
     },
     {
-        id: 9,
+        id: 8,
         content: (
             <div className="relative w-full h-full">
                 <img 
@@ -243,7 +233,7 @@ export default function Home() {
         bgColor: '#000000'
     },
     {
-        id: 10,
+        id: 9,
         content: (
             <VerticalAccordion 
                 items={accordionItems}
@@ -257,7 +247,7 @@ export default function Home() {
         bgColor: 'transparent'
     },
     {
-        id: 11,
+        id: 10,
         content: (
             <>
             </>

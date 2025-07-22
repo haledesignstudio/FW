@@ -158,19 +158,11 @@ export const privacyPolicyQuery = defineQuery(`
     },
     interpretationAndDefinitionsSection {
       sectionTitle,
-      interpretationContent,
-      definitionsContent
+      content
     },
     collectingAndUsingDataSection {
       sectionTitle,
-      typesOfDataContent,
-      personalDataContent,
-      usageDataContent,
-      useOfDataContent,
-      retentionContent,
-      transferContent,
-      disclosureContent,
-      securityContent
+      content
     },
     childrensPrivacySection {
       sectionTitle,
@@ -186,13 +178,7 @@ export const privacyPolicyQuery = defineQuery(`
     },
     contactUsSection {
       sectionTitle,
-      content,
-      contactDetails {
-        email,
-        phone,
-        address,
-        website
-      }
+      content
     }
   }
 `);
@@ -470,7 +456,20 @@ export const CONTACT_PAGE_QUERY = defineQuery(`
     pageHeader {
       mainTitle
     },
-    officesSubheading,
+    contactFormSubheading,
+    contactForm {
+      namePlaceholder,
+      emailPlaceholder,
+      phonePlaceholder,
+      companyPlaceholder,
+      positionPlaceholder,
+      messagePlaceholder
+    },
+    mainImage {
+      asset,
+      alt
+    },
+    contactFormIntro,
     officesAroundTheWorld[] {
       name,
       email,

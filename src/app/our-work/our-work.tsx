@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Header from '@/components/header';
+import { HighlightText } from '@/components/HighlightText';
 import Footer from '@/components/footer';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import CountingAnimation from '@/components/countingAnimation';
@@ -233,7 +234,7 @@ export default function OurWork({ data }: OurWorkProps) {
             content: (
                 <div className="flex items-center justify-start h-full">
                     <p className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[6vh] leading-tight">
-                        {data.subtitle}
+                        <HighlightText text={data.subtitle} />
                     </p>
                 </div>
             ),

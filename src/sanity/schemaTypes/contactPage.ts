@@ -45,43 +45,35 @@ const contactPage = defineType({
       ]
     }),
     defineField({
-      name: 'officesSubheading',
-      title: 'Offices Subheading',
+      name: 'contactFormSubheading',
+      title: 'Contact Form Subheading',
       type: 'string',
-      description: 'Subheading for the offices section (row 3, columns 5-6)'
+      description: 'Subheading for the contact form (row 2, columns 4-6)'
     }),
     defineField({
-      name: 'officesAroundTheWorld',
-      title: 'Offices Around The World',
-      type: 'array',
-      validation: (Rule) => Rule.max(6),
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'name',
-              title: 'Office Name',
-              type: 'string',
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'email',
-              title: 'Office Email',
-              type: 'email',
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'image',
-              title: 'Office Image',
-              type: 'image',
-              options: {
-                hotspot: true
-              },
-              validation: (Rule) => Rule.required()
-            }
-          ]
-        }
+      name: 'mainImage',
+      title: 'Main Image (Row 3)',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Image displayed in the third row of the contact page grid.'
+    }),
+    {
+      name: 'contactFormIntro',
+      type: 'string',
+      title: 'Contact Form Intro',
+      description: 'Introductory text above the contact form (e.g. "We’d love to connect. We just need to know:")',
+    },
+    defineField({
+      name: 'contactForm',
+      title: 'Contact Form Placeholders',
+      type: 'object',
+      fields: [
+        { name: 'namePlaceholder', title: 'Name and Surname Placeholder', type: 'string' },
+        { name: 'emailPlaceholder', title: 'Email Placeholder', type: 'string' },
+        { name: 'phonePlaceholder', title: 'Phone Number Placeholder', type: 'string' },
+        { name: 'companyPlaceholder', title: 'Company Placeholder', type: 'string' },
+        { name: 'positionPlaceholder', title: 'Position Placeholder', type: 'string' },
+        { name: 'messagePlaceholder', title: 'Message Placeholder', type: 'string' }
       ]
     }),
     defineField({
