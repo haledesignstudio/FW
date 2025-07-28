@@ -9,14 +9,11 @@ export function HighlightText({ text }: { text: string }) {
   const tomorrowRegex = /\bTomorrow\b/i;
 
   let match = text.match(futureRegex);
-  let regex = futureRegex;
   if (!match) {
     match = text.match(growthRegex);
-    regex = growthRegex;
   }
   if (!match) {
     match = text.match(tomorrowRegex);
-    regex = tomorrowRegex;
   }
   if (!match) return <>{text}</>;
 

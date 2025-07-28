@@ -488,3 +488,42 @@ export const CONTACT_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const provocativeScenariosQuery = defineQuery(`
+  *[_type == "provocativeScenario"] | order(_createdAt desc) {
+    _id,
+    title,
+    subtitle,
+    mainText,
+    boldText,
+    carouselItems[]-> {
+      _id,
+      title,
+      image {
+        asset,
+        alt
+      },
+      description
+    },
+    podcast {
+      info,
+      audio {
+        asset -> {
+          url,
+          originalFilename
+        }
+      },
+      link
+    },
+    mindbullets[]-> {
+      _id,
+      title,
+      image {
+        asset,
+        alt
+      },
+      description
+    },
+    subheading,
+    slug
+  }
+`);

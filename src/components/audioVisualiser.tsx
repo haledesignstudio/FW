@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 interface AudioVisualiserProps {
   audioElement?: HTMLAudioElement | null;
+  audioSrc?: string;
   size?: number;
   color?: string;
   backgroundColor?: string;
@@ -12,7 +13,8 @@ interface AudioVisualiserProps {
 }
 
 export default function AudioVisualiser({
-  audioElement,
+  audioElement: externalAudioElement,
+  audioSrc,
   size = 300,
   color = '#FFFFFF',
   backgroundColor = '#000000',
@@ -24,8 +26,10 @@ export default function AudioVisualiser({
   const audioContextRef = useRef<AudioContext | null>(null);
   const animationRef = useRef<number | null>(null);
   const [isSetup, setIsSetup] = useState(false);
+  const [internalAudioElement, setInternalAudioElement] = useState<HTMLAudioElement | null>(null);
 
   const setupAudio = useCallback(async () => {
+    const audioElement = externalAudioElement || internalAudioElement;
     if (!audioElement || isSetup) return;
 
     try {
@@ -52,7 +56,7 @@ export default function AudioVisualiser({
     } catch (error) {
       console.error('Audio setup failed:', error);
     }
-  }, [audioElement, isSetup]);
+  }, [externalAudioElement, internalAudioElement, isSetup]);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -172,10 +176,25 @@ export default function AudioVisualiser({
   }, [isPlaying, size, color]);
 
   useEffect(() => {
+    const audioElement = externalAudioElement || internalAudioElement;
     if (audioElement && !isSetup) {
       setupAudio();
     }
-  }, [audioElement, setupAudio, isSetup]);
+  }, [externalAudioElement, internalAudioElement, setupAudio, isSetup]);
+
+  // If audioSrc is provided, create and manage an internal audio element
+  useEffect(() => {
+    if (audioSrc) {
+      const audio = new window.Audio(audioSrc);
+      setInternalAudioElement(audio);
+      return () => {
+        audio.pause();
+        setInternalAudioElement(null);
+      };
+    } else {
+      setInternalAudioElement(null);
+    }
+  }, [audioSrc]);
 
   useEffect(() => {
     if (isSetup && isPlaying) {
@@ -207,7 +226,12 @@ export default function AudioVisualiser({
         height={size}
         className="absolute inset-0"
       />
-      
+      {/* If using internal audio, render controls for play/pause */}
+      {audioSrc && internalAudioElement && (
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10">
+          <audio controls src={audioSrc} style={{ width: size - 40 }} />
+        </div>
+      )}
       {/* Play/Pause indicator in center */}
       <div 
         className="absolute inset-0 flex items-center justify-center"

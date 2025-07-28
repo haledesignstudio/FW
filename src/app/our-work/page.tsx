@@ -5,7 +5,11 @@ import OurWork from './our-work';
 
 export default async function OurWorkPage() {
   const data = await client.fetch(ourWorkQuery);
-  
+
+  if (!data) {
+    return <div>No data found.</div>;
+  }
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <OurWork data={data} />
