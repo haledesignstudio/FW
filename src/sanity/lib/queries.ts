@@ -33,53 +33,6 @@ export const whatWeDoQuery = defineQuery(`
   }
 `);
 
-export const shareholderValueAnalyticsQuery = defineQuery(`
-  *[_type == "shareholderValueAnalytics"][0] {
-    _id,
-    headline,
-    question,
-    mainline,
-    statement1,
-    statement2,
-    cta1,
-    mail1,
-    cta2,
-    mail2,
-    embedLink
-  }
-`);
-
-export const keynoteQuery = defineQuery(`
-  *[_type == "keynote"][0] {
-    _id,
-    topicHeadline,
-    topicMainline,
-    topicStatement,
-    topicCTA1,
-    topicMail1,
-    topicCTA2,
-    topicCTA3,
-    topicMail3,
-    topicCarousel[] {
-      topicCarouselImage {
-        asset,
-        alt
-      },
-      topicCarouselHeadline,
-      topicCarouselDescription
-    },
-    speakerHeadline,
-    speakerMainline,
-    speakerStatement,
-    speakerCTA1,
-    speakerMail1,
-    speakerCTA2
-  }
-`);
-
-
-
-
 export const homePageQuery = defineQuery(`
   *[_type == "homePage"][0] {
     _id,
@@ -341,14 +294,19 @@ export const podcastQuery = defineQuery(`
   *[_type == "podcast"] | order(_createdAt desc) {
     _id,
     headline,
-    description,
+    description, // this must stay as PortableTextBlock[]
     embedLink,
+    slug,
     headerImage {
-      asset,
+      asset->{
+        url
+      },
       alt
     }
   }
 `);
+
+
 
 export const ourWorkQuery = defineQuery(`
   *[_type == "ourWorkPage"][0] {
