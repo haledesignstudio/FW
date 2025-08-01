@@ -242,10 +242,12 @@ export const insightsPageQuery = defineQuery(`
       title,
       subheading,
       contentText,
-      statement1,
-      statement2,
       CTA1,
       Mail1,
+      iframeSource,
+      IQ_heading,
+      IQ_subheading,
+      IQ_context,
       CTA2,
       Mail2
     },
@@ -290,11 +292,13 @@ export const insightsPageQuery = defineQuery(`
   }
 `);
 
+
 export const podcastQuery = defineQuery(`
   *[_type == "podcast"] | order(_createdAt desc) {
     _id,
     headline,
-    description, // this must stay as PortableTextBlock[]
+    subheading,
+    description,
     embedLink,
     slug,
     headerImage {
@@ -305,6 +309,7 @@ export const podcastQuery = defineQuery(`
     }
   }
 `);
+
 
 
 
@@ -485,3 +490,22 @@ export const provocativeScenariosQuery = defineQuery(`
     slug
   }
 `);
+
+export const topicQuery = defineQuery(`
+  *[_type == "keynoteTopic"] | order(topicTitle asc) {
+    _id,
+    topicTitle,
+    topicHeading,
+    topicImage {
+      asset,
+      alt
+    },
+    topicButtonText,
+    topicMail,
+    contents[] {
+      heading,
+      description
+    }
+  }
+`);
+

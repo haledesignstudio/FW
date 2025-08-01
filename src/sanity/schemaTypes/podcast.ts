@@ -20,18 +20,25 @@ export default defineType({
       validation: (Rule) => Rule.required().max(120),
     }),
     defineField({
+      name: 'subheading',
+      title: 'Subheading',
+      type: 'string',
+      validation: (Rule) => Rule.max(300),
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
-      type: 'array',
-      of: [{ type: 'block' }],
+      type: 'string',
+      validation: (Rule) => Rule.max(1000),
     }),
     defineField({
       name: 'embedLink',
       title: 'Embed Link',
       type: 'url',
-      validation: (Rule) => Rule.uri({
-        scheme: ['http', 'https'],
-      }),
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['http', 'https'],
+        }),
     }),
   ],
 })

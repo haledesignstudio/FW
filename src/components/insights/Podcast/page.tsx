@@ -1,6 +1,5 @@
-import { PortableText } from '@portabletext/react';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
-import type { PortableTextBlock } from '@portabletext/types';
+import { HighlightText } from '@/components/HighlightText';
 
 
 type GridItem = {
@@ -12,11 +11,12 @@ type GridItem = {
 
 type PodcastProps = {
     title: string;
-    subheading?: PortableTextBlock[];
+    subheading: string;
     podcasts: {
         _id: string;
         headline: string;
-        description: PortableTextBlock[]; // ✅ replace any
+        subheading: string;
+        description: string;
         embedLink?: string;
         slug?: { current: string };
         headerImage?: {
@@ -60,7 +60,9 @@ export default function Podcast({ title, subheading, podcasts }: PodcastProps): 
             id: 'podcast-3',
             content: (
                 <div className="text-[5vh] font-graphik leading-[5vh]">
-                    <PortableText value={subheading || []} />
+                    <HighlightText text={subheading} />
+
+
                 </div>
             ),
             colSpan: 3,

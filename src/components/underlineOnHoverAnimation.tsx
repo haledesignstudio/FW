@@ -28,7 +28,7 @@ if (typeof window !== 'undefined' && !document.getElementById('underline-on-hove
       margin: 0;
       display: inline-block;
       position: relative;
-      opacity: 0.75;
+      opacity: 0.5;
       cursor: pointer;
       transition: opacity 200ms;
     }
