@@ -71,37 +71,37 @@ const menuItems = [
             <div className="text-left">
                 <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href="/insights?section=analytics" className="flex gap-[10%] hover:underline">
                             <span>01</span>
                             <span>Shareholder Value Analytics</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href="/insights?section=mindbullets" className="flex gap-[10%] hover:underline">
                             <span className="">02</span>
                             <span>Mindbullets: News From the Future</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href="/insights?section=keynotes" className="flex gap-[10%] hover:underline">
                             <span className="">03</span>
                             <span>Keynotes</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href="/insights?section=podcast" className="flex gap-[10%] hover:underline">
                             <span className="">04</span>
                             <span>Podcasts</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href="/insights?section=corporate" className="flex gap-[10%] hover:underline">
                             <span className="">05</span>
                             <span>Corporate Venturing</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href="/insights?section=edge" className="flex gap-[10%] hover:underline">
                             <span className="">06</span>
                             <span>The Edge: Insights Driven by Disruption</span>
                         </Link>

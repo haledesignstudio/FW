@@ -95,6 +95,9 @@ const items: GridItem[] = [
                     required
                     className="outline-none border-none bg-transparent text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:placeholder:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:placeholder:text-[4vh]"
                 />
+                <h2 className="text-[2vh] mt-[2vh] underline [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] font-bold leading-tight">
+                    Submit
+                </h2>
             </>
         ),
         colSpan: 2,
@@ -107,7 +110,7 @@ const items: GridItem[] = [
 ];
 
 const getGridClasses = (item: GridItem) => {
-    const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col','justify-end'];
+    const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'justify-end'];
 
     // Mobile
     if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
@@ -140,14 +143,14 @@ const getGridClasses = (item: GridItem) => {
 const Footer: React.FC = () => {
     return (
         <footer className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-                <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
-                    {items.map((item) => (
-                        <div key={item.id} className={getGridClasses(item)}>
-                            {item.content}
-                        </div>
-                    ))}
-                </div>
-            </footer>
+            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+                {items.map((item) => (
+                    <div key={item.id} className={getGridClasses(item)}>
+                        {item.content}
+                    </div>
+                ))}
+            </div>
+        </footer>
     );
 };
 

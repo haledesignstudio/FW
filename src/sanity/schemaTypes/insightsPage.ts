@@ -27,54 +27,73 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'array',
-          of: [{ type: 'block' }],
+          type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Text below the section title'
         },
         {
           name: 'contentText',
           title: 'Content Text',
-          type: 'array',
-          of: [{ type: 'block' }],
+          type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Main content for this section'
         },
-        {
-          name: 'statement1',
-          title: 'Statement 1',
-          type: 'array',
-          of: [{ type: 'block' }],
-          description: 'Main content for this section'
-        },
-        {
-          name: 'statement2',
-          title: 'Statement 2',
-          type: 'array',
-          of: [{ type: 'block' }],
-          description: 'Main content for this section'
-        },
-
-        {
+         {
           name: 'CTA1',
           title: 'CTA 1',
           type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Text for first CTA button'
         },
         {
           name: 'Mail1',
           title: 'Mail 1',
           type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Email for first CTA button'
         },
+        {
+          name: 'iframeSource',
+          title: 'iFrame Source URL',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+          description: 'Text below the section title'
+        },
+        {
+          name: 'IQ_heading',
+          title: 'IQ Heading',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+          description: 'Text below the section title'
+        },
+        {
+          name: 'IQ_subheading',
+          title: 'IQ Subheading',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+          description: 'Text below the section title'
+        },
+        {
+          name: 'IQ_context',
+          title: 'Context for IQ',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+          description: 'Main content for this section'
+        },
+        
+       
         {
           name: 'CTA2',
           title: 'CTA 2',
           type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Text for second CTA button'
         },
-                {
+        {
           name: 'Mail2',
           title: 'Mail 2',
           type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Email for second CTA button'
         }
 
@@ -95,8 +114,8 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'array',
-          of: [{ type: 'block' }],
+          type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Text below the section title'
         },
       ]
@@ -115,20 +134,21 @@ const insightsPage = defineType({
               name: 'topicSectionTitle',
               title: 'Topic Section Title',
               type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Heading for the keynote topics section'
             },
             {
               name: 'topicSectionSubtitle',
               title: 'Topic Section Subtitle',
-              type: 'array',
-              of: [{ type: 'block' }],
+              type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Subtitle/description for the topics section'
             },
             {
               name: 'topicContentText',
               title: 'Content Text',
-              type: 'array',
-              of: [{ type: 'block' }],
+              type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Main content for this section'
             },
 
@@ -136,18 +156,21 @@ const insightsPage = defineType({
               name: 'topicCTA1',
               title: 'Topic CTA 1',
               type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Text for first CTA button'
             },
             {
               name: 'topicMail1',
               title: 'Topic Mail 1',
               type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Email for first CTA button'
             },
             {
               name: 'topicCTA2',
               title: 'Topic CTA 2',
               type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Text for second CTA button'
             }
           ]
@@ -162,20 +185,21 @@ const insightsPage = defineType({
               name: 'speakerSectionTitle',
               title: 'Speakers Section Title',
               type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Heading for the keynote speakers section'
             },
             {
               name: 'speakerSectionSubtitle',
               title: 'Speakers Section Subtitle',
-              type: 'array',
-              of: [{ type: 'block' }],
+              type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Subtitle/description for the speakers section'
             },
             {
               name: 'speakerContentText',
               title: 'Content Text',
-              type: 'array',
-              of: [{ type: 'block' }],
+              type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Main content for this section'
             },
 
@@ -183,18 +207,21 @@ const insightsPage = defineType({
               name: 'speakerCTA1',
               title: 'Topic CTA 1',
               type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Text for first CTA button'
             },
             {
               name: 'speakerMail1',
               title: 'Topic Mail 1',
               type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Email for first CTA button'
             },
             {
               name: 'speakerCTA2',
               title: 'Topic CTA 2',
               type: 'string',
+              validation: (Rule) => Rule.required(),
               description: 'Text for second CTA button'
             },
           ]
@@ -216,9 +243,8 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'array',
-          of: [{ type: 'block' }],
-          description: 'Text below the section title'
+          type: 'string',
+          validation: (Rule) => Rule.required()
         },
       ]
     }),
@@ -237,27 +263,29 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'array',
-          of: [{ type: 'block' }],
+          type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Text below the section title'
         },
         {
           name: 'contentText',
           title: 'Content Text',
-          type: 'array',
-          of: [{ type: 'block' }],
+          type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Main content for this section'
         },
         {
           name: 'CTA',
           title: 'CTA',
           type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Text for first CTA button'
         },
         {
           name: 'Mail',
           title: 'Mail',
           type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Email for first CTA button'
         },
       ]
@@ -277,15 +305,15 @@ const insightsPage = defineType({
         {
           name: 'subheading',
           title: 'Subheading',
-          type: 'array',
-          of: [{ type: 'block' }],
+          type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Text below the section title'
         },
         {
           name: 'contentText',
           title: 'Content Text',
-          type: 'array',
-          of: [{ type: 'block' }],
+          type: 'string',
+          validation: (Rule) => Rule.required(),
           description: 'Main content for this section'
         },
       ]

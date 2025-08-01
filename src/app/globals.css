@@ -33,3 +33,16 @@ body {
 .animate-scroll {
   animation: scroll 30s linear infinite;
 }
+
+/* Hide scrollbar but allow scroll */
+html,
+body {
+  scrollbar-width: none;         /* Firefox */
+  -ms-overflow-style: none;      /* IE 10+ */
+  overflow-y: scroll;            /* Ensure scroll still works */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;                 /* Chrome, Safari and Opera */
+}

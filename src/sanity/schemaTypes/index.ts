@@ -2,7 +2,7 @@ import { type SchemaTypeDefinition } from 'sanity'
 import keynoteSpeaker from './keynoteSpeaker'
 import whatWeDo from './whatWeDo'
 import shareholderValueAnalytics from './shareholderValueAnalytics';
-import keynote from './keynote';
+import keynoteTopic from './keynoteTopic';
 import homePage from './homePage'
 import article from './article'
 import insightsPage from './insightsPage'
@@ -44,6 +44,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     podcast,
     provocativeScenario,
     carouselItem,
-    whatWeDo, shareholderValueAnalytics, keynote
+    whatWeDo, shareholderValueAnalytics, keynoteTopic
   ],
 }
