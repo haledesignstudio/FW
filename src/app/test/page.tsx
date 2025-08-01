@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import TextAnimation from '@/components/TextAnimation';
 import CountingAnimation from '@/components/countingAnimation';
 import AudioVisualiser from '@/components/audioVisualiser';
+import MindbulletArchive from '@/components/mindbulletsArchive';
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(true); // Start as playing
@@ -255,6 +256,9 @@ export default function Home() {
         loop
         muted={false}
       />
+
+      {/* Mindbullets Archive Demo */}
+      <MindbulletArchive />
 
       <div className="mt-12 flex gap-6">
         <a 

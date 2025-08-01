@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import MainTitleAnimation from '@/components/MainTitleAnimation'
@@ -37,6 +37,17 @@ type GridItem = {
     landscapeColSpan?: number;
     landscapeRowSpan?: number;
 };
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < breakpoint);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [breakpoint]);
+  return isMobile;
+}
 
 const getGridClasses = (item: GridItem) => {
     const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'items-start', 'relative'];
@@ -76,9 +87,105 @@ const getGridClasses = (item: GridItem) => {
 
 export default function FAQClient({ faqData }: Props) {
   const [selectedQuestion, setSelectedQuestion] = useState<number | null>(null)
+  const isMobile = useIsMobile();
+
+  const handleBackToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const toggleQuestion = (index: number) => {
     setSelectedQuestion(selectedQuestion === index ? null : index)
+  }
+
+  if (isMobile) {
+    // MOBILE LAYOUT
+    return (
+      <>
+        <Header />
+        <main className="p-[2vh] bg-[#F9F7F2]">
+          <div className="grid grid-cols-4 gap-y-2 auto-rows-min">
+            {/* Row 1: Header (cols 1-4) */}
+            <div className="col-span-2 row-span-1">
+              <div className="flex items-start justify-start w-full">
+                <MainTitleAnimation 
+                  text={faqData.pageHeader.mainTitle}
+                  typeSpeed={60}
+                  delay={500}
+                  className="text-[5vh] font-bold leading-tight"
+                />
+              </div>
+            </div>
+            {/* Row 2: Empty */}
+            <div className="col-span-4 row-span-1"></div>
+            {/* Row 3: Main Title (already rendered above) */}
+            {/* Row 4: Empty */}
+            <div className="col-span-4 row-span-1"></div>
+            {/* Row 5+: Questions */}
+            {faqData.faqs.map((faq, index) => (
+              <React.Fragment key={index}>
+                {/* Question row: cols 1-3 (right aligned), arrow in col 4 */}
+                <div className="col-span-3 flex justify-end items-center">
+                  <button
+                    onClick={() => setSelectedQuestion(selectedQuestion === index ? null : index)}
+                    className="text-right w-full pointer-events-auto cursor-pointer bg-transparent border-none outline-none font-graphik font-normal"
+                    style={{ background: 'none' }}
+                  >
+                    <UnderlineOnHoverAnimation
+                      className="text-black font-graphik font-normal"
+                      isActive={selectedQuestion === index}
+                    >
+                      <span className="text-[2.5vh] leading-tight">
+                        {faq.question}
+                      </span>
+                    </UnderlineOnHoverAnimation>
+                  </button>
+                </div>
+                <div className="col-span-1 flex items-center justify-end">
+                  <div
+                    className="transition-transform duration-300 ease-in-out"
+                    style={{ 
+                      transform: selectedQuestion === index ? 'rotate(135deg)' : 'rotate(90deg)',
+                    }}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                    </svg>
+                  </div>
+                </div>
+                {/* If selected, show answer below, cols 2-4 */}
+                {selectedQuestion === index && (
+                  <div className="col-start-2 col-span-3 animate-fade-in mb-5 mt-5">
+                    <p className="text-[2vh] leading-tight text-gray-700">
+                      {faq.answer}
+                    </p>
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
+            {/* Back to top button after last FAQ */}
+            <div className="col-start-4 col-span-1 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+              <span className="underline text-[2vh] flex items-center gap-1">Back to top
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+              </span>
+            </div>
+            {/* Empty row after back to top */}
+            <div className="col-span-4 row-span-1"></div>
+          </div>
+        </main>
+        <Footer />
+        <style jsx>{`
+          @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fade-in {
+            animation: fade-in 0.3s ease-out;
+          }
+        `}</style>
+      </>
+    );
   }
 
   const items: GridItem[] = [
