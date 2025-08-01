@@ -224,28 +224,37 @@ export default function FAQClient({ faqData }: Props) {
     },
     // Merged area for questions (columns 1-4, rows 2-4) - Questions start from row 2
     {
-      id: 3,
-      content: (
-        <div className="w-full h-full flex flex-col justify-start gap-6 pr-4">
-          {faqData.faqs.map((faq, index) => (
-            <button
-              key={index}
-              onClick={() => toggleQuestion(index)}
-              className="text-right w-full pointer-events-auto cursor-pointer bg-transparent border-none outline-none font-graphik font-normal"
-              style={{ background: 'none' }}
-            >
+    id: 3,
+    content: (
+      <div className="w-full h-full flex flex-col justify-start gap-6 pr-4">
+        {faqData.faqs.map((faq, index) => (
+          <button
+            key={index}
+            onClick={() => toggleQuestion(index)}
+            className="w-full flex items-center justify-between pointer-events-auto cursor-pointer bg-transparent border-none outline-none font-graphik font-normal"
+            style={{ background: 'none' }}
+          >
+            <span className="text-[3vh] w-full block text-right">
               <UnderlineOnHoverAnimation
                 className="text-black font-graphik font-normal"
                 isActive={selectedQuestion === index}
               >
-                <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
-                  {faq.question}
-                </span>
+                {faq.question}
               </UnderlineOnHoverAnimation>
-            </button>
-          ))}
-        </div>
-      ),
+            </span>
+            <span
+              className="ml-4 transition-transform duration-300 ease-in-out"
+              style={{ transform: selectedQuestion === index ? 'rotate(45deg)' : 'rotate(90deg)' }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </span>
+          </button>
+        ))}
+      </div>
+    ),
+
       colSpan: 4,
       rowSpan: 3,
       mobileColSpan: 4,
@@ -257,21 +266,8 @@ export default function FAQClient({ faqData }: Props) {
     {
       id: 4,
       content: (
-        <div className="w-full h-full flex flex-col justify-start gap-10">
-          {faqData.faqs.map((faq, index) => (
-            <div key={index} className="flex items-center h-auto">
-              <div
-                className="self-start transition-transform duration-300 ease-in-out"
-                style={{ 
-                  transform: selectedQuestion === index ? 'rotate(45deg)' : 'rotate(90deg)',
-                }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-              </div>
-            </div>
-          ))}
+        <div>
+          
         </div>
       ),
       colSpan: 1,

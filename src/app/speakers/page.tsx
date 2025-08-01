@@ -1,58 +1,58 @@
-import { client } from '@/sanity/lib/client';
-import { speakersQuery } from '@/sanity/lib/queries';
-import { Speaker } from '@/types/speaker';
-import { urlFor } from '@/sanity/lib/image';
+// import { client } from '@/sanity/lib/client';
+// import { speakersQuery } from '@/sanity/lib/queries';
+// import { Speaker } from '@/types/speaker';
 import CircularTextSlider from '@/components/CircularTextSlider';
 
 export const revalidate = 60; // Revalidate every minute
 
 // Type for the Sanity query result
-type SanityKeynoteSpeaker = {
-  _id: string;
-  name: string | null;
-  bio: string | null;
-  image: {
-    asset: {
-      _ref: string;
-      _type: 'reference';
-    } | null;
-    alt: string | null;
-  } | null;
-  position: string | null;
-  company: string | null;
-};
+// type SanityKeynoteSpeaker = {
+//   _id: string;
+//   name: string | null;
+//   bio: string | null;
+//   image: {
+//     asset: {
+//       _ref: string;
+//       _type: 'reference';
+//     } | null;
+//     alt: string | null;
+//   } | null;
+//   position: string | null;
+//   company: string | null;
+// };
 
-async function getSpeakers(): Promise<Speaker[]> {
-  try {
-    const speakers = await client.fetch<SanityKeynoteSpeaker[]>(speakersQuery);
-    // Transform the Sanity data to match Speaker type, handling null values
-    return speakers?.map((speaker: SanityKeynoteSpeaker) => ({
-      _id: speaker._id,
-      name: speaker.name || 'Unknown Speaker',
-      bio: speaker.bio || undefined,
-      image: speaker.image?.asset ? {
-        asset: speaker.image.asset,
-        alt: speaker.image.alt || undefined
-      } : undefined,
-      position: speaker.position || undefined,
-      company: speaker.company || undefined
-    })) || [];
-  } catch (error) {
-    console.error('Error fetching speakers:', error);
-    return [];
-  }
-}
+// async function getSpeakers(): Promise<Speaker[]> {
+//   try {
+//     const speakers = await client.fetch<SanityKeynoteSpeaker[]>(speakersQuery);
+//     // Transform the Sanity data to match Speaker type, handling null values
+//     return speakers?.map((speaker: SanityKeynoteSpeaker) => ({
+//       _id: speaker._id,
+//       name: speaker.name || 'Unknown Speaker',
+//       bio: speaker.bio || undefined,
+//       image: speaker.image?.asset ? {
+//         asset: speaker.image.asset,
+//         alt: speaker.image.alt || undefined
+//       } : undefined,
+//       position: speaker.position || undefined,
+//       company: speaker.company || undefined
+//     })) || [];
+//   } catch (error) {
+//     console.error('Error fetching speakers:', error);
+//     return [];
+//   }
+// }
 
 export default async function SpeakersPage() {
-  const speakers = await getSpeakers();
+  // const speakers = await getSpeakers();
 
   // Convert Sanity speakers to the format expected by CircularTextSlider
-  const convertedSpeakers = speakers.map((speaker) => ({
-    id: speaker._id,
-    name: speaker.name,
-    bio: speaker.bio || '',
-    image: speaker.image ? urlFor(speaker.image).width(300).height(300).url() : 'https://images.unsplash.com/photo-1494790108755-2616b612e93f?w=300&h=300&fit=crop&crop=face'
-  }));
+  // const convertedSpeakers = speakers.map((speaker) => ({
+  //   id: speaker._id,
+  //   name: speaker.name,
+  //   bio: speaker.bio || '',
+  //   image: speaker.image ? urlFor(speaker.image).width(300).height(300).url() : 'https://images.unsplash.com/photo-1494790108755-2616b612e93f?w=300&h=300&fit=crop&crop=face'
+  // }));
+
 
   // Demo speakers as fallback
   const demoSpeakers = [
@@ -124,7 +124,8 @@ export default async function SpeakersPage() {
     }
   ];
 
-  const displaySpeakers = convertedSpeakers.length > 0 ? convertedSpeakers : demoSpeakers;
+  // const displaySpeakers = convertedSpeakers.length > 0 ? convertedSpeakers : demoSpeakers;
+  const displaySpeakers = demoSpeakers;
 
   return (
     <main className="min-h-screen">
