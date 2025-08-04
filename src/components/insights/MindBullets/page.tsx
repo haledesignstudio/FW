@@ -3,6 +3,7 @@
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 
+
 type GridItem = {
     id: string;
     content: React.ReactNode;
@@ -86,11 +87,6 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
       colSpan: 6,
       rowSpan: 2,
     },
-    {
-      id: 'mindbullets-7',
-      content: <></>,
-      colSpan: 6,
-      rowSpan: 1,
-    },
+
   ];
 }

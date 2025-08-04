@@ -91,7 +91,7 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                     <h3
                                         className={`
               font-roboto leading-[3vh] mb-[3vh]
-              ${index === 0 ? 'underline text-[3vh]' : 'text-[2vh]'}
+              ${index === 0 ? 'font-graphik text-[3vh]' : 'text-[2vh]'}
             `}
                                     >
                                         {item.heading}

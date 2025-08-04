@@ -60,7 +60,7 @@ export default function Edge({ title, subheading, contentText, podcasts }: Props
       id: 'edge-3',
       content: (
         <div className="text-[3vh] font-roboto leading-[4vh]">
-          <HighlightText text={contentText} />
+          {contentText}
         </div>
       ),
       colSpan: 2,

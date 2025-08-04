@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
 
 interface Speaker {
   id: string;
@@ -29,85 +28,77 @@ const defaultSpeakers: Speaker[] = [
 ];
 
 export default function CircularTextSlider({ speakers = defaultSpeakers }: CircularTextSliderProps) {
-  // Configuration - easily adjustable
-  const centerPointFromBottom = 300; // Distance from bottom of screen to circle center
-  const circleRadius = 400; // Radius of the circle
-  
+  const circleRadius = 400;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
-  
+
   const [hoveredSpeaker, setHoveredSpeaker] = useState<Speaker | null>(null);
   const [currentRotation, setCurrentRotation] = useState(0);
   const [targetRotation, setTargetRotation] = useState(0);
+  const [panelPosition, setPanelPosition] = useState<'left' | 'right'>('right');
 
-  // Handle wheel events
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    setTargetRotation(prev => prev + e.deltaY * 0.1);
+  const handleWheel = (e: WheelEvent) => {
+    if (!containerRef.current) return;
+    const bounds = containerRef.current.getBoundingClientRect();
+    const withinBounds =
+      e.clientX >= bounds.left &&
+      e.clientX <= bounds.right &&
+      e.clientY >= bounds.top &&
+      e.clientY <= bounds.bottom;
+
+    if (withinBounds) {
+      e.preventDefault();
+      setTargetRotation(prev => prev + e.deltaY * 0.1);
+    }
   };
 
   useEffect(() => {
-    const gallery = galleryRef.current;
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, []);
 
+  useEffect(() => {
+    const gallery = galleryRef.current;
     if (!gallery) return;
 
-    // Smooth rotation animation loop
     const animateRotation = () => {
-      const newRotation = currentRotation + (targetRotation - currentRotation) * 0.1; // Slightly faster smoothing
+      const newRotation = currentRotation + (targetRotation - currentRotation) * 0.1;
       setCurrentRotation(newRotation);
-      gsap.set(gallery, { 
-        rotation: newRotation,
-        transformOrigin: '50% 0%' // Rotate around the top center of the gallery
-      });
+      
+      // Using CSS transform instead of GSAP for this demo
+      if (gallery) {
+        gallery.style.transform = `translateX(-50%) rotate(${newRotation}deg)`;
+        gallery.style.transformOrigin = '50% 0%';
+      }
+      
       requestAnimationFrame(animateRotation);
     };
-    
-    const animationId = requestAnimationFrame(animateRotation);
 
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
+    const animationId = requestAnimationFrame(animateRotation);
+    return () => cancelAnimationFrame(animationId);
   }, [currentRotation, targetRotation]);
 
   return (
     <>
       <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        body {
-          background: white;
-          color: black;
-          font-family: 'Inter', 'Arial', sans-serif;
-          overflow-x: hidden;
-          height: 300vh; /* Ensure there's enough height to scroll */
-        }
-
         .circular-slider-container {
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          position: relative;
           width: 100vw;
-          height: ${centerPointFromBottom * 2}px; /* Make container taller to show more of the circle */
+          height: ${circleRadius + 200}px; /* Height for top half + text padding */
           pointer-events: all;
           z-index: 100;
           overflow: hidden;
         }
-
         .gallery {
           position: absolute;
-          bottom: -300px; /* Position so the center of the 100px gallery is at the container bottom */
+          bottom: -${circleRadius}px; /* Position so circle center is at container bottom */
           left: 50%;
           width: 100px;
           height: 100px;
           transform: translateX(-50%);
           pointer-events: all;
         }
-
         .speaker-item {
           position: absolute;
           top: 0;
@@ -121,11 +112,9 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           cursor: pointer;
           color: black;
           transition: color 0.2s ease;
-          padding: 8px 12px; /* Increased padding for larger hover area */
           user-select: none;
-          border-radius: 4px; /* Slightly rounded corners for better hover detection */
-        }
 
+        }
         .speaker-item::before {
           content: '';
           position: absolute;
@@ -139,27 +128,17 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           transition: transform 0.2s ease;
           z-index: -1;
         }
-
         .speaker-item:hover {
-          color: white;
-        }
 
+        }
         .speaker-item:hover::before {
           transform: scaleX(1);
         }
-
-        .cursor {
-          display: none; /* Hide the separate cursor */
-        }
-
         .speaker-info-panel {
-          position: fixed;
-          top: 20%;
-          left: 50%;
-          transform: translateX(-50%);
+          position: absolute;
+          top: 0%;
+          transform: translateX(-50%) translateY(-20px);
           width: 600px;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(10px);
           padding: 30px;
           z-index: 1001;
           pointer-events: none;
@@ -167,7 +146,6 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           gap: 20px;
           align-items: center;
           opacity: 0;
-          transform: translateX(-50%) translateY(-20px);
           transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
@@ -175,117 +153,70 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           opacity: 1;
           transform: translateX(-50%) translateY(0);
         }
-
         .speaker-image {
           width: 200px;
           height: 250px;
           object-fit: cover;
-          object-position: center;
           flex-shrink: 0;
         }
-
         .speaker-details {
           flex: 1;
         }
-
         .speaker-details h3 {
-          margin: 0 0 15px 0;
           font-size: 24px;
           font-weight: 700;
-          color: black;
           text-transform: uppercase;
           letter-spacing: 1px;
+          margin-bottom: 10px;
         }
-
         .speaker-details p {
-          margin: 0;
           font-size: 16px;
           line-height: 1.6;
           color: #666;
-        }
-
-        @media (max-width: 768px) {
-          .gallery {
-            width: 500px;
-            height: 250px;
-          }
-          
-          .speaker-item {
-            font-size: 18px;
-            padding: 8px 15px;
-          }
-          
-          .speaker-info-panel {
-            width: 90%;
-            padding: 20px;
-            flex-direction: column;
-            text-align: center;
-          }
-
-          .speaker-image {
-            width: 150px;
-            height: 200px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .gallery {
-            width: 400px;
-            height: 200px;
-          }
-          
-          .speaker-item {
-            font-size: 14px;
-            padding: 6px 12px;
-            letter-spacing: 2px;
-          }
-
-          .speaker-info-panel {
-            width: 95%;
-            padding: 15px;
-          }
-
-          .speaker-image {
-            width: 120px;
-            height: 160px;
-          }
-
-          .speaker-details h3 {
-            font-size: 18px;
-          }
-
-          .speaker-details p {
-            font-size: 14px;
-          }
+          margin: 0;
         }
       `}</style>
 
-      <div 
-        className="circular-slider-container" 
-        ref={containerRef}
-        onWheel={handleWheel}
-      >
+      <div className="circular-slider-container relative" ref={containerRef}>
+        {hoveredSpeaker && (
+          <div
+            className={`speaker-info-panel ${hoveredSpeaker ? 'visible' : ''}`}
+            style={{
+              left: panelPosition === 'left' ? '40%' : '70%',
+            }}
+          >
+            <img
+              src={hoveredSpeaker.image}
+              alt={hoveredSpeaker.name}
+              className="speaker-image"
+            />
+            <div className="speaker-details">
+              <h3>{hoveredSpeaker.name}</h3>
+              <p>{hoveredSpeaker.bio}</p>
+            </div>
+          </div>
+        )}
         <div className="gallery" ref={galleryRef}>
           {[...speakers, ...speakers, ...speakers, ...speakers].map((speaker, index) => {
-            const totalSpeakers = speakers.length * 4; // Quadruple the count since we're repeating 4 times
-            // Spread speakers around the full circle (360 degrees) with duplicates
-            const angle = (360 / totalSpeakers) * index;
-            
+            const total = speakers.length * 4;
+            const angle = (360 / total) * index;
             const angleRad = (angle * Math.PI) / 180;
             const x = Math.cos(angleRad) * circleRadius;
             const y = Math.sin(angleRad) * circleRadius;
-            
             const textRotation = angle;
-            
             return (
               <div
                 key={`${speaker.id}-${index}`}
                 className="speaker-item"
                 style={{
-                  transform: `translate(${x}px, ${y}px) rotate(${textRotation}deg)`,
-                  transformOrigin: '0 0'
+                  transform: `translate(${x}px, ${y}px) rotate(${textRotation}deg)`
                 }}
-                onMouseEnter={() => setHoveredSpeaker(speaker)}
+                onMouseEnter={(e) => {
+                  setHoveredSpeaker(speaker);
+                  const x = e.clientX;
+                  const screenMid = window.innerWidth / 2;
+                  setPanelPosition(x < screenMid ? 'left' : 'right');
+                }}
                 onMouseLeave={() => setHoveredSpeaker(null)}
               >
                 {speaker.name}
@@ -294,21 +225,6 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           })}
         </div>
       </div>
-
-      {/* Combined speaker info panel */}
-      {hoveredSpeaker && (
-        <div className={`speaker-info-panel ${hoveredSpeaker ? 'visible' : ''}`}>
-          <img
-            src={hoveredSpeaker.image}
-            alt={hoveredSpeaker.name}
-            className="speaker-image"
-          />
-          <div className="speaker-details">
-            <h3>{hoveredSpeaker.name}</h3>
-            <p>{hoveredSpeaker.bio}</p>
-          </div>
-        </div>
-      )}
     </>
   );
 }

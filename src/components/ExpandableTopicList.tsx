@@ -66,12 +66,18 @@ export default function ExpandableTopicList() {
 
 
                         <div
-                        className={`
+                            className={`
                             transition-all duration-500 ease-in-out overflow-hidden
                             ${isOpen ? 'max-h-[200vh] opacity-100 mt-[5vh]' : 'max-h-0 opacity-0 mt-0'}
                         `}
                         >
-                            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+                            <div onClick={() =>
+                                setOpenIndices((prev) =>
+                                    prev.includes(index)
+                                        ? prev.filter((i) => i !== index) // close
+                                        : [...prev, index]               // open
+                                )
+                            } className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
                                 {/* td-1: topicHeading */}
                                 <div className="col-span-2 row-span-1 p-[1vh]">
                                     <p className="text-[3vh]">{topic.topicHeading}</p>
@@ -122,11 +128,13 @@ export default function ExpandableTopicList() {
                                 {/* td-7: CTA */}
                                 <div className="col-span-1 row-span-1 p-[1vh] flex items-end justify-end text-right">
                                     <a
-                                        href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
-                                        className="text-[2vh] font-bold underline"
-                                    >
-                                        {topic.topicButtonText}
-                                    </a>
+  href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
+  className="text-[2vh] font-bold underline"
+  onClick={(e) => e.stopPropagation()}
+>
+  {topic.topicButtonText}
+</a>
+
                                 </div>
                             </div>
                         </div>

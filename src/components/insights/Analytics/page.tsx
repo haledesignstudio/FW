@@ -30,7 +30,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-1',
       content: (
-        <p className="text-[5vh] md:text-[20vh] font-graphik leading-[20vh]">
+        <p className="text-[20vh] font-graphik leading-[20vh]">
           {analytics.title}
         </p>
       ),
@@ -46,8 +46,8 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-3',
       content: (
-        <div className="text-[5vh] md:text-[4vh] leading-tight">
-          <HighlightText text={analytics.contentText} />
+        <div className="text-[3vh] leading-tight">
+          {analytics.contentText}
         </div>
       ),
       colSpan: 2,
@@ -117,7 +117,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-10',
       content: (
         <div className="text-[5vh] md:text-[4vh] leading-tight">
-          <HighlightText text={analytics.IQ_context} />
+          {analytics.IQ_context}
         </div>
       ),
       colSpan: 2,
@@ -150,7 +150,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-end h-full">
           <div className="text-[5vh] md:text-[3vh] leading-tight">
-            <HighlightText text={analytics.IQ_subheading} />
+            {analytics.IQ_subheading}
           </div>
         </div>
       ),
