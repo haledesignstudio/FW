@@ -2,7 +2,7 @@
 
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
-import TypeMotion from '@/components/typeMotion';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 type GridItem = {
   id: string;
@@ -44,9 +44,11 @@ export default function Edge({ title, subheading, contentText, podcasts }: Props
     {
       id: 'edge-1',
       content: (
-        <TypeMotion delay={2.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <FadeInOnVisible>
+        <div className="text-[20vh] font-graphik leading-[20vh]">
           {title}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 5,
       rowSpan: 3,
@@ -60,39 +62,39 @@ export default function Edge({ title, subheading, contentText, podcasts }: Props
     {
       id: 'edge-3',
       content: (
-        <TypeMotion delay={2.5} className="text-[3vh] font-roboto leading-[4vh]">
+        <FadeInOnVisible>
+        <div className="text-[3.5vh] font-roboto leading-tight">
           {contentText}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
-      rowSpan: 1,
+      rowSpan: 2,
     },
     {
       id: 'edge-4',
       content: (
-        <div className="text-[5vh] font-graphik leading-[6vh]">
+        <FadeInOnVisible>
+        <div className="text-[5vh] font-graphik leading-tight">
           <HighlightText text={subheading} />
         </div>
+        </FadeInOnVisible>
       ),
       colSpan: 3,
-      rowSpan: 1,
+      rowSpan: 2,
     },
     {
       id: 'edge-5',
       content: <></>,
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
     },
     {
       id: 'edge-6',
-      content: <></>,
-      colSpan: 6,
-      rowSpan: 1,
-    },
-    {
-      id: 'edge-7',
       content: 
-      <ResponsiveGridCarousel items={carouselItems} />,
+      <FadeInOnVisible>
+      <ResponsiveGridCarousel items={carouselItems} />
+      </FadeInOnVisible>,
       colSpan: 6,
       rowSpan: 2,
     },

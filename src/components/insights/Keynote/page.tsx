@@ -1,7 +1,7 @@
 'use client';
 
 import { HighlightText } from '@/components/HighlightText';
-import TypeMotion from '@/components/typeMotion';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 
 
@@ -40,9 +40,11 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
     {
       id: 'keynotes-1',
       content: (
-        <TypeMotion delay={2.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <FadeInOnVisible>
+        <div className="text-[20vh] font-graphik leading-[20vh]">
           {topicSection.topicSectionTitle || ''}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 5,
       rowSpan: 1,
@@ -62,9 +64,11 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
     {
       id: 'keynotes-4',
       content: (
-        <TypeMotion delay={2.5} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] leading-tight">
+        <FadeInOnVisible>
+        <div className="text-[3.5vh] leading-tight">
           {topicSection.topicContentText}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -72,9 +76,11 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
     {
       id: 'keynotes-5',
       content: (
-        <div className="whitespace-pre-line text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4.25vh] font-bold leading-tight">
+        <FadeInOnVisible>
+        <div className="whitespace-pre-line text-[5vh] font-bold leading-tight">
           <HighlightText text={topicSection.topicSectionSubtitle} />
         </div>
+        </FadeInOnVisible>
       ),
       colSpan: 4,
       rowSpan: 1,
@@ -102,77 +108,81 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
     {
       id: 'keynotes-8',
       content: (
-        <TypeMotion delay={3.5} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <FadeInOnVisible>
+        <div className="text-[20vh] font-graphik leading-[20vh]">
           {speakerSection.speakerSectionTitle || ''}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
-      colSpan: 5,
+      colSpan: 6,
       rowSpan: 1,
     },
     {
       id: 'keynotes-9',
       content: <></>,
-      colSpan: 1,
-      rowSpan: 1,
-    },
-    {
-      id: 'keynotes-10',
-      content: <></>,
       colSpan: 6,
       rowSpan: 1,
     },
     {
-      id: 'keynotes-11',
+      id: 'keynotes-10',
       content: (
-        <TypeMotion delay={4.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] leading-tight">
+        <FadeInOnVisible>
+        <div className="text-[3.5vh] leading-tight">
           {speakerSection.speakerContentText}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
-      rowSpan: 1,
+      rowSpan: 2,
+    },
+    {
+      id: 'keynotes-11',
+      content: (
+        <FadeInOnVisible>
+        <div className="whitespace-pre-line text-[5vh] font-bold leading-tight">
+          <HighlightText text={speakerSection.speakerSectionSubtitle} />
+        </div>
+        </FadeInOnVisible>
+      ),
+      colSpan: 4,
+      rowSpan: 2,
     },
     {
       id: 'keynotes-12',
-      content: (
-        <div className="whitespace-pre-line text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4.25vh] font-bold leading-tight">
-          <HighlightText text={speakerSection.speakerSectionSubtitle} />
-        </div>
-      ),
-      colSpan: 4,
-      rowSpan: 1,
-    },
-    {
-      id: 'keynotes-13',
       content: <></>,
       colSpan: 2,
       rowSpan: 1,
     },
 
     {
-      id: 'keynotes-14',
+      id: 'keynotes-13',
       content: (
-        <div className="flex flex-col justify-end h-full">
-          <TypeMotion delay={5.0} className="underline text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] font-graphik leading-[2vh]">
+        <div className="flex flex-col justify-start h-full">
+          <FadeInOnVisible>
+          <div className="underline text-[2.25vh] font-graphik leading-[2.25vh]">
             <a
               href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
             >
               {speakerSection.speakerCTA1 ?? 'Get in Touch'}
             </a>
-          </TypeMotion>
+          </div>
+          </FadeInOnVisible>
         </div>
       ),
       colSpan: 1,
       rowSpan: 1,
     },
     {
-      id: 'keynotes-15',
+      id: 'keynotes-14',
       content: (
-        <div className="flex flex-col justify-end h-full">
-          <TypeMotion delay={5.5} className="underline text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] font-bold leading-tight">
+        <div className="flex flex-col justify-start h-full">
+          <FadeInOnVisible>
+          <div className="underline text-[2.25vh] font-bold leading-[2.25vh]">
             <a href="#our-speakers">
               {speakerSection.speakerCTA2 || ''}
             </a>
-          </TypeMotion>
+          </div>
+          </FadeInOnVisible>
         </div>
       ),
       colSpan: 1,

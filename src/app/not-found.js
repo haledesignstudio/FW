@@ -206,7 +206,7 @@ export default function NotFound() {
 
           <Link 
             href="/"
-            className="inline-flex items-center font-roboto underline hover:no-underline transition-all duration-300"
+            className="inline-flex items-center font-roboto underline transition-all duration-300"
             style={{ 
               padding: 'clamp(0.375rem, 1.5vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)',
               fontSize: 'clamp(0.75rem, 3.5vw, 1rem)',

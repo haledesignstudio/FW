@@ -21,7 +21,7 @@ const items = (shouldAnimate: boolean): GridItem[] => [
         content: (
             <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight">
                 {shouldAnimate ? (
-                    <FutureText text="Social" delay={0} speed={25} triggerOnVisible={false} />
+                    <FutureText text="Social" delay={0} speed={50} triggerOnVisible={false} />
                 ) : (
                     "Social"
                 )}
@@ -38,12 +38,12 @@ const items = (shouldAnimate: boolean): GridItem[] => [
         id: 2,
         content: (
             <ul className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
-                <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="RSS" delay={0} speed={20} triggerOnVisible={false} /> : "RSS"}</a></li>
-                <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Instagram" delay={0} speed={20} triggerOnVisible={false} /> : "Instagram"}</a></li>
-                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Twitter" delay={0} speed={20} triggerOnVisible={false} /> : "Twitter"}</a></li>
-                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Facebook" delay={0} speed={20} triggerOnVisible={false} /> : "Facebook"}</a></li>
-                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Linkedin" delay={0} speed={20} triggerOnVisible={false} /> : "Linkedin"}</a></li>
-                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Discord" delay={0} speed={20} triggerOnVisible={false} /> : "Discord"}</a></li>
+                <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="RSS" delay={2000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
+                <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Instagram" delay={2000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
+                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Twitter" delay={2000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
+                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Facebook" delay={2000} speed={30} triggerOnVisible={false} /> : "Facebook"}</a></li>
+                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Linkedin" delay={2000} speed={30} triggerOnVisible={false} /> : "Linkedin"}</a></li>
+                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Discord" delay={2000} speed={30} triggerOnVisible={false} /> : "Discord"}</a></li>
             </ul>
         ),
         colSpan: 1,
@@ -58,7 +58,7 @@ const items = (shouldAnimate: boolean): GridItem[] => [
         content: (
             <h2 className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] font-bold leading-tight">
                 {shouldAnimate ? (
-                    <FutureText text="Quick Links" delay={0} speed={25} triggerOnVisible={false} />
+                    <FutureText text="Quick Links" delay={3000} speed={30} triggerOnVisible={false} />
                 ) : (
                     "Quick Links"
                 )}
@@ -75,13 +75,13 @@ const items = (shouldAnimate: boolean): GridItem[] => [
         id: 4,
         content: (
             <ul className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
-                <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="Contact" delay={0} speed={20} triggerOnVisible={false} /> : "Contact"}</a></li>
-                <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Keynotes" delay={0} speed={20} triggerOnVisible={false} /> : "Keynotes"}</a></li>
-                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Join us" delay={0} speed={20} triggerOnVisible={false} /> : "Join us"}</a></li>
-                <li><a href="/faq">{shouldAnimate ? <FutureText text="FAQs" delay={0} speed={20} triggerOnVisible={false} /> : "FAQs"}</a></li>
-                <li><a href="/privacy-policy">{shouldAnimate ? <FutureText text="Privacy policy" delay={0} speed={20} triggerOnVisible={false} /> : "Privacy policy"}</a></li>
-                <li><a href="/terms-conditions">{shouldAnimate ? <FutureText text="Terms and conditions" delay={0} speed={20} triggerOnVisible={false} /> : "Terms and conditions"}</a></li>
-                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Shareholder Value Analytics" delay={0} speed={20} triggerOnVisible={false} /> : "Shareholder Value Analytics"}</a></li>
+                <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="Contact" delay={5000} speed={20} triggerOnVisible={false} /> : "Contact"}</a></li>
+                <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Keynotes" delay={5000} speed={20} triggerOnVisible={false} /> : "Keynotes"}</a></li>
+                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Join us" delay={5000} speed={20} triggerOnVisible={false} /> : "Join us"}</a></li>
+                <li><a href="/faq">{shouldAnimate ? <FutureText text="FAQs" delay={5000} speed={20} triggerOnVisible={false} /> : "FAQs"}</a></li>
+                <li><a href="/privacy-policy">{shouldAnimate ? <FutureText text="Privacy policy" delay={5000} speed={20} triggerOnVisible={false} /> : "Privacy policy"}</a></li>
+                <li><a href="/terms-conditions">{shouldAnimate ? <FutureText text="Terms and conditions" delay={5000} speed={20} triggerOnVisible={false} /> : "Terms and conditions"}</a></li>
+                <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Shareholder Value Analytics" delay={5000} speed={20} triggerOnVisible={false} /> : "Shareholder Value Analytics"}</a></li>
             </ul>
         ),
         colSpan: 1,
@@ -93,32 +93,61 @@ const items = (shouldAnimate: boolean): GridItem[] => [
     },
     {
         id: 5,
-        content: (
-            <>
-                <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] leading-tight">
-                    {shouldAnimate ? (
-                        <FutureText text="Subscribe for news from the future" delay={0} speed={20} triggerOnVisible={false} />
-                    ) : (
-                        "Subscribe for news from the future"
+        content: (() => {
+            const [placeholder, setPlaceholder] = useState('');
+
+            return (
+                <>
+                    <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] leading-tight">
+                        {shouldAnimate ? (
+                            <FutureText
+                                text="Subscribe for news from the future"
+                                delay={6000}
+                                speed={20}
+                                triggerOnVisible={false}
+                            />
+                        ) : (
+                            "Subscribe for news from the future"
+                        )}
+                    </p>
+
+                    {/* Animate placeholder text */}
+                    {shouldAnimate && (
+                        <FutureText
+                            text="Enter your e-mail"
+                            delay={7000}
+                            speed={20}
+                            triggerOnVisible={false}
+                            onUpdate={setPlaceholder}
+                            className="hidden"
+                        />
                     )}
-                </p>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your e-mail"
-                    required
-                    className="outline-none border-none bg-transparent text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:placeholder:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:placeholder:text-[4vh]"
-                />
-                <h2 className="text-[2vh] mt-[2vh] underline [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] font-bold leading-tight">
-                    {shouldAnimate ? (
-                        <FutureText text="Submit" delay={0} speed={25} triggerOnVisible={false} />
-                    ) : (
-                        "Submit"
-                    )}
-                </h2>
-            </>
-        ),
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder={shouldAnimate ? placeholder || ' ' : 'Enter your e-mail'}
+                        className="outline-none border-none bg-transparent text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:placeholder:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:placeholder:text-[4vh]"
+                    />
+
+                    <h2 className="text-[2vh] mt-[2vh] underline [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] font-bold leading-tight">
+                        {shouldAnimate ? (
+                            <FutureText
+                                text="Submit"
+                                delay={8000}
+                                speed={25}
+                                triggerOnVisible={false}
+                            />
+                        ) : (
+                            "Submit"
+                        )}
+                    </h2>
+                </>
+            );
+        })(),
         colSpan: 2,
         rowSpan: 1,
         mobileColSpan: 1,
@@ -126,6 +155,7 @@ const items = (shouldAnimate: boolean): GridItem[] => [
         landscapeColSpan: 1,
         landscapeRowSpan: 1,
     },
+
 ];
 
 const getGridClasses = (item: GridItem) => {

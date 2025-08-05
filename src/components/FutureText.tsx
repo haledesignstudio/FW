@@ -8,9 +8,17 @@ interface FutureTextProps {
   delay?: number;
   speed?: number;
   triggerOnVisible?: boolean;
+  onUpdate?: (animatedText: string) => void; 
 }
 
-export function FutureText({ text, className = '', delay = 0, speed = 30, triggerOnVisible = false }: FutureTextProps) {
+export function FutureText({
+  text,
+  className = '',
+  delay = 0,
+  speed = 30,
+  triggerOnVisible = false,
+  onUpdate,
+}: FutureTextProps) {
   const [displayText, setDisplayText] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
@@ -24,34 +32,32 @@ export function FutureText({ text, className = '', delay = 0, speed = 30, trigge
 
   const animateText = async () => {
     setIsAnimating(true);
-    const targetText = text; // Keep original case instead of toUpperCase()
+    const targetText = text;
     let currentText = '';
-    
-    // Build up the text character by character
+
     for (let i = 0; i < targetText.length; i++) {
       const targetChar = targetText[i];
-      
-      // If it's a space, just add it immediately
+
       if (targetChar === ' ') {
         currentText += ' ';
         setDisplayText(currentText);
+        onUpdate?.(currentText);
         continue;
       }
-      
-      // Cycle through random characters before settling on the target
-      const cycles = Math.floor(Math.random() * 4) + 3; // 3-6 cycles per character (faster)
-      
+
+      const cycles = Math.floor(Math.random() * 4) + 3;
+
       for (let cycle = 0; cycle < cycles; cycle++) {
         const randomChar = cycle === cycles - 1 ? targetChar : getRandomChar();
-        setDisplayText(currentText + randomChar);
-        
-        // Wait for the next cycle
-        await new Promise(resolve => setTimeout(resolve, speed));
+        const updated = currentText + randomChar;
+        setDisplayText(updated);
+        onUpdate?.(updated);
+        await new Promise((resolve) => setTimeout(resolve, speed));
       }
-      
+
       currentText += targetChar;
     }
-    
+
     setIsAnimating(false);
   };
 
@@ -65,20 +71,19 @@ export function FutureText({ text, className = '', delay = 0, speed = 30, trigge
               const timer = setTimeout(() => {
                 animateText();
               }, delay);
-              
-              // Clean up the timer if component unmounts
+
               return () => clearTimeout(timer);
             }
           });
         },
         {
-          threshold: 0.1, // Trigger when 10% of the element is visible
-          rootMargin: '0px 0px -10% 0px' // Trigger slightly before fully in view
+          threshold: 0.1,
+          rootMargin: '0px 0px -10% 0px',
         }
       );
-      
+
       observer.observe(elementRef.current);
-      
+
       return () => {
         observer.disconnect();
         if (intervalRef.current) {
@@ -86,7 +91,6 @@ export function FutureText({ text, className = '', delay = 0, speed = 30, trigge
         }
       };
     } else if (!triggerOnVisible) {
-      // Original behavior - trigger immediately with delay
       const timer = setTimeout(() => {
         animateText();
       }, delay);
