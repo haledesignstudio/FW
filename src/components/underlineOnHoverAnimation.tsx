@@ -20,7 +20,7 @@ export default function UnderlineOnHoverAnimation({
       // Add a class that will trigger the entrance animation after a delay
       setTimeout(() => {
         spanRef.current?.classList.add('animate-entrance');
-      }, 1500); // 1.5 second delay to let other page animations finish
+      }, 600); // 1.5 second delay to let other page animations finish
     }
   }, [isActive]);
 
