@@ -4,6 +4,7 @@
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 type GridItem = {
   id: string;
@@ -105,11 +106,14 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
       id: 'corporate-7',
       content: (
         <FadeInOnVisible>
-        <div className="underline text-[2.25vh] font-graphik leading-[2.25vh]">
+        <div className="text-[2.25vh] font-graphik leading-[2.25vh]">
           <a
             href={`mailto:${Mail ?? 'info@futureworld.org'}?subject=${encodeURIComponent(CTA ?? '')}`}
+            className="transition cursor-pointer"
           >
-            {CTA ?? 'Get in Touch'}
+            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+              {CTA ?? 'Get in Touch'}
+            </UnderlineOnHoverAnimation>
           </a>
         </div>
         </FadeInOnVisible>

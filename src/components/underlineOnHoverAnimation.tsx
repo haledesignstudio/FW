@@ -1,19 +1,36 @@
-import React from 'react';
-
+import React, { useEffect, useRef } from 'react';
 
 export type UnderlineOnHoverAnimationProps = {
   children: React.ReactNode;
   className?: string;
   isActive?: boolean;
+  hasStaticUnderline?: boolean; // New prop to control static underline behavior
 };
 
 export default function UnderlineOnHoverAnimation({
   children,
   className = '',
   isActive = false,
+  hasStaticUnderline = false,
 }: UnderlineOnHoverAnimationProps) {
+  const spanRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (isActive && spanRef.current) {
+      // Add a class that will trigger the entrance animation after a delay
+      setTimeout(() => {
+        spanRef.current?.classList.add('animate-entrance');
+      }, 1500); // 1.5 second delay to let other page animations finish
+    }
+  }, [isActive]);
+
   return (
-    <span className={`nav-link nav-link-ltr ${isActive ? 'underline-active' : ''} ${className}`}>{children}</span>
+    <span 
+      ref={spanRef}
+      className={`nav-link nav-link-ltr ${isActive ? 'underline-active' : ''} ${hasStaticUnderline ? 'has-static-underline' : ''} ${className}`}
+    >
+      {children}
+    </span>
   );
 }
 
@@ -36,19 +53,36 @@ if (typeof window !== 'undefined' && !document.getElementById('underline-on-hove
       opacity: 1;
     }
     .nav-link::before {
-      transition: 300ms;
       height: 1px;
       content: "";
       position: absolute;
       background-color: #000000;
       left: 0;
-    }
-    .nav-link-ltr::before {
+      bottom: -6px;
       width: 0%;
-      bottom: -8px;
+      transition: width 300ms ease-in-out;
     }
-    .nav-link-ltr:hover::before,
+    
+    /* Static underline that disappears on hover */
+    .nav-link.has-static-underline {
+      text-decoration: underline;
+      text-underline-offset: 8px;
+      text-decoration-thickness: 1px;
+    }
+    .nav-link.has-static-underline:hover {
+      text-decoration: none;
+    }
+    
+    /* Regular hover animation */
+    .nav-link-ltr:hover::before {
+      width: 100%;
+    }
+    
+    /* Active state animations */
     .nav-link-ltr.underline-active::before {
+      width: 0%;
+    }
+    .nav-link-ltr.underline-active.animate-entrance::before {
       width: 100%;
     }
   `;

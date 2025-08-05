@@ -1,6 +1,7 @@
 'use client';
 import { HighlightText } from '@/components/HighlightText';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 type GridItem = {
   id: string;
@@ -81,11 +82,14 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-center h-full">
           <FadeInOnVisible>
-          <div className="underline text-[2.25vh] font-graphik leading-[2.25vh]">
+          <div className="text-[2.25vh] font-graphik leading-[2.25vh]">
             <a
               href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA1 ?? '')}`}
+              className="transition cursor-pointer"
             >
-              {analytics.CTA1 ?? 'Get in Touch'}
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                {analytics.CTA1 ?? 'Get in Touch'}
+              </UnderlineOnHoverAnimation>
             </a>
           </div>
           </FadeInOnVisible>
@@ -190,11 +194,14 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-center h-full">
           <FadeInOnVisible>
-          <div className="underline text-[2.25vh] font-graphik leading-[2.25vh]">
+          <div className="text-[2.25vh] font-graphik leading-[2.25vh]">
             <a
               href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA2 ?? '')}`}
+              className="transition cursor-pointer"
             >
-              {analytics.CTA2 ?? 'Get in Touch'}
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                {analytics.CTA2 ?? 'Get in Touch'}
+              </UnderlineOnHoverAnimation>
             </a>
           </div>
           </FadeInOnVisible>

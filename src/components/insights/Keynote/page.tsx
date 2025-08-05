@@ -2,7 +2,7 @@
 
 import { HighlightText } from '@/components/HighlightText';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
-
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 
 type GridItem = {
@@ -155,39 +155,47 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
     },
 
     {
-      id: 'keynotes-13',
-      content: (
-        <div className="flex flex-col justify-start h-full">
-          <FadeInOnVisible>
-          <div className="underline text-[2.25vh] font-graphik leading-[2.25vh]">
-            <a
-              href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
-            >
-              {speakerSection.speakerCTA1 ?? 'Get in Touch'}
-            </a>
+        id: 'keynotes-13',
+        content: (
+          <div className="flex flex-col justify-start h-full">
+            <FadeInOnVisible>
+            <div className="text-[2.25vh] font-graphik leading-[2.25vh]">
+              <a
+                href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
+                className="transition cursor-pointer"
+              >
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  {speakerSection.speakerCTA1 ?? 'Get in Touch'}
+                </UnderlineOnHoverAnimation>
+              </a>
+            </div>
+            </FadeInOnVisible>
           </div>
-          </FadeInOnVisible>
-        </div>
-      ),
-      colSpan: 1,
-      rowSpan: 1,
-    },
-    {
-      id: 'keynotes-14',
-      content: (
-        <div className="flex flex-col justify-start h-full">
-          <FadeInOnVisible>
-          <div className="underline text-[2.25vh] font-bold leading-[2.25vh]">
-            <a href="#our-speakers">
-              {speakerSection.speakerCTA2 || ''}
-            </a>
+        ),
+        colSpan: 1,
+        rowSpan: 1,
+      },
+      {
+        id: 'keynotes-14',
+        content: (
+          <div className="flex flex-col justify-start h-full">
+            <FadeInOnVisible>
+            <div className="text-[2.25vh] font-bold leading-[2.25vh]">
+              <a 
+                href="#our-speakers"
+                className="transition cursor-pointer"
+              >
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  {speakerSection.speakerCTA2 || ''}
+                </UnderlineOnHoverAnimation>
+              </a>
+            </div>
+            </FadeInOnVisible>
           </div>
-          </FadeInOnVisible>
-        </div>
-      ),
-      colSpan: 1,
-      rowSpan: 1,
-    },
+        ),
+        colSpan: 1,
+        rowSpan: 1,
+      },
 
   ];
 }

@@ -28,8 +28,6 @@ const defaultSpeakers: Speaker[] = [
 ];
 
 export default function CircularTextSlider({ speakers = defaultSpeakers }: CircularTextSliderProps) {
-  const circleRadius = 400;
-
   const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
@@ -38,20 +36,35 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
   const [targetRotation, setTargetRotation] = useState(0);
   const [panelPosition, setPanelPosition] = useState<'left' | 'right'>('right');
 
-  const handleWheel = (e: WheelEvent) => {
-    if (!containerRef.current) return;
-    const bounds = containerRef.current.getBoundingClientRect();
-    const withinBounds =
-      e.clientX >= bounds.left &&
-      e.clientX <= bounds.right &&
-      e.clientY >= bounds.top &&
-      e.clientY <= bounds.bottom;
-
-    if (withinBounds) {
-      e.preventDefault();
-      setTargetRotation(prev => prev + e.deltaY * 0.1);
+  // Use viewport units for circle radius - much larger wheel
+  const getCircleRadius = () => {
+    if (typeof window !== 'undefined') {
+      return Math.min(window.innerWidth, window.innerHeight) * 0.7; // 60% of smaller viewport dimension
     }
+    return 600; // fallback
   };
+
+  const handleWheel = (e: WheelEvent) => {
+  if (!containerRef.current) return;
+  
+  const bounds = containerRef.current.getBoundingClientRect();
+  const centerX = bounds.left + bounds.width / 2;
+  const centerY = bounds.bottom - (45 * window.innerHeight / 100); // Account for -45vh bottom position
+  
+  // Calculate distance from cursor to circle center
+  const deltaX = e.clientX - centerX;
+  const deltaY = e.clientY - centerY;
+  const distanceFromCenter = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    // Reduce scrollable area to 60% of the visual circle radius
+  const scrollableRadius = circleRadius * 0.6;
+  
+  // Only allow scrolling if cursor is within the smaller scrollable radius
+  if (distanceFromCenter <= scrollableRadius) {
+    e.preventDefault();
+    setTargetRotation(prev => prev + e.deltaY * 0.1);
+  }
+};
 
   useEffect(() => {
     window.addEventListener('wheel', handleWheel, { passive: false });
@@ -66,7 +79,6 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
       const newRotation = currentRotation + (targetRotation - currentRotation) * 0.1;
       setCurrentRotation(newRotation);
       
-      // Using CSS transform instead of GSAP for this demo
       if (gallery) {
         gallery.style.transform = `translateX(-50%) rotate(${newRotation}deg)`;
         gallery.style.transformOrigin = '50% 0%';
@@ -79,23 +91,25 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
     return () => cancelAnimationFrame(animationId);
   }, [currentRotation, targetRotation]);
 
+  const circleRadius = getCircleRadius();
+
   return (
     <>
       <style jsx global>{`
         .circular-slider-container {
           position: relative;
           width: 100vw;
-          height: ${circleRadius + 200}px; /* Height for top half + text padding */
+          height: 70vh; /* Use viewport height instead of fixed pixels */
           pointer-events: all;
           z-index: 100;
           overflow: hidden;
         }
         .gallery {
           position: absolute;
-          bottom: -${circleRadius}px; /* Position so circle center is at container bottom */
+          bottom: -45vh; /* Position using viewport units */
           left: 50%;
-          width: 100px;
-          height: 100px;
+          width: 10vh;
+          height: 10vh;
           transform: translateX(-50%);
           pointer-events: all;
         }
@@ -104,16 +118,15 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           top: 0;
           left: 50%;
           transform-origin: 0 0;
-          font-size: 22px;
+          font-size: 2.5vh; /* Responsive font size */
           font-weight: 600;
           text-transform: uppercase;
-          letter-spacing: 2px;
+          letter-spacing: 0.3vh;
           white-space: nowrap;
           cursor: pointer;
           color: black;
           transition: color 0.2s ease;
           user-select: none;
-
         }
         .speaker-item::before {
           content: '';
@@ -128,34 +141,31 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           transition: transform 0.2s ease;
           z-index: -1;
         }
-        .speaker-item:hover {
-
-        }
         .speaker-item:hover::before {
           transform: scaleX(1);
         }
         .speaker-info-panel {
           position: absolute;
           top: 0%;
-          transform: translateX(-50%) translateY(-20px);
-          width: 600px;
-          padding: 30px;
+          transform: translateX(-50%) translateY(-2vh);
+          width: 60vw; /* Responsive width */
+          max-width: 60rem; /* Maximum width cap */
+          padding: 3vh;
           z-index: 1001;
           pointer-events: none;
           display: flex;
-          gap: 20px;
+          gap: 2vh;
           align-items: center;
           opacity: 0;
           transition: opacity 0.2s ease, transform 0.2s ease;
         }
-
         .speaker-info-panel.visible {
           opacity: 1;
           transform: translateX(-50%) translateY(0);
         }
         .speaker-image {
-          width: 200px;
-          height: 250px;
+          width: 20vh; /* Responsive image size */
+          height: 25vh;
           object-fit: cover;
           flex-shrink: 0;
         }
@@ -163,14 +173,14 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           flex: 1;
         }
         .speaker-details h3 {
-          font-size: 24px;
+          font-size: 2.8vh; /* Responsive heading */
           font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 1px;
-          margin-bottom: 10px;
+          letter-spacing: 0.1vh;
+          margin-bottom: 1vh;
         }
         .speaker-details p {
-          font-size: 16px;
+          font-size: 1.8vh; /* Responsive text */
           line-height: 1.6;
           color: #666;
           margin: 0;
