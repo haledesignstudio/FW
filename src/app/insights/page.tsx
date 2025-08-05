@@ -18,7 +18,8 @@ import ProvocativeScenarios from '@/components/ProvocativeScenarios';
 import { useSearchParams } from 'next/navigation';
 import MindbulletArchive from '@/components/mindbulletsArchive';
 import CircularTextSlider from '@/components/CircularTextSlider';
-import MaskedTextSwap from '@/components/MaskedTextSwap';
+import { useRouter, usePathname } from 'next/navigation';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 
 type insightsPageContent = {
@@ -113,6 +114,10 @@ const getGridClasses = (item: GridItem) => {
 };
 
 function PageContent() {
+    const router = useRouter();
+    const pathname = usePathname();
+
+
     const searchParams = useSearchParams();
     const sectionFromURL = searchParams?.get('section');
 
@@ -141,11 +146,10 @@ function PageContent() {
         { key: 'analytics', label: 'Shareholder Value Analytics' },
         { key: 'mindbullets', label: 'Mindbullets: News From the Future' },
         { key: 'keynotes', label: 'Keynotes' },
-        { key: 'podcast', label: 'Podcast', disabled: true },
-        { key: 'corporate', label: 'Corporate Venturing', disabled: true },
+        { key: 'podcast', label: 'Podcast' },
+        { key: 'corporate', label: 'Corporate Venturing' },
         { key: 'edge', label: 'The Edge: Insights Driven by Disruption' },
     ];
-
 
     useEffect(() => {
         Promise.all([
@@ -192,33 +196,56 @@ function PageContent() {
         {
             id: 'categories',
             content: (
-                <>
-                    <span className="text-[2.5vh] font-bold cursor-pointer text-black">Categories</span>
+                <>  <FadeInOnVisible>
+                    <span className="text-[2.5vh] font-bold cursor-pointer mt-[2.5vh]">Categories</span>
+                </FadeInOnVisible>
                     <br />
-                    <ul className="text-[2.5vh] leading-[2vh] space-y-[2vh]">
-                        {categories.map((cat) => (
-                            <li key={cat.key}>
-                                {cat.disabled ? (
-                                    <span className="transition cursor-pointer text-black">
-                                        <MaskedTextSwap
-                                            originalText={cat.label}
-                                            hoverText="Coming Soon"
-                                            className="text-[2.5vh]"
-                                        />
-                                    </span>
-                                ) : (
-                                    <button
-                                        onClick={() => setActivePage(cat.key)}
-                                        className="transition cursor-pointer text-black"
-                                    >
-                                        <UnderlineOnHoverAnimation isActive={activePage === cat.key}>
-                                            {cat.label}
-                                        </UnderlineOnHoverAnimation>
-                                    </button>
-                                )}
-                            </li>
-                        ))}
+                    <ul className="text-[2.5vh] leading-[2vh] space-y-[1.75vh]">
+                        {categories.map((cat) => {
+                            const isDisabled = cat.key === 'podcast' || cat.key === 'corporate';
+
+                            return (
+                                <li key={cat.key}>
+                                    {isDisabled ? (
+                                        <FadeInOnVisible>
+                                            <div className="group flex items-center gap-[1vh]">
+                                                {/* Underline Animation always visible */}
+                                                <UnderlineOnHoverAnimation>
+                                                    <span className="text-black">{cat.label}</span>
+                                                </UnderlineOnHoverAnimation>
+
+                                                {/* COMING SOON slides in from bottom */}
+                                                <div className="overflow-hidden h-[2.5vh] relative w-fit flex items-center">
+                                                    <span
+                                                        className="block text-[2vh] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out"
+                                                    >
+                                                        (Coming Soon)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </FadeInOnVisible>
+                                    ) : (
+                                        <FadeInOnVisible>
+                                            <button
+                                                onClick={() => {
+                                                    setActivePage(cat.key);
+                                                    router.push(`${pathname}?section=${cat.key}`, { scroll: false });
+
+                                                }}
+                                                className="transition cursor-pointer"
+                                            >
+                                                <UnderlineOnHoverAnimation isActive={activePage === cat.key}>
+                                                    {cat.label}
+                                                </UnderlineOnHoverAnimation>
+                                            </button>
+                                        </FadeInOnVisible>
+
+                                    )}
+                                </li>
+                            );
+                        })}
                     </ul>
+
                 </>
             ),
 
@@ -274,9 +301,11 @@ function PageContent() {
                                 </div>
                             ))}
                         </div>
-                        <div className="w-full">
-                            <ExpandableTopicList />
-                        </div>
+                        <FadeInOnVisible>
+                            <div className="w-full">
+                                <ExpandableTopicList />
+                            </div>
+                        </FadeInOnVisible>
                         <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
                             {keynoteBottom.map((item) => (
                                 <div key={item.id} className={getGridClasses(item)}>
@@ -284,9 +313,11 @@ function PageContent() {
                                 </div>
                             ))}
                         </div>
-                        <div className="w-full mt-[25vh]">
+                        <FadeInOnVisible>
+                        <div className="w-full mt-[5vh]">
                             <CircularTextSlider />
                         </div>
+                        </FadeInOnVisible>
 
                     </>
                 ) : (
@@ -299,15 +330,19 @@ function PageContent() {
                             ))}
                         </div>
                         {activePage === 'edge' && (
+                            <FadeInOnVisible>
                             <div className="mt-[15vh]">
                                 <ProvocativeScenarios />
                             </div>
+                            </FadeInOnVisible>
                         )}
 
                         {activePage === 'mindbullets' && (
+                            <FadeInOnVisible>
                             <div className="">
                                 <MindbulletArchive />
                             </div>
+                            </FadeInOnVisible>
                         )}
 
 

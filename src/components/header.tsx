@@ -84,66 +84,86 @@ const menuItems = [
 
     },
     { label: '', href: '' },
-    {
-        label: 'INSIGHTS',
-        href: '/insights',
-        content: (
-            <div className="text-left">
-                <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
-                    <li>
-                        <Link href="/insights?section=analytics" className="flex gap-[10%] hover:underline">
-                            <span>01</span>
-                            <span>Shareholder Value Analytics</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/insights?section=mindbullets" className="flex gap-[10%] hover:underline">
-                            <span className="">02</span>
-                            <span>Mindbullets: News From the Future</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/insights?section=keynotes" className="flex gap-[10%] hover:underline">
-                            <span className="">03</span>
-                            <span>Keynotes</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/insights?section=podcast" className="flex gap-[10%] hover:underline">
-                            <span className="">04</span>
-                            <span>Podcasts</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/insights?section=corporate" className="flex gap-[10%] hover:underline">
-                            <span className="">05</span>
-                            <span>Corporate Venturing</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/insights?section=edge" className="flex gap-[10%] hover:underline">
-                            <span className="">06</span>
-                            <span>The Edge: Insights Driven by Disruption</span>
-                        </Link>
-                    </li>
-                </ul>
-                <Image
-                    src="/menu-insights.png"
-                    alt="home"
-                    width={600}
-                    height={400}
-                    className="w-[60%] pb-[7.5vh]"
-                    loading="eager"
-                    priority
-                />
-                <Link href="/your-target-page">
-                    <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
-                        Explore Shareholder Value Analytics
-                    </span>
-                </Link>
-            </div>
-        )
-    },
+    // Update the INSIGHTS section in your menuItems array:
+
+{
+    label: 'INSIGHTS',
+    href: '/insights',
+    content: (
+        <div className="text-left">
+            <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+                <li>
+                    <Link href="/insights?section=analytics" className="flex gap-[10%] hover:underline">
+                        <span>01</span>
+                        <span>Shareholder Value Analytics</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/insights?section=mindbullets" className="flex gap-[10%] hover:underline">
+                        <span className="">02</span>
+                        <span>Mindbullets: News From the Future</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/insights?section=keynotes" className="flex gap-[10%] hover:underline">
+                        <span className="">03</span>
+                        <span>Keynotes</span>
+                    </Link>
+                </li>
+                <li>
+                    <div className="group flex items-center group cursor-pointer">
+                        <span className="group-hover:underline">04</span>
+                        <div className="w-[10%]"></div>
+                        <span className="group-hover:underline">Podcasts</span>
+                        <div className="w-[2.5%]"></div>
+                        
+                        {/* COMING SOON slides in from bottom */}
+                        <div className="overflow-hidden h-[0.85vw] relative w-fit flex items-center">
+                            <span className="block text-[0.7vw] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
+                                (Coming Soon)
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div className="group flex items-center group cursor-pointer">
+                        <span className="group-hover:underline">05</span>
+                        <div className="w-[10%]"></div>
+                        <span className="group-hover:underline">Corporate Venturing</span>
+                        <div className="w-[2.5%]"></div>
+                        
+                        {/* COMING SOON slides in from bottom */}
+                        <div className="overflow-hidden h-[0.85vw] relative w-fit flex items-center">
+                            <span className="block text-[0.7vw] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
+                                (Coming Soon)
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <Link href="/insights?section=edge" className="flex gap-[10%] hover:underline">
+                        <span className="">06</span>
+                        <span>The Edge: Insights Driven by Disruption</span>
+                    </Link>
+                </li>
+            </ul>
+            <Image
+                src="/menu-insights.png"
+                alt="home"
+                width={600}
+                height={400}
+                className="w-[60%] pb-[7.5vh]"
+                loading="eager"
+                priority
+            />
+            <Link href="/your-target-page">
+                <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
+                    Explore Shareholder Value Analytics
+                </span>
+            </Link>
+        </div>
+    )
+},
     { label: '', href: '' },
     {
         label: 'OUR WORK',

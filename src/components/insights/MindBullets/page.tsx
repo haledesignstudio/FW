@@ -2,7 +2,7 @@
 
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
-import TypeMotion from '@/components/typeMotion';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 
 type GridItem = {
@@ -46,9 +46,11 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
     {
       id: 'mindbullets-1',
       content: (
-        <TypeMotion delay={2.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <FadeInOnVisible>
+        <div className="text-[20vh] font-graphik leading-[20vh]">
           {title}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 5,
       rowSpan: 3,
@@ -62,9 +64,11 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
     {
       id: 'mindbullets-3',
       content: (
-        <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[6vh] font-graphik leading-[7vh]">
+        <FadeInOnVisible>
+        <div className="text-[5vh] font-graphik leading-tight">
           <HighlightText text={subheading} />
         </div>
+        </FadeInOnVisible>
       ),
       colSpan: 4,
       rowSpan: 1,
@@ -84,7 +88,9 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
     {
       id: 'mindbullets-6',
       content:
-      <ResponsiveGridCarousel items={carouselItems} />,
+      <FadeInOnVisible>
+      <ResponsiveGridCarousel items={carouselItems} />
+      </FadeInOnVisible>,
       colSpan: 6,
       rowSpan: 2,
     },

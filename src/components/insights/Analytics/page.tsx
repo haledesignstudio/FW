@@ -1,6 +1,6 @@
 'use client';
 import { HighlightText } from '@/components/HighlightText';
-import TypeMotion from '@/components/typeMotion';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 type GridItem = {
   id: string;
@@ -31,9 +31,11 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-1',
       content: (
-        <TypeMotion delay={2.0} className="text-[20vh] font-graphik leading-[20vh]">
+        <FadeInOnVisible>
+        <div className="text-[20vh] font-graphik leading-[20vh]">
           {analytics.title}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 5,
       rowSpan: 2,
@@ -47,9 +49,11 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-3',
       content: (
-        <TypeMotion delay={2.5} className="text-[3vh] leading-tight">
+        <FadeInOnVisible>
+        <div className="text-[3.5vh] leading-tight">
           {analytics.contentText}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -57,9 +61,11 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-4',
       content: (
-        <div className="text-[5vh] md:text-[5vh] font-bold leading-tight">
+        <FadeInOnVisible>
+        <div className="text-[5vh] font-bold leading-tight">
           <HighlightText text={analytics.subheading} />
         </div>
+        </FadeInOnVisible>
       ),
       colSpan: 4,
       rowSpan: 1,
@@ -74,13 +80,15 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-6',
       content: (
         <div className="flex items-center h-full">
-          <TypeMotion delay={3.5} className="underline text-[5vh] md:text-[2vh] font-graphik leading-[2vh]">
+          <FadeInOnVisible>
+          <div className="underline text-[2.25vh] font-graphik leading-[2.25vh]">
             <a
               href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA1 ?? '')}`}
             >
               {analytics.CTA1 ?? 'Get in Touch'}
             </a>
-          </TypeMotion>
+          </div>
+          </FadeInOnVisible>
         </div>
       ),
       colSpan: 2,
@@ -118,9 +126,11 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-10',
       content: (
-        <TypeMotion delay={4.0} className="text-[5vh] md:text-[4vh] leading-tight">
+        <FadeInOnVisible>
+        <div className="text-[3.5vh] leading-tight">
           {analytics.IQ_context}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -128,9 +138,11 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-11',
       content: (
-        <div className="text-[5vh] md:text-[5vh] font-bold leading-tight">
+        <FadeInOnVisible>
+        <div className="text-[4.75vh] font-bold leading-tight">
           <HighlightText text={analytics.IQ_heading} />
         </div>
+        </FadeInOnVisible>
       ),
       colSpan: 3,
       rowSpan: 1,
@@ -151,9 +163,11 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-14',
       content: (
         <div className="flex items-end h-full">
-          <TypeMotion delay={5.0} className="text-[5vh] md:text-[3vh] leading-tight">
+          <FadeInOnVisible>
+          <div className="text-[2.75vh] leading-tight">
             {analytics.IQ_subheading}
-          </TypeMotion>
+          </div>
+          </FadeInOnVisible>
         </div>
       ),
       colSpan: 3,
@@ -175,13 +189,15 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-21',
       content: (
         <div className="flex items-center h-full">
-          <TypeMotion delay={5.5} className="underline text-[5vh] md:text-[2vh] font-graphik leading-[2vh]">
+          <FadeInOnVisible>
+          <div className="underline text-[2.25vh] font-graphik leading-[2.25vh]">
             <a
               href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA2 ?? '')}`}
             >
               {analytics.CTA2 ?? 'Get in Touch'}
             </a>
-          </TypeMotion>
+          </div>
+          </FadeInOnVisible>
         </div>
       ),
       colSpan: 2,

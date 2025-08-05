@@ -3,7 +3,7 @@
 
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
-import TypeMotion from '@/components/typeMotion';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 type GridItem = {
   id: string;
@@ -50,9 +50,11 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
     {
       id: 'corporate-1',
       content: (
-        <TypeMotion delay={2.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <FadeInOnVisible>
+        <div className="text-[20vh] font-graphik leading-[20vh]">
           {title}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 5,
       rowSpan: 2,
@@ -66,9 +68,11 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
     {
       id: 'corporate-3',
       content: (
-        <TypeMotion delay={2.5} className="text-[3vh] font-roboto leading-[4vh]">
+        <FadeInOnVisible>
+        <div className="text-[3.5vh] font-roboto leading-tight">
           {contentText}
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -76,9 +80,11 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
     {
       id: 'corporate-4',
       content: (
-        <div className="text-[5vh] font-graphik leading-[6vh]">
+        <FadeInOnVisible>
+        <div className="text-[5vh] font-graphik leading-tight">
           <HighlightText text={subheading} />
         </div>
+        </FadeInOnVisible>
       ),
       colSpan: 3,
       rowSpan: 1,
@@ -98,13 +104,15 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
     {
       id: 'corporate-7',
       content: (
-        <TypeMotion delay={3.5} className="underline text-[2vh] font-graphik leading-[2vh]">
+        <FadeInOnVisible>
+        <div className="underline text-[2.25vh] font-graphik leading-[2.25vh]">
           <a
             href={`mailto:${Mail ?? 'info@futureworld.org'}?subject=${encodeURIComponent(CTA ?? '')}`}
           >
             {CTA ?? 'Get in Touch'}
           </a>
-        </TypeMotion>
+        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -118,7 +126,9 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
     {
       id: 'corporate-9',
       content: 
-      <ResponsiveGridCarousel items={carouselItems} />,
+      <FadeInOnVisible>
+      <ResponsiveGridCarousel items={carouselItems} />
+      </FadeInOnVisible>,
       colSpan: 6,
       rowSpan: 2,
     },
