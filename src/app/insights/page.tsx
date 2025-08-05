@@ -16,6 +16,10 @@ import { KeynoteTop, KeynoteBottom } from '@/components/insights/Keynote/page';
 import ExpandableTopicList from '@/components/ExpandableTopicList';
 import ProvocativeScenarios from '@/components/ProvocativeScenarios';
 import { useSearchParams } from 'next/navigation';
+import MindbulletArchive from '@/components/mindbulletsArchive';
+import CircularTextSlider from '@/components/CircularTextSlider';
+import MaskedTextSwap from '@/components/MaskedTextSwap';
+
 
 type insightsPageContent = {
     title: string;
@@ -137,10 +141,11 @@ function PageContent() {
         { key: 'analytics', label: 'Shareholder Value Analytics' },
         { key: 'mindbullets', label: 'Mindbullets: News From the Future' },
         { key: 'keynotes', label: 'Keynotes' },
-        { key: 'podcast', label: 'Podcast' },
-        { key: 'corporate', label: 'Corporate Venturing' },
+        { key: 'podcast', label: 'Podcast', disabled: true },
+        { key: 'corporate', label: 'Corporate Venturing', disabled: true },
         { key: 'edge', label: 'The Edge: Insights Driven by Disruption' },
     ];
+
 
     useEffect(() => {
         Promise.all([
@@ -174,7 +179,7 @@ function PageContent() {
                     text={data.insights.title}
                     typeSpeed={60}
                     delay={500}
-                    className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[8vh] font-bold leading-tight"
+                    className="text-[10vh] font-bold leading-tight"
                 />
             ),
             colSpan: 4,
@@ -190,19 +195,30 @@ function PageContent() {
                 <>
                     <span className="text-[2.5vh] font-bold cursor-pointer">Categories</span>
                     <br />
-                    <ul className="text-[2.5vh] leading-[2vh]  space-y-[2.5vh]">
+                    <ul className="text-[2.5vh] leading-[2vh]  space-y-[2vh]">
                         {categories.map((cat) => (
                             <li key={cat.key}>
-                                <button
-                                    onClick={() => setActivePage(cat.key)}
-                                    className="transition cursor-pointer"
-                                >
-                                    <UnderlineOnHoverAnimation isActive={activePage === cat.key}>
-                                        {cat.label}
-                                    </UnderlineOnHoverAnimation>
-                                </button>
+                                {cat.disabled ? (
+                                    <span className="transition cursor-pointer">
+                                        <MaskedTextSwap
+                                            originalText={cat.label}
+                                            hoverText="Coming Soon"
+                                            className="text-[2.5vh]"
+                                        />
+                                    </span>
+                                ) : (
+                                    <button
+                                        onClick={() => setActivePage(cat.key)}
+                                        className="transition cursor-pointer"
+                                    >
+                                        <UnderlineOnHoverAnimation isActive={activePage === cat.key}>
+                                            {cat.label}
+                                        </UnderlineOnHoverAnimation>
+                                    </button>
+                                )}
                             </li>
                         ))}
+
                     </ul>
 
                 </>
@@ -270,6 +286,10 @@ function PageContent() {
                                 </div>
                             ))}
                         </div>
+                        <div className="w-full mt-[25vh]">
+                            <CircularTextSlider />
+                        </div>
+
                     </>
                 ) : (
                     <>
@@ -285,6 +305,14 @@ function PageContent() {
                                 <ProvocativeScenarios />
                             </div>
                         )}
+
+                        {activePage === 'mindbullets' && (
+                            <div className="">
+                                <MindbulletArchive />
+                            </div>
+                        )}
+
+
                     </>
                 )}
             </main>

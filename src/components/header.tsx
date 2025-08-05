@@ -34,7 +34,18 @@ const menuItems = [
                         </Link>
                     </li>
                 </ul>
-                <img src="/menu-home.png" alt="home" className="w-[60%]" />
+                <Image
+                    src="/menu-home.png"
+                    alt="home"
+                    width={600}
+                    height={400}
+                    className="w-[60%] h-auto"
+                    loading="eager"
+                    priority
+                />
+
+
+
             </div>
         )
     },
@@ -58,7 +69,16 @@ const menuItems = [
                         </Link>
                     </li>
                 </ul>
-                <img src="/menu-what-we-do.png" alt="what-we-do" className="w-[60%]" />
+                <Image
+                    src="/menu-what-we-do.png"
+                    alt="home"
+                    width={600}
+                    height={400}
+                    className="w-[60%] h-auto"
+                    loading="eager"
+                    priority
+                />
+
             </div>
         )
 
@@ -107,7 +127,15 @@ const menuItems = [
                         </Link>
                     </li>
                 </ul>
-                <img src="/menu-insights.png" alt="insights" className="w-[60%] pb-[7.5vh]" />
+                <Image
+                    src="/menu-insights.png"
+                    alt="home"
+                    width={600}
+                    height={400}
+                    className="w-[60%] pb-[7.5vh]"
+                    loading="eager"
+                    priority
+                />
                 <Link href="/your-target-page">
                     <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
                         Explore Shareholder Value Analytics
@@ -154,7 +182,15 @@ const menuItems = [
                         </Link>
                     </li>
                 </ul>
-                <img src="/menu-our-work.png" alt="our-work" className="w-[60%] pb-[7.5vh]" />
+                <Image
+                    src="/menu-our-work.png" 
+                    alt="home"
+                    width={600}
+                    height={400}
+                    className="w-[60%] pb-[7.5vh]"
+                    loading="eager"
+                    priority
+                />
                 <Link href="/your-target-page">
                     <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
                         See case studies
@@ -195,7 +231,15 @@ const menuItems = [
                         </Link>
                     </li>
                 </ul>
-                <img src="/menu-people.png" alt="careers" className="w-[60%] pb-[7.5vh]" />
+                <Image
+                    src="/menu-people.png" 
+                    alt="home"
+                    width={600}
+                    height={400}
+                    className="w-[60%] pb-[7.5vh]"
+                    loading="eager"
+                    priority
+                />
                 <Link href="/your-target-page">
                     <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
                         See careers
@@ -230,7 +274,15 @@ const menuItems = [
                         </Link>
                     </li>
                 </ul>
-                <img src="/menu-contact.png" alt="careers" className="w-[60%] pb-[7.5vh]" />
+                <Image
+                    src="/menu-contact.png" 
+                    alt="home"
+                    width={600}
+                    height={400}
+                    className="w-[60%] pb-[7.5vh]"
+                    loading="eager"
+                    priority
+                />
                 <Link href="/your-target-page">
                     <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
                         Explore Keynote topics
@@ -245,30 +297,30 @@ const menuItems = [
 
 
 const menuVariants: Variants = {
-  hidden: {
-    maxHeight: '0px', // use string, not number
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.42, 0, 0.58, 1]
+    hidden: {
+        maxHeight: '0px', // use string, not number
+        opacity: 1,
+        transition: {
+            duration: 0.6,
+            ease: [0.42, 0, 0.58, 1]
+        }
+    },
+    visible: {
+        maxHeight: '75vh',
+        opacity: 1,
+        transition: {
+            duration: 0.6,
+            ease: [0.42, 0, 0.58, 1]
+        }
+    },
+    exit: {
+        maxHeight: '0px',
+        opacity: 1,
+        transition: {
+            duration: 0.5,
+            ease: [0.42, 0, 0.58, 1]
+        }
     }
-  },
-  visible: {
-    maxHeight: '75vh',
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.42, 0, 0.58, 1]
-    }
-  },
-  exit: {
-    maxHeight: '0px',
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      ease: [0.42, 0, 0.58, 1]
-    }
-  }
 };
 
 
@@ -389,11 +441,12 @@ const Header: React.FC = () => {
                 {/* Logo: always first column */}
                 <Link href="/" className="relative col-span-1 aspect-[5/1]">
                     <Image
-                        src="/logo.png"
+                        src="/FW_Logo.gif"
                         alt="Logo"
                         fill
                         className="object-contain object-left-top cursor-pointer"
                         priority
+                        unoptimized={false}
                     />
                 </Link>
 

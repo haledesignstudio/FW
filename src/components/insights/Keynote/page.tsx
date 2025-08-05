@@ -62,7 +62,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
       id: 'keynotes-4',
       content: (
         <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] leading-tight">
-          <HighlightText text={topicSection.topicContentText} />
+          {topicSection.topicContentText}
         </div>
       ),
       colSpan: 2,
@@ -124,7 +124,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       id: 'keynotes-11',
       content: (
         <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] leading-tight">
-          <HighlightText text={speakerSection.speakerContentText} />
+          {speakerSection.speakerContentText}
         </div>
       ),
       colSpan: 2,

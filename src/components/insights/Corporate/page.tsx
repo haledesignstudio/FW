@@ -66,7 +66,7 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
       id: 'corporate-3',
       content: (
         <div className="text-[3vh] font-roboto leading-[4vh]">
-          <HighlightText text={contentText} />
+          {contentText}
         </div>
       ),
       colSpan: 2,
