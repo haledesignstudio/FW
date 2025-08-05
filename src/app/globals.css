@@ -46,3 +46,12 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;                 /* Chrome, Safari and Opera */
 }
+
+/* TypeMotion animation styles */
+.split {
+  will-change: transform, opacity;
+}
+
+.split * {
+  will-change: transform, opacity;
+}

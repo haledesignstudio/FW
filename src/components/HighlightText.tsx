@@ -15,6 +15,7 @@ export function HighlightText({ text }: { text: string }) {
   if (!match) {
     match = text.match(tomorrowRegex);
   }
+  
   if (!match) return <>{text}</>;
 
   const start = match.index!;
@@ -25,9 +26,9 @@ export function HighlightText({ text }: { text: string }) {
       {text.slice(0, start)}
       <span
         style={{
-          background: highlightColor,
+          backgroundColor: highlightColor,
           padding: '0.1em 0.25em',
-          color: 'inherit',
+          color: 'black',
           boxDecorationBreak: 'clone',
         }}
       >

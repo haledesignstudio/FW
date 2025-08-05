@@ -1,5 +1,6 @@
 'use client';
 import { HighlightText } from '@/components/HighlightText';
+import TypeMotion from '@/components/typeMotion';
 
 type GridItem = {
   id: string;
@@ -30,9 +31,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-1',
       content: (
-        <p className="text-[20vh] font-graphik leading-[20vh]">
+        <TypeMotion delay={2.0} className="text-[20vh] font-graphik leading-[20vh]">
           {analytics.title}
-        </p>
+        </TypeMotion>
       ),
       colSpan: 5,
       rowSpan: 2,
@@ -46,9 +47,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-3',
       content: (
-        <div className="text-[3vh] leading-tight">
+        <TypeMotion delay={2.5} className="text-[3vh] leading-tight">
           {analytics.contentText}
-        </div>
+        </TypeMotion>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -73,12 +74,13 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-6',
       content: (
         <div className="flex items-center h-full">
-          <a
-            href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA1 ?? '')}`}
-            className="underline text-[5vh] md:text-[2vh] font-graphik leading-[2vh]"
-          >
-            {analytics.CTA1 ?? 'Get in Touch'}
-          </a>
+          <TypeMotion delay={3.5} className="underline text-[5vh] md:text-[2vh] font-graphik leading-[2vh]">
+            <a
+              href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA1 ?? '')}`}
+            >
+              {analytics.CTA1 ?? 'Get in Touch'}
+            </a>
+          </TypeMotion>
         </div>
       ),
       colSpan: 2,
@@ -116,9 +118,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-10',
       content: (
-        <div className="text-[5vh] md:text-[4vh] leading-tight">
+        <TypeMotion delay={4.0} className="text-[5vh] md:text-[4vh] leading-tight">
           {analytics.IQ_context}
-        </div>
+        </TypeMotion>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -149,9 +151,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-14',
       content: (
         <div className="flex items-end h-full">
-          <div className="text-[5vh] md:text-[3vh] leading-tight">
+          <TypeMotion delay={5.0} className="text-[5vh] md:text-[3vh] leading-tight">
             {analytics.IQ_subheading}
-          </div>
+          </TypeMotion>
         </div>
       ),
       colSpan: 3,
@@ -173,12 +175,13 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-21',
       content: (
         <div className="flex items-center h-full">
-        <a
-          href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA2 ?? '')}`}
-          className="underline text-[5vh] md:text-[2vh] font-graphik leading-[2vh]"
-        >
-          {analytics.CTA2 ?? 'Get in Touch'}
-        </a>
+          <TypeMotion delay={5.5} className="underline text-[5vh] md:text-[2vh] font-graphik leading-[2vh]">
+            <a
+              href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA2 ?? '')}`}
+            >
+              {analytics.CTA2 ?? 'Get in Touch'}
+            </a>
+          </TypeMotion>
         </div>
       ),
       colSpan: 2,

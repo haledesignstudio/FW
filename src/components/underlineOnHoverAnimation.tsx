@@ -28,7 +28,7 @@ if (typeof window !== 'undefined' && !document.getElementById('underline-on-hove
       margin: 0;
       display: inline-block;
       position: relative;
-      opacity: 0.5;
+      opacity: 1;
       cursor: pointer;
       transition: opacity 200ms;
     }
@@ -37,7 +37,7 @@ if (typeof window !== 'undefined' && !document.getElementById('underline-on-hove
     }
     .nav-link::before {
       transition: 300ms;
-      height: 2px;
+      height: 1px;
       content: "";
       position: absolute;
       background-color: #000000;

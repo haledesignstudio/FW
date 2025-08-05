@@ -1,5 +1,6 @@
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import { HighlightText } from '@/components/HighlightText';
+import TypeMotion from '@/components/typeMotion';
 
 
 type GridItem = {
@@ -43,9 +44,9 @@ export default function Podcast({ title, subheading, podcasts }: PodcastProps): 
         {
             id: 'podcast-1',
             content: (
-                <h2 className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-graphik leading-[20vh]">
+                <TypeMotion delay={2.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-graphik leading-[20vh]">
                     {title}
-                </h2>
+                </TypeMotion>
             ),
             colSpan: 5,
             rowSpan: 1,
@@ -61,8 +62,6 @@ export default function Podcast({ title, subheading, podcasts }: PodcastProps): 
             content: (
                 <div className="text-[5vh] font-graphik leading-[5vh]">
                     <HighlightText text={subheading} />
-
-
                 </div>
             ),
             colSpan: 3,

@@ -5,6 +5,7 @@ import TextAnimation from '@/components/TextAnimation';
 import CountingAnimation from '@/components/countingAnimation';
 import AudioVisualiser from '@/components/audioVisualiser';
 import MindbulletArchive from '@/components/mindbulletsArchive';
+import { FutureText } from '@/components/FutureText';
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(true); // Start as playing
@@ -121,6 +122,40 @@ export default function Home() {
           letterDelay={0.08}
           duration={0.7}
         />
+      </div>
+
+      {/* FutureText Animation Test Section */}
+      <div className="mt-16 w-full max-w-6xl">
+        <h2 className="text-3xl font-roboto-bold text-center mb-12">
+          <TextAnimation 
+            text="FutureText Animation Tests"
+            delay={8}
+            letterDelay={0.05}
+            duration={0.6}
+          />
+        </h2>
+        
+        <div className="space-y-8 text-center">
+          <div className="bg-gray-900 p-6 rounded">
+            <h3 className="text-lg mb-4">Basic Future Text:</h3>
+            <FutureText text="TRANSMISSION RECEIVED" className="text-2xl text-green-400" delay={9000} speed={80} />
+          </div>
+          
+          <div className="bg-gray-900 p-6 rounded">
+            <h3 className="text-lg mb-4">Fast Animation:</h3>
+            <FutureText text="Decoding future data..." className="text-xl text-blue-400" delay={12000} speed={40} />
+          </div>
+          
+          <div className="bg-gray-900 p-6 rounded">
+            <h3 className="text-lg mb-4">Slow Dramatic Effect:</h3>
+            <FutureText text="Welcome to Tomorrow" className="text-3xl text-purple-400" delay={15000} speed={120} />
+          </div>
+          
+          <div className="bg-gray-900 p-6 rounded">
+            <h3 className="text-lg mb-4">Mixed Case Input:</h3>
+            <FutureText text="The Future is Now" className="text-xl text-red-400" delay={18000} speed={60} />
+          </div>
+        </div>
       </div>
 
       {/* Counting Animation Test Section */}

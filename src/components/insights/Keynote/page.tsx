@@ -1,6 +1,7 @@
 'use client';
 
 import { HighlightText } from '@/components/HighlightText';
+import TypeMotion from '@/components/typeMotion';
 
 
 
@@ -39,9 +40,9 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
     {
       id: 'keynotes-1',
       content: (
-        <h2 className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <TypeMotion delay={2.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
           {topicSection.topicSectionTitle || ''}
-        </h2>
+        </TypeMotion>
       ),
       colSpan: 5,
       rowSpan: 1,
@@ -61,9 +62,9 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
     {
       id: 'keynotes-4',
       content: (
-        <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] leading-tight">
+        <TypeMotion delay={2.5} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] leading-tight">
           {topicSection.topicContentText}
-        </div>
+        </TypeMotion>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -101,9 +102,9 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
     {
       id: 'keynotes-8',
       content: (
-        <h2 className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <TypeMotion delay={3.5} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
           {speakerSection.speakerSectionTitle || ''}
-        </h2>
+        </TypeMotion>
       ),
       colSpan: 5,
       rowSpan: 1,
@@ -123,9 +124,9 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
     {
       id: 'keynotes-11',
       content: (
-        <div className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] leading-tight">
+        <TypeMotion delay={4.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] leading-tight">
           {speakerSection.speakerContentText}
-        </div>
+        </TypeMotion>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -151,12 +152,13 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       id: 'keynotes-14',
       content: (
         <div className="flex flex-col justify-end h-full">
-          <a
-            href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
-            className="underline text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] font-graphik leading-[2vh]"
-          >
-            {speakerSection.speakerCTA1 ?? 'Get in Touch'}
-          </a>
+          <TypeMotion delay={5.0} className="underline text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] font-graphik leading-[2vh]">
+            <a
+              href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
+            >
+              {speakerSection.speakerCTA1 ?? 'Get in Touch'}
+            </a>
+          </TypeMotion>
         </div>
       ),
       colSpan: 1,
@@ -166,12 +168,11 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       id: 'keynotes-15',
       content: (
         <div className="flex flex-col justify-end h-full">
-          <a
-            href="#our-speakers"
-            className="underline text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] font-bold leading-tight"
-          >
-            {speakerSection.speakerCTA2 || ''}
-          </a>
+          <TypeMotion delay={5.5} className="underline text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] font-bold leading-tight">
+            <a href="#our-speakers">
+              {speakerSection.speakerCTA2 || ''}
+            </a>
+          </TypeMotion>
         </div>
       ),
       colSpan: 1,

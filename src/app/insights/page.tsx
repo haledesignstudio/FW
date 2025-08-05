@@ -193,13 +193,13 @@ function PageContent() {
             id: 'categories',
             content: (
                 <>
-                    <span className="text-[2.5vh] font-bold cursor-pointer">Categories</span>
+                    <span className="text-[2.5vh] font-bold cursor-pointer text-black">Categories</span>
                     <br />
-                    <ul className="text-[2.5vh] leading-[2vh]  space-y-[2vh]">
+                    <ul className="text-[2.5vh] leading-[2vh] space-y-[2vh]">
                         {categories.map((cat) => (
                             <li key={cat.key}>
                                 {cat.disabled ? (
-                                    <span className="transition cursor-pointer">
+                                    <span className="transition cursor-pointer text-black">
                                         <MaskedTextSwap
                                             originalText={cat.label}
                                             hoverText="Coming Soon"
@@ -209,7 +209,7 @@ function PageContent() {
                                 ) : (
                                     <button
                                         onClick={() => setActivePage(cat.key)}
-                                        className="transition cursor-pointer"
+                                        className="transition cursor-pointer text-black"
                                     >
                                         <UnderlineOnHoverAnimation isActive={activePage === cat.key}>
                                             {cat.label}
@@ -218,9 +218,7 @@ function PageContent() {
                                 )}
                             </li>
                         ))}
-
                     </ul>
-
                 </>
             ),
 

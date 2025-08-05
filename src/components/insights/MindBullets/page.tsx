@@ -2,6 +2,7 @@
 
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
+import TypeMotion from '@/components/typeMotion';
 
 
 type GridItem = {
@@ -45,9 +46,9 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
     {
       id: 'mindbullets-1',
       content: (
-        <h2 className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <TypeMotion delay={2.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
           {title}
-        </h2>
+        </TypeMotion>
       ),
       colSpan: 5,
       rowSpan: 3,

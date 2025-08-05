@@ -3,6 +3,7 @@
 
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
+import TypeMotion from '@/components/typeMotion';
 
 type GridItem = {
   id: string;
@@ -49,9 +50,9 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
     {
       id: 'corporate-1',
       content: (
-        <h2 className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
+        <TypeMotion delay={2.0} className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[20vh] font-graphik leading-[20vh]">
           {title}
-        </h2>
+        </TypeMotion>
       ),
       colSpan: 5,
       rowSpan: 2,
@@ -65,9 +66,9 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
     {
       id: 'corporate-3',
       content: (
-        <div className="text-[3vh] font-roboto leading-[4vh]">
+        <TypeMotion delay={2.5} className="text-[3vh] font-roboto leading-[4vh]">
           {contentText}
-        </div>
+        </TypeMotion>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -97,12 +98,13 @@ export default function Corporate({ title, subheading, contentText, CTA, Mail, p
     {
       id: 'corporate-7',
       content: (
-        <a
-          href={`mailto:${Mail ?? 'info@futureworld.org'}?subject=${encodeURIComponent(CTA ?? '')}`}
-          className="underline text-[2vh] font-graphik leading-[2vh]"
-        >
-          {CTA ?? 'Get in Touch'}
-        </a>
+        <TypeMotion delay={3.5} className="underline text-[2vh] font-graphik leading-[2vh]">
+          <a
+            href={`mailto:${Mail ?? 'info@futureworld.org'}?subject=${encodeURIComponent(CTA ?? '')}`}
+          >
+            {CTA ?? 'Get in Touch'}
+          </a>
+        </TypeMotion>
       ),
       colSpan: 2,
       rowSpan: 1,
