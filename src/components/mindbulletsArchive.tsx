@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 function getRandomDatelineNumber() {
-  return Math.floor(Math.random() * 40) + 1;
+  return Math.floor(Math.random() * (2100 - 2025 + 1)) + 2025;
 }
+
+const localImages = [
+  '/menu-people.png',
+  '/menu-our-work.png',
+  '/menu-home.png',
+  '/menu-insights.png',
+  '/menu-what-we-do.png',
+
+];
+
 
 const mockMindbullets = Array.from({ length: 40 }).map((_, i) => {
   const datelineNum = getRandomDatelineNumber();
+  const imageIndex = i % localImages.length; // Cycle through 10 images
   return {
     _id: `mb${i}`,
     title: `Mindbullet Title ${i + 1}`,
     publishedDate: `2025-07-${(i % 30) + 1}`,
-    dateline: `Dateline ${datelineNum}`,
-    headImage: { url: `https://picsum.photos/seed/${i}/120/120` },
+    dateline: `${datelineNum}`,
+    headImage: { url: localImages[imageIndex] }, // Use local image
   };
 });
+
 
 const PAGE_SIZE = 10;
 
@@ -63,8 +76,8 @@ const MindbulletArchive = () => {
           <button onClick={() => handleSort('publishedDate')} className="flex items-center cursor-pointer">
             <span
               className={`transition-transform duration-200 ${sortBy === 'publishedDate' && sortDirection === 'asc'
-                  ? 'rotate-[-90deg]'
-                  : 'rotate-0'
+                ? 'rotate-[-90deg]'
+                : 'rotate-0'
                 }`}
             >
               <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -78,8 +91,8 @@ const MindbulletArchive = () => {
           <button onClick={() => handleSort('dateline')} className="flex items-center cursor-pointer">
             <span
               className={`transition-transform duration-200 ${sortBy === 'dateline' && sortDirection === 'asc'
-                  ? 'rotate-[-90deg]'
-                  : 'rotate-0'
+                ? 'rotate-[-90deg]'
+                : 'rotate-0'
                 }`}
             >
               <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -144,24 +157,29 @@ const MindbulletArchive = () => {
         </div>
       </div>
 
-      {/* Hover Image */}
+
       {hoveredImage && (
-        <img
+        <Image
           src={hoveredImage}
           alt="Mindbullet"
+          width={1920}  // example values
+          height={1080}
           style={{
             position: 'fixed',
             top: mousePos.y + 10,
             left: mousePos.x + 10,
-            width: 120,
-            height: 120,
+            height: 'calc(10vw * 9 / 16)',  // 16:9 box height
+            width: '10vw',                  // 16:9 box width
+            objectFit: 'cover',             // Crop + fill box
             pointerEvents: 'none',
-            border: '2px solid #ccc',
-            background: '#fff',
             zIndex: 9999,
           }}
+          sizes="10vw"
         />
       )}
+
+
+
     </div>
   );
 };

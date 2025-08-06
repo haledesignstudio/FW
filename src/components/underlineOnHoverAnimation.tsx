@@ -1,10 +1,11 @@
+'use client';
 import React, { useEffect, useRef } from 'react';
 
 export type UnderlineOnHoverAnimationProps = {
   children: React.ReactNode;
   className?: string;
   isActive?: boolean;
-  hasStaticUnderline?: boolean; // New prop to control static underline behavior
+  hasStaticUnderline?: boolean;
 };
 
 export default function UnderlineOnHoverAnimation({
@@ -17,27 +18,28 @@ export default function UnderlineOnHoverAnimation({
 
   useEffect(() => {
     if (isActive && spanRef.current) {
-      // Add a class that will trigger the entrance animation after a delay
       setTimeout(() => {
         spanRef.current?.classList.add('animate-entrance');
-      }, 600); // 1.5 second delay to let other page animations finish
+      }, 600);
     }
   }, [isActive]);
 
   return (
-    <span 
+    <span
       ref={spanRef}
-      className={`nav-link nav-link-ltr ${isActive ? 'underline-active' : ''} ${hasStaticUnderline ? 'has-static-underline' : ''} ${className}`}
+      className={`nav-link nav-link-ltr ${
+        isActive ? 'underline-active' : ''
+      } ${hasStaticUnderline ? 'underline-static' : ''} ${className}`}
     >
       {children}
     </span>
   );
 }
 
-// Inline styles for animation (can be moved to a CSS/SCSS file if desired)
-if (typeof window !== 'undefined' && !document.getElementById('underline-on-hover-animation-styles-v2')) {
+// Inline styles
+if (typeof window !== 'undefined' && !document.getElementById('underline-on-hover-animation-styles-v4')) {
   const style = document.createElement('style');
-  style.id = 'underline-on-hover-animation-styles-v2';
+  style.id = 'underline-on-hover-animation-styles-v4';
   style.innerHTML = `
     .nav-link {
       text-decoration: none;
@@ -49,41 +51,52 @@ if (typeof window !== 'undefined' && !document.getElementById('underline-on-hove
       cursor: pointer;
       transition: opacity 200ms;
     }
+
     .nav-link:hover {
       opacity: 1;
     }
+
     .nav-link::before {
       height: 1px;
       content: "";
       position: absolute;
       background-color: #000000;
       left: 0;
-      bottom: -6px;
+      bottom: -4px;
       width: 0%;
       transition: width 300ms ease-in-out;
     }
-    
-    /* Static underline that disappears on hover */
-    .nav-link.has-static-underline {
-      text-decoration: underline;
-      text-underline-offset: 8px;
-      text-decoration-thickness: 1px;
-    }
-    .nav-link.has-static-underline:hover {
-      text-decoration: none;
-    }
-    
-    /* Regular hover animation */
+
+    /* Hover triggers animation */
     .nav-link-ltr:hover::before {
       width: 100%;
     }
-    
-    /* Active state animations */
+
+    /* Active animation */
     .nav-link-ltr.underline-active::before {
       width: 0%;
     }
     .nav-link-ltr.underline-active.animate-entrance::before {
       width: 100%;
+    }
+
+    /* Static underline that's still interactive on hover */
+    .nav-link.underline-static::before {
+      width: 100%;
+    }
+
+    .nav-link.underline-static:hover::before {
+      width: 0%;
+      animation: underline-reenter 300ms forwards;
+    }
+
+    @keyframes underline-reenter {
+      from {
+        width: 0%;
+      }
+      to {
+        width: 100%;
+      }
     }
   `;
   document.head.appendChild(style);

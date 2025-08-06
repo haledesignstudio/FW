@@ -33,7 +33,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-1',
       content: (
         <FadeInOnVisible>
-        <div className="text-[20vh] font-graphik leading-[20vh]">
+        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
           {analytics.title}
         </div>
         </FadeInOnVisible>
@@ -51,7 +51,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-3',
       content: (
         <FadeInOnVisible>
-        <div className="text-[3.5vh] leading-tight">
+        <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
           {analytics.contentText}
         </div>
         </FadeInOnVisible>
@@ -63,7 +63,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-4',
       content: (
         <FadeInOnVisible>
-        <div className="text-[5vh] font-bold leading-tight">
+        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
           <HighlightText text={analytics.subheading} />
         </div>
         </FadeInOnVisible>
@@ -82,7 +82,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-center h-full">
           <FadeInOnVisible>
-          <div className="text-[2.25vh] font-graphik leading-[2.25vh]">
+          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
             <a
               href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA1 ?? '')}`}
               className="transition cursor-pointer"
@@ -131,7 +131,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-10',
       content: (
         <FadeInOnVisible>
-        <div className="text-[3.5vh] leading-tight">
+        <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
           {analytics.IQ_context}
         </div>
         </FadeInOnVisible>
@@ -143,7 +143,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-11',
       content: (
         <FadeInOnVisible>
-        <div className="text-[4.75vh] font-bold leading-tight">
+        <div className="text-[clamp(1.9vw,4.75vh,2.3vw)] font-bold leading-tight">
           <HighlightText text={analytics.IQ_heading} />
         </div>
         </FadeInOnVisible>
@@ -168,7 +168,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-end h-full">
           <FadeInOnVisible>
-          <div className="text-[2.75vh] leading-tight">
+          <div className="text-[clamp(1vw,2.75vh,1.3vw)] leading-tight">
             {analytics.IQ_subheading}
           </div>
           </FadeInOnVisible>
@@ -194,7 +194,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-center h-full">
           <FadeInOnVisible>
-          <div className="text-[2.25vh] font-graphik leading-[2.25vh]">
+          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
             <a
               href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA2 ?? '')}`}
               className="transition cursor-pointer"

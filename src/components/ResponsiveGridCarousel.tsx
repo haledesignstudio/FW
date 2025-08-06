@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { PortableTextBlock } from '@portabletext/types';
 import { PortableText } from '@portabletext/react';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 
 type CarouselItem = {
@@ -87,35 +87,35 @@ export default function ResponsiveGridCarousel({ items }: Props) {
           bg-[#F9F7F2] flex flex-col justify-between h-full
         `}
                             >
-                                <div className="overflow-hidden min-h-0">
+                                <div
+                                    className={`overflow-hidden text-ellipsis prose max-w-none font-roboto
+                                        ${index === 0 ? 'line-clamp-[5]' : 'line-clamp-[5]'}
+                                    `}
+                                >
                                     <h3
-                                        className={`
-              font-roboto leading-[3vh] mb-[3vh]
-              ${index === 0 ? 'font-graphik text-[3vh]' : 'text-[2vh]'}
-            `}
+                                        className={`leading-[3vh] mb-[1vh] break-words
+                                    ${index === 0 ? 'font-graphik text-[3vh]' : 'text-[2vh]'}
+                                    `}
                                     >
                                         {item.heading}
                                     </h3>
-                                    <div
-                                        className={`
-              text-[2vh] font-roboto overflow-hidden text-ellipsis prose prose-sm max-w-none
-              ${index === 0 ? 'line-clamp-5' : 'line-clamp-3'}
-            `}
-                                    >
-                                        {typeof item.body === 'string' ? (
-                                            <p>{item.body}</p>
-                                        ) : (
+                                    {typeof item.body === 'string' ? (
+                                        <p className="text-[2vh]">{item.body}</p>
+                                    ) : (
+                                        <div className="text-[2vh]">
                                             <PortableText value={item.body} />
-                                        )}
-                                    </div>
+                                        </div>
+                                    )}
                                 </div>
 
-                                <Link
-                                    href={item.link}
-                                    className="underline font-graphik self-start mt-2"
-                                >
-                                    Read more
-                                </Link>
+                                <div className="self-start">
+                                    <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                                        <span className="font-graphik text-[2vh] leading-tight">
+                                            Read more
+                                        </span>
+                                    </UnderlineOnHoverAnimation>
+                                </div>
+
                             </div>
                         </React.Fragment>
                     );

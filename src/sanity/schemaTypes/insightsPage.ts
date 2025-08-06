@@ -38,7 +38,7 @@ const insightsPage = defineType({
           validation: (Rule) => Rule.required(),
           description: 'Main content for this section'
         },
-         {
+        {
           name: 'CTA1',
           title: 'CTA 1',
           type: 'string',
@@ -80,8 +80,8 @@ const insightsPage = defineType({
           validation: (Rule) => Rule.required(),
           description: 'Main content for this section'
         },
-        
-       
+
+
         {
           name: 'CTA2',
           title: 'CTA 2',
@@ -140,10 +140,12 @@ const insightsPage = defineType({
             {
               name: 'topicSectionSubtitle',
               title: 'Topic Section Subtitle',
-              type: 'string',
+              type: 'array',
+              of: [{ type: 'block' }],
               validation: (Rule) => Rule.required(),
-              description: 'Subtitle/description for the topics section'
+              description: 'Subtitle/description for the topics section. Supports rich text and bullet points.'
             },
+
             {
               name: 'topicContentText',
               title: 'Content Text',

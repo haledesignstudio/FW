@@ -128,12 +128,12 @@ export default function ExpandableTopicList() {
                                 {/* td-7: CTA */}
                                 <div className="col-span-1 row-span-1 p-[1vh] flex items-end justify-end text-right">
                                     <a
-  href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
-  className="text-[2vh] font-bold underline"
-  onClick={(e) => e.stopPropagation()}
->
-  {topic.topicButtonText}
-</a>
+                                        href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
+                                        className="text-[2vh] font-bold underline"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {topic.topicButtonText}
+                                    </a>
 
                                 </div>
                             </div>

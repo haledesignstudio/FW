@@ -20,6 +20,7 @@ import MindbulletArchive from '@/components/mindbulletsArchive';
 import CircularTextSlider from '@/components/CircularTextSlider';
 import { useRouter, usePathname } from 'next/navigation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import { PortableTextBlock } from '@portabletext/types';
 
 
 type insightsPageContent = {
@@ -44,7 +45,7 @@ type insightsPageContent = {
     keynotes: {
         topicSection: {
             topicSectionTitle: string;
-            topicSectionSubtitle: string;
+            topicSectionSubtitle: PortableTextBlock[];
             topicContentText: string;
             topicCTA1: string;
             topicMail1: string;
@@ -314,7 +315,7 @@ function PageContent() {
                             ))}
                         </div>
                         <FadeInOnVisible>
-                        <div className="w-full mt-[5vh]">
+                        <div className="w-full mt-[20vh]">
                             <CircularTextSlider />
                         </div>
                         </FadeInOnVisible>
