@@ -476,3 +476,18 @@ export const topicQuery = defineQuery(`
   }
 `);
 
+export const mindbulletsQuery = defineQuery(`
+  *[_type == "mindbullet"] | order(datePublished desc) {
+    _id,
+    title,
+    content,
+    dateline,
+    datePublished,
+    image {
+      asset,
+      alt
+    }
+  }
+`);
+
+

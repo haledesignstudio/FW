@@ -213,6 +213,9 @@ export type ProvocativeScenariosQueryResult = Array<never>;
 // Variable: topicQuery
 // Query: *[_type == "keynoteTopic"] | order(topicTitle asc) {    _id,    topicTitle,    topicHeading,    topicImage {      asset,      alt    },    topicButtonText,    topicMail,    contents[] {      heading,      description    }  }
 export type TopicQueryResult = Array<never>;
+// Variable: mindbulletsQuery
+// Query: *[_type == "mindbullet"] | order(datePublished desc) {    _id,    title,    content,    dateline,    datePublished,    image {      asset,      alt    }  }
+export type MindbulletsQueryResult = Array<never>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -231,5 +234,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"contactPage\"][0] {\n    _id,\n    title,\n    seo {\n      metaTitle,\n      metaDescription\n    },\n    pageHeader {\n      mainTitle\n    },\n    contactFormSubheading,\n    contactForm {\n      namePlaceholder,\n      emailPlaceholder,\n      phonePlaceholder,\n      companyPlaceholder,\n      positionPlaceholder,\n      messagePlaceholder\n    },\n    mainImage {\n      asset,\n      alt\n    },\n    contactFormIntro,\n    officesAroundTheWorld[] {\n      name,\n      email,\n      image {\n        asset,\n        alt\n      }\n    },\n    keynoteSubheading,\n    bookingKeynote {\n      title,\n      subtitle,\n      text,\n      link\n    }\n  }\n": CONTACT_PAGE_QUERYResult;
     "\n  *[_type == \"provocativeScenario\"] | order(_createdAt desc) {\n    _id,\n    title\n  }\n": ProvocativeScenariosQueryResult;
     "\n  *[_type == \"keynoteTopic\"] | order(topicTitle asc) {\n    _id,\n    topicTitle,\n    topicHeading,\n    topicImage {\n      asset,\n      alt\n    },\n    topicButtonText,\n    topicMail,\n    contents[] {\n      heading,\n      description\n    }\n  }\n": TopicQueryResult;
+    "\n  *[_type == \"mindbullet\"] | order(datePublished desc) {\n    _id,\n    title,\n    content,\n    dateline,\n    datePublished,\n    image {\n      asset,\n      alt\n    }\n  }\n": MindbulletsQueryResult;
   }
 }
