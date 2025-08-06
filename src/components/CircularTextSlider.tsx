@@ -20,7 +20,7 @@ const defaultSpeakers: Speaker[] = [
   { id: '4', name: 'Colin Iles', bio: 'Technology strategist and innovation consultant specializing in emerging markets.', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face' },
   { id: '5', name: 'Doug Ostberg', bio: 'Digital transformation expert and thought leader in business innovation.', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
   { id: '6', name: 'Gerd Leonhard', bio: 'Futurist and humanist exploring the intersection of technology and humanity.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face' },
-  { id: '7', name: 'Matt Lawn', bio: 'Innovation strategist and technology evangelist focused on future trends.', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face' },
+  { id: '7', name: 'Matt Law', bio: 'Innovation strategist and technology evangelist focused on future trends.', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face' },
   { id: '8', name: 'Neil Jacobsohn', bio: 'Business transformation leader and strategic advisor for digital innovation.', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face' },
   { id: '9', name: 'Ming Wong', bio: 'Technology entrepreneur and expert in emerging technologies and digital ecosystems.', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
   { id: '10', name: 'Per Ostberg', bio: 'Strategic consultant and thought leader in organizational transformation.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face' },
@@ -34,7 +34,6 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
   const [hoveredSpeaker, setHoveredSpeaker] = useState<Speaker | null>(null);
   const [currentRotation, setCurrentRotation] = useState(0);
   const [targetRotation, setTargetRotation] = useState(0);
-  const [panelPosition, setPanelPosition] = useState<'left' | 'right'>('right');
 
   // Use viewport units for circle radius - much larger wheel
   const getCircleRadius = () => {
@@ -45,26 +44,26 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
   };
 
   const handleWheel = (e: WheelEvent) => {
-  if (!containerRef.current) return;
-  
-  const bounds = containerRef.current.getBoundingClientRect();
-  const centerX = bounds.left + bounds.width / 2;
-  const centerY = bounds.bottom - (45 * window.innerHeight / 100); // Account for -45vh bottom position
-  
-  // Calculate distance from cursor to circle center
-  const deltaX = e.clientX - centerX;
-  const deltaY = e.clientY - centerY;
-  const distanceFromCenter = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    if (!containerRef.current) return;
+
+    const bounds = containerRef.current.getBoundingClientRect();
+    const centerX = bounds.left + bounds.width / 2;
+    const centerY = bounds.bottom - (45 * window.innerHeight / 100); // Account for -45vh bottom position
+
+    // Calculate distance from cursor to circle center
+    const deltaX = e.clientX - centerX;
+    const deltaY = e.clientY - centerY;
+    const distanceFromCenter = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
     // Reduce scrollable area to 60% of the visual circle radius
-  const scrollableRadius = circleRadius * 0.6;
-  
-  // Only allow scrolling if cursor is within the smaller scrollable radius
-  if (distanceFromCenter <= scrollableRadius) {
-    e.preventDefault();
-    setTargetRotation(prev => prev + e.deltaY * 0.1);
-  }
-};
+    const scrollableRadius = circleRadius * 0.6;
+
+    // Only allow scrolling if cursor is within the smaller scrollable radius
+    if (distanceFromCenter <= scrollableRadius) {
+      e.preventDefault();
+      setTargetRotation(prev => prev + e.deltaY * 0.1);
+    }
+  };
 
   useEffect(() => {
     window.addEventListener('wheel', handleWheel, { passive: false });
@@ -78,12 +77,12 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
     const animateRotation = () => {
       const newRotation = currentRotation + (targetRotation - currentRotation) * 0.1;
       setCurrentRotation(newRotation);
-      
+
       if (gallery) {
         gallery.style.transform = `translateX(-50%) rotate(${newRotation}deg)`;
         gallery.style.transformOrigin = '50% 0%';
       }
-      
+
       requestAnimationFrame(animateRotation);
     };
 
@@ -96,6 +95,11 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
   return (
     <>
       <style jsx global>{`
+        .circular-slider-wrapper {
+          position: relative;
+          width: 100vw;
+          height: 70vh;
+        }
         .circular-slider-container {
           position: relative;
           width: 100vw;
@@ -118,9 +122,8 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
           top: 0;
           left: 50%;
           transform-origin: 0 0;
-          font-size: 2.5vh; /* Responsive font size */
+          font-size: 3.5vh; /* Responsive font size */
           font-weight: 600;
-          text-transform: uppercase;
           letter-spacing: 0.3vh;
           white-space: nowrap;
           cursor: pointer;
@@ -146,23 +149,25 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
         }
         .speaker-info-panel {
           position: absolute;
-          top: 0%;
-          transform: translateX(-50%) translateY(-2vh);
-          width: 60vw; /* Responsive width */
-          max-width: 60rem; /* Maximum width cap */
-          padding: 3vh;
+          top: -20vh;
+          left: 50%;
+          transform: translateX(-50%) translateY(2vh);
+          width: 60vw;
+          max-width: 60rem;
           z-index: 1001;
           pointer-events: none;
           display: flex;
           gap: 2vh;
           align-items: center;
           opacity: 0;
-          transition: opacity 0.2s ease, transform 0.2s ease;
+          transition: opacity 0.3s ease, transform 0.3s ease;
         }
+
         .speaker-info-panel.visible {
           opacity: 1;
-          transform: translateX(-50%) translateY(0);
+          transform: translateX(-50%) translateY(-2vh);
         }
+
         .speaker-image {
           width: 20vh; /* Responsive image size */
           height: 25vh;
@@ -187,13 +192,11 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
         }
       `}</style>
 
-      <div className="circular-slider-container relative" ref={containerRef}>
+      <div className="circular-slider-wrapper">
+        {/* Speaker info panel is now outside the overflow:hidden container */}
         {hoveredSpeaker && (
           <div
             className={`speaker-info-panel ${hoveredSpeaker ? 'visible' : ''}`}
-            style={{
-              left: panelPosition === 'left' ? '40%' : '70%',
-            }}
           >
             <img
               src={hoveredSpeaker.image}
@@ -206,33 +209,34 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
             </div>
           </div>
         )}
-        <div className="gallery" ref={galleryRef}>
-          {[...speakers, ...speakers, ...speakers, ...speakers].map((speaker, index) => {
-            const total = speakers.length * 4;
-            const angle = (360 / total) * index;
-            const angleRad = (angle * Math.PI) / 180;
-            const x = Math.cos(angleRad) * circleRadius;
-            const y = Math.sin(angleRad) * circleRadius;
-            const textRotation = angle;
-            return (
-              <div
-                key={`${speaker.id}-${index}`}
-                className="speaker-item"
-                style={{
-                  transform: `translate(${x}px, ${y}px) rotate(${textRotation}deg)`
-                }}
-                onMouseEnter={(e) => {
-                  setHoveredSpeaker(speaker);
-                  const x = e.clientX;
-                  const screenMid = window.innerWidth / 2;
-                  setPanelPosition(x < screenMid ? 'left' : 'right');
-                }}
-                onMouseLeave={() => setHoveredSpeaker(null)}
-              >
-                {speaker.name}
-              </div>
-            );
-          })}
+
+        <div className="circular-slider-container" ref={containerRef}>
+          <div className="gallery" ref={galleryRef}>
+            {[...speakers, ...speakers, ...speakers, ...speakers].map((speaker, index) => {
+              const total = speakers.length * 4;
+              const angle = (360 / total) * index;
+              const angleRad = (angle * Math.PI) / 180;
+              const x = Math.cos(angleRad) * circleRadius;
+              const y = Math.sin(angleRad) * circleRadius;
+              const textRotation = angle;
+              return (
+                <div
+                  key={`${speaker.id}-${index}`}
+                  className="speaker-item"
+                  style={{
+                    transform: `translate(${x}px, ${y}px) rotate(${textRotation}deg)`
+                  }}
+                  onMouseEnter={() => {
+                    setHoveredSpeaker(speaker);
+                  }}
+
+                  onMouseLeave={() => setHoveredSpeaker(null)}
+                >
+                  {speaker.name}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>

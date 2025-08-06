@@ -45,7 +45,7 @@ export default function Edge({ title, subheading, contentText, podcasts }: Props
       id: 'edge-1',
       content: (
         <FadeInOnVisible>
-        <div className="text-[20vh] font-graphik leading-[20vh]">
+        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
           {title}
         </div>
         </FadeInOnVisible>
@@ -63,7 +63,7 @@ export default function Edge({ title, subheading, contentText, podcasts }: Props
       id: 'edge-3',
       content: (
         <FadeInOnVisible>
-        <div className="text-[3.5vh] font-roboto leading-tight">
+        <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight">
           {contentText}
         </div>
         </FadeInOnVisible>
@@ -75,7 +75,7 @@ export default function Edge({ title, subheading, contentText, podcasts }: Props
       id: 'edge-4',
       content: (
         <FadeInOnVisible>
-        <div className="text-[5vh] font-graphik leading-tight">
+        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
           <HighlightText text={subheading} />
         </div>
         </FadeInOnVisible>

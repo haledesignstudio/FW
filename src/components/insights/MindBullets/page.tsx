@@ -47,7 +47,7 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
       id: 'mindbullets-1',
       content: (
         <FadeInOnVisible>
-        <div className="text-[20vh] font-graphik leading-[20vh]">
+        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
           {title}
         </div>
         </FadeInOnVisible>
@@ -65,7 +65,7 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
       id: 'mindbullets-3',
       content: (
         <FadeInOnVisible>
-        <div className="text-[5vh] font-graphik leading-tight">
+        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
           <HighlightText text={subheading} />
         </div>
         </FadeInOnVisible>
