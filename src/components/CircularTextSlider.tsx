@@ -1,33 +1,31 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { PortableText } from '@portabletext/react';
+import { PortableTextBlock } from '@portabletext/types';
+import Image from 'next/image';
 
 interface Speaker {
-  id: string;
+  _id: string;
   name: string;
-  bio: string;
-  image: string;
+  bio: PortableTextBlock[];
+  image: {
+    asset: string; // Assuming image is resolved to URL
+    alt?: string;
+  };
 }
+
 
 interface CircularTextSliderProps {
-  speakers?: Speaker[];
+  speakers: Speaker[];
 }
 
-const defaultSpeakers: Speaker[] = [
-  { id: '1', name: 'Anton Musgrave', bio: 'Anton Musgrave is a futurist, strategist, globally acclaimed speaker, entrepreneur, and angel investor who challenges leaders to rethink innovation, strategy, and the future.', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
-  { id: '2', name: 'Bright Simons', bio: 'Technology innovator and social entrepreneur focused on digital transformation in Africa.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face' },
-  { id: '3', name: 'Dr. Chris Kutarna', bio: 'Author and expert on global trends, technology disruption, and societal transformation.', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face' },
-  { id: '4', name: 'Colin Iles', bio: 'Technology strategist and innovation consultant specializing in emerging markets.', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face' },
-  { id: '5', name: 'Doug Ostberg', bio: 'Digital transformation expert and thought leader in business innovation.', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
-  { id: '6', name: 'Gerd Leonhard', bio: 'Futurist and humanist exploring the intersection of technology and humanity.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face' },
-  { id: '7', name: 'Matt Law', bio: 'Innovation strategist and technology evangelist focused on future trends.', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face' },
-  { id: '8', name: 'Neil Jacobsohn', bio: 'Business transformation leader and strategic advisor for digital innovation.', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face' },
-  { id: '9', name: 'Ming Wong', bio: 'Technology entrepreneur and expert in emerging technologies and digital ecosystems.', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
-  { id: '10', name: 'Per Ostberg', bio: 'Strategic consultant and thought leader in organizational transformation.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face' },
-  { id: '11', name: 'Dr. Vivienne Ming', bio: 'Neuroscientist, technologist, and entrepreneur working on human potential optimization.', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&h=300&fit=crop&crop=face' }
-];
+export default function CircularTextSlider({ speakers }: CircularTextSliderProps) {
 
-export default function CircularTextSlider({ speakers = defaultSpeakers }: CircularTextSliderProps) {
+
+
+
+
   const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
@@ -149,10 +147,10 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
         }
         .speaker-info-panel {
           position: absolute;
-          top: -20vh;
+          top: -25vh;
           left: 50%;
           transform: translateX(-50%) translateY(2vh);
-          width: 60vw;
+          width: 30vw;
           max-width: 60rem;
           z-index: 1001;
           pointer-events: none;
@@ -169,8 +167,8 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
         }
 
         .speaker-image {
-          width: 20vh; /* Responsive image size */
-          height: 25vh;
+          width: 10vh; /* Responsive image size */
+          height: 30vh;
           object-fit: cover;
           flex-shrink: 0;
         }
@@ -195,20 +193,23 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
       <div className="circular-slider-wrapper">
         {/* Speaker info panel is now outside the overflow:hidden container */}
         {hoveredSpeaker && (
-          <div
-            className={`speaker-info-panel ${hoveredSpeaker ? 'visible' : ''}`}
-          >
-            <img
-              src={hoveredSpeaker.image}
-              alt={hoveredSpeaker.name}
+          <div className={`speaker-info-panel visible`}>
+            <Image
+              src={hoveredSpeaker.image.asset}
+              alt={hoveredSpeaker.image.alt || hoveredSpeaker.name}
               className="speaker-image"
+              width={400}
+              height={500}
+              priority
+              unoptimized={false}
             />
             <div className="speaker-details">
               <h3>{hoveredSpeaker.name}</h3>
-              <p>{hoveredSpeaker.bio}</p>
+              <PortableText value={hoveredSpeaker.bio} />
             </div>
           </div>
         )}
+
 
         <div className="circular-slider-container" ref={containerRef}>
           <div className="gallery" ref={galleryRef}>
@@ -221,7 +222,7 @@ export default function CircularTextSlider({ speakers = defaultSpeakers }: Circu
               const textRotation = angle;
               return (
                 <div
-                  key={`${speaker.id}-${index}`}
+                  key={`${speaker._id}-${index}`}
                   className="speaker-item"
                   style={{
                     transform: `translate(${x}px, ${y}px) rotate(${textRotation}deg)`

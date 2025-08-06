@@ -2,6 +2,7 @@
 import { HighlightText } from '@/components/HighlightText';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import Image from 'next/image';
 
 type GridItem = {
   id: string;
@@ -33,9 +34,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-1',
       content: (
         <FadeInOnVisible>
-        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
-          {analytics.title}
-        </div>
+          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+            {analytics.title}
+          </div>
         </FadeInOnVisible>
       ),
       colSpan: 5,
@@ -51,9 +52,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-3',
       content: (
         <FadeInOnVisible>
-        <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
-          {analytics.contentText}
-        </div>
+          <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
+            {analytics.contentText}
+          </div>
         </FadeInOnVisible>
       ),
       colSpan: 2,
@@ -63,9 +64,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-4',
       content: (
         <FadeInOnVisible>
-        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
-          <HighlightText text={analytics.subheading} />
-        </div>
+          <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+            <HighlightText text={analytics.subheading} />
+          </div>
         </FadeInOnVisible>
       ),
       colSpan: 4,
@@ -82,16 +83,16 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-center h-full">
           <FadeInOnVisible>
-          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
-            <a
-              href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA1 ?? '')}`}
-              className="transition cursor-pointer"
-            >
-              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                {analytics.CTA1 ?? 'Get in Touch'}
-              </UnderlineOnHoverAnimation>
-            </a>
-          </div>
+            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
+              <a
+                href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA1 ?? '')}`}
+                className="transition cursor-pointer"
+              >
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  {analytics.CTA1 ?? 'Get in Touch'}
+                </UnderlineOnHoverAnimation>
+              </a>
+            </div>
           </FadeInOnVisible>
         </div>
       ),
@@ -107,15 +108,16 @@ export default function Analytics({ analytics }: Props): GridItem[] {
     {
       id: 'analytics-8',
       content: (
-        <iframe
-          src="https://fw-demo.evidence.app/"
-          width="100%"
-          height="100%"
-          style={{ border: 'none' }}
-          title="Futureworld Shareholder Value Analytics"
-          allowFullScreen
+        <FadeInOnVisible>
+        <Image
+          src="/evidence.png" // ✅ Update this path to match your local asset
+          alt="Futureworld Shareholder Value Analytics"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          width={3000}  // or appropriate dimensions
+          height={2000}
           loading="lazy"
         />
+        </FadeInOnVisible>
       ),
       colSpan: 6,
       rowSpan: 5,
@@ -131,9 +133,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-10',
       content: (
         <FadeInOnVisible>
-        <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
-          {analytics.IQ_context}
-        </div>
+          <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
+            {analytics.IQ_context}
+          </div>
         </FadeInOnVisible>
       ),
       colSpan: 2,
@@ -143,9 +145,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-11',
       content: (
         <FadeInOnVisible>
-        <div className="text-[clamp(1.9vw,4.75vh,2.3vw)] font-bold leading-tight">
-          <HighlightText text={analytics.IQ_heading} />
-        </div>
+          <div className="text-[clamp(1.9vw,4.75vh,2.3vw)] font-bold leading-tight">
+            <HighlightText text={analytics.IQ_heading} />
+          </div>
         </FadeInOnVisible>
       ),
       colSpan: 3,
@@ -168,9 +170,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-end h-full">
           <FadeInOnVisible>
-          <div className="text-[clamp(1vw,2.75vh,1.3vw)] leading-tight">
-            {analytics.IQ_subheading}
-          </div>
+            <div className="text-[clamp(1vw,2.75vh,1.3vw)] leading-tight">
+              {analytics.IQ_subheading}
+            </div>
           </FadeInOnVisible>
         </div>
       ),
@@ -194,16 +196,16 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <div className="flex items-center h-full">
           <FadeInOnVisible>
-          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
-            <a
-              href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA2 ?? '')}`}
-              className="transition cursor-pointer"
-            >
-              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                {analytics.CTA2 ?? 'Get in Touch'}
-              </UnderlineOnHoverAnimation>
-            </a>
-          </div>
+            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
+              <a
+                href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA2 ?? '')}`}
+                className="transition cursor-pointer"
+              >
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  {analytics.CTA2 ?? 'Get in Touch'}
+                </UnderlineOnHoverAnimation>
+              </a>
+            </div>
           </FadeInOnVisible>
         </div>
       ),

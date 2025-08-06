@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 function getRandomDatelineNumber() {
   return Math.floor(Math.random() * (2100 - 2025 + 1)) + 2025;
@@ -151,7 +152,9 @@ const MindbulletArchive = () => {
               style={{ boxShadow: 'none' }}
               onClick={() => setPage(page + 1)}
             >
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
               Show More
+              </UnderlineOnHoverAnimation>
             </button>
           )}
         </div>

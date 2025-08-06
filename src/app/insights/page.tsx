@@ -21,6 +21,10 @@ import CircularTextSlider from '@/components/CircularTextSlider';
 import { useRouter, usePathname } from 'next/navigation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { PortableTextBlock } from '@portabletext/types';
+import { speakersQuery } from '@/sanity/lib/queries';
+import { urlFor } from '@/sanity/lib/image';
+
+
 
 
 type insightsPageContent = {
@@ -152,18 +156,53 @@ function PageContent() {
         { key: 'edge', label: 'The Edge: Insights Driven by Disruption' },
     ];
 
+    const [speakers, setSpeakers] = useState<{
+        _id: string;
+        name: string;
+        bio: PortableTextBlock[];
+        image: {
+            asset: string;
+            alt?: string;
+        };
+    }[]>([]);
+
+
+
     useEffect(() => {
         Promise.all([
             client.fetch<insightsPageContent>(insightsPageQuery),
             client.fetch(podcastQuery),
-        ]).then(([insightsResult, podcastResults]) => {
+            client.fetch(speakersQuery), // 🔥 add this
+        ]).then(([insightsResult, podcastResults, speakerResults]) => {
             setData({
                 insights: insightsResult,
                 podcasts: podcastResults,
             });
+            setSpeakers(
+                speakerResults
+                    .filter(
+                        (s) =>
+                            typeof s.name === 'string' &&
+                            Array.isArray(s.bio) &&
+                            s.image !== null &&
+                            s.image.asset !== null
+                    )
+                    .map((s) => ({
+                        _id: s._id,
+                        name: s.name!,
+                        bio: (Array.isArray(s.bio) ? s.bio : []) as PortableTextBlock[],
+                        image: {
+                            asset: urlFor(s.image!).url(), // image is now guaranteed non-null
+                            alt: s.image?.alt || '',
+                        },
+                    }))
+            );
+
+
             setLoading(false);
         });
     }, []);
+
 
     useEffect(() => {
         if (sectionFromURL) {
@@ -315,9 +354,9 @@ function PageContent() {
                             ))}
                         </div>
                         <FadeInOnVisible>
-                        <div className="w-full mt-[20vh]">
-                            <CircularTextSlider />
-                        </div>
+                            <div className="w-full mt-[20vh]">
+                                <CircularTextSlider speakers={speakers} />
+                            </div>
                         </FadeInOnVisible>
 
                     </>
@@ -332,17 +371,17 @@ function PageContent() {
                         </div>
                         {activePage === 'edge' && (
                             <FadeInOnVisible>
-                            <div className="mt-[15vh]">
-                                <ProvocativeScenarios />
-                            </div>
+                                <div className="mt-[15vh]">
+                                    <ProvocativeScenarios />
+                                </div>
                             </FadeInOnVisible>
                         )}
 
                         {activePage === 'mindbullets' && (
                             <FadeInOnVisible>
-                            <div className="">
-                                <MindbulletArchive />
-                            </div>
+                                <div className="">
+                                    <MindbulletArchive />
+                                </div>
                             </FadeInOnVisible>
                         )}
 
