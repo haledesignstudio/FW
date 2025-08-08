@@ -196,7 +196,7 @@ export default async function ProvocativeScenarioPage({ params }: { params: Prom
     // Row 13, Cols 1-3: Subheading with highlight
     {
       id: 32,
-      content: <h2 className="text-xl font-semibold"><HighlightText text={data.subheading} /></h2>,
+      content: <h2 className="text-xl font-semibold"><HighlightText value={data.subheading} /></h2>,
       colSpan: 3, rowSpan: 1, mobileColSpan: 3, mobileRowSpan: 1, landscapeColSpan: 3, landscapeRowSpan: 1,
     },
     // Row 13, Cols 5-6: Subscribe field (reuse Footer component or extract)

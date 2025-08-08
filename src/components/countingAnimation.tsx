@@ -11,7 +11,7 @@ interface CountingAnimationProps {
 
 export default function CountingAnimation({
   target,
-  duration = 2000,
+  duration = 6000,
   className = '',
   fontSize = '60px'
 }: CountingAnimationProps) {

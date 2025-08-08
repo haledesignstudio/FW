@@ -36,65 +36,44 @@ export const whatWeDoQuery = defineQuery(`
 export const homePageQuery = defineQuery(`
   *[_type == "homePage"][0] {
     _id,
-    title,
-    seo,
-    signalsFromFuture,
-    mainHeadline,
-    growthSection,
-    videoSection {
-      backgroundImage {
+    headline,
+    subheading,
+    body,
+    cta,
+    email,
+    Image {
         asset,
         alt
       },
-      videoUrl
+    section1 {
+      section1Title,
+      section1Body,
+      section1CTA,
+      section1Email,
+      section1URL
     },
-    accordionSection {
-      benchmarkInnovation {
-        title,
-        description,
-        ctaText,
-        dashboardImage {
-          asset,
-          alt
-        },
-        backgroundColor
-      },
-      ourProcess {
-        title,
-        introText,
-        processColumns[] {
-          headline,
-          subheadline,
-          content
-        },
-        astronautImage {
-          asset,
-          alt
-        },
-        backgroundColor
-      },
-      caseStudies {
-        title,
-        headline,
-        subheadline,
-        caseStudyGrid[] {
-          asset,
-          alt
-        },
-        featuredCaseStudy {
-          image {
-            asset,
-            alt
-          },
-          title,
-          description,
-          readMoreLink
-        },
-        backgroundColor
+    section2 {
+      section2Title,
+      section2Body,
+      section2Heading1,
+      section2Description1,
+      section2Heading2,
+      section2Description2,
+      section2Heading3,
+      section2Description3,
+      section2Image {
+        asset,
+        alt
       }
+    },
+    section3 {
+      section3Title,
+      section3Body
     }
   }
 `);
+
+
 
 export const privacyPolicyQuery = defineQuery(`
   *[_type == "privacyPolicyPage"][0] {

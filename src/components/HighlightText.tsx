@@ -1,45 +1,37 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { PortableText, PortableTextComponents } from '@portabletext/react';
+import type { PortableTextBlock } from '@portabletext/types';
 
-export function HighlightText({ text }: { text: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
+export function HighlightText({ value }: { value: PortableTextBlock[] }) {
   const highlightColor = '#DC5A50';
 
-  const futureRegex = /\bFuture\b/i;
-  const growthRegex = /\bGrowth\b/i;
-  const tomorrowRegex = /\bTomorrow\b/i;
+  const futureRegex = /\b(Future|Growth|Tomorrow)\b/gi;
 
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
+  const HighlightedWord = ({ children }: { children: React.ReactNode }) => {
+    const ref = useRef<HTMLSpanElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // only animate once
-        }
-      },
-      { threshold: 0.2 }
-    );
+    useEffect(() => {
+      const node = ref.current;
+      if (!node) return;
 
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect(); // only animate once
+          }
+        },
+        { threshold: 0.2 }
+      );
 
-  // Do this AFTER all hooks
-  const match = text.match(futureRegex) || text.match(growthRegex) || text.match(tomorrowRegex);
-  if (!match) return <>{text}</>;
+      observer.observe(node);
+      return () => observer.disconnect();
+    }, []);
 
-  const start = match.index!;
-  const end = start + match[0].length;
-
-  return (
-    <>
-      {text.slice(0, start)}
+    return (
       <span ref={ref} className="relative inline-block">
         <span
           className={`
@@ -48,7 +40,7 @@ export function HighlightText({ text }: { text: string }) {
             ${isVisible ? 'text-black' : 'text-inherit'}
           `}
         >
-          {text.slice(start, end)}
+          {children}
         </span>
         <span
           className={`
@@ -64,7 +56,72 @@ export function HighlightText({ text }: { text: string }) {
           style={{ pointerEvents: 'none' }}
         />
       </span>
-      {text.slice(end)}
-    </>
-  );
+    );
+  };
+
+  const components: PortableTextComponents = {
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-6 mb-4">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal pl-6 mb-4">{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => (
+      <li className="mb-1">
+        {React.Children.map(children, (child) => {
+          if (typeof child !== 'string') return child;
+
+          const parts = child.split(futureRegex);
+          return parts.map((part, i) =>
+            futureRegex.test(part) ? (
+              <HighlightedWord key={i}>{part}</HighlightedWord>
+            ) : (
+              <React.Fragment key={i}>{part}</React.Fragment>
+            )
+          );
+        })}
+      </li>
+    ),
+    number: ({ children }) => (
+      <li className="mb-1">
+        {React.Children.map(children, (child) => {
+          if (typeof child !== 'string') return child;
+
+          const parts = child.split(futureRegex);
+          return parts.map((part, i) =>
+            futureRegex.test(part) ? (
+              <HighlightedWord key={i}>{part}</HighlightedWord>
+            ) : (
+              <React.Fragment key={i}>{part}</React.Fragment>
+            )
+          );
+        })}
+      </li>
+    ),
+  },
+  block: {
+    normal: ({ children }) => (
+      <p className="mb-2">
+        {React.Children.map(children, (child) => {
+          if (typeof child !== 'string') return child;
+
+          const parts = child.split(futureRegex);
+          return parts.map((part, i) =>
+            futureRegex.test(part) ? (
+              <HighlightedWord key={i}>{part}</HighlightedWord>
+            ) : (
+              <React.Fragment key={i}>{part}</React.Fragment>
+            )
+          );
+        })}
+      </p>
+    ),
+  },
+};
+
+
+  return <PortableText value={value} components={components} />;
 }

@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import Header from '@/components/header';
-import { HighlightText } from '@/components/HighlightText';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import Footer from '@/components/footer';
 import HorizontalAccordion, { AccordionItem } from '@/components/HorizontalAccordion';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 type WhatWeDoContent = {
     heading: string;
@@ -104,9 +105,12 @@ export default function WhatWeDo({ data }: WhatWeDoProps) {
         },
         {
             id: 3,
-            content: <p className="whitespace-pre-line text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight">
-                <HighlightText text={data.mainline} />
-            </p>,
+            content: 
+            <FadeInOnVisible>
+            <p className="whitespace-pre-line text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight">
+                {data.mainline}
+            </p>
+            </FadeInOnVisible>,
             colSpan: 3,
             rowSpan: 2,
             mobileColSpan: 2,
@@ -129,35 +133,36 @@ export default function WhatWeDo({ data }: WhatWeDoProps) {
         {
             id: 5,
             content: (
-                <>
+                <>  <FadeInOnVisible>
                     <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
                         <a
                             href={`mailto:${data.mail}?subject=${encodeURIComponent(data.cta)}`}
                             className="underline text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
                         >
-                            {data.cta}
+                            <UnderlineOnHoverAnimation hasStaticUnderline={true}>{data.cta}</UnderlineOnHoverAnimation>
                         </a>
                     </div>
+                    </FadeInOnVisible>
 
                     <div className="block flex flex-col h-full [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden">
+                        <FadeInOnVisible>
                         <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
                             {data.statement1}
                         </p>
+                        </FadeInOnVisible>
                         <br />
+                        <FadeInOnVisible>
                         <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
                             {data.statement2}
                         </p>
+                        </FadeInOnVisible>
                         <br />
+                        <FadeInOnVisible>
                         <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
                             {data.statement3}
                         </p>
-
-                        <a
-                            href={`mailto:${data.mail}?subject=${encodeURIComponent(data.cta)}`}
-                            className="mt-auto underline text-right text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
-                        >
-                            {data.cta}
-                        </a>
+                        </FadeInOnVisible>
+                        
                     </div>
                 </>
             ),
@@ -183,9 +188,11 @@ export default function WhatWeDo({ data }: WhatWeDoProps) {
         {
             id: 7,
             content: (
+                <FadeInOnVisible>
                 <p className=" text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
                     {data.statement1}
                 </p>
+                </FadeInOnVisible>
             ),
             colSpan: 1,
             rowSpan: 1,
@@ -197,9 +204,11 @@ export default function WhatWeDo({ data }: WhatWeDoProps) {
         {
             id: 8,
             content: (
+                <FadeInOnVisible>
                 <p className=" text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
                     {data.statement2}
                 </p>
+                </FadeInOnVisible>
             ),
             colSpan: 1,
             rowSpan: 1,
@@ -211,9 +220,11 @@ export default function WhatWeDo({ data }: WhatWeDoProps) {
         {
             id: 9,
             content: (
+                <FadeInOnVisible>
                 <p className=" text-[6vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
                     {data.statement3}
                 </p>
+                </FadeInOnVisible>
             ),
             colSpan: 1,
             rowSpan: 1,

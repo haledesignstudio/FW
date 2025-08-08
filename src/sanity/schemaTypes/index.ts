@@ -14,7 +14,6 @@ import termsAndConditionsPage from './termsAndConditionsPage'
 import privacyPolicyPage from './privacyPolicyPage'
 import project from './project'
 import caseStudy from './caseStudy'
-import mindbulletsArchive from './mindbulletsArchive'
 import mindbullet from './mindbullet'
 import podcast from './podcast'
 import provocativeScenario from './provocativeScenarios'
@@ -39,7 +38,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     article,
     project,
     caseStudy,
-    mindbulletsArchive,
     mindbullet,
     podcast,
     provocativeScenario,

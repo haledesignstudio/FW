@@ -3,6 +3,7 @@ import { HighlightText } from '@/components/HighlightText';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import Image from 'next/image';
+import { PortableTextBlock } from '@portabletext/types';
 
 type GridItem = {
   id: string;
@@ -14,10 +15,10 @@ type GridItem = {
 type Props = {
   analytics: {
     title: string;
-    subheading: string;
+    subheading: PortableTextBlock[];
     contentText: string;
     iframeSource: string;
-    IQ_heading: string;
+    IQ_heading: PortableTextBlock[];
     IQ_subheading: string;
     IQ_context: string;
     CTA1?: string;
@@ -65,7 +66,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <FadeInOnVisible>
           <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
-            <HighlightText text={analytics.subheading} />
+            <HighlightText value={analytics.subheading} />
           </div>
         </FadeInOnVisible>
       ),
@@ -146,7 +147,7 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       content: (
         <FadeInOnVisible>
           <div className="text-[clamp(1.9vw,4.75vh,2.3vw)] font-bold leading-tight">
-            <HighlightText text={analytics.IQ_heading} />
+            <HighlightText value={analytics.IQ_heading} />
           </div>
         </FadeInOnVisible>
       ),

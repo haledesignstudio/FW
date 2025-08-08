@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import Header from '@/components/header';
-import { HighlightText } from '@/components/HighlightText';
 import Footer from '@/components/footer';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import CountingAnimation from '@/components/countingAnimation';
 import VerticalAccordion from '@/components/VerticalAccordion';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 type OurWorkContent = {
     title: string;
@@ -233,9 +233,11 @@ export default function OurWork({ data }: OurWorkProps) {
             id: 3,
             content: (
                 <div className="flex items-center justify-start h-full">
+                    <FadeInOnVisible>
                     <p className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[6vh] leading-tight">
-                        <HighlightText text={data.subtitle} />
+                        {data.subtitle}
                     </p>
+                    </FadeInOnVisible>
                 </div>
             ),
             colSpan: 3,
@@ -260,6 +262,7 @@ export default function OurWork({ data }: OurWorkProps) {
         ...statsData.map((stat, index) => ({
             id: 5 + index,
             content: (
+                <FadeInOnVisible>
                 <div className="flex flex-col items-center justify-center h-full text-center">
                     <CountingAnimation
                         target={stat.number}
@@ -269,6 +272,7 @@ export default function OurWork({ data }: OurWorkProps) {
                         {stat.text}
                     </p>
                 </div>
+                </FadeInOnVisible>
             ),
             colSpan: 1,
             rowSpan: 1,
