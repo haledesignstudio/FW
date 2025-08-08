@@ -3,6 +3,7 @@
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import { PortableTextBlock } from '@portabletext/types';
 
 type GridItem = {
   id: string;
@@ -14,7 +15,7 @@ type GridItem = {
 
 type Props = {
     title: string;
-    subheading: string;
+    subheading: PortableTextBlock[];
     contentText: string;
     podcasts: {
         _id: string;
@@ -76,7 +77,7 @@ export default function Edge({ title, subheading, contentText, podcasts }: Props
       content: (
         <FadeInOnVisible>
         <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
-          <HighlightText text={subheading} />
+          <HighlightText value={subheading} />
         </div>
         </FadeInOnVisible>
       ),

@@ -3,6 +3,7 @@
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import { PortableTextBlock } from '@portabletext/types';
 
 
 type GridItem = {
@@ -15,7 +16,7 @@ type GridItem = {
 
 type Props = {
     title: string;
-    subheading: string;
+    subheading: PortableTextBlock[];
     podcasts: {
         _id: string;
         headline: string;
@@ -66,7 +67,7 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
       content: (
         <FadeInOnVisible>
         <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
-          <HighlightText text={subheading} />
+          <HighlightText value={subheading} />
         </div>
         </FadeInOnVisible>
       ),

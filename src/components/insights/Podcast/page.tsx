@@ -1,6 +1,7 @@
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import { HighlightText } from '@/components/HighlightText';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import { PortableTextBlock } from '@portabletext/types';
 
 
 type GridItem = {
@@ -12,7 +13,7 @@ type GridItem = {
 
 type PodcastProps = {
     title: string;
-    subheading: string;
+    subheading: PortableTextBlock[];
     podcasts: {
         _id: string;
         headline: string;
@@ -64,7 +65,7 @@ export default function Podcast({ title, subheading, podcasts }: PodcastProps): 
             content: (
                 <FadeInOnVisible>
                 <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
-                    <HighlightText text={subheading} />
+                    <HighlightText value={subheading} />
                 </div>
                 </FadeInOnVisible>
             ),

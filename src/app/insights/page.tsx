@@ -31,10 +31,10 @@ type insightsPageContent = {
     title: string;
     shareholderValueAnalytics?: {
         title: string;
-        subheading: string;
+        subheading: PortableTextBlock[];
         contentText: string;
         iframeSource: string;
-        IQ_heading: string;
+        IQ_heading: PortableTextBlock[];
         IQ_subheading: string;
         IQ_context: string;
         CTA1: string;
@@ -44,7 +44,7 @@ type insightsPageContent = {
     };
     mindbullets: {
         title: string;
-        subheading: string;
+        subheading: PortableTextBlock[];
     };
     keynotes: {
         topicSection: {
@@ -57,7 +57,7 @@ type insightsPageContent = {
         };
         speakerSection: {
             speakerSectionTitle: string;
-            speakerSectionSubtitle: string;
+            speakerSectionSubtitle: PortableTextBlock[];
             speakerContentText: string;
             speakerCTA1: string;
             speakerMail1: string;
@@ -66,18 +66,18 @@ type insightsPageContent = {
     };
     podcast: {
         title: string;
-        subheading: string;
+        subheading: PortableTextBlock[];
     };
     corporateVenturing: {
         title: string;
-        subheading: string;
+        subheading: PortableTextBlock[];
         contentText: string;
         CTA: string;
         Mail: string;
     };
     theEdge: {
         title: string;
-        subheading: string;
+        subheading: PortableTextBlock[];
         contentText: string;
     };
 };
@@ -223,7 +223,7 @@ function PageContent() {
                     text={data.insights.title}
                     typeSpeed={60}
                     delay={500}
-                    className="text-[10vh] font-bold leading-tight"
+                    className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
                 />
             ),
             colSpan: 4,

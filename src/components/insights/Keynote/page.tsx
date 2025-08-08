@@ -4,8 +4,8 @@ import { HighlightText } from '@/components/HighlightText';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { PortableTextBlock } from '@portabletext/types';
-import { PortableText, PortableTextComponents } from '@portabletext/react';
 import React from 'react';
+
 
 type GridItem = {
   id: string;
@@ -26,7 +26,7 @@ type Props = {
     };
     speakerSection: {
       speakerSectionTitle: string;
-      speakerSectionSubtitle: string;
+      speakerSectionSubtitle: PortableTextBlock[];
       speakerContentText: string;
       speakerCTA1: string;
       speakerMail1: string;
@@ -35,20 +35,6 @@ type Props = {
   };
 };
 
-// ✅ Rich text components with bullet/number support
-const portableTextComponents: PortableTextComponents = {
-  list: {
-    bullet: ({ children }) => <ul className="list-disc pl-6 mb-4">{children}</ul>,
-    number: ({ children }) => <ol className="list-decimal pl-6 mb-4">{children}</ol>,
-  },
-  listItem: {
-    bullet: ({ children }) => <li className="mb-1">{children}</li>,
-    number: ({ children }) => <li className="mb-1">{children}</li>,
-  },
-  block: {
-    normal: ({ children }) => <p className="mb-2">{children}</p>,
-  },
-};
 
 export function KeynoteTop({ keynotes }: Props): GridItem[] {
   const topicSection = keynotes?.topicSection;
@@ -95,10 +81,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
       content: (
         <FadeInOnVisible>
           <div className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
-            <PortableText
-              value={topicSection.topicSectionSubtitle}
-              components={portableTextComponents}
-            />
+            <HighlightText value={topicSection.topicSectionSubtitle} />
           </div>
         </FadeInOnVisible>
       ),
@@ -159,7 +142,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       content: (
         <FadeInOnVisible>
           <div className="whitespace-pre-line text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
-            <HighlightText text={speakerSection.speakerSectionSubtitle} />
+            <HighlightText value={speakerSection.speakerSectionSubtitle} />
           </div>
         </FadeInOnVisible>
       ),

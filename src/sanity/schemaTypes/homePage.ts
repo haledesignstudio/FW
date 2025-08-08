@@ -4,311 +4,108 @@ const homePage = defineType({
   name: 'homePage',
   title: 'Homepage',
   type: 'document',
+  fieldsets: [
+    { name: 'mainContent', title: 'Main Content', options: { collapsible: true, collapsed: false } },
+    { name: 'section1', title: 'Accordion Section 1', options: { collapsible: true, collapsed: true } },
+    { name: 'section2', title: 'Accordion Section 2', options: { collapsible: true, collapsed: true } },
+    { name: 'section3', title: 'Accordion Section 3', options: { collapsible: true, collapsed: true } },
+  ],
   fields: [
     defineField({
-      name: 'title',
-      title: 'Page Title',
+      name: 'headline',
+      title: 'Headline',
       type: 'string',
-      initialValue: 'Homepage',
-      validation: (Rule) => Rule.required()
+      validation: (Rule) => Rule.required(),
+      fieldset: 'mainContent',
     }),
     defineField({
-      name: 'seo',
-      title: 'SEO Settings',
-      type: 'object',
-      fields: [
-        {
-          name: 'metaTitle',
-          title: 'Meta Title',
-          type: 'string',
-          validation: (Rule) => Rule.max(60)
-        },
-        {
-          name: 'metaDescription',
-          title: 'Meta Description',
-          type: 'text',
-          validation: (Rule) => Rule.max(160)
-        }
-      ]
-    }),
-    defineField({
-      name: 'signalsFromFuture',
-      title: 'Signals from the Future',
+      name: 'subheading',
+      title: 'Subheading',
       type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'article' }]
-        }
+      of: [{ type: 'block' }],
+      validation: (Rule) => Rule.required(),
+      fieldset: 'mainContent',
+    }),
+    defineField({
+      name: 'body',
+      title: 'Body',
+      type: 'array',
+      of: [{ type: 'block' }],
+      validation: (Rule) => Rule.required(),
+      fieldset: 'mainContent',
+    }),
+    defineField({
+      name: 'cta',
+      title: 'Call to Action',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+      fieldset: 'mainContent',
+    }),
+    defineField({
+      name: 'email',
+      title: 'Email',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+      fieldset: 'mainContent',
+    }),
+
+    defineField({
+      name: 'Image',
+      title: 'Image',
+      type: 'image',
+      options: { hotspot: true },
+      validation: (Rule) => Rule.required(),
+    }),
+
+
+    defineField({
+      name: 'section1',
+      title: 'Section 1',
+      type: 'object',
+      fieldset: 'section1',
+      fields: [
+        defineField({ name: 'section1Title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section1Body', title: 'Body', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section1CTA', title: 'CTA', type: 'string', validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section1Email', title: 'Email', type: 'string', validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section1URL', title: 'URL', type: 'url', validation: (Rule) => Rule.required() }),
       ],
-      description: 'Select articles to display in the Signals from the Future section',
-      validation: (Rule) => Rule.max(6).warning('Consider limiting to 6 articles for better page performance')
     }),
+
     defineField({
-      name: 'mainHeadline',
-      title: 'Main Headline',
-      type: 'text',
-      description: 'The large headline: "We partner with large organisations to build new, future-relevant businesses, and co-invest in these ventures"',
-      validation: (Rule) => Rule.required()
-    }),
-    defineField({
-      name: 'growthSection',
-      title: 'Growth Section',
+      name: 'section2',
+      title: 'Section 2',
       type: 'object',
+      fieldset: 'section2',
       fields: [
-        {
-          name: 'headline',
-          title: 'Growth Headline',
-          type: 'string',
-          description: 'e.g., "Growth isn\'t optional."',
-          validation: (Rule) => Rule.required()
-        },
-        {
-          name: 'description',
-          title: 'Growth Description',
-          type: 'text',
-          description: 'Main description text about growth and shareholder returns',
-          validation: (Rule) => Rule.required()
-        },
-        {
-          name: 'ctaText',
-          title: 'Call to Action Text',
-          type: 'string',
-          description: 'e.g., "Explore what this means for your business."',
-          validation: (Rule) => Rule.required()
-        },
-        {
-          name: 'ctaLink',
-          title: 'Call to Action Link',
-          type: 'url',
-          description: 'Link for the CTA button'
-        }
-      ]
+        defineField({ name: 'section2Title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Body', title: 'Body', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Heading1', title: 'Heading 1', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Description1', title: 'Description 1', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Heading2', title: 'Heading 2', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Description2', title: 'Description 2', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Heading3', title: 'Heading 3', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Description3', title: 'Description 3', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Image', title: 'Image', type: 'image', options: { hotspot: true }, validation: (Rule) => Rule.required() }),
+      ],
     }),
+
     defineField({
-      name: 'videoSection',
-      title: 'Video Section',
+      name: 'section3',
+      title: 'Section 3',
       type: 'object',
+      fieldset: 'section3',
       fields: [
-        {
-          name: 'backgroundImage',
-          title: 'Video Background Image',
-          type: 'image',
-          options: { hotspot: true },
-          description: 'Background image shown before video plays'
-        },
-        {
-          name: 'videoUrl',
-          title: 'Video URL',
-          type: 'url',
-          description: 'URL of the video to play'
-        }
-      ]
+        defineField({ name: 'section3Title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section3Body', title: 'Body', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+      ],
     }),
-    defineField({
-      name: 'accordionSection',
-      title: 'Accordion Section',
-      type: 'object',
-      fields: [
-        {
-          name: 'benchmarkInnovation',
-          title: 'Benchmark Your Innovation',
-          type: 'object',
-          fields: [
-            {
-              name: 'title',
-              title: 'Tab Title',
-              type: 'string',
-              initialValue: 'Benchmark your innovation',
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'description',
-              title: 'Description Text',
-              type: 'text',
-              description: 'Main description about Innovation Quotient'
-            },
-            {
-              name: 'ctaText',
-              title: 'CTA Text',
-              type: 'string',
-              description: 'e.g., "Benchmark your organisation with [person]"'
-            },
-            {
-              name: 'dashboardImage',
-              title: 'Analytics Dashboard Image',
-              type: 'image',
-              options: { hotspot: true },
-              description: 'The analytics dashboard/world map image'
-            },
-            {
-              name: 'backgroundColor',
-              title: 'Background Color',
-              type: 'color',
-              options: {
-                disableAlpha: true
-              },
-              initialValue: { hex: '#232323' }
-            }
-          ]
-        },
-        {
-          name: 'ourProcess',
-          title: 'Our Process',
-          type: 'object',
-          fields: [
-            {
-              name: 'title',
-              title: 'Tab Title',
-              type: 'string',
-              initialValue: 'Our process',
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'introText',
-              title: 'Introduction Text',
-              type: 'text',
-              description: 'Main introduction about the process'
-            },
-            {
-              name: 'processColumns',
-              title: 'Process Columns',
-              type: 'array',
-              of: [
-                {
-                  type: 'object',
-                  fields: [
-                    {
-                      name: 'headline',
-                      title: 'Column Headline',
-                      type: 'string',
-                      validation: (Rule) => Rule.required()
-                    },
-                    {
-                      name: 'subheadline',
-                      title: 'Column Subheadline',
-                      type: 'string',
-                      validation: (Rule) => Rule.required()
-                    },
-                    {
-                      name: 'content',
-                      title: 'Column Content',
-                      type: 'array',
-                      of: [{ type: 'block' }]
-                    }
-                  ],
-                  preview: {
-                    select: {
-                      title: 'headline',
-                      subtitle: 'subheadline'
-                    }
-                  }
-                }
-              ],
-              validation: (Rule) => Rule.length(3).error('Must have exactly 3 columns')
-            },
-            {
-              name: 'astronautImage',
-              title: 'Astronaut Image',
-              type: 'image',
-              options: { hotspot: true },
-              description: 'The astronaut image on the right side'
-            },
-            {
-              name: 'backgroundColor',
-              title: 'Background Color',
-              type: 'color',
-              options: {
-                disableAlpha: true
-              },
-              initialValue: { hex: '#DC5A50' }
-            }
-          ]
-        },
-        {
-          name: 'caseStudies',
-          title: 'Case Studies',
-          type: 'object',
-          fields: [
-            {
-              name: 'title',
-              title: 'Tab Title',
-              type: 'string',
-              initialValue: 'Case studies',
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'headline',
-              title: 'Main Headline',
-              type: 'string',
-              description: 'Large headline for case studies section'
-            },
-            {
-              name: 'subheadline',
-              title: 'Subheadline',
-              type: 'text',
-              description: 'Description text below the headline'
-            },
-            {
-              name: 'caseStudyGrid',
-              title: 'Case Study Grid Images',
-              type: 'array',
-              of: [
-                {
-                  type: 'image',
-                  options: { hotspot: true }
-                }
-              ],
-              validation: (Rule) => Rule.length(5).error('Must have exactly 5 images for the grid')
-            },
-            {
-              name: 'featuredCaseStudy',
-              title: 'Featured Case Study',
-              type: 'object',
-              fields: [
-                {
-                  name: 'image',
-                  title: 'Featured Image',
-                  type: 'image',
-                  options: { hotspot: true }
-                },
-                {
-                  name: 'title',
-                  title: 'Case Study Title',
-                  type: 'string'
-                },
-                {
-                  name: 'description',
-                  title: 'Case Study Description',
-                  type: 'text'
-                },
-                {
-                  name: 'readMoreLink',
-                  title: 'Read More Link',
-                  type: 'url'
-                }
-              ]
-            },
-            {
-              name: 'backgroundColor',
-              title: 'Background Color',
-              type: 'color',
-              options: {
-                disableAlpha: true
-              },
-              initialValue: { hex: '#F9F7F2' }
-            }
-          ]
-        }
-      ]
-    })
   ],
   preview: {
     select: {
-      title: 'title',
-      subtitle: 'mainHeadline'
-    }
-  }
+      title: 'Homepage',
+    },
+  },
 })
 
 export default homePage
