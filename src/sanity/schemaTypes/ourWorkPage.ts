@@ -5,240 +5,190 @@ const ourWorkPage = defineType({
   title: 'Our Work Page',
   type: 'document',
   fields: [
+    // Title
     defineField({
       name: 'title',
-      title: 'Page Title',
+      title: 'Title',
       type: 'string',
-      initialValue: 'Our Work',
-      validation: (Rule) => Rule.required()
+      validation: (Rule) => Rule.required(),
     }),
+
+    // Subheading (Portable Text)
     defineField({
-      name: 'seo',
-      title: 'SEO Settings',
-      type: 'object',
-      fields: [
-        {
-          name: 'metaTitle',
-          title: 'Meta Title',
-          type: 'string',
-          validation: (Rule) => Rule.max(60)
-        },
-        {
-          name: 'metaDescription',
-          title: 'Meta Description',
-          type: 'text',
-          validation: (Rule) => Rule.max(160)
-        }
-      ]
+      name: 'subheading',
+      title: 'Subheading',
+      type: 'array',
+      of: [{ type: 'block' }],
+      validation: (Rule) => Rule.required().min(1),
     }),
+
+    // Statistics (Exactly 5 items)
     defineField({
-      name: 'mainTitle',
-      title: 'Main Title',
-      type: 'string',
-      description: 'Main page heading',
-      validation: (Rule) => Rule.required()
+      name: 'statistics',
+      title: 'Statistics',
+      type: 'array',
+      of: [
+        {
+          name: 'statItem',
+          type: 'object',
+          fields: [
+            {
+              name: 'statisticName',
+              title: 'Statistic Name',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'statisticValue',
+              title: 'Statistic Value',
+              type: 'string', // change to 'number' if you want numeric-only
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.required().min(5).max(5),
     }),
-    defineField({
-      name: 'subtitle',
-      title: 'Subtitle',
-      type: 'text',
-      description: 'Description text below the main title'
-    }),
-    defineField({
-      name: 'stats',
-      title: 'Statistics Section',
-      type: 'object',
-      fields: [
-        {
-          name: 'corporatePartners',
-          title: 'Corporate Partners',
-          type: 'number',
-          validation: (Rule) => Rule.required().integer().min(0)
-        },
-        {
-          name: 'gameChangingOpportunities',
-          title: 'Game Changing Opportunities',
-          type: 'number',
-          validation: (Rule) => Rule.required().integer().min(0)
-        },
-        {
-          name: 'valuePropositions',
-          title: 'Value Propositions',
-          type: 'number',
-          validation: (Rule) => Rule.required().integer().min(0)
-        },
-        {
-          name: 'investmentCases',
-          title: 'Investment Cases',
-          type: 'number',
-          validation: (Rule) => Rule.required().integer().min(0)
-        },
-        {
-          name: 'newVenturesInCommercialisation',
-          title: 'New Ventures in Commercialisation',
-          type: 'number',
-          validation: (Rule) => Rule.required().integer().min(0)
-        }
-      ]
-    }),
-    defineField({
-      name: 'statLabels',
-      title: 'Statistics Labels',
-      type: 'object',
-      description: 'Custom labels for the statistics',
-      fields: [
-        {
-          name: 'corporatePartnersLabel',
-          title: 'Corporate Partners Label',
-          type: 'string',
-          initialValue: 'Corporate Partners'
-        },
-        {
-          name: 'gameChangingOpportunitiesLabel',
-          title: 'Game Changing Opportunities Label',
-          type: 'string',
-          initialValue: 'Game Changing Opportunities'
-        },
-        {
-          name: 'valuePropositionsLabel',
-          title: 'Value Propositions Label',
-          type: 'string',
-          initialValue: 'Value Propositions'
-        },
-        {
-          name: 'investmentCasesLabel',
-          title: 'Investment Cases Label',
-          type: 'string',
-          initialValue: 'Investment Cases'
-        },
-        {
-          name: 'newVenturesInCommercialisationLabel',
-          title: 'New Ventures in Commercialisation Label',
-          type: 'string',
-          initialValue: 'New Ventures in Commercialisation'
-        }
-      ]
-    }),
+
+    // Testimonials
     defineField({
       name: 'testimonials',
       title: 'Testimonials',
       type: 'array',
       of: [
         {
+          name: 'testimonial',
           type: 'object',
           fields: [
             {
               name: 'quote',
-              title: 'Testimonial Quote',
-              type: 'text',
-              validation: (Rule) => Rule.required()
+              title: 'Quote',
+              type: 'array',
+              of: [{ type: 'block' }],
+              validation: (Rule) => Rule.required(),
             },
             {
-              name: 'clientName',
-              title: 'Client Name',
+              name: 'name',
+              title: 'Name',
               type: 'string',
-              validation: (Rule) => Rule.required()
+              validation: (Rule) => Rule.required(),
             },
             {
-              name: 'clientTitle',
-              title: 'Client Title/Position',
-              type: 'string'
+              name: 'jobTitle',
+              title: 'Job Title',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
             },
             {
               name: 'company',
               title: 'Company',
               type: 'string',
-              validation: (Rule) => Rule.required()
-            }
-          ]
-        }
-      ]
-    }),
-    defineField({
-      name: 'partneredBrands',
-      title: 'Partnered Brands',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'brandName',
-              title: 'Brand Name',
-              type: 'string',
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'brandLogo',
-              title: 'Brand Logo',
-              type: 'image',
-              options: {
-                hotspot: true
-              },
-              validation: (Rule) => Rule.required()
-            }
-          ]
-        }
-      ]
-    }),
-    defineField({
-      name: 'accordion',
-      title: '3-Layer Accordion',
-      type: 'array',
-      validation: (Rule) => Rule.max(3),
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'heading',
-              title: 'Accordion Heading',
-              type: 'string',
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'text',
-              title: 'Accordion Text',
-              type: 'text',
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'image',
-              title: 'Accordion Image',
-              type: 'image',
-              options: {
-                hotspot: true
-              },
-              validation: (Rule) => Rule.required()
-            },
-            {
-              name: 'color',
-              title: 'Background Color',
-              type: 'string',
-              options: {
-                list: [
-                  { title: 'Light Beige', value: '#F9F7F2' },
-                  { title: 'Red', value: '#DC5A50' },
-                  { title: 'Dark Grey', value: '#232323' },
-                  { title: 'White', value: '#FFFFFF' },
-                  { title: 'Black', value: '#000000' }
-                ],
-                layout: 'radio'
-              },
               validation: (Rule) => Rule.required(),
-              initialValue: '#F9F7F2'
-            }
-          ]
-        }
-      ]
-    })
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.required().min(1),
+    }),
+
+    // Partners
+    defineField({
+      name: 'partners',
+      title: 'Partners',
+      type: 'array',
+      of: [
+        {
+          name: 'partner',
+          type: 'object',
+          fields: [
+            {
+              name: 'partnerName',
+              title: 'Partner Name',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'partnerImage',
+              title: 'Partner Image',
+              type: 'image',
+              options: { hotspot: true },
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.required().min(1),
+    }),
+
+    // Accordion Section 1
+    defineField({
+      name: 'accordionSection1',
+      title: 'Accordion Section 1',
+      type: 'object',
+      fields: [
+        {
+          name: 'heading',
+          title: 'Heading',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: 'body',
+          title: 'Body',
+          type: 'array',
+          of: [{ type: 'block' }],
+          validation: (Rule) => Rule.required().min(1),
+        },
+        {
+          name: 'mainImage',
+          title: 'Main Image',
+          type: 'image',
+          options: { hotspot: true },
+          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: 'brandImage',
+          title: 'Brand Image',
+          type: 'image',
+          options: { hotspot: true },
+          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: 'cta',
+          title: 'CTA',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        },
+      ],
+      validation: (Rule) => Rule.required(),
+    }),
+
+    // Accordion Section 2
+    defineField({
+      name: 'accordionSection2',
+      title: 'Accordion Section 2',
+      type: 'object',
+      fields: [
+        {
+          name: 'heading',
+          title: 'Heading',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: 'body',
+          title: 'Body',
+          type: 'array',
+          of: [{ type: 'block' }],
+          validation: (Rule) => Rule.required().min(1),
+        },
+      ],
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   preview: {
-    select: {
-      title: 'title',
-      subtitle: 'mainTitle'
-    }
-  }
+    select: { title: 'title' },
+  },
 })
 
 export default ourWorkPage
