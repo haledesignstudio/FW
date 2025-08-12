@@ -335,10 +335,10 @@ const menuVariants: Variants = {
     },
     exit: {
         maxHeight: '0px',
-        opacity: 1,
+        opacity: 0,
         transition: {
-            duration: 0.5,
-            ease: [0.42, 0, 0.58, 1]
+            maxHeight: { duration: 0.4, ease: [0.42, 0, 0.58, 1] },
+            opacity: { duration: 0.3, ease: "easeOut", delay: 0 }
         }
     }
 };
@@ -493,7 +493,8 @@ const Header: React.FC = () => {
                         animate="visible"
                         exit="exit"
                         variants={menuVariants}
-                        className="w-screen h-[75vh] bg-[#F9F7F2] flex items-center justify-end relative left-0 z-40"
+                        className="w-screen bg-[#F9F7F2] flex items-center justify-end relative left-0 z-40 overflow-hidden"
+                        style={{ height: '75vh' }}
                     >
                         <div
                             className="relative h-full overflow-visible"

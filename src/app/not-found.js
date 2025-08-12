@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { FutureText } from '@/components/FutureText';
 
 export default function NotFound() {
   const mountRef = useRef(null);
@@ -187,7 +188,12 @@ export default function NotFound() {
               fontWeight: '700'
             }}
           >
-            404 / You&apos;ve reached the end of the internet
+            <FutureText
+              text="404 / You've reached the end of the internet"
+              delay={500}
+              speed={25}
+              className="font-roboto text-white leading-tight"
+            />
           </h1>
           <div 
             className="mb-4 sm:mb-6"
@@ -200,20 +206,30 @@ export default function NotFound() {
                 fontWeight: '300'
               }}
             >
-              The page you&apos;re looking for doesn&apos;t exist or may have been moved.
+              <FutureText
+                text="The page you're looking for doesn't exist or may have been moved."
+                delay={1800}
+                speed={20}
+                className="font-roboto text-gray-300 leading-relaxed"
+              />
             </p>
           </div>
 
           <Link 
             href="/"
-            className="inline-flex items-center font-roboto underline transition-all duration-300"
+            className="inline-flex items-center font-roboto underline transition-all duration-300 text-white"
             style={{ 
               padding: 'clamp(0.375rem, 1.5vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)',
               fontSize: 'clamp(0.75rem, 3.5vw, 1rem)',
               fontWeight: '500'
             }}
           >
-            <span className="mr-2">Go back to homepage</span>
+            <FutureText
+              text="Go back to homepage"
+              delay={3200}
+              speed={25}
+              className="font-roboto text-white underline"
+            />
           </Link>
         </div>
       </div>
