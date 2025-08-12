@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { PortableText } from '@portabletext/react';
-import type { HomePageContent } from '@/app/page';
+import type { HomePageContent } from '@/app/home-client';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 

@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { client } from '@/sanity/lib/client';
+import Image from 'next/image';
+// import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { FutureText } from '@/components/FutureText';
@@ -32,54 +33,54 @@ interface SignalsFromTheFutureProps {
 }
 
 // Sanity query to get latest pieces from different content types
-const signalsQuery = `
-{
-  "mindbullets": *[_type == "mindbullet"] | order(publishedAt desc)[0] {
-    _id,
-    title,
-    summary,
-    mainImage,
-    publishedAt,
-    "type": "mindbullet",
-    slug
-  },
-  "podcasts": *[_type == "podcast"] | order(publishedAt desc)[0] {
-    _id,
-    title,
-    summary,
-    mainImage,
-    publishedAt,
-    "type": "podcast",
-    slug
-  },
-  "caseStudies": *[_type == "caseStudy"] | order(publishedAt desc)[0] {
-    _id,
-    title,
-    summary,
-    mainImage,
-    publishedAt,
-    "type": "case-study",
-    slug
-  },
-  "articles": *[_type == "article"] | order(publishedAt desc)[0] {
-    _id,
-    title,
-    summary,
-    mainImage,
-    publishedAt,
-    "type": "article",
-    slug
-  },
-  "provocativeScenarios": *[_type == "provocativeScenario"] | order(publishedAt desc)[0] {
-    _id,
-    title,
-    summary,
-    mainImage,
-    publishedAt,
-    "type": "provocative-scenario",
-    slug
-  }
-}`;
+// const signalsQuery = `
+// {
+//   "mindbullets": *[_type == "mindbullet"] | order(publishedAt desc)[0] {
+//     _id,
+//     title,
+//     summary,
+//     mainImage,
+//     publishedAt,
+//     "type": "mindbullet",
+//     slug
+//   },
+//   "podcasts": *[_type == "podcast"] | order(publishedAt desc)[0] {
+//     _id,
+//     title,
+//     summary,
+//     mainImage,
+//     publishedAt,
+//     "type": "podcast",
+//     slug
+//   },
+//   "caseStudies": *[_type == "caseStudy"] | order(publishedAt desc)[0] {
+//     _id,
+//     title,
+//     summary,
+//     mainImage,
+//     publishedAt,
+//     "type": "case-study",
+//     slug
+//   },
+//   "articles": *[_type == "article"] | order(publishedAt desc)[0] {
+//     _id,
+//     title,
+//     summary,
+//     mainImage,
+//     publishedAt,
+//     "type": "article",
+//     slug
+//   },
+//   "provocativeScenarios": *[_type == "provocativeScenario"] | order(publishedAt desc)[0] {
+//     _id,
+//     title,
+//     summary,
+//     mainImage,
+//     publishedAt,
+//     "type": "provocative-scenario",
+//     slug
+//   }
+// }`;
 
 type GridItem = {
   id: number;
@@ -142,8 +143,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
   useEffect(() => {
     setIsClient(true);
     const checkMobile = () => {
-      const mobile = window.innerWidth < 768;
-      // Update mobile state if needed
+      // Mobile detection handled by window.innerWidth checks where needed
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -290,13 +290,13 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
     }
   };
 
-  const handleReadLess = () => {
-    setExpandedColumn(null);
-    const isMobileScreen = isClient && window.innerWidth < 768;
-    if (isMobile || isMobileScreen) {
-      setMobileAutoplay(true); // Resume autoplay
-    }
-  };
+//   const handleReadLess = () => {
+//     setExpandedColumn(null);
+//     const isMobileScreen = isClient && window.innerWidth < 768;
+//     if (isMobile || isMobileScreen) {
+//       setMobileAutoplay(true); // Resume autoplay
+//     }
+//   };
 
   const getSlugUrl = (piece: SignalPiece) => {
     const typeToPath: Record<string, string> = {
@@ -455,7 +455,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                   {currentPiece.summary && currentPiece.summary.map((block, index) => (
                     <div key={index} className="mb-2">
                       <FutureText
-                        text={(block as any).children?.map((child: any) => child.text).join('') || ''}
+                        text={(block as PortableTextBlock & { children?: Array<{ text: string }> }).children?.map((child) => child.text).join('') || ''}
                         delay={300 + (index * 200)}
                         className="text-[1.8vh] leading-tight"
                         speed={5}
@@ -484,11 +484,13 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
             >
-              <img
+              <Image
                 src={currentPiece.mainImage.asset._ref.startsWith('dummy-') 
                   ? '/placeholder-image.png' 
                   : urlFor(currentPiece.mainImage.asset).url()}
                 alt={currentPiece.mainImage.alt || currentPiece.title}
+                width={500}
+                height={300}
                 className="object-cover w-full h-full"
               />
             </motion.div>
@@ -676,7 +678,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                       {piece.summary && piece.summary.map((block, blockIndex) => (
                         <div key={blockIndex} className="mb-2">
                           <FutureText
-                            text={(block as any).children?.map((child: any) => child.text).join('') || ''}
+                            text={(block as PortableTextBlock & { children?: Array<{ text: string }> }).children?.map((child) => child.text).join('') || ''}
                             delay={400 + (blockIndex * 200)}
                             className="text-[clamp(0.8vw,1.8vh,1.2vw)] leading-tight"
                             speed={5}
@@ -696,11 +698,13 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                   >
                     {piece.mainImage && (
                       <div className="h-[12.5vh] mb-2">
-                        <img
+                        <Image
                           src={piece.mainImage.asset._ref.startsWith('dummy-') 
                             ? '/placeholder-image.png' 
                             : urlFor(piece.mainImage.asset).url()}
                           alt={piece.mainImage.alt || piece.title}
+                          width={400}
+                          height={200}
                           className="object-cover w-full h-full"
                         />
                       </div>
