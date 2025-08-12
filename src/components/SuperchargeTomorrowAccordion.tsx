@@ -3,74 +3,98 @@
 import { useState } from 'react';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
-import { PortableTextBlock } from '@portabletext/react';
-import MainTitleAnimation from '@/components/MainTitleAnimation';
-import { HighlightText } from '@/components/HighlightText';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import type { PortableTextBlock } from '@portabletext/react';
 
-export type WhatWeDoEntry = {
-    title: PortableTextBlock[];
-    body: PortableTextBlock[];
+type PT = PortableTextBlock[];
+
+/** Section 1 */
+export type ST_Section1Statement = {
+    body: PT;
 };
 
-/**
- * Represents each `accordionItem` object inside `items`.
- * Each contains heading, subheading, description, prompt, and entries.
- */
-export type WhatWeDoAccordionItem = {
+export type ST_AccordionSection1 = {
     heading: string;
-    subheading: PortableTextBlock[];
-    description: PortableTextBlock[];
+    subheading: PT;
+    description: PT;
     image: {
         asset: {
             _ref: string;
             _type: string;
         };
     };
-    prompt: PortableTextBlock[];
-    entries: [WhatWeDoEntry, WhatWeDoEntry, WhatWeDoEntry];
-};
-
-/**
- * Represents the `accordion` object.
- * Contains heading, subheading, and exactly three accordion items.
- */
-export type WhatWeDoAccordion = {
-    heading: string;
-    subheading: PortableTextBlock[];
-    items: [
-        WhatWeDoAccordionItem,
-        WhatWeDoAccordionItem,
-        WhatWeDoAccordionItem
+    cta: string;
+    email: string;
+    // exactly 4
+    statements: [
+        ST_Section1Statement,
+        ST_Section1Statement,
+        ST_Section1Statement,
+        ST_Section1Statement
     ];
 };
 
-/**
- * Top-level `whatWeDo` document.
- * Matches the Sanity schema exactly.
- */
-export type WhatWeDoDocument = {
-    /** Sanity system fields (optional) */
-    _id?: string;
-    _type?: 'whatWeDo';
-
-    /** Intro fieldset */
-    heading: string;
-    subheading: PortableTextBlock[];
-
-    /** Call to Action (CTA) fieldset */
-    cta: string;
-    email: string;
-
-    /** Statements fieldset */
-    statement1: PortableTextBlock[];
-    statement2: PortableTextBlock[];
-    statement3: PortableTextBlock[];
-
-    /** Accordion fieldset */
-    accordion: WhatWeDoAccordion;
+/** Section 2 */
+export type ST_Section2Statement = {
+    heading: PT;
+    body: PT;
 };
 
-export type WhatWeDoAccordionProps = { data: WhatWeDoDocument };
+export type ST_AccordionSection2_S1 = {
+    description: PT;
+    // exactly 3
+    statements: [
+        ST_Section2Statement,
+        ST_Section2Statement,
+        ST_Section2Statement
+    ];
+};
+
+export type ST_AccordionSection2_S2 = {
+    description: PT;
+    // exactly 2
+    statements: [ST_Section2Statement, ST_Section2Statement];
+};
+
+export type ST_AccordionSection2 = {
+    heading: string;
+    subheading: PT;
+    cta: string;
+    email: string;
+    section1: ST_AccordionSection2_S1;
+    section2: ST_AccordionSection2_S2;
+};
+
+/** Section 3 */
+export type ST_AccordionSection3 = {
+    heading: string;
+    subheading: PT;
+    description: PT;
+    image: {
+        asset: {
+            _ref: string;
+            _type: string;
+        };
+    };
+    cta: string;
+    email: string;
+};
+
+/** Top-level document */
+export type SuperchargeTomorrowPage = {
+    _id?: string;
+    _type?: 'superchargeTomorrowPage';
+    title: string;
+    heading: string;
+    subheading: PT;
+
+    accordionSection1: ST_AccordionSection1;
+    accordionSection2: ST_AccordionSection2;
+    accordionSection3: ST_AccordionSection3;
+};
+
+export type SuperchargeTomorrowProps = { data: SuperchargeTomorrowPage };
+
 
 type GridItem = {
     id: number;
@@ -82,8 +106,6 @@ type GridItem = {
     landscapeColSpan?: number;
     landscapeRowSpan?: number;
 };
-
-
 
 
 function getGridClasses(item: GridItem) {
@@ -108,34 +130,29 @@ function getGridClasses(item: GridItem) {
     return base.join(' ');
 }
 
-type Active = 'sec2' | 'sec3' | 'sec4' | null;
+type Active = 'sec2' | 'sec3' | 'sec4';
 
-function placement(section: 'sec1' | 'sec2' | 'sec3' | 'sec4', active: Active) {
-    // Returns { start, span } for a 6-column grid, implementing the left-expansion rules.
-    if (active === null) {
-        if (section === 'sec1') return { start: 1, span: 3 };
-        if (section === 'sec2') return { start: 4, span: 1 };
-        if (section === 'sec3') return { start: 5, span: 1 };
-        return { start: 6, span: 1 }; // sec4
-    }
+
+function placement(section: 'sec2' | 'sec3' | 'sec4', active: Active) {
+    // 6-column grid.
+    // No active: 3 equal columns (2 each)
+    // Active expands to 4 columns, others 1 column
     if (active === 'sec2') {
-        if (section === 'sec1') return { start: 1, span: 0 };
-        if (section === 'sec2') return { start: 1, span: 4 }; // expands left (cols 1-4)
+        if (section === 'sec2') return { start: 1, span: 4 }; // cols 1-4
         if (section === 'sec3') return { start: 5, span: 1 };
         return { start: 6, span: 1 };
     }
     if (active === 'sec3') {
-        if (section === 'sec1') return { start: 1, span: 0 };
         if (section === 'sec2') return { start: 1, span: 1 };
-        if (section === 'sec3') return { start: 2, span: 4 }; // expands left (cols 2-5)
+        if (section === 'sec3') return { start: 2, span: 4 }; // cols 2-5
         return { start: 6, span: 1 };
     }
     // active === 'sec4'
-    if (section === 'sec1') return { start: 1, span: 0 };
     if (section === 'sec2') return { start: 1, span: 1 };
     if (section === 'sec3') return { start: 2, span: 1 };
-    return { start: 3, span: 4 }; // expands left (cols 3-6)
+    return { start: 3, span: 4 }; // cols 3-6
 }
+
 
 // Wrap plain strings so you can style them reliably inside list items/blocks
 const wrapStrings = (children: React.ReactNode): React.ReactNode => {
@@ -164,93 +181,13 @@ const ptComponents: PortableTextComponents = {
 
 
 
-export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
-    const [active, setActive] = useState<Active>(null);
-    const toggle = (id: Active) => setActive(prev => (prev === id ? null : id));
+export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorrowProps) {
+    const [active, setActive] = useState<Active>('sec2');
+    const toggle = (id: Active) => setActive(prev => (prev === id ? 'sec2' : id));
+
 
     // ---- Section definitions with unique items per tab ----
     const sections = [
-        {
-            key: 'sec1' as const,
-            clickable: false,
-            bg: '#F9F7F2',
-            fg: '#000',
-            title: 'Section 1',
-            titleItem: {
-                id: 0,
-                colSpan: 0,
-                rowSpan: 2,
-                mobileColSpan: 2,
-                mobileRowSpan: 1,
-                landscapeColSpan: 6,
-                landscapeRowSpan: 1,
-                content: <></>,
-            },
-            items: [
-                {
-                    id: 1,
-                    content: <></>,
-                    colSpan: 4,
-                    rowSpan: 2,
-                    mobileColSpan: 2,
-                    mobileRowSpan: 1,
-                    landscapeColSpan: 3,
-                    landscapeRowSpan: 1,
-                },
-                {
-                    id: 2,
-                    content: (
-                        <MainTitleAnimation
-                            text={data.accordion.heading}
-                            typeSpeed={40}
-                            delay={500}
-                            className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-[clamp(4vw,10vh,5vw)] text-balance text-[#232323]"
-                        />
-
-                    ),
-                    colSpan: 2,
-                    rowSpan: 2,
-                    mobileColSpan: 2,
-                    mobileRowSpan: 1,
-                    landscapeColSpan: 3,
-                    landscapeRowSpan: 1,
-                },
-                {
-                    id: 3,
-                    content: <></>,
-                    colSpan: 2,
-                    rowSpan: 2,
-                    mobileColSpan: 2,
-                    mobileRowSpan: 1,
-                    landscapeColSpan: 3,
-                    landscapeRowSpan: 1,
-                },
-                {
-                    id: 4,
-                    content:
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-[#232323]">
-                            <HighlightText value={data.accordion.subheading} />
-                        </div>
-                    ,
-                    colSpan: 4,
-                    rowSpan: 2,
-                    mobileColSpan: 2,
-                    mobileRowSpan: 1,
-                    landscapeColSpan: 3,
-                    landscapeRowSpan: 1,
-                },
-                {
-                    id: 5,
-                    content: <></>,
-                    colSpan: 4,
-                    rowSpan: 2,
-                    mobileColSpan: 2,
-                    mobileRowSpan: 1,
-                    landscapeColSpan: 3,
-                    landscapeRowSpan: 1,
-                },
-            ] as GridItem[],
-        },
 
         // ---- Section 2 (unique items) ----
         {
@@ -273,7 +210,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 201,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-center text-[#F9F7F2]">
                             1
                         </div>,
                     colSpan: 1,
@@ -295,8 +232,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 203,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#F9F7F2]">
-                                {data.accordion.items[0].heading}
+                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik text-center leading-tight text-[#F9F7F2]">
+                                {data.accordionSection1.heading}
                             </div>
                         </div>,
                     colSpan: 1, rowSpan: 1,
@@ -310,17 +247,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                        <div className="h-full flex flex-col  gap-[2vh]">
-                            <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
-                                1
-                            </div>
-                            <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].description} components={ptComponents} />
-                            </div>
+                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                            1
                         </div>
                     ),
                     colSpan: 1,
-                    rowSpan: 4,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -338,10 +270,16 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 3,
-                    content:
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#F9F7F2]">
-                            <PortableText value={data.accordion.items[0].subheading} />
-                        </div>,
+                    content: (
+
+                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance pt-[2vh] text-right text-[#F9F7F2]">
+                            <PortableText
+                                value={data.accordionSection1.subheading}
+                                components={ptComponents}
+                            />
+                        </div>
+
+                    ),
                     colSpan: 2,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -351,9 +289,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 4,
-                    content: data.accordion.items[0].image.asset ? (
+                    content: data.accordionSection1.image.asset ? (
                         <img
-                            src={urlFor(data.accordion.items[0].image.asset).url()}
+                            src={urlFor(data.accordionSection1.image.asset).url()}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
                         />
@@ -368,10 +306,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 5,
                     content:
-                        <div className="flex h-full pt-[14.5vh]">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].prompt} />
-                            </div>
+                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <PortableText value={data.accordionSection1.description} components={ptComponents} />
                         </div>,
                     colSpan: 1,
                     rowSpan: 2,
@@ -382,16 +318,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 6,
-                    content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].entries[0].title} />
-                            </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].entries[0].body} />
-                            </div>
-                        </div>
-                    ,
+                    content: <></>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -402,15 +329,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 7,
                     content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].entries[1].title} />
-                            </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].entries[1].body} />
-                            </div>
-                        </div>
-                    ,
+                        <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] pt-[4vh] font-roboto leading-tight text-[#F9F7F2]">
+                            <PortableText value={data.accordionSection1.statements[0].body} components={ptComponents} />
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -421,13 +342,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 8,
                     content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].entries[2].title} />
-                            </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].entries[2].body} />
-                            </div>
+                        <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] pt-[4vh] font-roboto leading-tight text-[#F9F7F2]">
+                            <PortableText value={data.accordionSection1.statements[1].body} components={ptComponents} />
                         </div>,
                     colSpan: 1,
                     rowSpan: 1,
@@ -439,16 +355,77 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#F9F7F2]">
-                            {data.accordion.items[0].heading}
+                        <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] pt-[4vh] font-roboto leading-tight text-[#F9F7F2]">
+                            <PortableText value={data.accordionSection1.statements[2].body} components={ptComponents} />
                         </div>,
-                    colSpan: 4,
+                    colSpan: 1,
+                    rowSpan: 1,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+                {
+                    id: 10,
+                    content:
+                        <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] pt-[4vh] font-roboto leading-tight text-[#F9F7F2]">
+                            <PortableText value={data.accordionSection1.statements[3].body} components={ptComponents} />
+                        </div>,
+                    colSpan: 1,
+                    rowSpan: 1,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+                {
+                    id: 11,
+                    content:
+                        <div className="flex items-end h-full">
+                            <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)] text-[#F9F7F2]">
+                                {data.accordionSection1.heading}
+                            </div>
+                        </div>,
+                    colSpan: 2,
                     rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
                     landscapeRowSpan: 1,
                 },
+                {
+                    id: 12,
+                    content: <></>,
+                    colSpan: 1,
+                    rowSpan: 2,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+                {
+                    id: 13,
+                    content:
+                        <div className="flex items-end h-full justify-end text-right pb-[4vh]">
+                            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] text-[#F9F7F2] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)] ">
+                                <a
+                                    href={`mailto:${data.accordionSection1.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
+                                    className="transition cursor-pointer"
+                                >
+                                    <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#F9F7F2">
+                                        {data.accordionSection1.cta ?? 'Get in Touch'}
+                                    </UnderlineOnHoverAnimation>
+                                </a>
+                            </div>
+                        </div>,
+                    colSpan: 1,
+                    rowSpan: 2,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+
             ] as GridItem[],
         },
 
@@ -473,7 +450,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 301,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-center text-[#F9F7F2]">
                             2
                         </div>,
                     colSpan: 1,
@@ -495,8 +472,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 303,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#F9F7F2]">
-                                {data.accordion.items[1].heading}
+                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik text-center leading-tight text-[#F9F7F2]">
+                                {data.accordionSection2.heading}
                             </div>
                         </div>,
                     colSpan: 1, rowSpan: 1,
@@ -510,17 +487,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                        <div className="h-full flex flex-col  gap-[2vh]">
-                            <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
-                                2
-                            </div>
-                            <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[1].description} components={ptComponents} />
-                            </div>
+                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                            2
                         </div>
                     ),
                     colSpan: 1,
-                    rowSpan: 4,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -530,7 +502,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 2,
                     content: <></>,
                     colSpan: 1,
-                    rowSpan: 1,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -538,12 +510,16 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 3,
-                    content:
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#F9F7F2]">
-                            <PortableText value={data.accordion.items[1].subheading} />
-                        </div>,
+                    content: (
+                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#F9F7F2] pt-[2vh]">
+                            <PortableText
+                                value={data.accordionSection2.subheading}
+                                components={ptComponents}
+                            />
+                        </div>
+                    ),
                     colSpan: 2,
-                    rowSpan: 1,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -551,15 +527,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 4,
-                    content: data.accordion.items[1].image.asset ? (
-                        <img
-                            src={urlFor(data.accordion.items[1].image.asset).url()}
-                            alt={'Process image'}
-                            className="w-full h-full object-cover"
-                        />
-                    ) : null,
-                    colSpan: 3,
-                    rowSpan: 4,
+                    content:
+                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <PortableText value={data.accordionSection2.section1.description} components={ptComponents} />
+                        </div>,
+                    colSpan: 1,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -568,9 +541,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 5,
                     content:
-                        <div className="flex h-full pt-[14.5vh]">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[1].prompt} />
+                        <div className="h-full flex flex-col gap-[1vh]">
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section1.statements[0].heading} components={ptComponents} />
+                            </div>
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section1.statements[0].body} components={ptComponents} />
                             </div>
                         </div>,
                     colSpan: 1,
@@ -583,16 +559,16 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 6,
                     content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[1].entries[0].title} />
+                        <div className="h-full flex flex-col gap-[1vh]">
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section1.statements[1].heading} components={ptComponents} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[1].entries[0].body} />
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section1.statements[1].body} components={ptComponents} />
                             </div>
                         </div>,
                     colSpan: 1,
-                    rowSpan: 1,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -601,16 +577,16 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 7,
                     content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[1].entries[1].title} />
+                        <div className="h-full flex flex-col gap-[1vh]">
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section1.statements[2].heading} components={ptComponents} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[1].entries[1].body} />
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section1.statements[2].body} components={ptComponents} />
                             </div>
                         </div>,
                     colSpan: 1,
-                    rowSpan: 1,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -619,14 +595,56 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 8,
                     content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[1].entries[2].title} />
+                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <PortableText value={data.accordionSection2.section2.description} components={ptComponents} />
+                        </div>,
+                    colSpan: 1,
+                    rowSpan: 2,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+                {
+                    id: 9,
+                    content: 
+                    <div className="h-full flex flex-col gap-[1vh]">
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section2.statements[0].heading} components={ptComponents} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[1].entries[2].body} />
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section2.statements[0].body} components={ptComponents} />
                             </div>
                         </div>,
+                    colSpan: 1,
+                    rowSpan: 2,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+                {
+                    id: 10,
+                    content: 
+                    <div className="h-full flex flex-col gap-[1vh]">
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section2.statements[1].heading} components={ptComponents} />
+                            </div>
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                                <PortableText value={data.accordionSection2.section2.statements[1].body} components={ptComponents} />
+                            </div>
+                        </div>,
+                    colSpan: 1,
+                    rowSpan: 2,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+                {
+                    id: 11,
+                    content: 
+                    <></>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -635,18 +653,46 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     landscapeRowSpan: 1,
                 },
                 {
-                    id: 9,
-                    content:
-                        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#F9F7F2]">
-                            {data.accordion.items[1].heading}
+                    id: 12,
+                    content: 
+                    <div className="flex items-end h-full">
+                            <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)] text-[#F9F7F2]">
+                                {data.accordionSection2.heading}
+                            </div>
                         </div>,
-                    colSpan: 4,
+                    colSpan: 3,
                     rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
                     landscapeRowSpan: 1,
                 },
+                {
+                    id: 13,
+                    content: 
+                    <div className="flex items-end h-full justify-end text-right pb-[4vh]">
+                            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] text-[#F9F7F2] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)] ">
+                                <a
+                                    href={`mailto:${data.accordionSection2.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
+                                    className="transition cursor-pointer"
+                                >
+                                    <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#F9F7F2">
+                                        {data.accordionSection2.cta ?? 'Get in Touch'}
+                                    </UnderlineOnHoverAnimation>
+                                </a>
+                            </div>
+                        </div>,
+                    colSpan: 1,
+                    rowSpan: 2,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+               
+
+
+
             ] as GridItem[],
         },
 
@@ -671,7 +717,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 401,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#232323]">
+                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-center text-[#232323]">
                             3
                         </div>,
                     colSpan: 1,
@@ -693,8 +739,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 403,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#232323]">
-                                {data.accordion.items[2].heading}
+                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik text-center leading-tight text-[#232323]">
+                                {data.accordionSection3.heading}
                             </div>
                         </div>,
                     colSpan: 1, rowSpan: 1,
@@ -708,17 +754,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                        <div className="h-full flex flex-col  gap-[2vh]">
-                            <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#232323]">
-                                3
-                            </div>
-                            <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
-                                <PortableText value={data.accordion.items[2].description} components={ptComponents} />
-                            </div>
+                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#232323]">
+                            3
                         </div>
                     ),
                     colSpan: 1,
-                    rowSpan: 4,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -736,10 +777,15 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 3,
-                    content:
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#232323]">
-                            <PortableText value={data.accordion.items[2].subheading} />
-                        </div>,
+                    content: (
+
+                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance pt-[2vh] text-right text-[#232323]">
+                            <PortableText
+                                value={data.accordionSection3.subheading}
+                                components={ptComponents}
+                            />
+                        </div>
+                    ),
                     colSpan: 2,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -749,9 +795,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 4,
-                    content: data.accordion.items[2].image.asset ? (
+                    content: data.accordionSection1.image.asset ? (
                         <img
-                            src={urlFor(data.accordion.items[2].image.asset).url()}
+                            src={urlFor(data.accordionSection3.image.asset).url()}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
                         />
@@ -766,10 +812,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 5,
                     content:
-                        <div className="flex h-full pt-[14.5vh]">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
-                                <PortableText value={data.accordion.items[2].prompt} />
-                            </div>
+                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#232323]">
+                            <PortableText value={data.accordionSection3.description} components={ptComponents} />
                         </div>,
                     colSpan: 1,
                     rowSpan: 2,
@@ -780,15 +824,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 6,
-                    content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
-                                <PortableText value={data.accordion.items[2].entries[0].title} />
-                            </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
-                                <PortableText value={data.accordion.items[2].entries[0].body} />
-                            </div>
-                        </div>,
+                    content: <></>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -799,15 +835,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 7,
                     content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
-                                <PortableText value={data.accordion.items[2].entries[1].title} />
-                            </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
-                                <PortableText value={data.accordion.items[2].entries[1].body} />
-                            </div>
-                        </div>,
-                    colSpan: 1,
+                        <></>,
+                    colSpan: 4,
                     rowSpan: 1,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
@@ -817,16 +846,13 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 8,
                     content:
-                        <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
-                                <PortableText value={data.accordion.items[2].entries[2].title} />
-                            </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
-                                <PortableText value={data.accordion.items[2].entries[2].body} />
+                        <div className="flex items-end h-full">
+                            <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)] text-[#232323]">
+                                {data.accordionSection3.heading}
                             </div>
                         </div>,
-                    colSpan: 1,
-                    rowSpan: 1,
+                    colSpan: 2,
+                    rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
@@ -834,17 +860,37 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 },
                 {
                     id: 9,
-                    content:
-                        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#232323]">
-                            {data.accordion.items[2].heading}
-                        </div>,
-                    colSpan: 4,
+                    content: <></>,
+                    colSpan: 1,
                     rowSpan: 2,
                     mobileColSpan: 2,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
                     landscapeRowSpan: 1,
                 },
+                {
+                    id: 10,
+                    content:
+                        <div className="flex items-end h-full justify-end text-right pb-[4vh]">
+                            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] text-[#232323] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)] ">
+                                <a
+                                    href={`mailto:${data.accordionSection3.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
+                                    className="transition cursor-pointer"
+                                >
+                                    <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#232323">
+                                        {data.accordionSection3.cta ?? 'Get in Touch'}
+                                    </UnderlineOnHoverAnimation>
+                                </a>
+                            </div>
+                        </div>,
+                    colSpan: 1,
+                    rowSpan: 2,
+                    mobileColSpan: 2,
+                    mobileRowSpan: 1,
+                    landscapeColSpan: 3,
+                    landscapeRowSpan: 1,
+                },
+
             ] as GridItem[],
         },
     ];
@@ -853,13 +899,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
         <div className="grid grid-cols-6">
             {sections.map(({ key, clickable, bg, fg, items, collapsedItems }) => {
                 const pos = placement(key, active);
-                if (pos.span === 0) return null; // hide Sec1 when any of 2/3/4 is active
+
 
                 const isActive = active === key;
-                const isCollapsed = key !== 'sec1' && !isActive;
-                const showContent =
-                    (key === 'sec1' && active === null) ||
-                    (key !== 'sec1' && isActive);
+                const isCollapsed = !isActive;
+                const showContent = isActive;
 
                 return (
                     <section

@@ -1,6 +1,6 @@
 import { type SchemaTypeDefinition } from 'sanity'
 import keynoteSpeaker from './keynoteSpeaker'
-import whatWeDo from './whatWeDo'
+import whatWeDoPage from './whatWeDoPage'
 import shareholderValueAnalytics from './shareholderValueAnalytics';
 import keynoteTopic from './keynoteTopic';
 import homePage from './homePage'
@@ -18,6 +18,7 @@ import mindbullet from './mindbullet'
 import podcast from './podcast'
 import provocativeScenario from './provocativeScenarios'
 import carouselItem from './carouselItem'
+import superchargeTomorrowPage from './superchargeTomorrowPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -26,6 +27,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     insightsPage,
     peoplePage,
     ourWorkPage,
+    superchargeTomorrowPage,
     contactPage,
     
     // Legal & Support page schemas
@@ -42,6 +44,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     podcast,
     provocativeScenario,
     carouselItem,
-    whatWeDo, shareholderValueAnalytics, keynoteTopic
+    whatWeDoPage, shareholderValueAnalytics, keynoteTopic
   ],
 }
