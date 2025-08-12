@@ -26,11 +26,12 @@ export const structure: StructureResolver = (S) =>
             .title('Main Pages')
             .items([
               S.documentTypeListItem('homePage').icon(HomeIcon),
-              S.documentTypeListItem('whatWeDo').icon(RobotIcon),
+              S.documentTypeListItem('whatWeDoPage').icon(RobotIcon),
               S.documentTypeListItem('insightsPage').icon(BarChartIcon),
               S.documentTypeListItem('ourWorkPage').icon(PresentationIcon),
               S.documentTypeListItem('peoplePage').icon(UserIcon),
               S.documentTypeListItem('contactPage').icon(MobileDeviceIcon),
+              S.documentTypeListItem('superchargeTomorrowPage').icon(MobileDeviceIcon),
             ])
         ),
 
@@ -84,7 +85,7 @@ export const structure: StructureResolver = (S) =>
             'privacyPolicyPage',
             'keynoteSpeaker',
             'keynoteTopic',
-            'whatWeDo',
+            'whatWeDoPage',
             'carouselItem',
             'shareholderValueAnalytics',
             'article',
@@ -93,6 +94,7 @@ export const structure: StructureResolver = (S) =>
             'mindbullet',
             'podcast',
             'provocativeScenario',
+            'superchargeTomorrowPage',
           ].includes(listItem.getId() || '')
       ),
     ])

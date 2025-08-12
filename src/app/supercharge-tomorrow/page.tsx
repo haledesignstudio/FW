@@ -4,48 +4,99 @@ import React, { useEffect, useState, Suspense } from "react";
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { client } from '@/sanity/lib/client';
-import { whatWeDoQuery } from '@/sanity/lib/queries';
-import { PortableText } from '@portabletext/react';
+import { superchargeTomorrowQuery } from '@/sanity/lib/queries';
 import { PortableTextBlock } from '@portabletext/types';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
-import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { HighlightText } from '@/components/HighlightText';
-import WhatWeDoAccordion from "@/components/WhatWeDoAccordion";
+import SuperchargeTomorrowAccordion from "@/components/SuperchargeTomorrowAccordion";
 
-type AccordionEntry = {
-    title: PortableTextBlock[];
-    body: PortableTextBlock[];
+
+
+type PT = PortableTextBlock[];
+
+/** Accordion Section 1 */
+export type AccordionSection1Statement = {
+    body: PT;
 };
 
-type AccordionItem = {
+export type AccordionSection1 = {
     heading: string;
-    subheading: PortableTextBlock[];
-    description: PortableTextBlock[];
+    subheading: PT;
+    description: PT;
     image: {
         asset: {
             _ref: string;
             _type: string;
         };
     };
-    prompt: PortableTextBlock[];
-    entries: [AccordionEntry, AccordionEntry, AccordionEntry]; // exactly 3
-};
-
-export type WhatWeDoPageContent = {
-    _id: string;
-    heading: string;
-    subheading: PortableTextBlock[];
     cta: string;
     email: string;
-    statement1: PortableTextBlock[];
-    statement2: PortableTextBlock[];
-    statement3: PortableTextBlock[];
-    accordion: {
-        heading: string;
-        subheading: PortableTextBlock[];
-        items: [AccordionItem, AccordionItem, AccordionItem]; // exactly 3
+    // exactly 4
+    statements: [
+        AccordionSection1Statement,
+        AccordionSection1Statement,
+        AccordionSection1Statement,
+        AccordionSection1Statement
+    ];
+};
+
+/** Accordion Section 2 */
+export type AccordionSection2Item = {
+    heading: PT;
+    body: PT;
+};
+
+export type AccordionSection2_Subsection1 = {
+    description: PT;
+    // exactly 3
+    statements: [
+        AccordionSection2Item,
+        AccordionSection2Item,
+        AccordionSection2Item
+    ];
+};
+
+export type AccordionSection2_Subsection2 = {
+    description: PT;
+    // exactly 2
+    statements: [AccordionSection2Item, AccordionSection2Item];
+};
+
+export type AccordionSection2 = {
+    heading: string;
+    subheading: PT;
+    cta: string;
+    email: string;
+    section1: AccordionSection2_Subsection1;
+    section2: AccordionSection2_Subsection2;
+};
+
+/** Accordion Section 3 */
+export type AccordionSection3 = {
+    heading: string;
+    subheading: PT;
+    description: PT;
+    image: {
+        asset: {
+            _ref: string;
+            _type: string;
+        };
     };
+    cta: string;
+    email: string;
+};
+
+/** Top-level document */
+export type SuperchargeTomorrowPageContent = {
+    _id: string;
+    title: string;
+    heading: string;
+    subheading: PT;
+
+    accordionSection1: AccordionSection1;
+    accordionSection2: AccordionSection2;
+    accordionSection3: AccordionSection3;
 };
 type GridItem = {
     id: number;
@@ -83,11 +134,11 @@ const getGridClasses = (item: GridItem) => {
     return base.join(' ');
 };
 
-function WhatWeDoContent() {
-    const [data, setData] = useState<WhatWeDoPageContent | null>(null);
+function SuperchargeTomorrowContent() {
+    const [data, setData] = useState<SuperchargeTomorrowPageContent | null>(null);
 
     useEffect(() => {
-        client.fetch<WhatWeDoPageContent>(whatWeDoQuery).then((res) => {
+        client.fetch<SuperchargeTomorrowPageContent>(superchargeTomorrowQuery).then((res) => {
             setData(res);
         });
     }, []);
@@ -99,7 +150,7 @@ function WhatWeDoContent() {
             id: 1,
             content: (
                 <MainTitleAnimation
-                    text={data.heading}
+                    text={data.title}
                     typeSpeed={60}
                     delay={500}
                     className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-balance"
@@ -117,7 +168,7 @@ function WhatWeDoContent() {
             content: (
                 <></>
             ),
-            colSpan: 1,
+            colSpan: 4,
             rowSpan: 1,
             mobileColSpan: 2,
             mobileRowSpan: 2,
@@ -126,6 +177,34 @@ function WhatWeDoContent() {
         },
         {
             id: 3,
+            content: (
+                <FadeInOnVisible>
+                    <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+                        {data.heading}
+                    </div>
+                </FadeInOnVisible>
+            ),
+            colSpan: 5,
+            rowSpan: 2,
+            mobileColSpan: 2,
+            mobileRowSpan: 2,
+            landscapeColSpan: 4,
+            landscapeRowSpan: 2,
+        },
+        {
+            id: 4,
+            content: (
+                <></>
+            ),
+            colSpan: 1,
+            rowSpan: 2,
+            mobileColSpan: 2,
+            mobileRowSpan: 2,
+            landscapeColSpan: 4,
+            landscapeRowSpan: 2,
+        },
+        {
+            id: 5,
             content: (
                 <FadeInOnVisible>
                     <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
@@ -141,7 +220,7 @@ function WhatWeDoContent() {
             landscapeRowSpan: 2,
         },
         {
-            id: 4,
+            id: 6,
             content: (
                 <></>
             ),
@@ -152,89 +231,7 @@ function WhatWeDoContent() {
             landscapeColSpan: 4,
             landscapeRowSpan: 2,
         },
-        {
-            id: 5,
-            content: (
-                <FadeInOnVisible>
-                    <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,3vh,1.5vw)] ">
-                        <a
-                            href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.cta ?? '')}`}
-                            className="transition cursor-pointer"
-                        >
-                            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                                {data.cta ?? 'Get in Touch'}
-                            </UnderlineOnHoverAnimation>
-                        </a>
-                    </div>
-                </FadeInOnVisible>
-            ),
-            colSpan: 1,
-            rowSpan: 1,
-            mobileColSpan: 2,
-            mobileRowSpan: 2,
-            landscapeColSpan: 4,
-            landscapeRowSpan: 2,
-        },
-        {
-            id: 6,
-            content: (
-                <></>
-            ),
-            colSpan: 2,
-            rowSpan: 1,
-            mobileColSpan: 2,
-            mobileRowSpan: 2,
-            landscapeColSpan: 4,
-            landscapeRowSpan: 2,
-        },
-        {
-            id: 7,
-            content: (
-                <FadeInOnVisible>
-                    <div className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
-                        <PortableText value={data.statement1} />
-                    </div>
-                </FadeInOnVisible>
-            ),
-            colSpan: 1,
-            rowSpan: 1,
-            mobileColSpan: 2,
-            mobileRowSpan: 2,
-            landscapeColSpan: 4,
-            landscapeRowSpan: 2,
-        },
-        {
-            id: 8,
-            content: (
-                <FadeInOnVisible>
-                    <div className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
-                        <PortableText value={data.statement2} />
-                    </div>
-                </FadeInOnVisible>
-            ),
-            colSpan: 1,
-            rowSpan: 1,
-            mobileColSpan: 2,
-            mobileRowSpan: 2,
-            landscapeColSpan: 4,
-            landscapeRowSpan: 2,
-        },
-        {
-            id: 9,
-            content: (
-                <FadeInOnVisible>
-                    <div className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
-                        <PortableText value={data.statement3} />
-                    </div>
-                </FadeInOnVisible>
-            ),
-            colSpan: 1,
-            rowSpan: 1,
-            mobileColSpan: 2,
-            mobileRowSpan: 2,
-            landscapeColSpan: 4,
-            landscapeRowSpan: 2,
-        },
+        
 
     ];
 
@@ -250,19 +247,20 @@ function WhatWeDoContent() {
                             </div>
                         ))}
                     </div>
-
                 </div>
-                <WhatWeDoAccordion data={data} />
+                <FadeInOnVisible>
+                <SuperchargeTomorrowAccordion data={data} />
+                </FadeInOnVisible>
             </main>
             <Footer />
         </>
     );
 }
 
-export default function WhatWeDo() {
+export default function SuperchargeTomorrow() {
     return (
         <Suspense fallback={null}>
-            <WhatWeDoContent />
+            <SuperchargeTomorrowContent />
         </Suspense>
     );
 }

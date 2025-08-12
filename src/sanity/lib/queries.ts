@@ -15,7 +15,7 @@ export const speakersQuery = defineQuery(`
 `);
 
 export const whatWeDoQuery = defineQuery(`
-  *[_type == "whatWeDo"][0]{
+  *[_type == "whatWeDoPage"][0]{
     _id,
     heading,
     subheading,
@@ -42,6 +42,56 @@ export const whatWeDoQuery = defineQuery(`
   }
 `);
 
+export const superchargeTomorrowQuery = defineQuery(`
+  *[_type == "superchargeTomorrowPage"][0]{
+    _id,
+    title,
+    heading,
+    subheading,
+
+    accordionSection1{
+      heading,
+      subheading,
+      description,
+      image{asset},
+      cta,
+      email,
+      statements[]{
+        body
+      }
+    },
+
+    accordionSection2{
+      heading,
+      subheading,
+      cta,
+      email,
+      section1{
+        description,
+        statements[]{
+          heading,
+          body
+        }
+      },
+      section2{
+        description,
+        statements[]{
+          heading,
+          body
+        }
+      }
+    },
+
+    accordionSection3{
+      heading,
+      subheading,
+      description,
+      image{asset},
+      cta,
+      email
+    }
+  }
+`);
 
 export const homePageQuery = defineQuery(`
   *[_type == "homePage"][0] {
