@@ -52,8 +52,10 @@ const peoplePage = defineType({
         {
           name: 'regularText',
           title: 'Regular Text',
-          type: 'text',
-          description: 'Regular text in columns 5-6, anchored to top left'
+          type: 'array',
+          of: [{ type: 'block' }],
+          description: 'Rich formatted content for regular text section',
+          validation: (Rule) => Rule.required()
         }
       ]
     }),
@@ -89,7 +91,8 @@ const peoplePage = defineType({
             {
               name: 'text',
               title: 'Text',
-              type: 'text',
+              type: 'array',
+              of: [{ type: 'block' }],
               description: 'Text in column 2, anchored to top left'
             }
           ]
@@ -108,7 +111,8 @@ const peoplePage = defineType({
             {
               name: 'text',
               title: 'Text',
-              type: 'text',
+              type: 'array',
+              of: [{ type: 'block' }],
               description: 'Text in column 4, anchored to top left'
             }
           ]
@@ -116,8 +120,10 @@ const peoplePage = defineType({
         {
           name: 'sideText',
           title: 'Side Text (Row 7)',
-          type: 'text',
-          description: 'Small text in row 7, column 6, anchored to top left'
+          type: 'array',
+          of: [{ type: 'block' }],
+          description: 'Rich formatted content for side text section',
+          validation: (Rule) => Rule.required()
         },
         {
           name: 'leftSection2',
@@ -133,7 +139,8 @@ const peoplePage = defineType({
             {
               name: 'text',
               title: 'Text',
-              type: 'text',
+              type: 'array',
+              of: [{ type: 'block' }],
               description: 'Text in column 2, anchored to top left'
             }
           ]
@@ -152,7 +159,8 @@ const peoplePage = defineType({
             {
               name: 'text',
               title: 'Text',
-              type: 'text',
+              type: 'array',
+              of: [{ type: 'block' }],
               description: 'Text in column 4, anchored to top left'
             }
           ]
@@ -184,7 +192,10 @@ const peoplePage = defineType({
                     {
                       name: 'text',
                       title: 'Text',
-                      type: 'text'
+                      type: 'array',
+                      of: [{ type: 'block' }],
+                      description: 'Rich formatted content for this reason',
+                      validation: (Rule) => Rule.required()
                     }
                   ]
                 }

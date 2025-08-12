@@ -16,7 +16,7 @@ export default function UnderlineOnHoverAnimation({
   className = '',
   isActive = false,
   hasStaticUnderline = false,
-  color, // ✅ you forgot this
+  color, 
 }: UnderlineOnHoverAnimationProps) {
   const spanRef = useRef<HTMLSpanElement>(null);
 

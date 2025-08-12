@@ -107,15 +107,14 @@ function HomeContent() {
     {
       id: 1,
       content: (
-
-        <MainTitleAnimation
-          text={data.headline}
-          typeSpeed={40}
-          delay={500}
-          className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
-        />
-
-
+        <FadeInOnVisible>
+          <MainTitleAnimation
+            text={data.headline}
+            typeSpeed={40}
+            delay={100}
+            className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
+          />
+        </FadeInOnVisible>
       ),
       colSpan: 5,
       rowSpan: 2,

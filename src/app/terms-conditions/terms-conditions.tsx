@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { PortableTextBlock } from 'sanity';
 
@@ -117,6 +118,23 @@ interface TermsAndConditionsClientProps {
 
 export default function TermsAndConditionsClient({ termsData }: TermsAndConditionsClientProps) {
   const [selectedCategory, setSelectedCategory] = useState(categories[0].key)
+  const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Mobile check with hydration safety
+  useEffect(() => {
+    setIsClient(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleBackToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const renderContent = () => {
     const section = termsData[selectedCategory as keyof TermsData] as TermsSection;
@@ -133,47 +151,49 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     ...topRowCategories.map((category, index) => ({
         id: index + 1,
         content: (
-            <div
-            className={`w-full h-full flex flex-col items-start justify-start relative ${
-                category.key === 'privacySection' ? 'z-50' : 'z-10'
-            } pointer-events-auto`}
-            >
-            <button
-                onClick={() => setSelectedCategory(category.key)}
-                className={`text-left w-full h-auto py-2 pointer-events-auto relative z-50 cursor-pointer bg-transparent border-none outline-none font-normal`}
-                style={{ background: 'none' }}
-            >
-              <UnderlineOnHoverAnimation
-                className={
-                  `${selectedCategory === category.key ? 'text-black  font-normal underline-active' : 'text-gray-600  font-normal'}`
-                }
+            <FadeInOnVisible>
+              <div
+              className={`w-full h-full flex flex-col items-start justify-start relative ${
+                  category.key === 'privacySection' ? 'z-50' : 'z-10'
+              } pointer-events-auto`}
               >
-                <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal">
-                  {category.shortLabel}
-                </span>
-              </UnderlineOnHoverAnimation>
-            </button>
-            {/* Additional categories for first 3 columns - positioned at bottom */}
-            {index < 3 && secondRowCategories[index] && (
-              <div className="mt-auto">
-                <button
-                  onClick={() => setSelectedCategory(secondRowCategories[index].key)}
-                  className={`text-left w-full h-auto py-2 pointer-events-auto relative z-20 cursor-pointer bg-transparent border-none outline-none font-normal`}
+              <button
+                  onClick={() => setSelectedCategory(category.key)}
+                  className={`text-left w-full h-auto py-2 pointer-events-auto relative z-50 cursor-pointer bg-transparent border-none outline-none font-normal`}
                   style={{ background: 'none' }}
+              >
+                <UnderlineOnHoverAnimation
+                  className={
+                    `${selectedCategory === category.key ? 'text-black  font-normal underline-active' : 'text-gray-600  font-normal'}`
+                  }
                 >
-                  <UnderlineOnHoverAnimation
-                    className={
-                      `${selectedCategory === secondRowCategories[index].key ? 'text-black font-normal underline-active' : 'text-gray-600 font-normal'}`
-                    }
+                  <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal">
+                    {category.shortLabel}
+                  </span>
+                </UnderlineOnHoverAnimation>
+              </button>
+              {/* Additional categories for first 3 columns - positioned at bottom */}
+              {index < 3 && secondRowCategories[index] && (
+                <div className="mt-auto">
+                  <button
+                    onClick={() => setSelectedCategory(secondRowCategories[index].key)}
+                    className={`text-left w-full h-auto py-2 pointer-events-auto relative z-20 cursor-pointer bg-transparent border-none outline-none font-normal`}
+                    style={{ background: 'none' }}
                   >
-                    <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal">
-                      {secondRowCategories[index].shortLabel}
-                    </span>
-                  </UnderlineOnHoverAnimation>
-                </button>
-              </div>
-            )}
-          </div>
+                    <UnderlineOnHoverAnimation
+                      className={
+                        `${selectedCategory === secondRowCategories[index].key ? 'text-black font-normal underline-active' : 'text-gray-600 font-normal'}`
+                      }
+                    >
+                      <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal">
+                        {secondRowCategories[index].shortLabel}
+                      </span>
+                    </UnderlineOnHoverAnimation>
+                  </button>
+                </div>
+              )}
+            </div>
+            </FadeInOnVisible>
         ),
         colSpan: 1,
         rowSpan: 1,
@@ -186,9 +206,11 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     {
       id: 7,
       content: (
-        <h2 className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[3vh] font-graphik mt-auto">
-          {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
-        </h2>
+        <FadeInOnVisible key={`header-${selectedCategory}`}>
+          <h2 className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[3vh] font-graphik mt-auto">
+            {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
+          </h2>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -212,16 +234,18 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     {
       id: 9,
       content: (
-        <div className="flex items-end justify-start h-full w-full overflow-hidden">
-          <div className="w-full max-w-full">
-            <MainTitleAnimation 
-              text={termsData.pageHeader.mainTitle}
-              typeSpeed={60}
-              delay={500}
-              className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
-            />
+        <FadeInOnVisible>
+          <div className="flex items-end justify-start h-full w-full overflow-hidden">
+            <div className="w-full max-w-full">
+              <MainTitleAnimation 
+                text={termsData.pageHeader.mainTitle}
+                typeSpeed={60}
+                delay={500}
+                className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
+              />
+            </div>
           </div>
-        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 1,
@@ -234,9 +258,11 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     {
       id: 10,
       content: (
-        <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
-          {renderContent()}
-        </div>
+        <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
+          <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
+            {renderContent()}
+          </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 2,
@@ -260,11 +286,13 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     {
       id: 12,
       content: (
-        <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
-          <div className="prose max-w-none text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh] leading-tight text-gray-700">
-            <PortableText value={termsData.pageHeader.introText} components={portableTextComponents} />
+        <FadeInOnVisible>
+          <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
+            <div className="prose max-w-none text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh] leading-tight text-gray-700">
+              <PortableText value={termsData.pageHeader.introText} components={portableTextComponents} />
+            </div>
           </div>
-        </div>
+        </FadeInOnVisible>
       ),
       colSpan: 2,
       rowSpan: 2,
@@ -287,6 +315,184 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     document.head.appendChild(style);
   }
 
+  // Prevent hydration mismatch by showing loading state until client-side JS loads
+  if (!isClient) {
+    return (
+      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
+        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+          {items.map((item) => (
+            <div key={item.id} className={getGridClasses(item)}>
+              {item.content}
+            </div>
+          ))}
+        </div>
+      </main>
+    );
+  }
+
+  if (isMobile) {
+    return (
+      <main className="p-[2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
+          {/* Row 1: Main title (cols 1-3) */}
+          <div className="col-span-3 row-span-1 flex items-end justify-start">
+            <FadeInOnVisible>
+              <MainTitleAnimation 
+                text={termsData.pageHeader.mainTitle}
+                typeSpeed={60}
+                delay={500}
+                className="text-[4vh] font-bold leading-tight"
+              />
+            </FadeInOnVisible>
+          </div>
+          <div className="col-span-1 row-span-1"></div>
+
+          {/* Rows 2-10: Intro text (cols 1-4) */}
+          <div className="col-span-4 row-span-8 flex items-start justify-start">
+            <FadeInOnVisible>
+              <div className="prose max-w-full text-[2.5vh] leading-relaxed w-full break-words overflow-y-auto pr-[1vh] h-full">
+                <PortableText 
+                  value={termsData.pageHeader.introText} 
+                  components={{
+                    ...portableTextComponents,
+                    block: {
+                      normal: ({ children }) => <p className="mb-4 text-[2vh] leading-relaxed break-words">{children}</p>,
+                    },
+                    list: {
+                      bullet: ({ children }) => (
+                        <ul className="list-disc pl-6 mb-4 text-[2vh] break-words">{children}</ul>
+                      ),
+                      number: ({ children }) => (
+                        <ol className="list-decimal pl-6 mb-4 text-[2vh] break-words">{children}</ol>
+                      ),
+                    },
+                    listItem: {
+                      bullet: ({ children }) => <li className="mb-2 text-[2vh] break-words">{children}</li>,
+                      number: ({ children }) => <li className="mb-2 text-[2vh] break-words">{children}</li>,
+                    },
+                    marks: {
+                      strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                      em: ({ children }) => <em className="italic">{children}</em>,
+                      link: ({ children, value }) => (
+                        <a 
+                          href={value?.href} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-blue-600 underline break-words"
+                        >
+                          {children}
+                        </a>
+                      ),
+                    },
+                  }}
+                />
+              </div>
+            </FadeInOnVisible>
+          </div>
+
+          {/* Category buttons section (cols 3-4, multiple rows) */}
+          <div className="col-span-2 row-span-1"></div>
+          <div className="col-span-2 row-span-5 flex flex-col justify-start items-start gap-[2.5vh] pt-[3vh]">
+            <FadeInOnVisible>
+              <div className="flex flex-col gap-[3.5vh] w-full">
+                {categories.map((category) => (
+                  <button
+                    key={category.key}
+                    onClick={() => setSelectedCategory(category.key)}
+                    className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full"
+                  >
+                    <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
+                      <span className="text-[2.5vh] leading-tight text-black font-normal text-left">
+                        {category.shortLabel}
+                      </span>
+                    </UnderlineOnHoverAnimation>
+                  </button>
+                ))}
+              </div>
+            </FadeInOnVisible>
+          </div>
+
+          {/* Row 16: Category header (cols 1-4, bottom left aligned) */}
+          <div className="col-span-4 row-span-1 flex items-end justify-start">
+            <FadeInOnVisible key={`header-${selectedCategory}`}>
+              <h2 className="text-[3vh] font-graphik">
+                {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
+              </h2>
+            </FadeInOnVisible>
+          </div>
+        </div>
+
+        {/* Content section - flexible height outside of grid (from row 17) */}
+        <div className="mt-[2vh] mb-[4vh]">
+          <div className="flex items-start justify-start">
+            <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
+              <div className="prose text-[2.5vh] leading-relaxed break-words" style={{ maxWidth: '100%', width: '100%' }}>
+                {(() => {
+                  const section = termsData[selectedCategory as keyof TermsData] as TermsSection;
+                  
+                  if (!section || !section.content || section.content.length === 0) {
+                    return <div className="text-red-500">No content available for this section.</div>;
+                  }
+                  
+                  return (
+                    <PortableText 
+                      value={section.content} 
+                      components={{
+                        ...portableTextComponents,
+                        block: {
+                          normal: ({ children }) => <p className="mb-4 text-[2.5vh] leading-relaxed break-words">{children}</p>,
+                        },
+                        marks: {
+                          link: ({ children, value }) => (
+                            <a 
+                              href={value?.href} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-blue-600 underline break-words"
+                              style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
+                            >
+                              {children}
+                            </a>
+                          ),
+                        },
+                        list: {
+                          bullet: ({ children }) => (
+                            <ul className="list-disc pl-6 mb-4 text-[2.5vh] break-words">{children}</ul>
+                          ),
+                          number: ({ children }) => (
+                            <ol className="list-decimal pl-6 mb-4 text-[2.5vh] break-words">{children}</ol>
+                          ),
+                        },
+                        listItem: {
+                          bullet: ({ children }) => <li className="mb-2 text-[2.5vh] break-words">{children}</li>,
+                          number: ({ children }) => <li className="mb-2 text-[2.5vh] break-words">{children}</li>,
+                        },
+                      }}
+                    />
+                  );
+                })()}
+              </div>
+            </FadeInOnVisible>
+          </div>
+        </div>
+
+        {/* Back to top button - always at bottom */}
+        <div className="flex justify-end items-center mt-[4vh] mb-[4vh]">
+          <div className="cursor-pointer" onClick={handleBackToTop}>
+            <FadeInOnVisible>
+              <span className="underline text-[2vh] flex items-center gap-1">Back to top
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+              </span>
+            </FadeInOnVisible>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // Desktop layout
   return (
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
         <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">

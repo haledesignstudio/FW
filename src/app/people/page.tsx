@@ -2,6 +2,7 @@ import React from 'react';
 import { client } from '@/sanity/lib/client';
 import { peoplePageQuery } from '@/sanity/lib/queries';
 import People from './people';
+import { PortableTextBlock } from 'sanity';
 
 type PeoplePageContent = {
   title: string;
@@ -12,7 +13,7 @@ type PeoplePageContent = {
   pageHeader: {
     mainTitle: string;
     subheading?: string;
-    regularText?: string;
+    regularText?: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
   };
   mainImage: {
     asset: {
@@ -25,26 +26,26 @@ type PeoplePageContent = {
     subheading1?: string;
     leftSection?: {
       heading: string;
-      text: string;
+      text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
     };
     rightSection?: {
       heading: string;
-      text: string;
+      text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
     };
-    sideText?: string;
+    sideText?: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
     leftSection2?: {
       heading: string;
-      text: string;
+      text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
     };
     rightSection2?: {
       heading: string;
-      text: string;
+      text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
     };
     whyJoinUsSection?: {
       mainHeading: string;
       reasons: Array<{
         heading: string;
-        text: string;
+        text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
       }>;
     };
     carouselHeading?: string;

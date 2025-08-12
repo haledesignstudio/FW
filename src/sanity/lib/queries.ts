@@ -337,55 +337,122 @@ export const ourWorkQuery = defineQuery(`
   }
 `);
 
-export const peoplePageQuery = defineQuery(`
-  *[_type == "peoplePage"][0] {
-    _id,
-    title,
-    seo,
-    pageHeader {
-      mainTitle,
-      subheading,
-      regularText
-    },
-    mainImage {
-      asset,
-      alt
-    },
-    sections {
-      subheading1,
-      leftSection {
-        heading,
-        text
-      },
-      rightSection {
-        heading,
-        text
-      },
-      sideText,
-      leftSection2 {
-        heading,
-        text
-      },
-      rightSection2 {
-        heading,
-        text
-      },
-      whyJoinUsSection {
-        mainHeading,
-        reasons[] {
-          heading,
-          text
+export const peoplePageQuery = defineQuery(
+  `*[_type == "peoplePage"][0]{
+  title,
+  seo{
+    metaTitle,
+    metaDescription
+  },
+  pageHeader{
+    mainTitle,
+    subheading,
+    regularText[]{
+      ...,
+      markDefs[]{
+        ...,
+        _type == "link" => {
+          ...,
+          href
         }
-      },
-      carouselHeading,
-      carouselSidebar {
-        heading,
-        text,
-        linkText
       }
     }
+  },
+  mainImage{
+    asset->{
+      _id,
+      url
+    },
+    alt
+  },
+  sections{
+    subheading1,
+    leftSection{
+      heading,
+      text[]{
+        ...,
+        markDefs[]{
+          ...,
+          _type == "link" => {
+            ...,
+            href
+          }
+        }
+      }
+    },
+    rightSection{
+      heading,
+      text[]{
+        ...,
+        markDefs[]{
+          ...,
+          _type == "link" => {
+            ...,
+            href
+          }
+        }
+      }
+    },
+    sideText[]{
+      ...,
+      markDefs[]{
+        ...,
+        _type == "link" => {
+          ...,
+          href
+        }
+      }
+    },
+    leftSection2{
+      heading,
+      text[]{
+        ...,
+        markDefs[]{
+          ...,
+          _type == "link" => {
+            ...,
+            href
+          }
+        }
+      }
+    },
+    rightSection2{
+      heading,
+      text[]{
+        ...,
+        markDefs[]{
+          ...,
+          _type == "link" => {
+            ...,
+            href
+          }
+        }
+      }
+    },
+    whyJoinUsSection{
+      mainHeading,
+      reasons[]{
+        heading,
+        text[]{
+          ...,
+          markDefs[]{
+            ...,
+            _type == "link" => {
+              ...,
+              href
+            }
+          }
+        }
+      }
+    },
+    carouselHeading,
+    carouselSidebar{
+      heading,
+      text,
+      linkText
+    }
   }
-`);
+}`);
 
 export const CONTACT_PAGE_QUERY = defineQuery(`
   *[_type == "contactPage"][0] {

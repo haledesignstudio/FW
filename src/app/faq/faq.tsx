@@ -113,7 +113,7 @@ export default function FAQClient({ faqData }: Props) {
                   text={faqData.pageHeader.mainTitle}
                   typeSpeed={60}
                   delay={500}
-                  className="text-[5vh] font-bold leading-tight"
+                  className="text-[5vh] font-bold leading-tight text-left"
                 />
               </div>
             </div>
@@ -125,8 +125,8 @@ export default function FAQClient({ faqData }: Props) {
             {/* Row 5+: Questions */}
             {faqData.faqs.map((faq, index) => (
               <React.Fragment key={index}>
-                {/* Question row: cols 1-3 (right aligned), arrow in col 4 */}
-                <div className="col-span-3 flex justify-end items-center">
+                {/* Question row: spans full width (cols 1-4) */}
+                <div className="col-span-4 flex justify-end items-center">
                   <button
                     onClick={() => setSelectedQuestion(selectedQuestion === index ? null : index)}
                     className="text-right w-full pointer-events-auto cursor-pointer bg-transparent border-none outline-none font-graphik font-normal"
@@ -141,18 +141,6 @@ export default function FAQClient({ faqData }: Props) {
                       </span>
                     </UnderlineOnHoverAnimation>
                   </button>
-                </div>
-                <div className="col-span-1 flex items-center justify-end">
-                  <div
-                    className="transition-transform duration-300 ease-in-out"
-                    style={{
-                      transform: selectedQuestion === index ? 'rotate(135deg)' : 'rotate(90deg)',
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" />
-                    </svg>
-                  </div>
                 </div>
                 {/* If selected, show answer below, cols 2-4 */}
                 {selectedQuestion === index && (
@@ -224,7 +212,7 @@ export default function FAQClient({ faqData }: Props) {
       landscapeColSpan: 2,
       landscapeRowSpan: 1,
     },
-    // Merged area for questions (columns 1-4, rows 2-4) - Questions start from row 2
+    // Merged area for questions (columns 1-5, rows 2-4) - Expanded to include arrow space
     {
       id: 3,
       content: (
@@ -245,28 +233,18 @@ export default function FAQClient({ faqData }: Props) {
                     {faq.question}
                   </UnderlineOnHoverAnimation>
                 </span>
-                <span
-                  className="ml-4 transition-transform duration-300 ease-in-out"
-                  style={{ transform: selectedQuestion === index ? 'rotate(45deg)' : 'rotate(90deg)' }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </span>
               </button>
             ))}
           </div>
         </FadeInOnVisible>
       ),
-
       colSpan: 4,
       rowSpan: 3,
-      mobileColSpan: 4,
+      mobileColSpan: 5,
       mobileRowSpan: 3,
-      landscapeColSpan: 4,
+      landscapeColSpan: 5,
       landscapeRowSpan: 3,
     },
-    // Arrows column (column 5, spans from row 2 downwards)
     {
       id: 4,
       content: (
