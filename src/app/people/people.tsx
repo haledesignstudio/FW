@@ -207,7 +207,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
             {/* Row 5-8: Regular text (cols 1-4) */}
             <div className="col-span-4 row-span-4 flex items-start justify-start">
               <FadeInOnVisible>
-                <div className="text-[2vh] leading-tight text-gray-700">
+                <div className="text-[2vh] leading-tight">
                   {data.pageHeader.regularText && (
                     <PortableText value={data.pageHeader.regularText} components={portableTextComponents} />
                   )}
@@ -216,15 +216,15 @@ export default function People({ data }: { data: PeoplePageContent }) {
             </div>
 
             {/* Row 9-12: Subheading 1 + Side text (cols 2-4) */}
-            <div className="col-span-1 row-span-4"></div>
-            <div className="col-span-3 row-span-4 flex flex-col items-start justify-start gap-[2vh]">
+            <div className="col-span-1 row-span-3"></div>
+            <div className="col-span-3 row-span-3 flex flex-col items-start justify-start gap-[2vh]">
               <FadeInOnVisible>
                 <h3 className="text-[2.5vh] font-bold leading-tight">
                   {data.sections.subheading1}
                 </h3>
               </FadeInOnVisible>
               <FadeInOnVisible>
-                <div className="text-[1.8vh] leading-tight text-gray-700">
+                <div className="text-[1.8vh] leading-tight">
                   {data.sections.sideText && (
                     <PortableText value={data.sections.sideText} components={portableTextComponents} />
                   )}
@@ -233,58 +233,58 @@ export default function People({ data }: { data: PeoplePageContent }) {
             </div>
 
             {/* Row 13-15: Left section from row 7 (cols 1-4) */}
-            <div className="col-span-4 row-span-3 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
                 <h4 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
                   {data.sections.leftSection?.heading}
                 </h4>
-                <p className="text-[1.6vh] leading-tight text-gray-700">
+                <div className="text-[1.6vh] leading-tight">
                   {data.sections.leftSection?.text && (
                     <PortableText value={data.sections.leftSection.text} components={portableTextComponents} />
                   )}
-                </p>
+                </div>
               </FadeInOnVisible>
             </div>
 
             {/* Row 16-18: Right section from row 7 (cols 1-4) */}
-            <div className="col-span-4 row-span-3 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
                 <h4 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
                   {data.sections.rightSection?.heading}
                 </h4>
-                <p className="text-[1.6vh] leading-tight text-gray-700">
+                <div className="text-[1.6vh] leading-tight">
                   {data.sections.rightSection?.text && (
                     <PortableText value={data.sections.rightSection.text} components={portableTextComponents} />
                   )}
-                </p>
+                </div>
               </FadeInOnVisible>
             </div>
 
             {/* Row 19-21: Left section 2 from row 8 (cols 1-4) */}
-            <div className="col-span-4 row-span-3 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
                 <h4 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
                   {data.sections.leftSection2?.heading}
                 </h4>
-                <p className="text-[1.6vh] leading-tight text-gray-700">
+                <div className="text-[1.6vh] leading-tight">
                   {data.sections.leftSection2?.text && (
                     <PortableText value={data.sections.leftSection2.text} components={portableTextComponents} />
                   )}
-                </p>
+                </div>
               </FadeInOnVisible>
             </div>
 
             {/* Row 19-21: right section 2 from row 8 (cols 1-4) */}
-            <div className="col-span-4 row-span-3 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
                 <h4 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
                   {data.sections.rightSection2?.heading}
                 </h4>
-                <p className="text-[1.6vh] leading-tight text-gray-700">
+                <div className="text-[1.6vh] leading-tight">
                   {data.sections.rightSection2?.text && (
                     <PortableText value={data.sections.rightSection2.text} components={portableTextComponents} />
                   )}
-                </p>
+                </div>
               </FadeInOnVisible>
             </div>
 
@@ -307,13 +307,13 @@ export default function People({ data }: { data: PeoplePageContent }) {
             <div className="col-span-4 row-span-1"></div>
 
             {/* Row 25-26: Reason 1 (cols 2-4) */}
-            <div className="col-span-1 row-span-2"></div>
-            <div className="col-span-3 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-1 row-span-1"></div>
+            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
                 <h5 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
                   {data.sections.whyJoinUsSection?.reasons[0]?.heading}
                 </h5>
-                <div className="text-[1.6vh] leading-tight text-gray-700">
+                <div className="text-[1.6vh] leading-tight">
                   {data.sections.whyJoinUsSection?.reasons[0]?.text && (
                     <PortableText value={data.sections.whyJoinUsSection.reasons[0].text} components={portableTextComponents} />
                   )}
@@ -322,13 +322,13 @@ export default function People({ data }: { data: PeoplePageContent }) {
             </div>
 
             {/* Row 27-28: Reason 2 (cols 2-4) */}
-            <div className="col-span-1 row-span-2"></div>
-            <div className="col-span-3 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-1 row-span-1"></div>
+            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
                 <h5 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
                   {data.sections.whyJoinUsSection?.reasons[1]?.heading}
                 </h5>
-                <div className="text-[1.6vh] leading-tight text-gray-700">
+                <div className="text-[1.6vh] leading-tight">
                   {data.sections.whyJoinUsSection?.reasons[1]?.text && (
                     <PortableText value={data.sections.whyJoinUsSection.reasons[1].text} components={portableTextComponents} />
                   )}
@@ -337,13 +337,13 @@ export default function People({ data }: { data: PeoplePageContent }) {
             </div>
 
             {/* Row 29-30: Reason 3 (cols 2-4) */}
-            <div className="col-span-1 row-span-2"></div>
-            <div className="col-span-3 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-1 row-span-1"></div>
+            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
                 <h5 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
                   {data.sections.whyJoinUsSection?.reasons[2]?.heading}
                 </h5>
-                <div className="text-[1.6vh] leading-tight text-gray-700">
+                <div className="text-[1.6vh] leading-tight">
                   {data.sections.whyJoinUsSection?.reasons[2]?.text && (
                     <PortableText value={data.sections.whyJoinUsSection.reasons[2].text} components={portableTextComponents} />
                   )}
@@ -352,13 +352,13 @@ export default function People({ data }: { data: PeoplePageContent }) {
             </div>
 
             {/* Row 31-32: Reason 4 (cols 2-4) */}
-            <div className="col-span-1 row-span-2"></div>
-            <div className="col-span-3 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-1 row-span-1"></div>
+            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
                 <h5 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
                   {data.sections.whyJoinUsSection?.reasons[3]?.heading}
                 </h5>
-                <div className="text-[1.6vh] leading-tight text-gray-700">
+                <div className="text-[1.6vh] leading-tight">
                   {data.sections.whyJoinUsSection?.reasons[3]?.text && (
                     <PortableText value={data.sections.whyJoinUsSection.reasons[3].text} components={portableTextComponents} />
                   )}
@@ -390,7 +390,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
                   <h6 className="text-[1.8vh] font-bold leading-tight mb-[1vh]">
                     {data.sections.carouselSidebar?.heading}
                   </h6>
-                  <p className="text-[1.5vh] leading-tight text-gray-700 mb-[1vh]">
+                  <p className="text-[1.5vh] leading-tight mb-[1vh]">
                     {data.sections.carouselSidebar?.text}
                   </p>
                   {data.sections.carouselSidebar?.linkText && (
