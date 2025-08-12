@@ -12,7 +12,6 @@ import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import HomeAccordion from '@/components/HomeAccordion';
-
 import { HighlightText } from '@/components/HighlightText';
 
 export type HomePageContent = {

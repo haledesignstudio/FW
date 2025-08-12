@@ -15,23 +15,33 @@ export const speakersQuery = defineQuery(`
 `);
 
 export const whatWeDoQuery = defineQuery(`
-  *[_type == "whatWeDo"][0] {
+  *[_type == "whatWeDo"][0]{
     _id,
     heading,
-    mainline,
+    subheading,
     cta,
-    mail,
+    email,
     statement1,
     statement2,
     statement3,
-    accordionHeading,
-    accordionItems[] {
-      title,
-      content,
-      color
+    accordion{
+      heading,
+      subheading,
+      items[]{
+        heading,
+        subheading,
+        description,
+        image{asset},
+        prompt,
+        entries[]{
+          title,
+          body
+        }
+      }
     }
   }
 `);
+
 
 export const homePageQuery = defineQuery(`
   *[_type == "homePage"][0] {
@@ -293,46 +303,36 @@ export const podcastQuery = defineQuery(`
 
 
 export const ourWorkQuery = defineQuery(`
-  *[_type == "ourWorkPage"][0] {
+  *[_type == "ourWorkPage"][0]{
     _id,
     title,
-    mainTitle,
-    subtitle,
-    stats {
-      corporatePartners,
-      gameChangingOpportunities,
-      valuePropositions,
-      investmentCases,
-      newVenturesInCommercialisation
+    subheading,
+    statistics[]{
+      statisticName,
+      statisticValue
     },
-    statLabels {
-      corporatePartnersLabel,
-      gameChangingOpportunitiesLabel,
-      valuePropositionsLabel,
-      investmentCasesLabel,
-      newVenturesInCommercialisationLabel
-    },
-    testimonials[] {
+    testimonials[]{
       quote,
-      clientName,
-      clientTitle,
+      name,
+      jobTitle,
       company
     },
-    partneredBrands[] {
-      brandName,
-      brandLogo {
-        asset,
-        alt
+    partners[]{
+      partnerName,
+      partnerImage{
+        asset
       }
     },
-    accordion[] {
+    accordionSection1{
       heading,
-      text,
-      image {
-        asset,
-        alt
-      },
-      color
+      body,
+      mainImage{asset},
+      brandImage{asset},
+      cta,
+    },
+    accordionSection2{
+      heading,
+      body
     }
   }
 `);
