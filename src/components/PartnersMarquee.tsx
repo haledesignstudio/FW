@@ -45,6 +45,13 @@ export default function PartnersMarquee({
   const measureRef = useRef<HTMLUListElement | null>(null);
   const [cyclesPerHalf, setCyclesPerHalf] = useState(1);
 
+  // Mobile detection for performance optimization
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   const items = useMemo(
     () =>
       (partners ?? []).filter(
@@ -70,29 +77,42 @@ export default function PartnersMarquee({
       setCyclesPerHalf(needed);
     };
 
-    const ro = new ResizeObserver(compute);
+    // Throttle ResizeObserver for mobile performance
+    let timeoutId: NodeJS.Timeout;
+    const throttledCompute = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(compute, isMobile ? 100 : 50); // Less frequent on mobile
+    };
+
+    const ro = new ResizeObserver(throttledCompute);
     ro.observe(container);
     ro.observe(measure);
 
-    // Recompute after each image loads
+    // Recompute after each image loads (but throttled on mobile)
     const imgs = Array.from(measure.querySelectorAll('img'));
     imgs.forEach((img) => {
-      if (!img.complete) img.addEventListener('load', compute, { once: true });
+      if (!img.complete) {
+        const handler = isMobile ? throttledCompute : compute;
+        img.addEventListener('load', handler, { once: true });
+      }
     });
 
     compute();
 
     return () => {
       ro.disconnect();
+      clearTimeout(timeoutId);
     };
-  }, [items]);
+  }, [items, isMobile]);
 
   if (!items.length) return null;
 
   const renderCycle = (keyPrefix: string) =>
     items.map((p, i) => {
+      // Optimize image resolution for mobile
+      const heightMultiplier = isMobile ? 1.5 : 2; // Lower resolution on mobile
       const src = urlFor(p.partnerImage)
-        .height(Math.round(logoHeightVh * 2 * 16))
+        .height(Math.round(logoHeightVh * heightMultiplier * 16))
         .fit('max')
         .auto('format')
         .url();
@@ -108,6 +128,7 @@ export default function PartnersMarquee({
             style={{ height: `calc(${logoHeightVh}vh)`, width: 'auto' }}
             className="block object-contain"
             loading="lazy"
+            decoding="async" // Performance hint for mobile
           />
         </li>
       );
@@ -154,9 +175,14 @@ export default function PartnersMarquee({
 
       {/* TRACK with two identical halves for a seamless -50% loop */}
       <div
-        className="pm-track flex w-max will-change-transform [gap:var(--pm-gap)]"
+        className={`pm-track flex w-max ${isMobile ? 'will-change-transform' : 'will-change-transform'} [gap:var(--pm-gap)]`}
         style={{
           animation: `${direction === 'left' ? 'pm-marquee' : 'pm-marquee-rev'} var(--pm-duration) linear infinite`,
+          // Performance optimization for mobile
+          ...(isMobile && {
+            transform: 'translateZ(0)', // Force hardware acceleration
+            backfaceVisibility: 'hidden' as const,
+          })
         }}
       >
         <ul className="pm-group flex items-center [gap:var(--pm-gap)]">
@@ -187,6 +213,14 @@ export default function PartnersMarquee({
         }
         @media (prefers-reduced-motion: reduce) {
           .pm-track { animation: none !important; transform: translateX(0) !important; }
+        }
+        /* Mobile performance optimizations */
+        @media (max-width: 767px) {
+          .pm-track {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+          }
         }
       `}</style>
     </div>

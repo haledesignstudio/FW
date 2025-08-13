@@ -27,7 +27,7 @@ function normalizeTarget(t: number | string) {
 
 export default function CountingAnimation({
   target,
-  duration = 6000,
+  duration = 3000, // Reduced from 6000ms to 3000ms for faster completion
   className = '',
   as: Tag = 'span',
   start = false,
@@ -41,18 +41,40 @@ export default function CountingAnimation({
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
 
+  // Detect mobile for performance optimization
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const targetFPS = isMobile ? 30 : 60; // Half the frame rate on mobile
+  const frameInterval = 1000 / targetFPS;
+  const optimizedDuration = isMobile ? Math.min(duration * 0.6, 2000) : duration; // 40% faster on mobile, max 2s
+
   useEffect(() => {
     if (!start) return;
     if (triggerOnce && hasAnimated) return;
 
     const startTime = Date.now();
+    let lastFrameTime = 0;
     let raf = 0;
 
     const tick = () => {
-      const progress = Math.min((Date.now() - startTime) / duration, 1);
+      const now = Date.now();
+      const elapsed = now - startTime;
+      
+      // Throttle frame rate for mobile performance
+      if (now - lastFrameTime < frameInterval) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+      lastFrameTime = now;
+
+      const progress = Math.min(elapsed / optimizedDuration, 1);
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(easeOut * targetValue);
-      setCount(current);
+      
+      // Only update if the value actually changed to reduce DOM thrashing
+      if (current !== count) {
+        setCount(current);
+      }
+      
       if (progress < 1) {
         raf = requestAnimationFrame(tick);
       } else {
@@ -63,7 +85,7 @@ export default function CountingAnimation({
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [start, depsKey, duration, targetValue, triggerOnce, hasAnimated]);
+  }, [start, depsKey, optimizedDuration, targetValue, triggerOnce, hasAnimated, frameInterval]);
 
   return <Tag className={className}>{count}{suffix}</Tag>;
 }

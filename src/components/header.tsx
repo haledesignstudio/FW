@@ -662,7 +662,7 @@ const Header: React.FC = () => {
                                                         href={item.href}
                                                         className={`text-black font-bold whitespace-nowrap ${
                                                             isHomepage 
-                                                                ? 'text-[4.25vw]' 
+                                                                ? 'text-[4vw]' 
                                                                 : 'text-[5vw]'
                                                         }`}
                                                         style={{

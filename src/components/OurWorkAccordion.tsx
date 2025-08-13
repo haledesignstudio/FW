@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { PortableText } from '@portabletext/react';
-import type { OurWorkContent } from '@/app/our-work/page';
+import type { OurWorkContent } from '@/app/our-work/our-work';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import Link from 'next/link';

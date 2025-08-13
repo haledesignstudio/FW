@@ -14,6 +14,7 @@ import HomeAccordion from '@/components/HomeAccordion';
 import { HighlightText } from '@/components/HighlightText';
 
 export type HomePageContent = {
+  _id: string;
   headline: string;
   subheading: PortableTextBlock[];
   body: PortableTextBlock[];
@@ -107,12 +108,18 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 1,
       content: (
         <FadeInOnVisible>
-          <MainTitleAnimation
-            text={data.headline}
-            typeSpeed={40}
-            delay={100}
-            className="text-[4vh] font-graphik leading-tight"
-          />
+          <div data-sanity={JSON.stringify({ 
+            _type: 'homePage', 
+            _id: data._id, 
+            _path: 'headline'
+          })}>
+            <MainTitleAnimation
+              text={data.headline}
+              typeSpeed={40}
+              delay={100}
+              className="text-[4vh] font-graphik leading-tight"
+            />
+          </div>
         </FadeInOnVisible>
       ),
       colSpan: 5,
@@ -138,7 +145,11 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 3,
       content: (
         <FadeInOnVisible>
-          <div className="prose max-w-none text-[2vh] font-bold leading-tight">
+          <div className="prose max-w-none text-[2vh] font-bold leading-tight" data-sanity={JSON.stringify({ 
+            _type: 'homePage', 
+            _id: data._id, 
+            _path: 'subheading'
+          })}>
             <HighlightText value={data.subheading} />
           </div>
         </FadeInOnVisible>
@@ -187,7 +198,11 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="text-[1.5vh] leading-tight">
+          <div className="text-[1.5vh] leading-tight" data-sanity={JSON.stringify({ 
+            _type: 'homePage', 
+            _id: data._id, 
+            _path: 'body'
+          })}>
             <PortableText value={data.body} />
           </div>
         </FadeInOnVisible>
@@ -204,7 +219,11 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 8,
       content: (
         <FadeInOnVisible>
-          <div className="text-[1.5vh] font-graphik leading-tight">
+          <div className="text-[1.5vh] font-graphik leading-tight" data-sanity={JSON.stringify({ 
+            _type: 'homePage', 
+            _id: data._id, 
+            _path: 'cta'
+          })}>
             <a
               href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.cta ?? '')}`}
               className="transition cursor-pointer"
@@ -283,12 +302,18 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 1,
       content: (
         <FadeInOnVisible>
-          <MainTitleAnimation
-            text={data.headline}
-            typeSpeed={40}
-            delay={100}
-            className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
-          />
+          <div data-sanity={JSON.stringify({ 
+            _type: 'homePage', 
+            _id: data._id, 
+            _path: 'headline'
+          })}>
+            <MainTitleAnimation
+              text={data.headline}
+              typeSpeed={40}
+              delay={100}
+              className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
+            />
+          </div>
         </FadeInOnVisible>
       ),
       colSpan: 5,
@@ -322,7 +347,11 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 4,
       content: (
         <FadeInOnVisible>
-          <div className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+          <div className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight" data-sanity={JSON.stringify({ 
+            _type: 'homePage', 
+            _id: data._id, 
+            _path: 'subheading'
+          })}>
             <HighlightText value={data.subheading} />
           </div>
         </FadeInOnVisible>
@@ -338,7 +367,11 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 5,
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3vh,1.5vw)] leading-tight">
+          <div className="text-[clamp(1vw,3vh,1.5vw)] leading-tight" data-sanity={JSON.stringify({ 
+            _type: 'homePage', 
+            _id: data._id, 
+            _path: 'body'
+          })}>
             <PortableText value={data.body} />
           </div>
         </FadeInOnVisible>
@@ -364,7 +397,11 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)]">
+          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)]" data-sanity={JSON.stringify({ 
+            _type: 'homePage', 
+            _id: data._id, 
+            _path: 'cta'
+          })}>
             <a
               href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.cta ?? '')}`}
               className="transition cursor-pointer"
@@ -417,7 +454,7 @@ export default function HomeClient({ data }: HomeClientProps) {
     <>
       <SignalsFromTheFuture />
       <Header />
-      <main className="bg-[#F9F7F2]">
+      <main className="bg-[#F9F7F2]" data-sanity={JSON.stringify({ _type: 'homePage', _id: data._id })}>
         {/* Mobile Layout */}
         <div className="block md:hidden">
           <div className="p-[2vh] bg-[#F9F7F2] overflow-visible">
