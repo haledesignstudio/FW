@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity';
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'mindbullet',
@@ -9,49 +9,97 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: Rule => Rule.required()
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'content',
-      title: 'Content',
-      type: 'array',
-      of: [{ type: 'block' }],
-      validation: Rule => Rule.required()
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: 'title',
+        maxLength: 250,
+      },
+    }),
+    defineField({
+      name: 'mainImage',
+      title: 'Main image',
+      validation: (Rule) => Rule.required(),
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'publishedAt',
+      title: 'Published at',
+      type: 'string',
+      description: 'Date Published',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'dateline',
       title: 'Dateline',
       type: 'string',
-      description: 'e.g., “New York, 2042”',
-      validation: Rule => Rule.required()
+      description: 'Futuristic or fictional date associated with the post content',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'datePublished',
-      title: 'Date Published',
-      type: 'date',
-      validation: Rule => Rule.required()
+      name: 'byLine',
+      title: 'Byline',
+      type: 'string',
+      description: 'Author credit or source of the article',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true
-      },
-      fields: [
+      name: 'body',
+      title: 'Body',
+      type: 'array',
+      of: [{ type: 'block' }],
+      validation: (Rule) => Rule.required(),
+    }),
+
+    // 🔽 Added field
+    defineField({
+      name: 'RelatedStories',
+      title: 'Related Stories',
+      type: 'array',
+      of: [
         {
-          name: 'alt',
-          title: 'Alternative Text',
-          type: 'string',
-          validation: Rule => Rule.required()
-        }
-      ]
-    })
+          type: 'object',
+          name: 'relatedStory',
+          title: 'Related Story',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'link',
+              title: 'Link',
+              type: 'url',
+              description: 'Full URL to the related story',
+              validation: (Rule) =>
+                Rule.uri({
+                  allowRelative: false,
+                  scheme: ['http', 'https'],
+                }),
+            }),
+          ],
+          preview: {
+            select: { title: 'title' },
+          },
+        },
+      ],
+    }),
   ],
+
   preview: {
     select: {
       title: 'title',
-      media: 'image'
-    }
-  }
-});
+      media: 'mainImage',
+    },
+  },
+})

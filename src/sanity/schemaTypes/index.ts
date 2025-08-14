@@ -1,7 +1,6 @@
 import { type SchemaTypeDefinition } from 'sanity'
 import keynoteSpeaker from './keynoteSpeaker'
 import whatWeDoPage from './whatWeDoPage'
-import shareholderValueAnalytics from './shareholderValueAnalytics';
 import keynoteTopic from './keynoteTopic';
 import homePage from './homePage'
 import article from './article'
@@ -19,13 +18,25 @@ import podcast from './podcast'
 import provocativeScenario from './provocativeScenarios'
 import carouselItem from './carouselItem'
 import superchargeTomorrowPage from './superchargeTomorrowPage'
+import mindbulletsPage from './mindbulletsPage'
+import keynotesPage from './keynotesPage'
+import edgePage from './edgePage'
+import podcastPage from './podcastPage'
+import corporatePage from './corporatePage'
+import shareholderPage from './shareholderPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     // Main page schemas
     homePage,
     insightsPage,
+    mindbulletsPage,
+    keynotesPage,
+    edgePage,
+    podcastPage,
     peoplePage,
+    corporatePage,
+    shareholderPage,
     ourWorkPage,
     superchargeTomorrowPage,
     contactPage,
@@ -44,6 +55,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     podcast,
     provocativeScenario,
     carouselItem,
-    whatWeDoPage, shareholderValueAnalytics, keynoteTopic
+    whatWeDoPage, keynoteTopic
   ],
 }

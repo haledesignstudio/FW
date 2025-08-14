@@ -1,41 +1,54 @@
+// app/keynotes/keynotes.tsx
 'use client';
 
-import { HighlightText } from '@/components/HighlightText';
+import ExpandableTopicList from '@/components/ExpandableTopicList';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import { getGridClasses } from '@/components/insights/grid';
+import { HighlightText } from '@/components/HighlightText';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
-import { PortableTextBlock } from '@portabletext/types';
-import React from 'react';
+import type { PortableTextBlock } from '@portabletext/types';
+import type { ReactNode } from 'react';
+import dynamic from 'next/dynamic';
 
+// ⬇️ Client-only render prevents hydration mismatch
+const CircularTextSlider = dynamic(() => import('@/components/CircularTextSlider'), { ssr: false });
 
-type GridItem = {
+type KeynotesData = {
+  topicSection: {
+    topicSectionTitle: string;
+    topicSectionSubtitle: PortableTextBlock[];
+    topicContentText: string;
+    topicCTA1: string;
+    topicMail1: string;
+    topicCTA2: string;
+  };
+  speakerSection: {
+    speakerSectionTitle: string;
+    speakerSectionSubtitle: PortableTextBlock[];
+    speakerContentText: string;
+    speakerCTA1: string;
+    speakerMail1: string;
+    speakerCTA2: string;
+  };
+};
+
+type SpeakerForClient = {
+  _id: string;
+  name: string;
+  bio: PortableTextBlock[];
+  image: { asset: string; alt?: string };
+};
+
+type Props = { keynotes: KeynotesData };
+
+export type GridItem = {
   id: string;
-  content: React.ReactNode;
+  content: ReactNode;
   colSpan: number;
   rowSpan: number;
 };
 
-type Props = {
-  keynotes: {
-    topicSection: {
-      topicSectionTitle: string;
-      topicSectionSubtitle: PortableTextBlock[];
-      topicContentText: string;
-      topicCTA1: string;
-      topicMail1: string;
-      topicCTA2: string;
-    };
-    speakerSection: {
-      speakerSectionTitle: string;
-      speakerSectionSubtitle: PortableTextBlock[];
-      speakerContentText: string;
-      speakerCTA1: string;
-      speakerMail1: string;
-      speakerCTA2: string;
-    };
-  };
-};
-
-
+// === Your requested grid layouts ===
 export function KeynoteTop({ keynotes }: Props): GridItem[] {
   const topicSection = keynotes?.topicSection;
 
@@ -162,7 +175,9 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
           <FadeInOnVisible>
             <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
               <a
-                href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
+                href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
+                  speakerSection.speakerCTA1 ?? ''
+                )}`}
                 className="transition cursor-pointer"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
@@ -195,4 +210,52 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       rowSpan: 1,
     },
   ];
+}
+
+// === Page client component ===
+export default function Keynotes({
+  keynotes,
+  speakers,
+}: {
+  keynotes: KeynotesData;
+  speakers: SpeakerForClient[];
+}) {
+  const keynoteTop = KeynoteTop({ keynotes });
+  const keynoteBottom = KeynoteBottom({ keynotes });
+
+  return (
+    <>
+      {/* Top grid */}
+      <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+        {keynoteTop.map((item) => (
+          <div key={item.id} className={getGridClasses(item)}>
+            {item.content}
+          </div>
+        ))}
+      </div>
+
+      {/* Topics list */}
+      <FadeInOnVisible>
+        <div className="w-full">
+          <ExpandableTopicList />
+        </div>
+      </FadeInOnVisible>
+
+      {/* Bottom grid */}
+      <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+        {keynoteBottom.map((item) => (
+          <div key={item.id} className={getGridClasses(item)}>
+            {item.content}
+          </div>
+        ))}
+      </div>
+
+      {/* Speaker wheel - client-only */}
+      <FadeInOnVisible>
+        <div className="w-full mt-[20vh]">
+          <CircularTextSlider speakers={speakers} />
+        </div>
+      </FadeInOnVisible>
+    </>
+  );
 }

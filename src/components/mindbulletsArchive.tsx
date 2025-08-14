@@ -1,70 +1,108 @@
-import React, { useState } from 'react';
+'use client';
+
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import Link from 'next/link';
 
-function getRandomDatelineNumber() {
-  return Math.floor(Math.random() * (2100 - 2025 + 1)) + 2025;
-}
+// 👉 make sure these point to your setup
+import { client } from '@/sanity/lib/client';
+import { defineQuery } from 'next-sanity';
+import { urlFor } from '@/sanity/lib/image';
 
-const localImages = [
-  '/menu-people.png',
-  '/menu-our-work.png',
-  '/menu-home.png',
-  '/menu-insights.png',
-  '/menu-what-we-do.png',
+const PAGE_SIZE = 10 as const;
 
-];
-
-
-const mockMindbullets = Array.from({ length: 40 }).map((_, i) => {
-  const datelineNum = getRandomDatelineNumber();
-  const imageIndex = i % localImages.length; // Cycle through 10 images
-  return {
-    _id: `mb${i}`,
-    title: `Mindbullet Title ${i + 1}`,
-    publishedDate: `2025-07-${(i % 30) + 1}`,
-    dateline: `${datelineNum}`,
-    headImage: { url: localImages[imageIndex] }, // Use local image
-  };
-});
-
-
-const PAGE_SIZE = 10;
-
-type SortField = 'publishedDate' | 'dateline';
+type SortField = 'publishedAt' | 'dateline';
 type SortDirection = 'asc' | 'desc';
 
+type SanityAssetRef = { _ref: string } | { _id: string };
+type SanityImage = { asset?: SanityAssetRef; alt?: string };
+
+
+type Mindbullet = {
+  _id: string;
+  title: string;
+  slug?: string;
+  mainImage?: SanityImage;
+  publishedAt: string; // stored as string in your schema
+  dateline: string;
+  byLine?: string;
+};
+
+const mindbulletsQuery = defineQuery(`
+  *[_type == "mindbullet"] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    mainImage {
+      asset,
+      alt
+    },
+    publishedAt,
+    dateline,
+    byLine
+  }
+`);
+
 const MindbulletArchive = () => {
+  const [mindbullets, setMindbullets] = useState<Mindbullet[]>([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [sortBy, setSortBy] = useState<SortField>('publishedDate');
+  const [sortBy, setSortBy] = useState<SortField>('publishedAt');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+  const [hoveredAlt, setHoveredAlt] = useState<string>('Mindbullet image');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  // Fetch from Sanity
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        setLoading(true);
+        const data = await client.fetch<Mindbullet[]>(mindbulletsQuery);
+        if (!cancelled) setMindbullets(data ?? []);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleSort = (field: SortField) => {
     if (sortBy === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      setSortDirection((d) => (d === 'asc' ? 'desc' : 'asc'));
     } else {
       setSortBy(field);
       setSortDirection('desc');
     }
   };
 
-  const sorted = [...mockMindbullets].sort((a, b) => {
-    if (sortBy === 'dateline') {
-      const numA = parseInt(a.dateline.replace(/\D/g, ''), 10);
-      const numB = parseInt(b.dateline.replace(/\D/g, ''), 10);
-      return sortDirection === 'asc' ? numA - numB : numB - numA;
-    } else {
-      const dateA = new Date(a.publishedDate);
-      const dateB = new Date(b.publishedDate);
-      return sortDirection === 'asc'
-        ? dateA.getTime() - dateB.getTime()
-        : dateB.getTime() - dateA.getTime();
-    }
-  });
+  const sorted = useMemo(() => {
+    const copy = [...mindbullets];
+    copy.sort((a, b) => {
+      if (sortBy === 'dateline') {
+        const numA = parseInt(String(a.dateline).replace(/\D/g, ''), 10) || 0;
+        const numB = parseInt(String(b.dateline).replace(/\D/g, ''), 10) || 0;
+        return sortDirection === 'asc' ? numA - numB : numB - numA;
+      } else {
+        // publishedAt is a string in your schema, so parse to Date
+        const dateA = new Date(a.publishedAt);
+        const dateB = new Date(b.publishedAt);
+        return sortDirection === 'asc'
+          ? dateA.getTime() - dateB.getTime()
+          : dateB.getTime() - dateA.getTime();
+      }
+    });
+    return copy;
+  }, [mindbullets, sortBy, sortDirection]);
 
-  const displayed = sorted.slice(0, page * PAGE_SIZE);
+  const displayed = useMemo(
+    () => sorted.slice(0, page * PAGE_SIZE),
+    [sorted, page]
+  );
 
   return (
     <div className="w-full relative mt-[20vh]">
@@ -74,9 +112,9 @@ const MindbulletArchive = () => {
           Mindbullets Archive
         </div>
         <div className="col-start-5 font-bold flex items-end">
-          <button onClick={() => handleSort('publishedDate')} className="flex items-center cursor-pointer">
+          <button onClick={() => handleSort('publishedAt')} className="flex items-center cursor-pointer">
             <span
-              className={`transition-transform duration-200 ${sortBy === 'publishedDate' && sortDirection === 'asc'
+              className={`transition-transform duration-200 ${sortBy === 'publishedAt' && sortDirection === 'asc'
                 ? 'rotate-[-90deg]'
                 : 'rotate-0'
                 }`}
@@ -89,7 +127,7 @@ const MindbulletArchive = () => {
           </button>
         </div>
         <div className="col-start-6 font-bold flex items-end">
-          <button onClick={() => handleSort('dateline')} className="flex items-center cursor-pointer">
+          <button onClick={() => handleSort('dateline')} className="flex items-center cursor-pointer ">
             <span
               className={`transition-transform duration-200 ${sortBy === 'dateline' && sortDirection === 'asc'
                 ? 'rotate-[-90deg]'
@@ -106,83 +144,110 @@ const MindbulletArchive = () => {
 
         {/* Titles */}
         <div className="col-span-3">
-          <ul className="space-y-2">
-            {displayed.map((mb) => (
-              <li key={mb._id}>
-                <span
-                  className="cursor-pointer"
-                  onMouseMove={(e) => {
-                    setMousePos({ x: e.clientX, y: e.clientY });
-                    setHoveredImage(mb.headImage.url);
-                  }}
-                  onMouseLeave={() => setHoveredImage(null)}
-                >
-                  {mb.title}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {loading ? (
+            <div className="opacity-60">Loading…</div>
+          ) : (
+            <ul className="space-y-2">
+              {displayed.map((mb) => {
+                const imgUrl = mb.mainImage?.asset
+                  ? urlFor(mb.mainImage).width(1200).height(675).fit('crop').url()
+                  : null;
+
+                return (
+                  <li key={mb._id}>
+                    <Link
+                      href={`/mindbullets/${mb.slug}`}
+                      className="cursor-pointer font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight"
+                      onMouseMove={(e) => {
+                        setMousePos({ x: e.clientX, y: e.clientY });
+                        if (imgUrl) {
+                          setHoveredImage(imgUrl);
+                          setHoveredAlt(mb.mainImage?.alt || 'Mindbullet image');
+                        } else {
+                          setHoveredImage(null);
+                        }
+                      }}
+                      onMouseLeave={() => setHoveredImage(null)}
+                    >
+                      {mb.title} / {mb.byLine}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
 
         <div className="col-start-4" />
 
         {/* Dates */}
         <div className="col-start-5">
-          <ul className="space-y-2">
+          <ul className="space-y-2 font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
             {displayed.map((mb) => (
-              <li key={mb._id}>{mb.publishedDate}</li>
+              <li key={mb._id}>
+                {new Intl.DateTimeFormat('en-GB', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                  timeZone: 'UTC',
+                }).format(new Date(`${mb.publishedAt}T00:00:00Z`))}
+
+              </li>
             ))}
           </ul>
         </div>
 
         {/* Datelines */}
         <div className="col-start-6">
-          <ul className="space-y-2">
+          <ul className="space-y-2 font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
             {displayed.map((mb) => (
-              <li key={mb._id}>{mb.dateline}</li>
+              <li key={mb._id}>
+                {new Intl.DateTimeFormat('en-GB', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                  timeZone: 'UTC',
+                }).format(new Date(`${mb.dateline}T00:00:00Z`))}</li>
             ))}
           </ul>
         </div>
 
         {/* Show More */}
         <div className="col-span-6 mt-4">
-          {displayed.length < sorted.length && (
+          {!loading && displayed.length < sorted.length && (
             <button
               className="text-400 underline bg-transparent border-none p-0 m-0 hover:text-600 transition-colors duration-150"
               style={{ boxShadow: 'none' }}
               onClick={() => setPage(page + 1)}
             >
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-              Show More
+                Show More
               </UnderlineOnHoverAnimation>
             </button>
           )}
         </div>
       </div>
 
-
+      {/* Hover image preview */}
       {hoveredImage && (
         <Image
           src={hoveredImage}
-          alt="Mindbullet"
-          width={1920}  // example values
+          alt={hoveredAlt}
+          width={1920}
           height={1080}
           style={{
             position: 'fixed',
             top: mousePos.y + 10,
             left: mousePos.x + 10,
-            height: 'calc(10vw * 9 / 16)',  // 16:9 box height
-            width: '10vw',                  // 16:9 box width
-            objectFit: 'cover',             // Crop + fill box
+            height: 'calc(10vw * 9 / 16)',
+            width: '10vw',
+            objectFit: 'cover',
             pointerEvents: 'none',
             zIndex: 9999,
           }}
           sizes="10vw"
         />
       )}
-
-
-
     </div>
   );
 };

@@ -1,36 +1,57 @@
+// /app/shareholder-value-analytics/shareholder-value-analytics.tsx
 'use client';
-import { HighlightText } from '@/components/HighlightText';
-import FadeInOnVisible from '@/components/FadeInOnVisible';
-import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
-import Image from 'next/image';
-import { PortableTextBlock } from '@portabletext/types';
 
-type GridItem = {
-  id: string;
-  content: React.ReactNode;
-  colSpan: number;
-  rowSpan: number;
-};
+import FadeInOnVisible from '@/components/FadeInOnVisible';
+import { HighlightText } from '@/components/HighlightText';
+import { getGridClasses } from '@/components/insights/grid';
+import type { PortableTextBlock } from '@portabletext/types';
+import Image from 'next/image';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 type Props = {
-  analytics: {
-    title: string;
-    subheading: PortableTextBlock[];
-    contentText: string;
-    iframeSource: string;
-    IQ_heading: PortableTextBlock[];
-    IQ_subheading: string;
-    IQ_context: string;
-    CTA1?: string;
-    Mail1?: string;
-    CTA2?: string;
-    Mail2?: string;
-  };
+  title: string;
+  subheading: PortableTextBlock[];
+  contentText: string;
+  iframeSource: string; // (not used in new layout, but kept for API compatibility)
+  IQ_heading: PortableTextBlock[];
+  IQ_subheading: string;
+  IQ_context: string;
+  CTA1: string;
+  Mail1: string;
+  CTA2: string;
+  Mail2: string;
 };
 
+export default function ShareholderValueAnalytics(props: Props) {
+  const {
+    title,
+    subheading,
+    contentText,
+    // iframeSource, // no longer used in the new grid
+    IQ_heading,
+    IQ_subheading,
+    IQ_context,
+    CTA1,
+    Mail1,
+    CTA2,
+    Mail2,
+  } = props;
 
-export default function Analytics({ analytics }: Props): GridItem[] {
-  return [
+  // Align prop names with your desired grid snippet
+  const analytics = {
+    title,
+    subheading,
+    contentText,
+    IQ_heading,
+    IQ_subheading,
+    IQ_context,
+    CTA1,
+    Mail1,
+    CTA2,
+    Mail2,
+  };
+
+  const gridItems = [
     {
       id: 'analytics-1',
       content: (
@@ -86,7 +107,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
           <FadeInOnVisible>
             <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
               <a
-                href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA1 ?? '')}`}
+                href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
+                  analytics.CTA1 ?? ''
+                )}`}
                 className="transition cursor-pointer"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
@@ -110,14 +133,14 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       id: 'analytics-8',
       content: (
         <FadeInOnVisible>
-        <Image
-          src="/evidence.png" // ✅ Update this path to match your local asset
-          alt="Futureworld Shareholder Value Analytics"
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          width={3000}  // or appropriate dimensions
-          height={2000}
-          loading="lazy"
-        />
+          <Image
+            src="/evidence.png" // ✅ Update if your asset lives elsewhere
+            alt="Futureworld Shareholder Value Analytics"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            width={3000}
+            height={2000}
+            loading="lazy"
+          />
         </FadeInOnVisible>
       ),
       colSpan: 6,
@@ -129,7 +152,6 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       colSpan: 6,
       rowSpan: 1,
     },
-
     {
       id: 'analytics-10',
       content: (
@@ -199,7 +221,9 @@ export default function Analytics({ analytics }: Props): GridItem[] {
           <FadeInOnVisible>
             <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
               <a
-                href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(analytics.CTA2 ?? '')}`}
+                href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
+                  analytics.CTA2 ?? ''
+                )}`}
                 className="transition cursor-pointer"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
@@ -213,5 +237,22 @@ export default function Analytics({ analytics }: Props): GridItem[] {
       colSpan: 2,
       rowSpan: 1,
     },
-  ];
+  ] as const;
+
+  return (
+    <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh] mt-[2vh]">
+      {gridItems.map((item) => (
+        <div
+          key={item.id}
+          className={getGridClasses({
+            id: item.id,
+            colSpan: item.colSpan,
+            rowSpan: item.rowSpan,
+          })}
+        >
+          {item.content}
+        </div>
+      ))}
+    </div>
+  );
 }
