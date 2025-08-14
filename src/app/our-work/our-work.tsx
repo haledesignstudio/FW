@@ -328,182 +328,189 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       <Header />
       <main className="bg-[#F9F7F2]">
         {isMobileScreen ? (
-          // MOBILE LAYOUT
-          <div className="p-[2vh] bg-[#F9F7F2]">
-            <div className="grid grid-cols-4 gap-[2vh] auto-rows-[5vh]">
-              {/* Row 1: Main Title (col 1) */}
-              <div className="col-span-1 row-span-1 flex items-center">
-                <FadeInOnVisible>
-                  <MainTitleAnimation
-                    text={data.title}
-                    typeSpeed={60}
-                    delay={500}
-                    className="text-[6vw] font-graphik leading-tight"
-                  />
-                </FadeInOnVisible>
-              </div>
+          <>
+            {/* MOBILE LAYOUT */}
+            <div className="p-[2vh] bg-[#F9F7F2]">
+              <div className="grid grid-cols-4 gap-[2vh] auto-rows-[5vh]">
+                {/* Row 1: Main Title (col 1) */}
+                <div className="col-span-1 row-span-1 flex items-center">
+                  <FadeInOnVisible>
+                    <MainTitleAnimation
+                      text={data.title}
+                      typeSpeed={60}
+                      delay={500}
+                      className="text-[6vw] font-graphik leading-tight"
+                    />
+                  </FadeInOnVisible>
+                </div>
 
-              {/* Row 1-3: Subheading (col 3-4) */}
-              <div className="col-span-1"></div>
-              <div className="col-span-2 row-span-3 flex items-center">
-                <FadeInOnVisible>
-                  <div className="prose max-w-none text-[4vw] font-bold leading-tight">
-                    <HighlightText value={data.subheading} />
+                {/* Row 1-3: Subheading (col 3-4) */}
+                <div className="col-span-1"></div>
+                <div className="col-span-2 row-span-3 flex items-center">
+                  <FadeInOnVisible>
+                    <div className="prose max-w-none text-[4vw] font-bold leading-tight">
+                      <HighlightText value={data.subheading} />
+                    </div>
+                  </FadeInOnVisible>
+                </div>
+
+                {/* Row 2: Empty (col 1-2) */}
+                <div className="col-span-2"></div>
+
+                {/* Row 3-4: Corporate Partners Statistics (col 1-2) */}
+                <div className="col-span-2 row-span-2 flex items-end">
+                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                    <FadeInOnVisible>
+                      {(inView) => (
+                        <>
+                          <div className="text-[8vw] font-graphik leading-tight">
+                            <CountingAnimation start={inView} target={data.statistics[0].statisticValue} />
+                          </div>
+                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[0].statisticName}</div>
+                        </>
+                      )}
+                    </FadeInOnVisible>
                   </div>
-                </FadeInOnVisible>
-              </div>
-
-              {/* Row 2: Empty (col 1-2) */}
-              <div className="col-span-2"></div>
-
-              {/* Row 3-4: Corporate Partners Statistics (col 1-2) */}
-              <div className="col-span-2 row-span-2 flex items-end">
-                <div className="h-full flex flex-col justify-end gap-[2vh]">
-                  <FadeInOnVisible>
-                    {(inView) => (
-                      <>
-                        <div className="text-[8vw] font-graphik leading-tight">
-                          <CountingAnimation start={inView} target={data.statistics[0].statisticValue} />
-                        </div>
-                        <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[0].statisticName}</div>
-                      </>
-                    )}
-                  </FadeInOnVisible>
                 </div>
-              </div>
 
-              {/* Row 4: Empty (col 3-4) */}
-              <div className="col-span-2"></div>
+                {/* Row 4: Empty (col 3-4) */}
+                <div className="col-span-2"></div>
 
-              {/* Row 5-6: Game-changing Opportunities (col 1-2) */}
-              <div className="col-span-2 row-span-2 flex items-end">
-                <div className="h-full flex flex-col justify-end gap-[2vh]">
-                  <FadeInOnVisible>
-                    {(inView) => (
-                      <>
-                        <div className="text-[8vw] font-graphik leading-tight">
-                          <CountingAnimation start={inView} target={data.statistics[1].statisticValue} />
-                        </div>
-                        <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[1].statisticName}</div>
-                      </>
-                    )}
-                  </FadeInOnVisible>
+                {/* Row 5-6: Game-changing Opportunities (col 1-2) */}
+                <div className="col-span-2 row-span-2 flex items-end">
+                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                    <FadeInOnVisible>
+                      {(inView) => (
+                        <>
+                          <div className="text-[8vw] font-graphik leading-tight">
+                            <CountingAnimation start={inView} target={data.statistics[1].statisticValue} />
+                          </div>
+                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[1].statisticName}</div>
+                        </>
+                      )}
+                    </FadeInOnVisible>
+                  </div>
                 </div>
-              </div>
 
-              {/* Row 5-6: Value Propositions (col 3-4) */}
-              <div className="col-span-2 row-span-2 flex items-end">
-                <div className="h-full flex flex-col justify-end gap-[2vh]">
-                  <FadeInOnVisible>
-                    {(inView) => (
-                      <>
-                        <div className="text-[8vw] font-graphik leading-tight">
-                          <CountingAnimation start={inView} target={data.statistics[2].statisticValue} />
-                        </div>
-                        <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[2].statisticName}</div>
-                      </>
-                    )}
-                  </FadeInOnVisible>
+                {/* Row 5-6: Value Propositions (col 3-4) */}
+                <div className="col-span-2 row-span-2 flex items-end">
+                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                    <FadeInOnVisible>
+                      {(inView) => (
+                        <>
+                          <div className="text-[8vw] font-graphik leading-tight">
+                            <CountingAnimation start={inView} target={data.statistics[2].statisticValue} />
+                          </div>
+                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[2].statisticName}</div>
+                        </>
+                      )}
+                    </FadeInOnVisible>
+                  </div>
                 </div>
-              </div>
 
-              {/* Row 7-8: Investment Cases (col 1-2) */}
-              <div className="col-span-2 row-span-2 flex items-end">
-                <div className="h-full flex flex-col justify-end gap-[2vh]">
-                  <FadeInOnVisible>
-                    {(inView) => (
-                      <>
-                        <div className="text-[8vw] font-graphik leading-tight">
-                          <CountingAnimation start={inView} target={data.statistics[3].statisticValue} />
-                        </div>
-                        <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[3].statisticName}</div>
-                      </>
-                    )}
-                  </FadeInOnVisible>
+                {/* Row 7-8: Investment Cases (col 1-2) */}
+                <div className="col-span-2 row-span-2 flex items-end">
+                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                    <FadeInOnVisible>
+                      {(inView) => (
+                        <>
+                          <div className="text-[8vw] font-graphik leading-tight">
+                            <CountingAnimation start={inView} target={data.statistics[3].statisticValue} />
+                          </div>
+                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[3].statisticName}</div>
+                        </>
+                      )}
+                    </FadeInOnVisible>
+                  </div>
                 </div>
-              </div>
 
-              {/* Row 7-8: New Ventures in Commercialisation (col 3-4) */}
-              <div className="col-span-2 row-span-2 flex items-end">
-                <div className="h-full flex flex-col justify-end gap-[2vh]">
-                  <FadeInOnVisible>
-                    {(inView) => (
-                      <>
-                        <div className="text-[8vw] font-graphik leading-tight">
-                          <CountingAnimation start={inView} target={data.statistics[4].statisticValue} />
-                        </div>
-                        <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[4].statisticName}</div>
-                      </>
-                    )}
-                  </FadeInOnVisible>
+                {/* Row 7-8: New Ventures in Commercialisation (col 3-4) */}
+                <div className="col-span-2 row-span-2 flex items-end">
+                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                    <FadeInOnVisible>
+                      {(inView) => (
+                        <>
+                          <div className="text-[8vw] font-graphik leading-tight">
+                            <CountingAnimation start={inView} target={data.statistics[4].statisticValue} />
+                          </div>
+                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[4].statisticName}</div>
+                        </>
+                      )}
+                    </FadeInOnVisible>
+                  </div>
                 </div>
-              </div>
 
-              {/* Row 9-11: Testimonials Carousel (placeholder) */}
-              <div className="col-span-4 row-span-3 flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-[3.5vw]">Testimonials carousel - coming soon</p>
+                {/* Row 9-11: Testimonials Carousel (placeholder) */}
+                <div className="col-span-4 row-span-3 flex items-center justify-center">
+                  <div className="text-center">
+                    <p className="text-[3.5vw]">Testimonials carousel - coming soon</p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Row 12: Empty */}
-              <div className="col-span-4"></div>
+                {/* Row 12: Empty */}
+                <div className="col-span-4"></div>
 
-              {/* Row 13: Partners Carousel */}
-              <div className="col-span-4 row-span-1 flex items-center">
-                <div className="h-full w-full flex items-center">
-                  <PartnersMarquee
-                    partners={data.partners}
-                    durationSec={25} // Faster for mobile performance
-                    logoHeightVh={5} // Optimized height for mobile
-                    gap="6vw" // Balanced gap for mobile
-                    edgeFadeVw={8} // Smaller fade for mobile
-                    fadeBg="#F9F7F2"
-                    direction="left"
-                  />
+                {/* Row 13: Partners Carousel */}
+                <div className="col-span-4 row-span-1 flex items-center">
+                  <div className="h-full w-full flex items-center">
+                    <PartnersMarquee
+                      partners={data.partners}
+                      durationSec={25} // Faster for mobile performance
+                      logoHeightVh={5} // Optimized height for mobile
+                      gap="6vw" // Balanced gap for mobile
+                      edgeFadeVw={8} // Smaller fade for mobile
+                      fadeBg="#F9F7F2"
+                      direction="left"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Row 14: Empty */}
-              <div className="col-span-4"></div>
+                {/* Row 14: Empty */}
+                <div className="col-span-4"></div>
+              </div>
             </div>
 
-            {/* Row 15+: Accordion Section (placeholder) */}
+            {/* Accordion Section - Full Width Edge-to-Edge */}
             <div className="mt-[4vh]">
-              <div className="text-center mb-[4vh]">
-                <p className="text-[3.5vw]">Accordion section - coming soon</p>
-              </div>
               <FadeInOnVisible>
                 <OurWorkAccordion data={data} />
               </FadeInOnVisible>
             </div>
 
-            {/* Back to Top Button */}
-            <div className="grid grid-cols-4 gap-[2vh] mt-[4vh]">
-              <div className="col-start-4 col-span-1 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
-                <span className="underline text-[2vh] flex items-center gap-1">Back to top
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 19V5M5 12l7-7 7 7" />
-                  </svg>
-                </span>
+            {/* Back to Top Button After Accordion */}
+            <div className="p-[2vh] bg-[#F9F7F2]">
+              <div className="grid grid-cols-4 gap-[2vh]">
+                <div className="col-start-4 col-span-1 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
+                  <span className="underline text-[2vh] flex items-center gap-1">Back to top
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M12 19V5M5 12l7-7 7 7" />
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          </>
         ) : (
-          // DESKTOP LAYOUT (existing)
-          <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2] overflow-visible">
-            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
-              {items.map((item) => (
-                <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
-                  {item.content}
-                </div>
-              ))}
+          <>
+            {/* DESKTOP LAYOUT (existing) */}
+            <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2] overflow-visible">
+              <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
+                {items.map((item) => (
+                  <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
+                    {item.content}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+
+            {/* Accordion Section for Desktop - Full Width Edge-to-Edge */}
+            <div className="mt-[4vh]">
+              <FadeInOnVisible>
+                <OurWorkAccordion data={data} />
+              </FadeInOnVisible>
+            </div>
+          </>
         )}
-        <FadeInOnVisible>
-          <OurWorkAccordion data={data} />
-        </FadeInOnVisible>
       </main>
       <Footer />
     </>

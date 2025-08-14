@@ -1,10 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { PortableText } from '@portabletext/react';
 import type { HomePageContent } from '@/app/home-client';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
+import { getCaseStudiesForCarousel, type CarouselCaseStudy } from '@/lib/caseStudies';
 
 type HomeAccordionProps = { data: HomePageContent };
 
@@ -17,6 +20,26 @@ type GridItem = {
     mobileRowSpan?: number;
     landscapeColSpan?: number;
     landscapeRowSpan?: number;
+};
+
+// Custom hook to detect responsive layout
+const useResponsiveLayout = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            // Mobile: not tablet landscape and not desktop
+            const isTabletLandscape = window.matchMedia('(max-height: 600px) and (max-width: 768px)').matches;
+            const isDesktop = window.matchMedia('(min-width: 768px) and (min-aspect-ratio: 1/1)').matches;
+            setIsMobile(!isTabletLandscape && !isDesktop);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    return { isMobile };
 };
 
 function getGridClasses(item: GridItem) {
@@ -42,8 +65,25 @@ function getGridClasses(item: GridItem) {
 }
 
 export default function HomeAccordion({ data }: HomeAccordionProps) {
+    const { isMobile } = useResponsiveLayout();
     // Changed from single string to Set of strings to track multiple open tabs
     const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
+    const [caseStudies, setCaseStudies] = useState<CarouselCaseStudy[]>([]);
+
+    // Fetch case studies on component mount
+    useEffect(() => {
+        const loadCaseStudies = async () => {
+            try {
+                const studies = await getCaseStudiesForCarousel();
+                setCaseStudies(studies);
+            } catch (error) {
+                console.error('Error loading case studies:', error);
+                setCaseStudies([]);
+            }
+        };
+
+        loadCaseStudies();
+    }, []);
 
     // Helper function to toggle a tab's open state
     const toggleTab = (tabId: string) => {
@@ -100,11 +140,15 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 2,
                         content: data.section2?.section2Image?.asset ? (
-                            <img
-                                src={urlFor(data.section2.section2Image.asset).url()}
-                                alt={data.section2.section2Image.alt || 'Process image'}
-                                className="w-full h-full object-cover rounded"
-                            />
+                            <div className="w-full h-full relative">
+                                <Image
+                                    src={urlFor(data.section2.section2Image.asset).url()}
+                                    alt={data.section2.section2Image.alt || 'Process image'}
+                                    className="w-full h-full object-cover rounded"
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
+                            </div>
                         ) : null,
                         colSpan: 3,
                         rowSpan: 2,
@@ -199,11 +243,15 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 3,
                         content: data.section2?.section2Image?.asset ? (
-                            <img
-                                src={urlFor(data.section2.section2Image.asset).url()}
-                                alt={data.section2.section2Image.alt || 'Process image'}
-                                className="w-full h-full object-contain object-top object-center opacity-50"
-                            />
+                            <div className="w-full h-full relative">
+                                <Image
+                                    src={urlFor(data.section2.section2Image.asset).url()}
+                                    alt={data.section2.section2Image.alt || 'Process image'}
+                                    className="w-full h-full object-contain object-top object-center opacity-50"
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
+                            </div>
                         ) : null,
                         colSpan: 3,
                         rowSpan: 3,
@@ -311,46 +359,281 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
     return (
         <div className="">
-            {tabs.map((tab) => {
-                const isActive = openTabs.has(tab.id);
-
-                return (
-                    <div
-                        key={tab.id}
+            {isMobile ? (
+                /* Mobile Layout - Individual Tab Containers with Overlap */
+                <div className="">
+                    {/* Section 1: Benchmark */}
+                    <div 
                         className="transition-all duration-500 overflow-hidden"
                         style={{
-                            backgroundColor: tab.color,
-                            color: tab.color === '#F9F7F2' ? '#000' : '#fff',
+                            backgroundColor: '#1B1B1B',
+                            color: '#fff',
                         }}
-                        onClick={() => toggleTab(tab.id)}
+                        onClick={() => toggleTab('benchmark')}
                     >
-                        {/* Grid wrapper: collapsed shows exactly one row height */}
                         <div className={[
-                            "p-[4vh]",
                             "overflow-hidden transition-[max-height] duration-500",
-                            !isActive
-                                ? "max-h-[35vh]"
+                            !openTabs.has('benchmark')
+                                ? "max-h-[16vh]"
                                 : "max-h-[9999px]"
-                        ].join(' ')}
-                        >
-                            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
-
-                                {/* Title as a grid item with custom spans */}
-                                <div className={`${getGridClasses(tab.titleItem)} p-4`}>
-                                    {tab.titleItem.content}
-                                </div>
-
-                                {/* Rest of items */}
-                                {tab.items.map((item) => (
-                                    <div key={item.id} className={`${getGridClasses(item)} p-4`}>
-                                        {item.content}
+                        ].join(' ')}>
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+                                {openTabs.has('benchmark') && (
+                                    <>
+                                        {/* Row 1-2: Section Title */}
+                                        <div 
+                                            className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-center cursor-pointer"
+                                            onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
+                                        >
+                                            <h2 className="text-[8vh] font-bold leading-none">{data.section1.section1Title}</h2>
+                                        </div>
+                                        
+                                        {/* Row 3: Section Body */}
+                                        <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-white p-4">
+                                            <div className="text-[2vh] font-roboto leading-tight">
+                                                <PortableText value={data.section1.section1Body} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 4: Empty */}
+                                        <div className="col-span-4 row-start-4 h-[5vh] bg-[#1B1B1B]"></div>
+                                        
+                                        {/* Row 5: CTA Section */}
+                                        <div className="col-span-4 row-start-5 bg-[#1B1B1B] text-white p-4">
+                                            <a
+                                                href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
+                                                className="transition cursor-pointer"
+                                            >
+                                                <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
+                                                    <span className="text-[3vh] font-graphik">{data.section1.section1CTA ?? 'Get in Touch'}</span>
+                                                </UnderlineOnHoverAnimation>
+                                            </a>
+                                        </div>
+                                        
+                                        {/* Row 6: Empty */}
+                                        <div className="col-span-4 row-start-6 h-[5vh] bg-[#1B1B1B]"></div>
+                                        
+                                        {/* Row 7-10: Section Image (iframe for section 1) */}
+                                        <div className="col-span-4 row-start-7 row-span-4 bg-[#1B1B1B] p-4">
+                                            <iframe 
+                                                src="https://futureworld-analytics-dashboard.vercel.app/"
+                                                className="w-full h-[40vh] rounded"
+                                                title="Future World Analytics Dashboard"
+                                            />
+                                        </div>
+                                    </>
+                                )}
+                                
+                                {/* Section 1 Title when collapsed */}
+                                {!openTabs.has('benchmark') && (
+                                    <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                                        <h2 className="text-[8vh] font-bold leading-none">{data.section1.section1Title}</h2>
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
                     </div>
-                );
-            })}
+
+                    {/* Section 2: Process */}
+                    <div 
+                        className="transition-all duration-500 overflow-hidden -mt-[2vh]"
+                        style={{
+                            backgroundColor: '#DC5A50',
+                            color: '#fff',
+                        }}
+                        onClick={() => toggleTab('process')}
+                    >
+                        <div className={[
+                            "overflow-hidden transition-[max-height] duration-500",
+                            !openTabs.has('process')
+                                ? "max-h-[16vh]"
+                                : "max-h-[9999px]"
+                        ].join(' ')}>
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+                                {openTabs.has('process') && (
+                                    <>
+                                        {/* Row 1: Section 2 Main Title */}
+                                        <div 
+                                            className="col-span-4 row-start-1 bg-[#DC5A50] text-white p-4 flex items-center cursor-pointer"
+                                            onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
+                                        >
+                                            <h2 className="text-[8vh] font-bold leading-none">{data.section2.section2Title}</h2>
+                                        </div>
+                                        
+                                        {/* Row 2: Section Body */}
+                                        <div className="col-span-4 row-start-2 bg-[#DC5A50] text-white p-4">
+                                            <div className="text-[2vh] font-roboto leading-tight">
+                                                <PortableText value={data.section2.section2Body} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 3-7: Section Image (Col 2-4) */}
+                                        <div className="col-span-1 row-start-3 row-span-5 bg-[#DC5A50]"></div>
+                                        <div className="col-start-2 col-span-3 row-start-3 row-span-5 bg-[#DC5A50] p-4">
+                                            {data.section2?.section2Image?.asset && (
+                                                <div className="w-full h-[40vh] relative">
+                                                    <Image
+                                                        src={urlFor(data.section2.section2Image.asset).url()}
+                                                        alt={data.section2.section2Image.alt || 'Process image'}
+                                                        className="w-full h-full object-contain opacity-50"
+                                                        fill
+                                                        sizes="75vw"
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                        
+                                        {/* Row 8: Empty */}
+                                        <div className="col-span-4 row-start-8 h-[5vh] bg-[#DC5A50]"></div>
+                                        
+                                        {/* Row 9: Section Heading1 */}
+                                        <div className="col-span-4 row-start-9 bg-[#DC5A50] text-white p-4">
+                                            <div className="text-[2.5vh] font-roboto leading-tight">
+                                                <PortableText value={data.section2.section2Heading1} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 10: Section Description1 */}
+                                        <div className="col-span-4 row-start-10 bg-[#DC5A50] text-white p-4">
+                                            <div className="text-[2vh] font-roboto leading-tight">
+                                                <PortableText value={data.section2.section2Description1} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 11: Section Heading2 */}
+                                        <div className="col-span-4 row-start-11 bg-[#DC5A50] text-white p-4">
+                                            <div className="text-[2.5vh] font-roboto leading-tight">
+                                                <PortableText value={data.section2.section2Heading2} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 12: Section Description2 */}
+                                        <div className="col-span-4 row-start-12 bg-[#DC5A50] text-white p-4">
+                                            <div className="text-[2vh] font-roboto leading-tight">
+                                                <PortableText value={data.section2.section2Description2} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 13: Section Heading3 */}
+                                        <div className="col-span-4 row-start-13 bg-[#DC5A50] text-white p-4">
+                                            <div className="text-[2.5vh] font-roboto leading-tight">
+                                                <PortableText value={data.section2.section2Heading3} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 14: Section Description3 */}
+                                        <div className="col-span-4 row-start-14 bg-[#DC5A50] text-white p-4">
+                                            <div className="text-[2vh] font-roboto leading-tight">
+                                                <PortableText value={data.section2.section2Description3} />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                
+                                {/* Section 2 Title when collapsed */}
+                                {!openTabs.has('process') && (
+                                    <div className="col-span-4 bg-[#DC5A50] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                                        <h2 className="text-[8vh] font-bold leading-none">{data.section2.section2Title}</h2>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Section 3: Case Studies */}
+                    <div 
+                        className="transition-all duration-500 overflow-hidden -mt-[2vh]"
+                        style={{
+                            backgroundColor: '#F9F7F2',
+                            color: '#000',
+                        }}
+                        onClick={() => toggleTab('case-studies')}
+                    >
+                        <div className={[
+                            "overflow-hidden transition-[max-height] duration-500",
+                            !openTabs.has('case-studies')
+                                ? "max-h-[16vh]"
+                                : "max-h-[9999px]"
+                        ].join(' ')}>
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+                                {openTabs.has('case-studies') && (
+                                    <>
+                                        {/* Row 1: Main Title */}
+                                        <div 
+                                            className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer"
+                                            onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
+                                        >
+                                            <h2 className="text-[8vh] font-bold leading-none">{data.section3.section3Title}</h2>
+                                        </div>
+                                        
+                                        {/* Row 2: Section Body */}
+                                        <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black p-4">
+                                            <div className="text-[2vh] font-roboto leading-tight">
+                                                <PortableText value={data.section3.section3Body} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 3: Responsive Carousel Component */}
+                                        <div className="col-span-4 row-start-3 bg-[#F9F7F2] p-4">
+                                            <ResponsiveGridCarousel items={caseStudies} />
+                                            
+                                        </div>
+                                    </>
+                                )}
+                                
+                                {/* Section 3 Title when collapsed */}
+                                {!openTabs.has('case-studies') && (
+                                    <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                                        <h2 className="text-[8vh] font-bold leading-none">{data.section3.section3Title}</h2>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                /* Desktop/Tablet Layout - Original Grid System */
+                tabs.map((tab) => {
+                    const isActive = openTabs.has(tab.id);
+
+                    return (
+                        <div
+                            key={tab.id}
+                            className="transition-all duration-500 overflow-hidden"
+                            style={{
+                                backgroundColor: tab.color,
+                                color: tab.color === '#F9F7F2' ? '#000' : '#fff',
+                            }}
+                            onClick={() => toggleTab(tab.id)}
+                        >
+                            {/* Grid wrapper: collapsed shows exactly one row height */}
+                            <div className={[
+                                "p-[4vh]",
+                                "overflow-hidden transition-[max-height] duration-500",
+                                !isActive
+                                    ? "max-h-[35vh]"
+                                    : "max-h-[9999px]"
+                            ].join(' ')}
+                            >
+                                <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+
+                                    {/* Title as a grid item with custom spans */}
+                                    <div className={`${getGridClasses(tab.titleItem)} p-4`}>
+                                        {tab.titleItem.content}
+                                    </div>
+
+                                    {/* Rest of items */}
+                                    {tab.items.map((item) => (
+                                        <div key={item.id} className={`${getGridClasses(item)} p-4`}>
+                                            {item.content}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })
+            )}
         </div>
     );
 }

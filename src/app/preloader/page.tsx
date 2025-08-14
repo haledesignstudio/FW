@@ -40,8 +40,6 @@ export default function PreloaderPage() {
           className={`w-[150px] h-[150px] [@media(max-width:768px)]:w-[80px] [@media(max-width:768px)]:h-[80px] object-contain transition-opacity duration-500 ${
             stage === 'fadeOut' ? 'opacity-0' : 'opacity-100'
           }`}
-          priority
-          unoptimized 
         />
       </div>
     </div>

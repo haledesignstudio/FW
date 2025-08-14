@@ -144,14 +144,15 @@ export default function NotFound() {
     createScene();
 
     return () => {
+      const currentMount = mountRef.current;
       if (sceneRef.current) {
         window.removeEventListener("resize", sceneRef.current.handleWindowResize);
         if (sceneRef.current.renderer) {
           sceneRef.current.renderer.dispose();
         }
-        if (mountRef.current && sceneRef.current.renderer.domElement) {
+        if (currentMount && sceneRef.current.renderer.domElement) {
           try {
-            mountRef.current.removeChild(sceneRef.current.renderer.domElement);
+            currentMount.removeChild(sceneRef.current.renderer.domElement);
           } catch {
             // Element might already be removed
           }
@@ -191,7 +192,7 @@ export default function NotFound() {
             <FutureText
               text="404 / You've reached the end of the internet"
               delay={500}
-              speed={25}
+              speed={15}
               className="font-roboto text-white leading-tight"
             />
           </h1>
@@ -209,7 +210,7 @@ export default function NotFound() {
               <FutureText
                 text="The page you're looking for doesn't exist or may have been moved."
                 delay={1800}
-                speed={20}
+                speed={10}
                 className="font-roboto text-gray-300 leading-relaxed"
               />
             </p>
@@ -227,7 +228,7 @@ export default function NotFound() {
             <FutureText
               text="Go back to homepage"
               delay={3200}
-              speed={25}
+              speed={15}
               className="font-roboto text-white underline"
             />
           </Link>
