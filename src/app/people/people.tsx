@@ -385,23 +385,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
                 <div className="w-full h-3/4">
                   <ResponsiveGridCarousel items={sampleCarouselItems} />
                 </div>
-                {/* Carousel sidebar */}
-                <div className="w-full h-1/4 flex flex-col justify-start">
-                  <h6 className="text-[1.8vh] font-bold leading-tight mb-[1vh]">
-                    {data.sections.carouselSidebar?.heading}
-                  </h6>
-                  <p className="text-[1.5vh] leading-tight mb-[1vh]">
-                    {data.sections.carouselSidebar?.text}
-                  </p>
-                  {data.sections.carouselSidebar?.linkText && (
-                    <a 
-                      href="mailto:careers@futureworld.org?subject=I want to work at Futureworld"
-                      className="text-[1.5vh] underline hover:no-underline"
-                    >
-                      {data.sections.carouselSidebar.linkText}
-                    </a>
-                  )}
-                </div>
+                
               </FadeInOnVisible>
             </div>
 

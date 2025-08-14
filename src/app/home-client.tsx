@@ -279,7 +279,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       colSpan: 6,
       rowSpan: 3,
       mobileColSpan: 4,
-      mobileRowSpan: 2,
+      mobileRowSpan: 3,
       landscapeColSpan: 3,
       landscapeRowSpan: 2,
     },

@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PortableText } from '@portabletext/react';
 import type { OurWorkContent } from '@/app/our-work/our-work';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import Link from 'next/link';
+import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
+import { getCaseStudiesForCarousel, type CarouselCaseStudy } from '@/lib/caseStudies';
 
 
 type OurWorkAccordionProps = { data: OurWorkContent };
@@ -19,6 +21,26 @@ type GridItem = {
     mobileRowSpan?: number;
     landscapeColSpan?: number;
     landscapeRowSpan?: number;
+};
+
+// Custom hook to detect responsive layout
+const useResponsiveLayout = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            // Mobile: not tablet landscape and not desktop
+            const isTabletLandscape = window.matchMedia('(max-height: 600px) and (max-width: 768px)').matches;
+            const isDesktop = window.matchMedia('(min-width: 768px) and (min-aspect-ratio: 1/1)').matches;
+            setIsMobile(!isTabletLandscape && !isDesktop);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    return { isMobile };
 };
 
 function getGridClasses(item: GridItem) {
@@ -44,8 +66,25 @@ function getGridClasses(item: GridItem) {
 }
 
 export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
+    const { isMobile } = useResponsiveLayout();
     // Changed from single string to Set of strings to track multiple open tabs
     const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
+    const [caseStudies, setCaseStudies] = useState<CarouselCaseStudy[]>([]);
+
+    // Fetch case studies on component mount
+    useEffect(() => {
+        const loadCaseStudies = async () => {
+            try {
+                const studies = await getCaseStudiesForCarousel();
+                setCaseStudies(studies);
+            } catch (error) {
+                console.error('Error loading case studies:', error);
+                setCaseStudies([]);
+            }
+        };
+
+        loadCaseStudies();
+    }, []);
 
     // Helper function to toggle a tab's open state
     const toggleTab = (tabId: string) => {
@@ -60,6 +99,11 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
         });
     };
 
+    // Back to top function
+    const handleBackToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     const tabs: {
         id: string;
         color: string;
@@ -67,7 +111,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
         items: GridItem[];
     }[] = [
             {
-                id: 'benchmark',
+                id: 'supercharge-tomorrow',
                 color: '#1B1B1B',
                 titleItem: {
                     id: 0,
@@ -79,7 +123,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                     landscapeRowSpan: 1,
                     content: (
                         <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                            onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}>
+                            onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}>
                             {data.accordionSection1.heading}
                         </div>
                     ),
@@ -182,19 +226,16 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
             },
 
             {
-                id: 'process',
+                id: 'case-studies',
                 color: '#F9F7F2',
                 titleItem: {
                     id: 0,
-                    colSpan: 6,
-                    rowSpan: 1,
-                    mobileColSpan: 2,
-                    mobileRowSpan: 1,
-                    landscapeColSpan: 6,
-                    landscapeRowSpan: 1,
+                    colSpan: 6, rowSpan: 1,
+                    mobileColSpan: 2, mobileRowSpan: 1,
+                    landscapeColSpan: 6, landscapeRowSpan: 1,
                     content: (
                         <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                            onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}>
+                            onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}>
                             {data.accordionSection2.heading}
                         </div>
                     ),
@@ -203,10 +244,11 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                     {
                         id: 1,
                         content: (
-
+                            <div className="h-full flex flex-col justify-end">
                                 <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-black">
                                     <PortableText value={data.accordionSection2.body} />
                                 </div>
+                            </div>
                         ),
                         colSpan: 2,
                         rowSpan: 1,
@@ -215,7 +257,6 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                         landscapeColSpan: 3,
                         landscapeRowSpan: 1,
                     },
-
                 ],
             },
 
@@ -224,46 +265,213 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
     return (
         <div className="">
-            {tabs.map((tab) => {
-                const isActive = openTabs.has(tab.id);
-
-                return (
-                    <div
-                        key={tab.id}
+            {isMobile ? (
+                /* Mobile Layout - Individual Tab Containers with Overlap */
+                <div className="">
+                    {/* Section 1: Supercharge Tomorrow */}
+                    <div 
                         className="transition-all duration-500 overflow-hidden"
                         style={{
-                            backgroundColor: tab.color,
-                            color: tab.color === '#F9F7F2' ? '#000' : '#fff',
+                            backgroundColor: '#1B1B1B',
+                            color: '#fff',
                         }}
-                        onClick={() => toggleTab(tab.id)}
+                        onClick={() => toggleTab('supercharge-tomorrow')}
                     >
-                        {/* Grid wrapper: collapsed shows exactly one row height */}
                         <div className={[
-                            "p-[4vh]",
                             "overflow-hidden transition-[max-height] duration-500",
-                            !isActive
-                                ? "max-h-[35vh]"
+                            !openTabs.has('supercharge-tomorrow')
+                                ? "max-h-[16vh]"
                                 : "max-h-[9999px]"
-                        ].join(' ')}
-                        >
-                            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
-
-                                {/* Title as a grid item with custom spans */}
-                                <div className={`${getGridClasses(tab.titleItem)} p-4`}>
-                                    {tab.titleItem.content}
-                                </div>
-
-                                {/* Rest of items */}
-                                {tab.items.map((item) => (
-                                    <div key={item.id} className={`${getGridClasses(item)} p-4`}>
-                                        {item.content}
+                        ].join(' ')}>
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+                                {openTabs.has('supercharge-tomorrow') && (
+                                    <>
+                                        {/* Row 1-2: Section Title */}
+                                        <div 
+                                            className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-center cursor-pointer"
+                                            onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
+                                        >
+                                            <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection1.heading}</h2>
+                                        </div>
+                                        
+                                        {/* Row 3: Section Body */}
+                                        <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-white p-4">
+                                            <div className="text-[2vh] font-roboto leading-tight">
+                                                <PortableText value={data.accordionSection1.body} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Rows 4-8: Container for overlapping content */}
+                                        <div className="col-span-4 row-start-4 row-span-5 bg-[#1B1B1B] relative">
+                                            {/* Background Image - Full container */}
+                                            {data.accordionSection1.mainImage.asset && (
+                                                <div className="absolute inset-0">
+                                                    <img
+                                                        src={urlFor(data.accordionSection1.mainImage.asset).url()}
+                                                        alt={'Main image'}
+                                                        className="w-[75%] h-full object-cover opacity-50 ml-auto"
+                                                    />
+                                                </div>
+                                            )}
+                                            
+                                            {/* Content Grid - Overlaid on top */}
+                                            <div className="relative z-10 grid grid-cols-2 h-full">
+                                                {/* Top Left: Brand Image */}
+                                                <div className="p-4 flex items-start">
+                                                    {data.accordionSection1.brandImage.asset && (
+                                                        <img
+                                                            src={urlFor(data.accordionSection1.brandImage.asset).url()}
+                                                            alt={'Brand image'}
+                                                            className="w-full h-auto object-contain max-h-[15vh]"
+                                                        />
+                                                    )}
+                                                </div>
+                                                
+                                                {/* Top Right: Empty space */}
+                                                <div className="p-4"></div>
+                                                
+                                                {/* Bottom Left: Empty space */}
+                                                <div className="p-4"></div>
+                                                
+                                                {/* Bottom Right: Empty space */}
+                                                <div className="p-4"></div>
+                                                
+                                                {/* Bottom Left (spans 2 cols): CTA Button */}
+                                                <div className="col-span-2 p-4 flex items-end justify-start">
+                                                    <Link href="/supercharge-tomorrow" className="text-[3vh] font-graphik">
+                                                        <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
+                                                            {data.accordionSection1.cta ?? 'Get in Touch'}
+                                                        </UnderlineOnHoverAnimation>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                
+                                {/* Section 1 Title when collapsed */}
+                                {!openTabs.has('supercharge-tomorrow') && (
+                                    <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                                        <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection1.heading}</h2>
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
                     </div>
-                );
-            })}
+
+                    {/* Section 2: Case Studies - Same as Home Page Section 3 */}
+                    <div 
+                        className="transition-all duration-500 overflow-hidden -mt-[2vh]"
+                        style={{
+                            backgroundColor: '#F9F7F2',
+                            color: '#000',
+                        }}
+                        onClick={() => toggleTab('case-studies')}
+                    >
+                        <div className={[
+                            "overflow-hidden transition-[max-height] duration-500",
+                            !openTabs.has('case-studies')
+                                ? "max-h-[16vh]"
+                                : "max-h-[9999px]"
+                        ].join(' ')}>
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+                                {openTabs.has('case-studies') && (
+                                    <>
+                                        {/* Row 1: Main Title */}
+                                        <div 
+                                            className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer"
+                                            onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
+                                        >
+                                            <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection2.heading}</h2>
+                                        </div>
+                                        
+                                        {/* Row 2: Section Body */}
+                                        <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black p-4">
+                                            <div className="text-[2vh] font-roboto leading-tight">
+                                                <PortableText value={data.accordionSection2.body} />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Row 3: Responsive Carousel Component */}
+                                        <div className="col-span-4 row-start-3 bg-[#F9F7F2] p-4">
+                                            <ResponsiveGridCarousel items={caseStudies} />
+                                        </div>
+                                    </>
+                                )}
+                                
+                                {/* Section 2 Title when collapsed */}
+                                {!openTabs.has('case-studies') && (
+                                    <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                                        <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection2.heading}</h2>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                /* Desktop Layout - Original Grid System */
+                tabs.map((tab) => {
+                    const isActive = openTabs.has(tab.id);
+
+                    return (
+                        <div
+                            key={tab.id}
+                            className="transition-all duration-500 overflow-hidden"
+                            style={{
+                                backgroundColor: tab.color,
+                                color: tab.color === '#F9F7F2' ? '#000' : '#fff',
+                            }}
+                            onClick={() => toggleTab(tab.id)}
+                        >
+                            {/* Grid wrapper: collapsed shows exactly one row height */}
+                            <div className={[
+                                "p-[4vh]",
+                                "overflow-hidden transition-[max-height] duration-500",
+                                !isActive
+                                    ? "max-h-[35vh]"
+                                    : "max-h-[9999px]"
+                            ].join(' ')}
+                            >
+                                <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+
+                                    {/* Title as a grid item with custom spans */}
+                                    <div className={`${getGridClasses(tab.titleItem)} p-4`}>
+                                        {tab.titleItem.content}
+                                    </div>
+
+                                    {/* Rest of items */}
+                                    {tab.items.map((item) => (
+                                        <div key={item.id} className={`${getGridClasses(item)} p-4`}>
+                                            {item.content}
+                                        </div>
+                                    ))}
+
+                                    {/* Section 3: Case Studies */}
+                                    {tab.id === 'case-studies' && isActive && (
+                                        <>
+                                            {/* Row 3-6: Responsive Carousel Component - Extended to accommodate button rows */}
+                                            <div className="col-span-6 row-start-3 row-span-4 bg-[#F9F7F2] p-4">
+                                                <ResponsiveGridCarousel items={caseStudies} />
+                                                
+                                                {/* Back to Top Button */}
+                                                <div className="col-start-6 col-span-1 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+                                                    <span className="underline text-[2vh] flex items-center gap-1">
+                                                        Back to top
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                            <path d="M12 19V5M5 12l7-7 7 7" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })
+            )}
         </div>
     );
 }
