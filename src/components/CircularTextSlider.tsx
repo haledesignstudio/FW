@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { PortableText } from '@portabletext/react';
 import { PortableTextBlock } from '@portabletext/types';
-import Image from 'next/image';
 
 interface Speaker {
   _id: string;
@@ -41,7 +40,7 @@ export default function CircularTextSlider({ speakers }: CircularTextSliderProps
     return 600; // fallback
   };
 
-  const handleWheel = (e: WheelEvent) => {
+  const handleWheel = useCallback((e: WheelEvent) => {
     if (!containerRef.current) return;
 
     const bounds = containerRef.current.getBoundingClientRect();
@@ -53,6 +52,8 @@ export default function CircularTextSlider({ speakers }: CircularTextSliderProps
     const deltaY = e.clientY - centerY;
     const distanceFromCenter = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
+    // Get current circle radius
+    const circleRadius = getCircleRadius();
     // Reduce scrollable area to 60% of the visual circle radius
     const scrollableRadius = circleRadius * 0.6;
 
@@ -61,12 +62,12 @@ export default function CircularTextSlider({ speakers }: CircularTextSliderProps
       e.preventDefault();
       setTargetRotation(prev => prev + e.deltaY * 0.1);
     }
-  };
+  }, []);
 
   useEffect(() => {
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => window.removeEventListener('wheel', handleWheel);
-  }, []);
+  }, [handleWheel]);
 
   useEffect(() => {
     const gallery = galleryRef.current;
@@ -194,14 +195,10 @@ export default function CircularTextSlider({ speakers }: CircularTextSliderProps
         {/* Speaker info panel is now outside the overflow:hidden container */}
         {hoveredSpeaker && (
           <div className={`speaker-info-panel visible`}>
-            <Image
+            <img
               src={hoveredSpeaker.image.asset}
               alt={hoveredSpeaker.image.alt || hoveredSpeaker.name}
               className="speaker-image"
-              width={400}
-              height={500}
-              priority
-              unoptimized={false}
             />
             <div className="speaker-details">
               <h3>{hoveredSpeaker.name}</h3>

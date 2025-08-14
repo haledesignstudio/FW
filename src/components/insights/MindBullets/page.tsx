@@ -93,7 +93,7 @@ export default function Mindbullets({ title, subheading, podcasts }: Props): Gri
       <ResponsiveGridCarousel items={carouselItems} />
       </FadeInOnVisible>,
       colSpan: 6,
-      rowSpan: 2,
+      rowSpan: 3,
     },
 
   ];

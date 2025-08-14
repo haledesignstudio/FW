@@ -16,6 +16,7 @@
     "@sanity/presentation": "^2.0.0",
     "@sanity/vision": "^3.95.0",
     "@sanity/visual-editing": "^3.0.2",
+    "@splidejs/react-splide": "^0.7.12",
     "@tailwindcss/typography": "^0.5.16",
     "@types/three": "^0.177.0",
     "clsx": "^2.1.1",

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 interface FutureTextProps {
   text: string;
@@ -30,7 +30,7 @@ export function FutureText({
     return chars[Math.floor(Math.random() * chars.length)];
   };
 
-  const animateText = async () => {
+  const animateText = useCallback(async () => {
     setIsAnimating(true);
     const targetText = text;
     let currentText = '';
@@ -59,7 +59,7 @@ export function FutureText({
     }
 
     setIsAnimating(false);
-  };
+  }, [text, speed, onUpdate]);
 
   useEffect(() => {
     if (triggerOnVisible && elementRef.current) {
@@ -86,8 +86,9 @@ export function FutureText({
 
       return () => {
         observer.disconnect();
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
+        const currentInterval = intervalRef.current;
+        if (currentInterval) {
+          clearInterval(currentInterval);
         }
       };
     } else if (!triggerOnVisible) {
@@ -97,12 +98,13 @@ export function FutureText({
 
       return () => {
         clearTimeout(timer);
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
+        const currentInterval = intervalRef.current;
+        if (currentInterval) {
+          clearInterval(currentInterval);
         }
       };
     }
-  }, [text, delay, speed, triggerOnVisible, hasTriggered]);
+  }, [text, delay, speed, triggerOnVisible, hasTriggered, animateText]);
 
   return (
     <span ref={elementRef} className={`${className} ${isAnimating ? 'text-black' : ''}`}>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
@@ -136,16 +137,24 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             </div>
 
             {/* Row 3-4: Image (cols 1-4) */}
-            <div className="col-span-4 row-span-2 flex items-center justify-center">
+            <div className="col-span-4 row-span-2 flex items-center justify-center relative">
               <FadeInOnVisible>
                 {data.mainImage?.asset ? (
-                  <img
+                  <Image
                     src={urlFor(data.mainImage).url()}
                     alt={data.mainImage?.alt || 'Contact'}
                     className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 ) : (
-                  <img src="/placeholder-image.png" alt="Contact" className="w-full h-full object-cover" />
+                  <Image 
+                    src="/placeholder-image.png" 
+                    alt="Contact" 
+                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 )}
               </FadeInOnVisible>
             </div>
@@ -324,15 +333,23 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             <h2 className="text-[2.5vh] font-bold">{data.contactFormSubheading || 'Get in Touch'}</h2>
           </div>
           {/* ROWS 3-5: Image (col-span-6) */}
-          <div className="col-span-6 row-span-3 bg-[#F9F7F2] flex items-center justify-center">
+          <div className="col-span-6 row-span-3 bg-[#F9F7F2] flex items-center justify-center relative">
             {data.mainImage?.asset ? (
-              <img
+              <Image
                 src={urlFor(data.mainImage).url()}
                 alt={data.mainImage?.alt || 'Contact'}
                 className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             ) : (
-              <img src="/placeholder-image.png" alt="Contact" className="w-full h-full object-cover" />
+              <Image 
+                src="/placeholder-image.png" 
+                alt="Contact" 
+                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             )}
           </div>
           {/* ROW 6: Text (col-span-2) */}

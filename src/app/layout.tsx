@@ -25,14 +25,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isEnabled } = await draftMode();
+  
   return (
     <html lang="en"  className="scroll-smooth">
-      <body
+      <body suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <PreloaderRedirect />
         {children}
-        {(await draftMode()).isEnabled && (
+        {isEnabled && (
           <VisualEditing trailingSlash={false} />
         )}
       </body>

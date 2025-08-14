@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { PortableText } from '@portabletext/react';
 import type { HomePageContent } from '@/app/home-client';
 import { urlFor } from '@/sanity/lib/image';
@@ -100,11 +101,15 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 2,
                         content: data.section2?.section2Image?.asset ? (
-                            <img
-                                src={urlFor(data.section2.section2Image.asset).url()}
-                                alt={data.section2.section2Image.alt || 'Process image'}
-                                className="w-full h-full object-cover rounded"
-                            />
+                            <div className="w-full h-full relative">
+                                <Image
+                                    src={urlFor(data.section2.section2Image.asset).url()}
+                                    alt={data.section2.section2Image.alt || 'Process image'}
+                                    className="w-full h-full object-cover rounded"
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
+                            </div>
                         ) : null,
                         colSpan: 3,
                         rowSpan: 2,
@@ -199,11 +204,15 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 3,
                         content: data.section2?.section2Image?.asset ? (
-                            <img
-                                src={urlFor(data.section2.section2Image.asset).url()}
-                                alt={data.section2.section2Image.alt || 'Process image'}
-                                className="w-full h-full object-contain object-top object-center opacity-50"
-                            />
+                            <div className="w-full h-full relative">
+                                <Image
+                                    src={urlFor(data.section2.section2Image.asset).url()}
+                                    alt={data.section2.section2Image.alt || 'Process image'}
+                                    className="w-full h-full object-contain object-top object-center opacity-50"
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
+                            </div>
                         ) : null,
                         colSpan: 3,
                         rowSpan: 3,
