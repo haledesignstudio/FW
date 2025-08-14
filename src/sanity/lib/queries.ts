@@ -573,17 +573,92 @@ export const topicQuery = defineQuery(`
 `);
 
 export const mindbulletsQuery = defineQuery(`
-  *[_type == "mindbullet"] | order(datePublished desc) {
+  *[_type == "mindbullet"] | order(publishedAt desc) {
     _id,
     title,
-    content,
-    dateline,
-    datePublished,
-    image {
+    "slug": slug.current,
+    mainImage {
       asset,
       alt
+    },
+    publishedAt,
+    dateline,
+    byLine,
+    body,
+    RelatedStories[] {
+      title,
+      link
     }
   }
 `);
 
+export const mindbulletsPageQuery = defineQuery(`
+  *[_type == "mindbulletsPage"][0] {
+    title,
+    subheading
+  }
+`);
+
+export const keynotesPageQuery = defineQuery(`
+  *[_type == "keynotesPage"][0] {
+    title,
+    topicSection {
+      topicSectionTitle,
+      topicSectionSubtitle,
+      topicContentText,
+      topicCTA1,
+      topicMail1,
+      topicCTA2
+    },
+    speakerSection {
+      speakerSectionTitle,
+      speakerSectionSubtitle,
+      speakerContentText,
+      speakerCTA1,
+      speakerMail1,
+      speakerCTA2
+    }
+  }
+`);
+
+export const edgePageQuery = defineQuery(`
+  *[_type == "edgePage"][0] {
+    title,
+    subheading,
+    contentText
+  }
+`);
+
+export const podcastPageQuery = defineQuery(`
+  *[_type == "podcastPage"][0] {
+    title,
+    subheading
+  }
+`);
+
+export const corporatePageQuery = defineQuery(`
+  *[_type == "corporatePage"][0] {
+    title,
+    subheading,
+    contentText,
+    CTA,
+    Mail
+  }
+`);
+
+export const shareholderPageQuery = defineQuery(`
+  *[_type == "shareholderPage"][0] {
+    title,
+    subheading,
+    contentText,
+    CTA1,
+    Mail1,
+    iframeSource,
+    IQ_heading,
+    IQ_subheading,
+    IQ_context,
+    CTA2,
+    Mail2
+  }
+`);
 
