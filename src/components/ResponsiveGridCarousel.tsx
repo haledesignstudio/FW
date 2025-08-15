@@ -132,7 +132,7 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                 />
                             </div>
                             {/* Text Component: Row 3-5, Col 1-4 */}
-                            <div className="col-span-4 row-span-2 row-start-3 bg-[#F9F7F2] relative">
+                            <div className="col-span-4 row-span-1 row-start-3 bg-[#F9F7F2] relative">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={`mobile-content-${paddedItems[0]?.id}`}
@@ -158,7 +158,7 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                 </AnimatePresence>
                             </div>
                             {/* Row 6: Read More button (col 1), empty (col 2-3), Next Slide button (col 4) */}
-                            <div className="col-span-1 row-start-5 bg-[#F9F7F2] flex items-center">
+                            <div className="col-span-1 row-start-4 bg-[#F9F7F2] flex items-center">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={`mobile-button-${paddedItems[0]?.id}`}
@@ -181,9 +181,9 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                     </motion.div>
                                 </AnimatePresence>
                             </div>
-                            <div className="col-span-1 row-start-5 bg-[#F9F7F2]"></div>
-                            <div className="col-span-1 row-start-5 bg-[#F9F7F2]"></div>
-                            <div className="col-span-1 row-start-5 bg-[#F9F7F2] flex items-center justify-end">
+                            <div className="col-span-1 row-start-4 bg-[#F9F7F2]"></div>
+                            <div className="col-span-1 row-start-4 bg-[#F9F7F2]"></div>
+                            <div className="col-span-1 row-start-4 bg-[#F9F7F2] flex items-center justify-end">
                                 <button
                                     onClick={(e) => { e.stopPropagation(); next(); }}
                                     disabled={isTransitioning}
@@ -267,7 +267,7 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                 </div>
 
                                 {/* Text Container - stays in position, content crossfades */}
-                                <div className={`row-start-2 row-span-2 ${colSpan} bg-[#F9F7F2] relative`}>
+                                <div className={`row-start-2 row-span-1 ${colSpan} bg-[#F9F7F2] relative`}>
                                     {/* Stretching effect for main slide text */}
                                     {index === 0 && (
                                         <motion.div
@@ -323,7 +323,7 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                 </div>
 
                                 {/* Read More Button Container - positioned in next row */}
-                                <div className={`row-start-4 ${colSpan} bg-[#F9F7F2] relative`}>
+                                <div className={`row-start-3 ${colSpan} bg-[#F9F7F2] relative`}>
                                     <AnimatePresence>
                                         <motion.div 
                                             key={`button-${item.id}`}

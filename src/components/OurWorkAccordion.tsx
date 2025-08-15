@@ -135,9 +135,11 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                     {
                         id: 1,
                         content: (
-                            <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
-                                <PortableText value={data.accordionSection1.body} />
-                            </div>
+                            <FadeInOnVisible>
+                                <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
+                                    <PortableText value={data.accordionSection1.body} />
+                                </div>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 2,
                         rowSpan: 1,
@@ -205,15 +207,16 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                     {
                         id: 6,
                         content: (
+                            <FadeInOnVisible>
+                                <Link href="/supercharge-tomorrow" className="h-full flex flex-col justify-end">
+                                    <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
 
-                            <Link href="/supercharge-tomorrow" className="h-full flex flex-col justify-end">
-                                <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
-
-                                        <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
-                                            {data.accordionSection1.cta?? 'Get in Touch'}
-                                        </UnderlineOnHoverAnimation>
-                                </div>
-                            </Link>
+                                            <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
+                                                {data.accordionSection1.cta?? 'Get in Touch'}
+                                            </UnderlineOnHoverAnimation>
+                                    </div>
+                                </Link>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 1,
                         rowSpan: 1,
@@ -237,21 +240,25 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                     mobileColSpan: 2, mobileRowSpan: 1,
                     landscapeColSpan: 6, landscapeRowSpan: 1,
                     content: (
-                        <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                            onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}>
-                            {data.accordionSection2.heading}
-                        </div>
+                        <FadeInOnVisible>
+                            <div className="cursor-pointer text-[20vh] font-bold leading-none"
+                                onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}>
+                                {data.accordionSection2.heading}
+                            </div>
+                        </FadeInOnVisible>
                     ),
                 },
                 items: [
                     {
                         id: 1,
                         content: (
-                            <div className="h-full flex flex-col justify-end">
-                                <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-black">
-                                    <PortableText value={data.accordionSection2.body} />
+                            <FadeInOnVisible>
+                                <div className="h-full flex flex-col justify-end">
+                                    <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-black">
+                                        <PortableText value={data.accordionSection2.body} />
+                                    </div>
                                 </div>
-                            </div>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 2,
                         rowSpan: 1,
