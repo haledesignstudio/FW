@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableTextBlock } from '@portabletext/react';
@@ -29,6 +29,16 @@ export type WhatWeDoAccordionItem = {
     prompt: PortableTextBlock[];
     entries: [WhatWeDoEntry, WhatWeDoEntry, WhatWeDoEntry];
 };
+function useIsMobile(breakpoint = 768) {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < breakpoint);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, [breakpoint]);
+    return isMobile;
+}
 
 /**
  * Represents the `accordion` object.
@@ -165,8 +175,93 @@ const ptComponents: PortableTextComponents = {
 
 
 export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
+    const isMobile = useIsMobile();
+    const [openTab, setOpenTab] = useState<number | null>(null);
+
     const [active, setActive] = useState<Active>(null);
     const toggle = (id: Active) => setActive(prev => (prev === id ? null : id));
+
+    if (isMobile) {
+        // Mobile vertical accordion layout
+        return (
+            <div className="w-screen -mx-[calc((100vw-100%)/2)] px-0">
+                {data.accordion.items.map((item, idx) => {
+                    const isOpen = openTab === idx;
+                    // Colors
+                    const bg = idx === 0 ? '#232323' : idx === 1 ? '#DC5A50' : '#F9F7F2';
+                    const fg = idx === 2 ? '#232323' : '#F9F7F2';
+                    return (
+                        <div
+                            key={idx}
+                            className={`w-full px-0 mx-0`}
+                            style={{ background: bg, color: fg }}
+                            onClick={() => setOpenTab(isOpen ? null : idx)}
+                        >
+                            {/* Closed state: only row 1 visible, click to open */}
+                            {!isOpen && (
+                                <div className="grid grid-cols-4 min-h-[7vh] items-center px-3 py-2 w-full">
+                                    <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik leading-tight">{idx + 1}</div>
+                                    <div className="col-span-3 row-start-1 row-span-1 text-right text-[5vh] font-graphik leading-tight truncate">{item.heading}</div>
+                                </div>
+                            )}
+                            {/* Open state: full vertical accordion */}
+                            {isOpen && (
+                                <div className="grid grid-cols-4 gap-y-1  items-center auto-rows-[minmax(50px,auto)] px-3 py-2 w-full">
+                                    
+                                    {/* Row 5: col 1: number, col 2-4: subheading (first word in row 5, rest in row 6) */}
+                                    <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik leading-tight">{idx + 1}</div>
+                                    {/* Subheading split: first word row 5, rest row 6 */}
+                                    {(() => {
+                                        const subheading = item.subheading && item.subheading.length > 0 ? item.subheading[0].children?.[0]?.text || '' : '';
+                                        const [firstWord, ...rest] = subheading.split(' ');
+                                        return <>
+                                            <div className="col-span-3 row-start-1 row-span-1 text-right text-[5vh] font-graphik leading-tight">{firstWord}</div>
+                                            <div className="col-start-2 row-start-2 row-span-1 col-span-3 text-right text-[2vh] font-graphik leading-tight">{rest.join(' ')}</div>
+                                        </>;
+                                    })()}
+                                    {/* Row 7-8: Image (col 1-4) */}
+                                    {item.image?.asset && (
+                                        <div className="col-span-4 row-start-3 row-span-2 flex justify-center items-center">
+                                            <img
+                                                src={urlFor(item.image.asset).url()}
+                                                alt="Process image"
+                                                className="w-full max-h-[160px] h-full object-cover"
+                                                style={{ aspectRatio: '16/9' }}
+                                            />
+                                        </div>
+                                    )}
+                                    {/* Row 9-11: Description (col 1-4) */}
+                                    <div className="col-span-4 text-[2vh] font-roboto leading-tight mt-2 pb-4">
+                                        <PortableText value={item.description} components={ptComponents} />
+                                    </div>
+                                    {/* Row 12: Empty */}
+                                    <div className="col-span-4 h-[1vh]"></div>
+                                    {/* Row 13: col 1-2: prompt, col 3-4: entry 0 */}
+                                    <div className="col-span-2 text-[2vh] font-bold leading-tight">
+                                        <PortableText value={item.prompt} />
+                                    </div>
+                                    <div className="col-span-2">
+                                        <div className="font-bold text-[2vh] pb-4"><PortableText value={item.entries[0].title} /></div>
+                                        <div className="text-[1.5vh] pb-4"><PortableText value={item.entries[0].body} /></div>
+                                    </div>
+                                    {/* Row 15-16: col 3-4: entry 1 */}
+                                    <div className="col-start-3 col-span-2">
+                                        <div className="font-bold text-[2vh] pb-4"><PortableText value={item.entries[1].title} /></div>
+                                        <div className="text-[1.5vh] pb-4"><PortableText value={item.entries[1].body} /></div>
+                                    </div>
+                                    {/* Row 17-18: col 3-4: entry 2 */}
+                                    <div className="col-start-3 col-span-2">
+                                        <div className="font-bold text-[2vh] pb-4"><PortableText value={item.entries[2].title} /></div>
+                                        <div className="text-[1.5vh] pb-4"><PortableText value={item.entries[2].body} /></div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
 
     // ---- Section definitions with unique items per tab ----
     const sections = [
