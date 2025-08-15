@@ -5,6 +5,7 @@ import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableTextBlock } from '@portabletext/react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
+import FadeInOnVisible from './FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
 
 export type WhatWeDoEntry = {
@@ -295,12 +296,14 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 2,
                     content: (
-                        <MainTitleAnimation
-                            text={data.accordion.heading}
-                            typeSpeed={40}
-                            delay={500}
-                            className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-[clamp(4vw,10vh,5vw)] text-balance text-[#232323]"
-                        />
+                        <FadeInOnVisible>
+                            <MainTitleAnimation
+                                text={data.accordion.heading}
+                                typeSpeed={40}
+                                delay={500}
+                                className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-[clamp(4vw,10vh,5vw)] text-balance text-[#232323]"
+                            />
+                        </FadeInOnVisible>
 
                     ),
                     colSpan: 2,

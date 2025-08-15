@@ -8,6 +8,7 @@ import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import Link from 'next/link';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import { getCaseStudiesForCarousel, type CarouselCaseStudy } from '@/lib/caseStudies';
+import FadeInOnVisible from './FadeInOnVisible';
 
 
 type OurWorkAccordionProps = { data: OurWorkContent };
@@ -122,10 +123,12 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                     landscapeColSpan: 6,
                     landscapeRowSpan: 1,
                     content: (
-                        <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                            onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}>
-                            {data.accordionSection1.heading}
-                        </div>
+                        <FadeInOnVisible>
+                            <div className="cursor-pointer text-[20vh] font-bold leading-none"
+                                onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}>
+                                {data.accordionSection1.heading}
+                            </div>
+                        </FadeInOnVisible>
                     ),
                 },
                 items: [

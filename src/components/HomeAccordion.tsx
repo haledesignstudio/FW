@@ -8,6 +8,7 @@ import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import { getCaseStudiesForCarousel, type CarouselCaseStudy } from '@/lib/caseStudies';
+import FadeInOnVisible from './FadeInOnVisible';
 
 type HomeAccordionProps = { data: HomePageContent };
 
@@ -116,19 +117,23 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     landscapeColSpan: 6,
                     landscapeRowSpan: 1,
                     content: (
-                        <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                            onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}>
-                            {data.section1.section1Title}
-                        </div>
+                        <FadeInOnVisible>
+                            <div className="cursor-pointer text-[20vh] font-bold leading-none"
+                                onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}>
+                                {data.section1.section1Title}
+                            </div>
+                        </FadeInOnVisible>
                     ),
                 },
                 items: [
                     {
                         id: 1,
                         content: (
-                            <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
-                                <PortableText value={data.section1.section1Body} />
-                            </div>
+                            <FadeInOnVisible>
+                                <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
+                                    <PortableText value={data.section1.section1Body} />
+                                </div>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 3,
                         rowSpan: 1,
@@ -171,18 +176,20 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 4,
                         content: (
-                            <div className="h-full flex flex-col justify-end">
-                                <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
-                                    <a
-                                        href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
-                                        className="transition cursor-pointer"
-                                    >
-                                        <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
-                                            {data.section1.section1CTA ?? 'Get in Touch'}
-                                        </UnderlineOnHoverAnimation>
-                                    </a>
+                            <FadeInOnVisible>
+                                <div className="h-full flex flex-col justify-end">
+                                    <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
+                                        <a
+                                            href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
+                                            className="transition cursor-pointer"
+                                        >
+                                            <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
+                                                {data.section1.section1CTA ?? 'Get in Touch'}
+                                            </UnderlineOnHoverAnimation>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 2,
                         rowSpan: 1,
@@ -206,21 +213,25 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     landscapeColSpan: 6,
                     landscapeRowSpan: 1,
                     content: (
-                        <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                            onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}>
-                            {data.section2.section2Title}
-                        </div>
+                        <FadeInOnVisible>
+                            <div className="cursor-pointer text-[20vh] font-bold leading-none"
+                                onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}>
+                                {data.section2.section2Title}
+                            </div>
+                        </FadeInOnVisible>
                     ),
                 },
                 items: [
                     {
                         id: 1,
                         content: (
-                            <div className="h-full flex flex-col justify-end">
-                                <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
-                                    <PortableText value={data.section2.section2Body} />
+                            <FadeInOnVisible>
+                                <div className="h-full flex flex-col justify-end">
+                                    <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
+                                        <PortableText value={data.section2.section2Body} />
+                                    </div>
                                 </div>
-                            </div>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 2,
                         rowSpan: 1,
@@ -263,14 +274,16 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 4,
                         content: (
-                            <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
-                                <div className="text-[2vh] font-roboto leading-tight text-white">
-                                    <PortableText value={data.section2.section2Heading1} />
+                            <FadeInOnVisible>
+                                <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
+                                    <div className="text-[2vh] font-roboto leading-tight text-white">
+                                        <PortableText value={data.section2.section2Heading1} />
+                                    </div>
+                                    <div className="text-[1.75vh] font-roboto leading-tight text-white">
+                                        <PortableText value={data.section2.section2Description1} />
+                                    </div>
                                 </div>
-                                <div className="text-[1.75vh] font-roboto leading-tight text-white">
-                                    <PortableText value={data.section2.section2Description1} />
-                                </div>
-                            </div>
+                            </FadeInOnVisible>
                         ),
 
                         colSpan: 1,
@@ -283,14 +296,16 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 5,
                         content: (
-                            <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
-                                <div className="text-[2vh] font-roboto leading-tight text-white">
-                                    <PortableText value={data.section2.section2Heading2} />
+                            <FadeInOnVisible>
+                                <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
+                                    <div className="text-[2vh] font-roboto leading-tight text-white">
+                                        <PortableText value={data.section2.section2Heading2} />
+                                    </div>
+                                    <div className="text-[1.75vh] font-roboto leading-tight text-white">
+                                        <PortableText value={data.section2.section2Description2} />
+                                    </div>
                                 </div>
-                                <div className="text-[1.75vh] font-roboto leading-tight text-white">
-                                    <PortableText value={data.section2.section2Description2} />
-                                </div>
-                            </div>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 1,
                         rowSpan: 2,
@@ -302,14 +317,16 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 6,
                         content: (
-                            <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
-                                <div className="text-[2vh] font-roboto leading-tight text-white">
-                                    <PortableText value={data.section2.section2Heading3} />
+                            <FadeInOnVisible>
+                                <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
+                                    <div className="text-[2vh] font-roboto leading-tight text-white">
+                                        <PortableText value={data.section2.section2Heading3} />
+                                    </div>
+                                    <div className="text-[1.75vh] font-roboto leading-tight text-white">
+                                        <PortableText value={data.section2.section2Description3} />
+                                    </div>
                                 </div>
-                                <div className="text-[1.75vh] font-roboto leading-tight text-white">
-                                    <PortableText value={data.section2.section2Description3} />
-                                </div>
-                            </div>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 1,
                         rowSpan: 2,
@@ -330,21 +347,25 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     mobileColSpan: 2, mobileRowSpan: 1,
                     landscapeColSpan: 6, landscapeRowSpan: 1,
                     content: (
-                        <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                            onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}>
-                            {data.section3.section3Title}
-                        </div>
+                        <FadeInOnVisible>
+                            <div className="cursor-pointer text-[20vh] font-bold leading-none"
+                                onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}>
+                                {data.section3.section3Title}
+                            </div>
+                        </FadeInOnVisible>
                     ),
                 },
                 items: [
                     {
                         id: 1,
                         content: (
-                            <div className="h-full flex flex-col justify-end">
-                                <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-black">
-                                    <PortableText value={data.section3.section3Body} />
+                            <FadeInOnVisible>
+                                <div className="h-full flex flex-col justify-end">
+                                    <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-black">
+                                        <PortableText value={data.section3.section3Body} />
+                                    </div>
                                 </div>
-                            </div>
+                            </FadeInOnVisible>
                         ),
                         colSpan: 2,
                         rowSpan: 1,
