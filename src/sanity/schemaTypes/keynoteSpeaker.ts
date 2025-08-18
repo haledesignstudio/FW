@@ -68,6 +68,12 @@ export default defineType({
       type: 'string',
       description: 'Subject line for the Book Keynote mailto link',
     }),
+    defineField({
+      name: 'email',
+      title: 'Email',
+      type: 'string',
+      description: 'Email address to link to',
+    }),
   ],
   preview: {
     select: {

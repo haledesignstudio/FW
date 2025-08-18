@@ -158,21 +158,62 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = KeynoteSpeaker | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/app/keynotes/[slug]/page.tsx
+// Variable: speakerBySlugQuery
+// Query: *[_type == "keynoteSpeaker" && slug.current == $slug][0]{    _id,    name,    "slug": slug.current,    bio,    image { asset, alt },    domainsOfExcellence,    socialLinks,    mailtoSubject  }
+export type SpeakerBySlugQueryResult = {
+  _id: string;
+  name: string | null;
+  slug: null;
+  bio: string | null;
+  image: {
+    asset: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    alt: string | null;
+  } | null;
+  domainsOfExcellence: null;
+  socialLinks: null;
+  mailtoSubject: null;
+} | null;
+
 // Source: ./src/app/mindbullets/[slug]/page.tsx
 // Variable: mindbulletBySlugQuery
 // Query: *[_type == "mindbullet" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    mainImage { asset, alt },    publishedAt,    dateline,    byLine,    body,    RelatedStories[] { title, link }  }
 export type MindbulletBySlugQueryResult = null;
+
+// Source: ./src/app/the-edge/[slug]/page.tsx
+// Variable: scenarioBySlugQuery
+// Query: *[_type == "provocativeScenario" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    subheading,    contentText,    "pdfMobileUrl": pdfMobile.asset->url,    "pdfDesktopUrl": pdfDesktop.asset->url,    "hasAudio": hasAudio == "yes",    audioDescription,    "audioFileUrl": audioFile.asset->url,    "articleContents": articleContents[]{      title,      description,      "image": {        "url": image.asset->url,        "alt": image.alt      }    }  }
+export type ScenarioBySlugQueryResult = null;
+
+// Source: ./src/app/the-edge/[slug]/pdf/route.ts
+// Variable: scenarioQuery
+// Query: *[_type == "provocativeScenario" && slug.current == $slug][0]{    title,    "pdfMobileUrl": pdfMobile.asset->url,    "pdfDesktopUrl": pdfDesktop.asset->url  }
+export type ScenarioQueryResult = null;
 
 // Source: ./src/components/mindbulletsArchive.tsx
 // Variable: mindbulletsQuery
 // Query: *[_type == "mindbullet"] | order(publishedAt desc) {    _id,    title,    "slug": slug.current,    mainImage {      asset,      alt    },    publishedAt,    dateline,    byLine  }
 export type MindbulletsQueryResult = Array<never>;
 
+// Source: ./src/lib/caseStudies.ts
+// Variable: CASE_STUDIES_QUERY
+// Query: *[_type == "caseStudy"] | order(_createdAt desc) {    _id,    title,    subheading,    mainImage,    slug  }
+export type CASE_STUDIES_QUERYResult = Array<never>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "\n  *[_type == \"keynoteSpeaker\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    bio,\n    image { asset, alt },\n    domainsOfExcellence,\n    socialLinks,\n    mailtoSubject\n  }\n": SpeakerBySlugQueryResult;
     "\n  *[_type == \"mindbullet\" && slug.current == $slug][0]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    mainImage { asset, alt },\n    publishedAt,\n    dateline,\n    byLine,\n    body,\n    RelatedStories[] { title, link }\n  }\n": MindbulletBySlugQueryResult;
+    "\n  *[_type == \"provocativeScenario\" && slug.current == $slug][0]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    subheading,\n    contentText,\n    \"pdfMobileUrl\": pdfMobile.asset->url,\n    \"pdfDesktopUrl\": pdfDesktop.asset->url,\n    \"hasAudio\": hasAudio == \"yes\",\n    audioDescription,\n    \"audioFileUrl\": audioFile.asset->url,\n    \"articleContents\": articleContents[]{\n      title,\n      description,\n      \"image\": {\n        \"url\": image.asset->url,\n        \"alt\": image.alt\n      }\n    }\n  }\n": ScenarioBySlugQueryResult;
+    "\n  *[_type == \"provocativeScenario\" && slug.current == $slug][0]{\n    title,\n    \"pdfMobileUrl\": pdfMobile.asset->url,\n    \"pdfDesktopUrl\": pdfDesktop.asset->url\n  }\n": ScenarioQueryResult;
     "\n  *[_type == \"mindbullet\"] | order(publishedAt desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    mainImage {\n      asset,\n      alt\n    },\n    publishedAt,\n    dateline,\n    byLine\n  }\n": MindbulletsQueryResult;
+    "\n  *[_type == \"caseStudy\"] | order(_createdAt desc) {\n    _id,\n    title,\n    subheading,\n    mainImage,\n    slug\n  }\n": CASE_STUDIES_QUERYResult;
   }
 }

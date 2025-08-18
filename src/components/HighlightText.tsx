@@ -1,37 +1,35 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { PortableText, PortableTextComponents } from '@portabletext/react';
+import React from 'react';
+import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import type { PortableTextBlock } from '@portabletext/types';
 
 const PRIORITY = ['Future', 'Growth', 'Tomorrow'] as const;
 
-const makeWordRegex = (w: string, flags = 'i') =>
-  new RegExp(`\\b(${w})\\b`, flags);
+const makeWordRegex = (w: string, flags = 'i') => new RegExp(`\\b(${w})\\b`, flags);
 
-/** Pick the first word that appears in the text, by priority */
-function pickHighlightWord(text: string): string | null {
-  for (const w of PRIORITY) {
-    if (makeWordRegex(w).test(text)) return w;
-  }
-  return null;
+
+type TextChild = { text?: string };
+type TextBlock = PortableTextBlock & { children?: TextChild[] };
+
+
+function extractPlainText(blocks: PortableTextBlock[]): string {
+  return blocks
+    .map((b) => (b as TextBlock).children?.map((c) => c.text ?? '').join('') ?? '')
+    .join('\n');
 }
 
-/** Split on the chosen word and wrap only those matches */
+
 function renderWithHighlight(
   text: string,
-  HighlightedWord: React.FC<{ children: React.ReactNode }>
+  HighlightedWord: React.FC<{ children: React.ReactNode }>,
+  chosenWord: string | null
 ) {
-  const word = pickHighlightWord(text);
-  if (!word) return text;
+  if (!chosenWord) return text;
 
-  // Build a regex for just the chosen word (global so split finds all, case-insensitive)
-  const rx = makeWordRegex(word, 'gi');
+  const rx = makeWordRegex(chosenWord, 'gi'); 
+  const parts = text.split(rx);               
 
-  // Using a *capturing* group means split will keep the matches in the array.
-  const parts = text.split(rx);
-
-  // Matches will be at odd indices (1, 3, 5, ...)
   return parts.map((part, i) =>
     i % 2 === 1 ? (
       <HighlightedWord key={i}>{part}</HighlightedWord>
@@ -41,29 +39,38 @@ function renderWithHighlight(
   );
 }
 
-export function HighlightText({ value }: { value: PortableTextBlock[] }) {
+export function HighlightText({ value }: { value: string | PortableTextBlock[] }) {
   const highlightColor = '#DC5A50';
 
-  const HighlightedWord = ({ children }: { children: React.ReactNode }) => {
-    const ref = useRef<HTMLSpanElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
+  // 1) Decide ONE word for the entire input (string or all PT blocks)
+  const chosenWord = React.useMemo(() => {
+    const haystack =
+      typeof value === 'string' ? value : extractPlainText(value ?? []);
+    for (const w of PRIORITY) {
+      if (makeWordRegex(w, 'i').test(haystack)) return w;
+    }
+    return null;
+  }, [value]);
 
-    useEffect(() => {
+
+  const HighlightedWord = ({ children }: { children: React.ReactNode }) => {
+    const ref = React.useRef<HTMLSpanElement>(null);
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    React.useEffect(() => {
       const node = ref.current;
       if (!node) return;
-
-      const observer = new IntersectionObserver(
+      const obs = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            observer.disconnect(); // only animate once
+            obs.disconnect();
           }
         },
         { threshold: 0.2 }
       );
-
-      observer.observe(node);
-      return () => observer.disconnect();
+      obs.observe(node);
+      return () => obs.disconnect();
     }, []);
 
     return (
@@ -77,23 +84,26 @@ export function HighlightText({ value }: { value: PortableTextBlock[] }) {
         </span>
         <span
           className={`
-            absolute inset-0 z-0 
-            origin-left 
-            transition-transform duration-800 ease-out 
-            ${isVisible ? 'scale-x-100' : 'scale-x-0'} 
+            absolute inset-0 z-0
+            origin-left
+            transition-transform duration-800 ease-out
+            ${isVisible ? 'scale-x-100' : 'scale-x-0'}
             transform will-change-transform delay-[1000ms]
           `}
-          // Tailwind can't read bg-[${...}]; use inline style:
           style={{ pointerEvents: 'none', backgroundColor: highlightColor }}
         />
       </span>
     );
   };
 
+
   const wrapStrings = (children: React.ReactNode) =>
     React.Children.map(children, (child) =>
-      typeof child === 'string' ? renderWithHighlight(child, HighlightedWord) : child
+      typeof child === 'string'
+        ? renderWithHighlight(child, HighlightedWord, chosenWord)
+        : child
     );
+
 
   const components: PortableTextComponents = {
     list: {
@@ -109,5 +119,11 @@ export function HighlightText({ value }: { value: PortableTextBlock[] }) {
     },
   };
 
+  // String mode
+  if (typeof value === 'string') {
+    return <>{renderWithHighlight(value, HighlightedWord, chosenWord)}</>;
+  }
+
+  // Portable Text mode
   return <PortableText value={value} components={components} />;
 }

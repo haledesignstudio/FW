@@ -4,7 +4,6 @@ import whatWeDoPage from './whatWeDoPage'
 import keynoteTopic from './keynoteTopic';
 import homePage from './homePage'
 import article from './article'
-import insightsPage from './insightsPage'
 import peoplePage from './peoplePage'
 import ourWorkPage from './ourWorkPage'
 import contactPage from './contactPage'
@@ -29,7 +28,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     // Main page schemas
     homePage,
-    insightsPage,
     mindbulletsPage,
     keynotesPage,
     edgePage,

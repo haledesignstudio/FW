@@ -10,7 +10,7 @@ import type { PortableTextBlock } from '@portabletext/types';
 import type { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 
-// ⬇️ Client-only render prevents hydration mismatch
+
 const CircularTextSlider = dynamic(() => import('@/components/CircularTextSlider'), { ssr: false });
 
 type KeynotesData = {
@@ -48,7 +48,7 @@ export type GridItem = {
   rowSpan: number;
 };
 
-// === Your requested grid layouts ===
+
 export function KeynoteTop({ keynotes }: Props): GridItem[] {
   const topicSection = keynotes?.topicSection;
 
@@ -173,7 +173,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       content: (
         <div className="flex flex-col justify-start h-full">
           <FadeInOnVisible>
-            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
+            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
               <a
                 href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
                   speakerSection.speakerCTA1 ?? ''
@@ -212,7 +212,6 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
   ];
 }
 
-// === Page client component ===
 export default function Keynotes({
   keynotes,
   speakers,
@@ -225,7 +224,7 @@ export default function Keynotes({
 
   return (
     <>
-      {/* Top grid */}
+      
       <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
         {keynoteTop.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
@@ -234,14 +233,14 @@ export default function Keynotes({
         ))}
       </div>
 
-      {/* Topics list */}
+      
       <FadeInOnVisible>
         <div className="w-full">
           <ExpandableTopicList />
         </div>
       </FadeInOnVisible>
 
-      {/* Bottom grid */}
+      
       <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
         {keynoteBottom.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
@@ -250,7 +249,7 @@ export default function Keynotes({
         ))}
       </div>
 
-      {/* Speaker wheel - client-only */}
+      
       <FadeInOnVisible>
         <div className="w-full mt-[20vh]">
           <CircularTextSlider speakers={speakers} />
