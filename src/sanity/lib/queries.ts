@@ -274,64 +274,6 @@ export const faqPageQuery = defineQuery(`
   }
 `);
 
-export const insightsPageQuery = defineQuery(`
-  *[_type == "insightsPage"][0] {
-    title,
-    shareholderValueAnalytics {
-      title,
-      subheading,
-      contentText,
-      CTA1,
-      Mail1,
-      iframeSource,
-      IQ_heading,
-      IQ_subheading,
-      IQ_context,
-      CTA2,
-      Mail2
-    },
-    mindbullets {
-      title,
-      subheading
-    },
-    keynotes {
-      topicSection {
-        topicSectionTitle,
-        topicSectionSubtitle,
-        topicContentText,
-        topicCTA1,
-        topicMail1,
-        topicCTA2
-      },
-      speakerSection {
-        speakerSectionTitle,
-        speakerSectionSubtitle,
-        speakerContentText,
-        speakerCTA1,
-        speakerMail1,
-        speakerCTA2
-      }
-    },
-    podcast {
-      title,
-      subheading
-    },
-    corporateVenturing {
-      title,
-      subheading,
-      contentText,
-      CTA,
-      Mail
-    },
-    theEdge {
-      title,
-      subheading,
-      contentText
-    }
-  }
-`);
-
-
 export const podcastQuery = defineQuery(`
   *[_type == "podcast"] | order(_createdAt desc) {
     _id,
@@ -550,9 +492,28 @@ export const CONTACT_PAGE_QUERY = defineQuery(`
 export const provocativeScenariosQuery = defineQuery(`
   *[_type == "provocativeScenario"] | order(_createdAt desc) {
     _id,
-    title
+    title,
+    "slug": slug.current,
+    subheading,
+    contentText,
+    "pdfMobileUrl": pdfMobile.asset->url,
+    "pdfDesktopUrl": pdfDesktop.asset->url,
+    hasAudio,
+    audioDescription,
+    "audioFileUrl": audioFile.asset->url,
+    // NEW: Article contents (exactly 3 per schema)
+    "articleContents": articleContents[]{
+      title,
+      description,
+      "image": {
+        "url": image.asset->url,
+      }
+    }
   }
 `);
+
+
+
 
 export const topicQuery = defineQuery(`
   *[_type == "keynoteTopic"] | order(topicTitle asc) {

@@ -27,7 +27,6 @@ export const structure: StructureResolver = (S) =>
             .items([
               S.documentTypeListItem('homePage').icon(HomeIcon),
               S.documentTypeListItem('whatWeDoPage').icon(RobotIcon),
-              S.documentTypeListItem('insightsPage').icon(BarChartIcon),
               S.documentTypeListItem('mindbulletsPage').icon(BarChartIcon),
               S.documentTypeListItem('keynotesPage').icon(BarChartIcon),
               S.documentTypeListItem('edgePage').icon(BarChartIcon),
@@ -81,7 +80,6 @@ export const structure: StructureResolver = (S) =>
         (listItem) =>
           ![
             'homePage',
-            'insightsPage',
             'peoplePage',
             'ourWorkPage',
             'contactPage',
