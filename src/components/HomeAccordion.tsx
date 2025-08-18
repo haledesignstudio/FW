@@ -144,17 +144,14 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     },
                     {
                         id: 2,
-                        content: data.section2?.section2Image?.asset ? (
-                            <div className="w-full h-full relative">
-                                <Image
-                                    src={urlFor(data.section2.section2Image.asset).url()}
-                                    alt={data.section2.section2Image.alt || 'Process image'}
-                                    className="w-full h-full object-cover rounded"
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                />
-                            </div>
-                        ) : null,
+                        content: (
+                            <iframe
+                                src="https://fw-demo.evidence.app/"
+                                className="w-full h-full bg-white"
+                                title="Future World Analytics Dashboard"
+                                style={{ minHeight: '300px' }}
+                            />
+                        ),
                         colSpan: 3,
                         rowSpan: 2,
                         mobileColSpan: 2,
@@ -437,8 +434,8 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         {/* Row 7-10: Section Image (iframe for section 1) */}
                                         <div className="col-span-4 row-start-7 row-span-4 bg-[#1B1B1B] p-4">
                                             <iframe 
-                                                src="https://futureworld-analytics-dashboard.vercel.app/"
-                                                className="w-full h-[40vh] rounded"
+                                                src="https://fw-demo.evidence.app/"
+                                                className="w-full h-[40vh] bg-white"
                                                 title="Future World Analytics Dashboard"
                                             />
                                         </div>

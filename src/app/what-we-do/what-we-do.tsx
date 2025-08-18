@@ -369,16 +369,20 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                     </div>
                 ) : (
                     // DESKTOP LAYOUT (existing)
-                    <div className="bg-[#F9F7F2] overflow-visible">
-                        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
-                            {items.map((item) => (
-                                <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
-                                    {item.content}
-                                </div>
-                            ))}
+                    <>
+                        <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2] overflow-visible">
+                            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
+                                {items.map((item) => (
+                                    <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
+                                        {item.content}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <WhatWeDoAccordion data={data} />
-                    </div>
+                        <div className="w-full">
+                            <WhatWeDoAccordion data={data} />
+                        </div>
+                    </>
                 )}
             </main>
             <Footer />

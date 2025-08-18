@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+import './accordion-animations.css';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableTextBlock } from '@portabletext/react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
-import FadeInOnVisible from './FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
 
 export type WhatWeDoEntry = {
@@ -182,6 +183,35 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
     const [active, setActive] = useState<Active>(null);
     const toggle = (id: Active) => setActive(prev => (prev === id ? null : id));
 
+    // Animation state for desktop open content
+    const [animatingSection, setAnimatingSection] = useState<Active | null>(null);
+    const [hasInteracted, setHasInteracted] = useState(false);
+    const animationTimeout = useRef<NodeJS.Timeout | null>(null);
+
+    // Track previous active tab to detect re-opening the same tab
+    const prevActiveRef = useRef<Active | null>(null);
+    useEffect(() => {
+        // Only animate if not mobile, not initial load, and a tab is opened
+        if (active && !isMobile && hasInteracted) {
+            // Always reset animation, even if opening the same tab again
+            setAnimatingSection(null);
+            if (animationTimeout.current) clearTimeout(animationTimeout.current);
+            animationTimeout.current = setTimeout(() => setAnimatingSection(active), 20);
+        }
+        prevActiveRef.current = active;
+        return () => {
+            if (animationTimeout.current) clearTimeout(animationTimeout.current);
+        };
+    }, [active, isMobile, hasInteracted]);
+
+    // Set hasInteracted to true after first tab click
+    const handleTabClick = (id: Active, clickable: boolean) => {
+        if (clickable) {
+            setHasInteracted(true);
+            toggle(id);
+        }
+    };
+
     if (isMobile) {
         // Mobile vertical accordion layout
         return (
@@ -296,14 +326,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 2,
                     content: (
-                        <FadeInOnVisible>
                             <MainTitleAnimation
                                 text={data.accordion.heading}
                                 typeSpeed={40}
                                 delay={500}
                                 className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-[clamp(4vw,10vh,5vw)] text-balance text-[#232323]"
                             />
-                        </FadeInOnVisible>
 
                     ),
                     colSpan: 2,
@@ -326,11 +354,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 4,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-[#232323]">
                             <HighlightText value={data.accordion.subheading} />
                         </div>
-                    </FadeInOnVisible>
                     ,
                     colSpan: 4,
                     rowSpan: 2,
@@ -373,11 +399,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 201,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
                             1
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -396,13 +420,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 203,
                     content:
-                    <FadeInOnVisible>
                         <div className="h-full flex flex-col justify-end ">
                             <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#F9F7F2]">
                                 {data.accordion.items[0].heading}
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1, rowSpan: 1,
                     mobileColSpan: 2, mobileRowSpan: 1,
                     landscapeColSpan: 3, landscapeRowSpan: 1,
@@ -414,7 +436,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                        <FadeInOnVisible>
                             <div className="h-full flex flex-col  gap-[2vh]">
                                 <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
                                     1
@@ -423,7 +444,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                     <PortableText value={data.accordion.items[0].description} components={ptComponents} />
                                 </div>
                             </div>
-                        </FadeInOnVisible>
                     ),
                     colSpan: 1,
                     rowSpan: 4,
@@ -445,11 +465,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 3,
                     content:
-                        <FadeInOnVisible>
                             <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].subheading} />
-                            </div>
-                        </FadeInOnVisible>,
+                            </div>,
                     colSpan: 2,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -476,13 +494,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 5,
                     content:
-                    <FadeInOnVisible>
                         <div className="flex h-full pt-[14.5vh]">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].prompt} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 2,
                     mobileColSpan: 2,
@@ -493,7 +509,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 6,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].entries[0].title} />
@@ -501,8 +516,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].entries[0].body} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -513,7 +527,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 7,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].entries[1].title} />
@@ -522,7 +535,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                 <PortableText value={data.accordion.items[0].entries[1].body} />
                             </div>
                         </div>
-                    </FadeInOnVisible>
                     ,
                     colSpan: 1,
                     rowSpan: 1,
@@ -534,7 +546,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 8,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].entries[2].title} />
@@ -542,8 +553,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].entries[2].body} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -554,11 +564,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#F9F7F2]">
                             {data.accordion.items[0].heading}
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 4,
                     rowSpan: 2,
                     mobileColSpan: 2,
@@ -590,11 +598,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 301,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
                             2
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -613,13 +619,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 303,
                     content:
-                    <FadeInOnVisible>
                         <div className="h-full flex flex-col justify-end ">
                             <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#F9F7F2]">
                                 {data.accordion.items[1].heading}
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1, rowSpan: 1,
                     mobileColSpan: 2, mobileRowSpan: 1,
                     landscapeColSpan: 3, landscapeRowSpan: 1,
@@ -631,7 +635,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                        <FadeInOnVisible>
                             <div className="h-full flex flex-col  gap-[2vh]">
                                 <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
                                     2
@@ -640,7 +643,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                     <PortableText value={data.accordion.items[1].description} components={ptComponents} />
                                 </div>
                             </div>
-                        </FadeInOnVisible>
                     ),
                     colSpan: 1,
                     rowSpan: 4,
@@ -662,11 +664,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 3,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#F9F7F2]">
                             <PortableText value={data.accordion.items[1].subheading} />
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 2,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -693,13 +693,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 5,
                     content:
-                    <FadeInOnVisible>
                         <div className="flex h-full pt-[14.5vh]">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].prompt} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 2,
                     mobileColSpan: 2,
@@ -710,7 +708,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 6,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[0].title} />
@@ -718,8 +715,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[0].body} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -730,7 +726,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 7,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[1].title} />
@@ -738,8 +733,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[1].body} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -750,7 +744,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 8,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[2].title} />
@@ -758,8 +751,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[2].body} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -770,11 +762,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#F9F7F2]">
                             {data.accordion.items[1].heading}
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 4,
                     rowSpan: 2,
                     mobileColSpan: 2,
@@ -806,11 +796,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 401,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#232323]">
                             3
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -829,13 +817,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 403,
                     content:
-                    <FadeInOnVisible>
                         <div className="h-full flex flex-col justify-end ">
                             <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#232323]">
                                 {data.accordion.items[2].heading}
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1, rowSpan: 1,
                     mobileColSpan: 2, mobileRowSpan: 1,
                     landscapeColSpan: 3, landscapeRowSpan: 1,
@@ -847,7 +833,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                        <FadeInOnVisible>
                             <div className="h-full flex flex-col  gap-[2vh]">
                                 <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#232323]">
                                     3
@@ -856,7 +841,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                     <PortableText value={data.accordion.items[2].description} components={ptComponents} />
                                 </div>
                             </div>
-                        </FadeInOnVisible>
                     ),
                     colSpan: 1,
                     rowSpan: 4,
@@ -878,11 +862,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 3,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#232323]">
                             <PortableText value={data.accordion.items[2].subheading} />
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 2,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -909,13 +891,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 5,
                     content:
-                    <FadeInOnVisible>
                         <div className="flex h-full pt-[14.5vh]">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].prompt} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 2,
                     mobileColSpan: 2,
@@ -926,7 +906,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 6,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[0].title} />
@@ -934,8 +913,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[0].body} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -946,7 +924,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 7,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[1].title} />
@@ -954,8 +931,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[1].body} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -966,7 +942,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 8,
                     content:
-                    <FadeInOnVisible>
                         <div className="relative h-full">
                             <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[2].title} />
@@ -974,8 +949,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[2].body} />
                             </div>
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 1,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -986,11 +960,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                    <FadeInOnVisible>
                         <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#232323]">
                             {data.accordion.items[2].heading}
-                        </div>
-                    </FadeInOnVisible>,
+                        </div>,
                     colSpan: 4,
                     rowSpan: 2,
                     mobileColSpan: 2,
@@ -1010,9 +982,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
 
                 const isActive = active === key;
                 const isCollapsed = key !== 'sec1' && !isActive;
-                const showContent =
-                    (key === 'sec1' && active === null) ||
-                    (key !== 'sec1' && isActive);
+                // const showContent =
+                //     (key === 'sec1' && active === null) ||
+                //     (key !== 'sec1' && isActive);
 
                 return (
                     <section
@@ -1023,9 +995,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             clickable ? 'cursor-pointer' : '',
                             '',
                         ].join(' ')}
-                        onClick={() => {
-                            if (clickable) toggle(key as Active);
-                        }}
+                        onClick={() => handleTabClick(key as Active, clickable)}
                     >
                         {/* Tiny grid when collapsed */}
                         {isCollapsed && (collapsedItems?.length ?? 0) > 0 && (
@@ -1041,9 +1011,30 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                         )}
 
                         {/* Full content when active (or sec1 initial) */}
-                        {showContent && (
+                        {/* Always show sec1 content when no tab is open (default text) */}
+                        {key === 'sec1' && active === null && (
                             <div className="p-[4vh]">
                                 <div className="grid gap-[2vh] grid-cols-4 auto-rows-[12.5vh]">
+                                    {items.map((item) => (
+                                        <div key={item.id} className={`${getGridClasses(item)} `}>
+                                            {item.content}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        {/* Animate open tab content only for sec2, sec3, sec4 */}
+                        {key !== 'sec1' && active === key && (
+                            <div className="p-[4vh]">
+                                <div
+                                    className={`grid gap-[2vh] grid-cols-4 auto-rows-[12.5vh] animate-scale-in-bottom-right ${
+                                        animatingSection === key ? 'scale-100' : (hasInteracted ? 'scale-0' : 'scale-100')
+                                    }`}
+                                    style={{
+                                        transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1)',
+                                        transformOrigin: 'bottom right',
+                                    }}
+                                >
                                     {items.map((item) => (
                                         <div key={item.id} className={`${getGridClasses(item)} `}>
                                             {item.content}

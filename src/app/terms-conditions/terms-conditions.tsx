@@ -163,29 +163,27 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                   style={{ background: 'none' }}
               >
                 <UnderlineOnHoverAnimation
-                  className={
-                    `${selectedCategory === category.key ? 'text-black  font-normal underline-active' : 'text-gray-600  font-normal'}`
-                  }
+                  isActive={selectedCategory === category.key}
+                  className="font-normal text-black"
                 >
-                  <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal">
+                  <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal text-black">
                     {category.shortLabel}
                   </span>
                 </UnderlineOnHoverAnimation>
               </button>
               {/* Additional categories for first 3 columns - positioned at bottom */}
               {index < 3 && secondRowCategories[index] && (
-                <div className="mt-auto">
+                <div className="mt-[3vh]">
                   <button
                     onClick={() => setSelectedCategory(secondRowCategories[index].key)}
                     className={`text-left w-full h-auto py-2 pointer-events-auto relative z-20 cursor-pointer bg-transparent border-none outline-none font-normal`}
                     style={{ background: 'none' }}
                   >
                     <UnderlineOnHoverAnimation
-                      className={
-                        `${selectedCategory === secondRowCategories[index].key ? 'text-black font-normal underline-active' : 'text-gray-600 font-normal'}`
-                      }
+                      isActive={selectedCategory === secondRowCategories[index].key}
+                      className="font-normal text-black"
                     >
-                      <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal">
+                      <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal text-black">
                         {secondRowCategories[index].shortLabel}
                       </span>
                     </UnderlineOnHoverAnimation>
@@ -401,7 +399,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                     onClick={() => setSelectedCategory(category.key)}
                     className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full"
                   >
-                    <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
+                    <UnderlineOnHoverAnimation isActive={selectedCategory === category.key} className="font-normal text-black">
                       <span className="text-[2.5vh] leading-tight text-black font-normal text-left">
                         {category.shortLabel}
                       </span>
