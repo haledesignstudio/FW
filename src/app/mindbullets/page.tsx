@@ -36,19 +36,19 @@ export default async function MindbulletsPage() {
   // const headerItems = commonHeader(doc.title, 'mindbullets');
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-[#F9F7F2]">
       <Header />
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-          {/* Desktop: grid items */}
-          {/* {headerItems.map((item) => (
-            <div key={item.id} className={getGridClasses(item)}>
-              {item.content}
-            </div>
-          ))} */}
-          {/* Mobile: client component renders its own grid */}
-          <CommonHeader title={doc.title} active="mindbullets" />
+      <main className="flex-1 p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh]">
+        {/* Desktop: grid items */}
+        {/* {headerItems.map((item) => (
+          <div key={item.id} className={getGridClasses(item)}>
+            {item.content}
+          </div>
+        ))} */}
+        {/* Mobile: client component renders its own grid */}
+        <CommonHeader title={doc.title} active="mindbullets" />
+        <div className="grid gap-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-auto gap-y-25">
 
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
           {/* Client component: render via JSX, not as a function */}
           <Mindbullets
             title={doc.title}
@@ -58,6 +58,6 @@ export default async function MindbulletsPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

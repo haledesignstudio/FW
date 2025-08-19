@@ -79,10 +79,10 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
               <ResponsiveGridCarousel items={carouselItems} />
             </FadeInOnVisible>
           </div>
-          {/* Row 13-17: MindbulletsArchive (mobile: 5 rows, 4 cols) */}
-          <div className="col-span-4 row-span-5">
+          {/* Row 13-17: MindbulletsArchive (mobile: 5 rows, 4 cols, auto-rows-auto) */}
+          <div className="col-span-4 row-span-5 auto-rows-auto">
             <FadeInOnVisible>
-              <div>
+              <div className="grid auto-rows-auto">
                 <MindbulletArchive />
               </div>
             </FadeInOnVisible>

@@ -158,7 +158,7 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                 </AnimatePresence>
                             </div>
                             {/* Row 6: Read More button (col 1), empty (col 2-3), Next Slide button (col 4) */}
-                            <div className="col-span-1 row-start-4 bg-[#F9F7F2] flex items-center">
+                            <div className="col-span-1 row-start-5 bg-[#F9F7F2] flex items-center">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={`mobile-button-${paddedItems[0]?.id}`}
@@ -181,9 +181,9 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                     </motion.div>
                                 </AnimatePresence>
                             </div>
-                            <div className="col-span-1 row-start-4 bg-[#F9F7F2]"></div>
-                            <div className="col-span-1 row-start-4 bg-[#F9F7F2]"></div>
-                            <div className="col-span-1 row-start-4 bg-[#F9F7F2] flex items-center justify-end">
+                            <div className="col-span-1 row-start-5 bg-[#F9F7F2]"></div>
+                            <div className="col-span-1 row-start-5 bg-[#F9F7F2]"></div>
+                            <div className="col-span-1 row-start-5 bg-[#F9F7F2] flex items-center justify-end">
                                 <button
                                     onClick={(e) => { e.stopPropagation(); next(); }}
                                     disabled={isTransitioning}
@@ -348,7 +348,7 @@ export default function ResponsiveGridCarousel({ items }: Props) {
                                                 className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left hover:opacity-80"
                                             >
                                                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                                                    <span className="font-graphik text-[2vh] leading-tight">
+                                                    <span className="font-graphik text-[2vh] font-bold leading-tight">
                                                         Read More
                                                     </span>
                                                 </UnderlineOnHoverAnimation>
