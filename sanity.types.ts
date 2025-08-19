@@ -158,6 +158,14 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = KeynoteSpeaker | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/app/insights/[slug]/page.tsx
+// Variable: articleBySlugQuery
+// Query: *[_type == "article" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    byline,    datePublished,    image { asset, alt },    body[],    downloadText[],    "pdfUrl": pdfUpload.asset->url,    "hasAudio": audioComponent,    "audioFileUrl": audioFile.asset->url,    // Author    "hasAuthor": hasAuthor,    authorName,    authorPosition,    authorBio[],    authorImage { asset, alt },    // Linked Video    "hasLinkedVideo": hasLinkedVideo,    linkedVideoTitle,    linkedVideoSubheading,    linkedVideoDescription[],    linkedVideoImage { asset, alt },    linkedVideoLink  }
+export type ArticleBySlugQueryResult = null;
+// Variable: articleByIdQuery
+// Query: *[_type == "article" && _id == $id][0]{    _id,    title,    "slug": slug.current,    byline,    datePublished,    image { asset, alt },    body[],    downloadText[],    "pdfUrl": pdfUpload.asset->url,    "hasAudio": audioComponent,    "audioFileUrl": audioFile.asset->url,    // Author    "hasAuthor": hasAuthor,    authorName,    authorPosition,    authorBio[],    authorImage { asset, alt },    // Linked Video    "hasLinkedVideo": hasLinkedVideo,    linkedVideoTitle,    linkedVideoSubheading,    linkedVideoDescription[],    linkedVideoImage { asset, alt },    linkedVideoLink  }
+export type ArticleByIdQueryResult = null;
+
 // Source: ./src/app/keynotes/[slug]/page.tsx
 // Variable: speakerBySlugQuery
 // Query: *[_type == "keynoteSpeaker" && slug.current == $slug][0]{    _id,    name,    "slug": slug.current,    bio,    image { asset, alt },    domainsOfExcellence,    socialLinks,    mailtoSubject  }
@@ -187,7 +195,7 @@ export type MindbulletBySlugQueryResult = null;
 
 // Source: ./src/app/the-edge/[slug]/page.tsx
 // Variable: scenarioBySlugQuery
-// Query: *[_type == "provocativeScenario" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    subheading,    contentText,    "pdfMobileUrl": pdfMobile.asset->url,    "pdfDesktopUrl": pdfDesktop.asset->url,    "hasAudio": hasAudio == "yes",    audioDescription,    "audioFileUrl": audioFile.asset->url,    "articleContents": articleContents[]{      title,      description,      "image": {        "url": image.asset->url,        "alt": image.alt      }    }  }
+// Query: *[_type == "provocativeScenario" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    subheading,    contentText,    "pdfMobileUrl": pdfMobile.asset->url,    "pdfDesktopUrl": pdfDesktop.asset->url,    "hasAudio": hasAudio == "yes",    audioDescription,    "audioFileUrl": audioFile.asset->url,    "articleContents": articleContents[]{      title,      description,      "image": {    "url": image.asset->url,      }    }  }
 export type ScenarioBySlugQueryResult = null;
 
 // Source: ./src/app/the-edge/[slug]/pdf/route.ts
@@ -209,9 +217,11 @@ export type CASE_STUDIES_QUERYResult = Array<never>;
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "\n  *[_type == \"article\" && slug.current == $slug][0]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    byline,\n    datePublished,\n    image { asset, alt },\n    body[],\n    downloadText[],\n    \"pdfUrl\": pdfUpload.asset->url,\n    \"hasAudio\": audioComponent,\n    \"audioFileUrl\": audioFile.asset->url,\n\n    // Author\n    \"hasAuthor\": hasAuthor,\n    authorName,\n    authorPosition,\n    authorBio[],\n    authorImage { asset, alt },\n\n    // Linked Video\n    \"hasLinkedVideo\": hasLinkedVideo,\n    linkedVideoTitle,\n    linkedVideoSubheading,\n    linkedVideoDescription[],\n    linkedVideoImage { asset, alt },\n    linkedVideoLink\n  }\n": ArticleBySlugQueryResult;
+    "\n  *[_type == \"article\" && _id == $id][0]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    byline,\n    datePublished,\n    image { asset, alt },\n    body[],\n    downloadText[],\n    \"pdfUrl\": pdfUpload.asset->url,\n    \"hasAudio\": audioComponent,\n    \"audioFileUrl\": audioFile.asset->url,\n\n    // Author\n    \"hasAuthor\": hasAuthor,\n    authorName,\n    authorPosition,\n    authorBio[],\n    authorImage { asset, alt },\n\n    // Linked Video\n    \"hasLinkedVideo\": hasLinkedVideo,\n    linkedVideoTitle,\n    linkedVideoSubheading,\n    linkedVideoDescription[],\n    linkedVideoImage { asset, alt },\n    linkedVideoLink\n  }\n": ArticleByIdQueryResult;
     "\n  *[_type == \"keynoteSpeaker\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    bio,\n    image { asset, alt },\n    domainsOfExcellence,\n    socialLinks,\n    mailtoSubject\n  }\n": SpeakerBySlugQueryResult;
     "\n  *[_type == \"mindbullet\" && slug.current == $slug][0]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    mainImage { asset, alt },\n    publishedAt,\n    dateline,\n    byLine,\n    body,\n    RelatedStories[] { title, link }\n  }\n": MindbulletBySlugQueryResult;
-    "\n  *[_type == \"provocativeScenario\" && slug.current == $slug][0]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    subheading,\n    contentText,\n    \"pdfMobileUrl\": pdfMobile.asset->url,\n    \"pdfDesktopUrl\": pdfDesktop.asset->url,\n    \"hasAudio\": hasAudio == \"yes\",\n    audioDescription,\n    \"audioFileUrl\": audioFile.asset->url,\n    \"articleContents\": articleContents[]{\n      title,\n      description,\n      \"image\": {\n        \"url\": image.asset->url,\n        \"alt\": image.alt\n      }\n    }\n  }\n": ScenarioBySlugQueryResult;
+    "\n  *[_type == \"provocativeScenario\" && slug.current == $slug][0]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    subheading,\n    contentText,\n    \"pdfMobileUrl\": pdfMobile.asset->url,\n    \"pdfDesktopUrl\": pdfDesktop.asset->url,\n    \"hasAudio\": hasAudio == \"yes\",\n    audioDescription,\n    \"audioFileUrl\": audioFile.asset->url,\n    \"articleContents\": articleContents[]{\n      title,\n      description,\n      \"image\": {\n    \"url\": image.asset->url,\n      }\n    }\n  }\n": ScenarioBySlugQueryResult;
     "\n  *[_type == \"provocativeScenario\" && slug.current == $slug][0]{\n    title,\n    \"pdfMobileUrl\": pdfMobile.asset->url,\n    \"pdfDesktopUrl\": pdfDesktop.asset->url\n  }\n": ScenarioQueryResult;
     "\n  *[_type == \"mindbullet\"] | order(publishedAt desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    mainImage {\n      asset,\n      alt\n    },\n    publishedAt,\n    dateline,\n    byLine\n  }\n": MindbulletsQueryResult;
     "\n  *[_type == \"caseStudy\"] | order(_createdAt desc) {\n    _id,\n    title,\n    subheading,\n    mainImage,\n    slug\n  }\n": CASE_STUDIES_QUERYResult;

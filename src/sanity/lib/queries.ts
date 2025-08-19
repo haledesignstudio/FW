@@ -501,7 +501,6 @@ export const provocativeScenariosQuery = defineQuery(`
     hasAudio,
     audioDescription,
     "audioFileUrl": audioFile.asset->url,
-    // NEW: Article contents (exactly 3 per schema)
     "articleContents": articleContents[]{
       title,
       description,
@@ -620,6 +619,34 @@ export const shareholderPageQuery = defineQuery(`
     IQ_context,
     CTA2,
     Mail2
+  }
+`);
+
+export const articleQuery = defineQuery(`
+  *[_type == "article"] | order(coalesce(datePublished, _createdAt) desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    byline,
+    datePublished,
+    "image": { "url": image.asset->url },
+    body[],
+    "pdfUrl": pdfUpload.asset->url,
+
+    // Author (now required/main section)
+    authorName,
+    authorPosition,
+    authorLinkedin,
+    authorBio[],
+    "authorImage": { "url": authorImage.asset->url },
+
+    // Linked Video (optional)
+    "hasLinkedVideo": hasLinkedVideo,
+    linkedVideoTitle,
+    linkedVideoSubheading,
+    linkedVideoDescription[],
+    "linkedVideoImage": { "url": linkedVideoImage.asset->url },
+    linkedVideoLink
   }
 `);
 
