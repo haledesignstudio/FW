@@ -3,8 +3,6 @@ import { client } from '@/sanity/lib/client';
 import { mindbulletsPageQuery, podcastQuery } from '@/sanity/lib/queries';
 import CommonHeader from '@/components/insights/CommonHeader';
 import Mindbullets from './mindbullets';
-import MindbulletArchive from '@/components/mindbulletsArchive';
-import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { notFound } from 'next/navigation';
 import type { PortableTextBlock } from '@portabletext/types';
 import Header from '@/components/header';

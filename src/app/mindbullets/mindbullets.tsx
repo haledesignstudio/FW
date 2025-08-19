@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
@@ -89,11 +90,11 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
           {/* Row 18: See Keynotes and Back to top */}
           <div className="col-span-2 row-span-1">
             <FadeInOnVisible>
-              <a href="/keynotes" className="transition font-bold cursor-pointer">
+              <Link href="/keynotes" className="transition font-bold cursor-pointer">
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   See Keynotes
                 </UnderlineOnHoverAnimation>
-              </a>
+              </Link>
             </FadeInOnVisible>
           </div>
           <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>

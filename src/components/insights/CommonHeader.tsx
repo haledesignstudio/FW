@@ -27,8 +27,6 @@ const categories = [
   { href: '/the-edge',        label: 'The Edge: Insights Driven by Disruption' },
 ];
 
-
-
 type CommonHeaderProps = {
   title: string;
   active: string;
@@ -56,7 +54,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
           </FadeInOnVisible>
         </div> */}
         {/* Each category: new row, cols 2-3 */}
-        {categories.map((cat, i) => (
+        {categories.map((cat) => (
           <div key={cat.href} className="col-start-2 col-span-3 row-span-1">
             {cat.comingSoon ? (
               <FadeInOnVisible>

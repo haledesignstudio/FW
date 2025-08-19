@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FutureText } from "./FutureText";
 import UnderlineOnHoverAnimation from "./underlineOnHoverAnimation"; 
+import Link from 'next/link';
 
 
 type GridItem = {
@@ -117,7 +118,7 @@ const Footer: React.FC = () => {
             content: (
                 <ul className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
                     <li><a href="/contact">{shouldAnimate ? <FutureText text="Contact" delay={2000} speed={20} triggerOnVisible={false} /> : "Contact"}</a></li>
-                    <li><a href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={2000} speed={20} triggerOnVisible={false} /> : "Keynotes"}</a></li>
+                    <li><Link href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={2000} speed={20} triggerOnVisible={false} /> : "Keynotes"}</Link></li>
                     <li><a href="/people">{shouldAnimate ? <FutureText text="Join us" delay={2000} speed={20} triggerOnVisible={false} /> : "Join us"}</a></li>
                     <li><a href="/faq">{shouldAnimate ? <FutureText text="FAQs" delay={2000} speed={20} triggerOnVisible={false} /> : "FAQs"}</a></li>
                     <li><a href="/privacy-policy">{shouldAnimate ? <FutureText text="Privacy policy" delay={2000} speed={20} triggerOnVisible={false} /> : "Privacy policy"}</a></li>

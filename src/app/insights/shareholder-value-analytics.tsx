@@ -1,6 +1,7 @@
 'use client';
 
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import Link from 'next/link';
 import { HighlightText } from '@/components/HighlightText';
 import { getGridClasses } from '@/components/insights/grid';
 import type { PortableTextBlock } from '@portabletext/types';
@@ -172,11 +173,11 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 22: Mindbullets button col 1-2, Back to top col 4 */}
           <div className="col-span-2 row-span-1">
             <FadeInOnVisible>
-              <a href="/mindbullets" className="transition font-bold cursor-pointer">
+              <Link href="/mindbullets" className="transition font-bold cursor-pointer">
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   See Mindbullets: News from the Future
                 </UnderlineOnHoverAnimation>
-              </a>
+              </Link>
             </FadeInOnVisible>
           </div>
           <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
