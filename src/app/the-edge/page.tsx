@@ -45,7 +45,7 @@ export default async function EdgePage() {
         <CommonHeader title={doc.title} active="edge" />
 
         {/* Edge content (client) */}
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+        <div className="grid gap-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-auto">
           <Edge
             title={doc.title}
             subheading={doc.subheading}

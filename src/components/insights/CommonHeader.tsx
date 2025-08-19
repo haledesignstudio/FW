@@ -80,7 +80,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
             )}
           </div>
         ))}
-        <div className="col-span-4 row-span-1"></div>
+        <div className="col-span-4 row-span-4"></div>
       </div>
     );
   }

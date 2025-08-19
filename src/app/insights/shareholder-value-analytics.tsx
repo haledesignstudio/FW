@@ -100,6 +100,7 @@ export default function ShareholderValueAnalytics(props: Props) {
               </div>
             </FadeInOnVisible>
           </div>
+          <div className="col-span-4 row-span-1"></div>
           {/* Row 8: CTA1 link */}
           <div className="col-span-4 row-span-1 flex items-center">
             <FadeInOnVisible>

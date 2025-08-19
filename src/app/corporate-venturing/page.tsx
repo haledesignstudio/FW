@@ -41,7 +41,7 @@ export default async function CorporateVenturingPage() {
       <Header />
       <main className="p-[2vh] md:p-[4vh] bg-[#F9F7F2]">
         <CommonHeader title={doc.title} active="corporate" />
-        <div className="grid gap-[2vh] grid-cols-2 md:grid-cols-6 auto-rows-[25vh]">
+        <div className="grid gap-[2vh] md:grid-cols-6 auto-rows-auto">
           {/* {headerItems.map((item) => (
                       <div key={item.id} className={getGridClasses(item)}>
                         {item.content}

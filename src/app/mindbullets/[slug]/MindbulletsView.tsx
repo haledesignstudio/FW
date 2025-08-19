@@ -46,8 +46,8 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
 
   // --- MOBILE ---
   const mobile = (
-    <div className="block md:hidden">
-      <div className="grid grid-cols-4 gap-y-5 w-full">
+    <div className="block md:hidden min-h-screen flex flex-col">
+      <div className="flex-1 grid grid-cols-4 gap-y-5 w-full">
         <div className="col-span-4 row-span-2 text-[5vh] font-graphik leading-tight">
           Mindbullets: News from the Future
         </div>
