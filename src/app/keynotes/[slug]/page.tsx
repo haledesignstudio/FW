@@ -6,7 +6,7 @@ import type { PortableTextBlock } from '@portabletext/types';
 import { PortableText } from '@portabletext/react';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { getGridClasses } from '@/components/insights/grid';
-import { commonHeader } from '@/components/insights/CommonHeader';
+import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
@@ -77,7 +77,7 @@ export default async function KeynoteSpeakerPage({ params }: PageProps) {
         idx >= 0 && allSlugs.length > 1 ? allSlugs[(idx + 1) % allSlugs.length] : null;
 
 
-    const headerItems = commonHeader(data.name, 'keynotes');
+    // const headerItems = commonHeader(data.name, 'keynotes');
 
     const gridItems = [
         {
@@ -232,13 +232,7 @@ export default async function KeynoteSpeakerPage({ params }: PageProps) {
         <>
             <Header />
             <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-                <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh] mb-[4vh]">
-                    {headerItems.map((item) => (
-                        <div key={item.id} className={getGridClasses(item)}>
-                            {item.content}
-                        </div>
-                    ))}
-                </div>
+                <CommonHeader title={data.name} active="keynotes" />
 
                 <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
                     {gridItems.map((item) => (

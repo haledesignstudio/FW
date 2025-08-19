@@ -6,7 +6,7 @@ import { urlFor } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { getGridClasses } from '@/components/insights/grid';
-import { commonHeader } from '@/components/insights/CommonHeader';
+import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
@@ -71,7 +71,7 @@ export default async function MindbulletPage({ params }: PageProps) {
 
 
     // Build header items just like in KeynotesPage
-    const headerItems = commonHeader(data.title, 'mindbullets');
+    // const headerItems = commonHeader(data.title, 'mindbullets');
 
     const gridItems = [
         {
@@ -152,13 +152,7 @@ export default async function MindbulletPage({ params }: PageProps) {
             <Header />
             <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
                 {/* Common header grid */}
-                <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh] mb-[4vh]">
-                    {headerItems.map((item) => (
-                        <div key={item.id} className={getGridClasses(item)}>
-                            {item.content}
-                        </div>
-                    ))}
-                </div>
+                <CommonHeader title={data.title} active="mindbullets" />
 
                 {/* Mindbullet content grid */}
                 <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">

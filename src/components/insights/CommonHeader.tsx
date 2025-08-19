@@ -1,8 +1,22 @@
+'use client';
+
 import Link from 'next/link';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
-import { GridItem } from '@/components/insights/grid';
+import { getGridClasses, GridItem } from '@/components/insights/grid';
+import React, { useState, useEffect } from 'react';
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < breakpoint);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [breakpoint]);
+  return isMobile;
+}
 
 const categories = [
   { href: '/insights',  label: 'Shareholder Value Analytics' },
@@ -13,8 +27,68 @@ const categories = [
   { href: '/the-edge',        label: 'The Edge: Insights Driven by Disruption' },
 ];
 
-export function commonHeader(title: string, active: string): GridItem[] {
-  return [
+
+
+type CommonHeaderProps = {
+  title: string;
+  active: string;
+};
+
+export default function CommonHeader({ active }: CommonHeaderProps) {
+  const isMobile = useIsMobile();
+  if (isMobile) {
+    // MOBILE LAYOUT
+    return (
+      <div className="grid grid-cols-4 gap-y-2 auto-rows-min w-full">
+        {/* Row 1: Title (cols 1-2) */}
+        <div className="col-span-2 row-span-1">
+          <MainTitleAnimation
+            text="Insights"
+            typeSpeed={60}
+            delay={500}
+            className="text-[clamp(4vw,10vh,8vw)] font-graphik leading-tight"
+          />
+        </div>
+        {/* Row 2: Categories header (cols 2-4) */}
+        {/* <div className="col-start-3 col-span-2 row-span-2">
+          <FadeInOnVisible>
+            <span className="text-[2.5vh] font-bold block">Categories</span>
+          </FadeInOnVisible>
+        </div> */}
+        {/* Each category: new row, cols 2-3 */}
+        {categories.map((cat, i) => (
+          <div key={cat.href} className="col-start-2 col-span-3 row-span-1">
+            {cat.comingSoon ? (
+              <FadeInOnVisible>
+                <div className="group flex items-center gap-[1vh]">
+                  <UnderlineOnHoverAnimation>
+                    <span className="text-black">{cat.label}</span>
+                  </UnderlineOnHoverAnimation>
+                  <div className="overflow-hidden h-[2.5vh] relative w-fit flex items-center">
+                    <span className="block text-[2vh] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
+                      (Coming Soon)
+                    </span>
+                  </div>
+                </div>
+              </FadeInOnVisible>
+            ) : (
+              <FadeInOnVisible>
+                <Link href={cat.href} className="transition">
+                  <UnderlineOnHoverAnimation isActive={cat.href.endsWith(active)}>
+                    {cat.label}
+                  </UnderlineOnHoverAnimation>
+                </Link>
+              </FadeInOnVisible>
+            )}
+          </div>
+        ))}
+        <div className="col-span-4 row-span-1"></div>
+      </div>
+    );
+  }
+
+  // DESKTOP LAYOUT: return grid items for parent grid
+  const items: GridItem[] = [
     {
       id: 'title',
       content: (
@@ -77,4 +151,17 @@ export function commonHeader(title: string, active: string): GridItem[] {
       landscapeRowSpan: 2,
     },
   ];
+  // Render grid items in parent grid
+  return (
+    <>
+      <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+        {items.map((item) => (
+          <div key={item.id} className={getGridClasses(item)}>
+            {item.content}
+          </div>
+          
+        ))}
+      </div>
+    </>
+  );
 }

@@ -3,8 +3,11 @@
 import { HighlightText } from '@/components/HighlightText';
 import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import MindbulletArchive from '@/components/mindbulletsArchive';
 import { PortableTextBlock } from '@portabletext/types';
 import { getGridClasses } from '@/components/insights/grid';
+import { useCallback, useState, useEffect } from 'react';
 
 type Props = {
   title: string;
@@ -20,6 +23,7 @@ type Props = {
   }[];
 };
 
+
 export default function Mindbullets({ title, subheading, podcasts }: Props) {
   const carouselItems = podcasts.map((podcast) => ({
     id: `podcastcarousel-${podcast._id}`,
@@ -29,7 +33,93 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
     link: podcast.embedLink || '#',
   }));
 
-  // Define your grid layout config here
+  function useIsMobile(breakpoint = 768) {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+      const check = () => setIsMobile(window.innerWidth < breakpoint);
+      check();
+      window.addEventListener('resize', check);
+      return () => window.removeEventListener('resize', check);
+    }, [breakpoint]);
+    return isMobile;
+  }
+
+  const isMobile = useIsMobile();
+
+  const handleBackToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  if (isMobile) {
+    return (
+      <main className="p-[2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
+          {/* Row 1-2: Title */}
+          <div className="col-span-4 row-span-2">
+            <FadeInOnVisible>
+              <div className="text-[5vh] font-bold font-graphik leading-tight text-left">
+                {title}
+              </div>
+            </FadeInOnVisible>
+          </div>
+          {/* Row 3: Empty */}
+          <div className="col-span-4 row-span-1"></div>
+          {/* Row 4-5: Subheading */}
+          <div className="col-span-4 row-span-2">
+            <FadeInOnVisible>
+              <div className="text-[2.5vh] font-bold leading-tight">
+                <HighlightText value={subheading} />
+              </div>
+            </FadeInOnVisible>
+          </div>
+          {/* Row 6-12: ResponsiveGridCarousel */}
+          <div className="col-span-4 row-span-7">
+            <FadeInOnVisible>
+              <ResponsiveGridCarousel items={carouselItems} />
+            </FadeInOnVisible>
+          </div>
+          {/* Row 13-17: MindbulletsArchive (mobile: 5 rows, 4 cols) */}
+          <div className="col-span-4 row-span-5">
+            <FadeInOnVisible>
+              <div>
+                <MindbulletArchive />
+              </div>
+            </FadeInOnVisible>
+          </div>
+          {/* Row 18: See Keynotes and Back to top */}
+          <div className="col-span-2 row-span-1">
+            <FadeInOnVisible>
+              <a href="/keynotes" className="transition font-bold cursor-pointer">
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  See Keynotes
+                </UnderlineOnHoverAnimation>
+              </a>
+            </FadeInOnVisible>
+          </div>
+          <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+            <FadeInOnVisible>
+                <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    style={{ transform: 'rotate(-45deg)' }}
+                  >
+                    <path d="M12 19V5M5 12l7-7 7 7" />
+                  </svg>
+                  Back to top
+                </span>
+              </FadeInOnVisible>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // Desktop grid config (unchanged)
   const gridItems = [
     {
       id: 'mindbullets-1',
@@ -83,9 +173,20 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
       colSpan: 6,
       rowSpan: 2,
     },
+    {
+      id: 'mindbullets-7',
+      content: (
+        <FadeInOnVisible>
+          <div>
+            <MindbulletArchive />
+          </div>
+        </FadeInOnVisible>
+      ),
+      colSpan: 6,
+      rowSpan: 2,
+    },
   ];
 
-  // Render from the configuration array
   return (
     <>
       {gridItems.map((item) => (

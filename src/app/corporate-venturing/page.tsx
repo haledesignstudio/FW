@@ -1,13 +1,12 @@
 // app/corporate-venturing/page.tsx
 import { client } from '@/sanity/lib/client';
 import { corporatePageQuery, podcastQuery } from '@/sanity/lib/queries';
-import { commonHeader } from '@/components/insights/CommonHeader';
+import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { notFound } from 'next/navigation';
 import type { PortableTextBlock } from '@portabletext/types';
 import CorporateSection from './corporate';
-import { getGridClasses } from '@/components/insights/grid';
 
 type CorporatePageDoc = {
   title: string;
@@ -35,18 +34,19 @@ export default async function CorporateVenturingPage() {
 
   if (!doc) notFound();
 
-   const headerItems = commonHeader(doc.title, 'corporate');
+  //  const headerItems = commonHeader(doc.title, 'corporate');
 
   return (
     <>
       <Header />
       <main className="p-[2vh] md:p-[4vh] bg-[#F9F7F2]">
+        <CommonHeader title={doc.title} active="corporate" />
         <div className="grid gap-[2vh] grid-cols-2 md:grid-cols-6 auto-rows-[25vh]">
-          {headerItems.map((item) => (
+          {/* {headerItems.map((item) => (
                       <div key={item.id} className={getGridClasses(item)}>
                         {item.content}
                       </div>
-                    ))}
+                    ))} */}
           <CorporateSection
             title={doc.title}
             subheading={doc.subheading}

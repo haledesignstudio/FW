@@ -1,8 +1,7 @@
 // app/insights/podcast/page.tsx
 import { client } from '@/sanity/lib/client';
 import { podcastPageQuery, podcastQuery } from '@/sanity/lib/queries';
-import { commonHeader } from '@/components/insights/CommonHeader';
-import { getGridClasses } from '@/components/insights/grid';
+import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { notFound } from 'next/navigation';
@@ -33,20 +32,21 @@ export default async function PodcastPage() {
   if (!doc) notFound();
 
   // Use podcastPage.title for the header and mark "podcast" active
-  const headerItems = commonHeader(doc.title, 'podcast');
+  // const headerItems = commonHeader(doc.title, 'podcast');
 
   return (
     <>
       <Header />
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
         {/* Header grid */}
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
-          {headerItems.map((item) => (
+          {/* Desktop: grid items */}
+          {/* {headerItems.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}
             </div>
-          ))}
-        </div>
+          ))} */}
+          {/* Mobile: client component renders its own grid */}
+          <CommonHeader title={doc.title} active="podcast" />
 
         {/* Podcast content (client) */}
         <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">

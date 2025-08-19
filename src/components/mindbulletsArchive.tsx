@@ -4,8 +4,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import Link from 'next/link';
-
-// 👉 make sure these point to your setup
 import { client } from '@/sanity/lib/client';
 import { defineQuery } from 'next-sanity';
 import { urlFor } from '@/sanity/lib/image';

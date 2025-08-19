@@ -116,13 +116,13 @@ const Footer: React.FC = () => {
             id: 4,
             content: (
                 <ul className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
-                    <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="Contact" delay={2000} speed={20} triggerOnVisible={false} /> : "Contact"}</a></li>
-                    <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Keynotes" delay={2000} speed={20} triggerOnVisible={false} /> : "Keynotes"}</a></li>
-                    <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Join us" delay={2000} speed={20} triggerOnVisible={false} /> : "Join us"}</a></li>
+                    <li><a href="/contact">{shouldAnimate ? <FutureText text="Contact" delay={2000} speed={20} triggerOnVisible={false} /> : "Contact"}</a></li>
+                    <li><a href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={2000} speed={20} triggerOnVisible={false} /> : "Keynotes"}</a></li>
+                    <li><a href="/people">{shouldAnimate ? <FutureText text="Join us" delay={2000} speed={20} triggerOnVisible={false} /> : "Join us"}</a></li>
                     <li><a href="/faq">{shouldAnimate ? <FutureText text="FAQs" delay={2000} speed={20} triggerOnVisible={false} /> : "FAQs"}</a></li>
                     <li><a href="/privacy-policy">{shouldAnimate ? <FutureText text="Privacy policy" delay={2000} speed={20} triggerOnVisible={false} /> : "Privacy policy"}</a></li>
                     <li><a href="/terms-conditions">{shouldAnimate ? <FutureText text="Terms and conditions" delay={2000} speed={20} triggerOnVisible={false} /> : "Terms and conditions"}</a></li>
-                    <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Shareholder Value Analytics" delay={2000} speed={20} triggerOnVisible={false} /> : "Shareholder Value Analytics"}</a></li>
+                    <li><a href="/insights">{shouldAnimate ? <FutureText text="Shareholder Value Analytics" delay={2000} speed={20} triggerOnVisible={false} /> : "Shareholder Value Analytics"}</a></li>
                 </ul>
             ),
             colSpan: 1,

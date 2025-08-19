@@ -4,8 +4,7 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { client } from '@/sanity/lib/client';
 import { shareholderPageQuery } from '@/sanity/lib/queries';
-import { commonHeader } from '@/components/insights/CommonHeader';
-import { getGridClasses } from '@/components/insights/grid';
+import CommonHeader from '@/components/insights/CommonHeader';
 import ShareholderValueAnalytics from './shareholder-value-analytics';
 import type { PortableTextBlock } from '@portabletext/types';
 
@@ -31,20 +30,15 @@ export default async function ShareholderValueAnalyticsPage() {
   }
 
   // Use "analytics" so your header nav highlights the correct section
-  const headerItems = commonHeader(data.title, 'analytics');
+  // const headerItems = commonHeader(data.title, 'analytics');
 
   return (
     <>
       <Header />
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
+      
         {/* Header grid */}
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
-          {headerItems.map((item) => (
-            <div key={item.id} className={getGridClasses(item)}>
-              {item.content}
-            </div>
-          ))}
-        </div>
+        <CommonHeader title={data.title} active="insights" />
 
         {/* Client component grid content */}
         <ShareholderValueAnalytics

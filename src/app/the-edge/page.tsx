@@ -1,8 +1,7 @@
 // app/insights/edge/page.tsx
 import { client } from '@/sanity/lib/client';
 import { edgePageQuery, podcastQuery } from '@/sanity/lib/queries';
-import { commonHeader } from '@/components/insights/CommonHeader';
-import { getGridClasses } from '@/components/insights/grid';
+import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { notFound } from 'next/navigation';
@@ -36,20 +35,14 @@ export default async function EdgePage() {
   if (!doc) notFound();
 
   // Use the Edge page title for the common header and mark "edge" active
-  const headerItems = commonHeader(doc.title, 'edge');
+  // const headerItems = commonHeader(doc.title, 'edge');
 
   return (
     <>
       <Header />
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
         {/* Header grid */}
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
-          {headerItems.map((item) => (
-            <div key={item.id} className={getGridClasses(item)}>
-              {item.content}
-            </div>
-          ))}
-        </div>
+        <CommonHeader title={doc.title} active="edge" />
 
         {/* Edge content (client) */}
         <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">

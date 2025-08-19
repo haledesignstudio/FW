@@ -1,8 +1,7 @@
 // src/app/mindbullets/page.tsx
 import { client } from '@/sanity/lib/client';
 import { mindbulletsPageQuery, podcastQuery } from '@/sanity/lib/queries';
-import { commonHeader } from '@/components/insights/CommonHeader';
-import { getGridClasses } from '@/components/insights/grid';
+import CommonHeader from '@/components/insights/CommonHeader';
 import Mindbullets from './mindbullets';
 import MindbulletArchive from '@/components/mindbulletsArchive';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
@@ -36,19 +35,22 @@ export default async function MindbulletsPage() {
     notFound();
   }
 
-  const headerItems = commonHeader(doc.title, 'mindbullets');
+  // const headerItems = commonHeader(doc.title, 'mindbullets');
 
   return (
     <>
       <Header />
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
-          {headerItems.map((item) => (
+          {/* Desktop: grid items */}
+          {/* {headerItems.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}
             </div>
-          ))}
+          ))} */}
+          {/* Mobile: client component renders its own grid */}
+          <CommonHeader title={doc.title} active="mindbullets" />
 
+        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
           {/* Client component: render via JSX, not as a function */}
           <Mindbullets
             title={doc.title}
@@ -56,12 +58,6 @@ export default async function MindbulletsPage() {
             podcasts={podcasts}
           />
         </div>
-
-        <FadeInOnVisible>
-          <div>
-            <MindbulletArchive />
-          </div>
-        </FadeInOnVisible>
       </main>
       <Footer />
     </>

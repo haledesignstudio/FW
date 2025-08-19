@@ -153,12 +153,23 @@ export default function FAQClient({ faqData }: Props) {
               </React.Fragment>
             ))}
             {/* Back to top button after last FAQ */}
-            <div className="col-start-4 col-span-1 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
-              <span className="underline text-[2vh] flex items-center gap-1">Back to top
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 19V5M5 12l7-7 7 7" />
-                </svg>
-              </span>
+            <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+              <FadeInOnVisible>
+                <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    style={{ transform: 'rotate(-45deg)' }}
+                  >
+                    <path d="M12 19V5M5 12l7-7 7 7" />
+                  </svg>
+                  Back to top
+                </span>
+              </FadeInOnVisible>
             </div>
             {/* Empty row after back to top */}
             <div className="col-span-4 row-span-1"></div>

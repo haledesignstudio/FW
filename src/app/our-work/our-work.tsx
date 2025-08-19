@@ -480,12 +480,23 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
             {/* Back to Top Button After Accordion */}
             <div className="p-[2vh] bg-[#F9F7F2]">
               <div className="grid grid-cols-4 gap-[2vh]">
-                <div className="col-start-4 col-span-1 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
-                  <span className="underline text-[2vh] flex items-center gap-1">Back to top
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 19V5M5 12l7-7 7 7" />
-                    </svg>
-                  </span>
+                <div className="col-start-3 col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
+                  <FadeInOnVisible>
+                    <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        style={{ transform: 'rotate(-45deg)' }}
+                      >
+                        <path d="M12 19V5M5 12l7-7 7 7" />
+                      </svg>
+                      Back to top
+                    </span>
+                  </FadeInOnVisible>
                 </div>
               </div>
             </div>
