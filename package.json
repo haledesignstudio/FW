@@ -19,6 +19,8 @@
     "@splidejs/react-splide": "^0.7.12",
     "@tailwindcss/typography": "^0.5.16",
     "@types/three": "^0.177.0",
+    "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",

@@ -11,6 +11,7 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import type { PortableTextBlock } from '@portabletext/types';
+import type { PortableTextReactComponents } from '@portabletext/react';
 
 
 type SanityAssetRef = { _type: 'reference'; _ref: string };
@@ -42,6 +43,14 @@ const mindbulletBySlugQuery = defineQuery(`
     RelatedStories[] { title, link }
   }
 `);
+
+
+
+const ptComponents: Partial<PortableTextReactComponents> = {
+  block: {
+    normal: (props) => <p className="mb-[1em]">{props.children}</p>,
+  },
+};
 
 export async function generateStaticParams() {
     const slugs = await client.fetch<string[]>(
@@ -179,10 +188,10 @@ export default async function MindbulletPage({ params }: PageProps) {
                                 return (
                                     <div className="grid grid-cols-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
                                         <div className="prose max-w-none text-[clamp(0.75vw,2vh,1vw)] leading-relaxed">
-                                            <PortableText value={leftBlocks} />
+                                            <PortableText value={leftBlocks} components={ptComponents} />
                                         </div>
                                         <div className="prose max-w-none text-[clamp(0.75vw,2vh,1vw)] leading-relaxed">
-                                            <PortableText value={rightBlocks} />
+                                            <PortableText value={rightBlocks} components={ptComponents} />
                                         </div>
                                     </div>
                                 );
