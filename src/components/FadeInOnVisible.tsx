@@ -28,11 +28,15 @@ const FadeInOnVisible: React.FC<FadeInOnVisibleProps> = ({
     const node = ref.current;
     if (!node) return;
 
+    let mounted = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          controls.start('visible');
+          // Ensure controls.start is only called after mount
+          setTimeout(() => {
+            if (mounted) controls.start('visible');
+          }, 0);
           if (triggerOnce) observer.disconnect();
         } else if (!triggerOnce) {
           setInView(false);
@@ -42,7 +46,10 @@ const FadeInOnVisible: React.FC<FadeInOnVisibleProps> = ({
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      mounted = false;
+      observer.disconnect();
+    };
   }, [controls, threshold, rootMargin, triggerOnce]);
 
   const content = typeof children === 'function' ? (children as (v: boolean) => React.ReactNode)(inView) : children;

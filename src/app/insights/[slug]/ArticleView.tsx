@@ -148,7 +148,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                         <img
                             src={urlFor(data.authorImage.asset).url()}
                             alt={data.authorImage.alt || "Author image"}
-                            className="w-full h-auto object-cover rounded-lg mb-[1vh]"
+                            className="w-full h-auto object-cover mb-[1vh]"
                         />
                     ) : null}
 
@@ -186,7 +186,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                         <img
                             src={urlFor(data.linkedVideoImage.asset).url()}
                             alt={data.linkedVideoImage.alt || "Linked video image"}
-                            className="w-full h-auto object-cover rounded-lg mb-[1vh]"
+                            className="w-full h-auto object-cover mb-[1vh]"
                         />
                     ) : null}
                     {data.linkedVideoTitle ? <div className="font-bold text-lg">{data.linkedVideoTitle}</div> : null}
@@ -436,7 +436,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                             <img
                                 src={urlFor(data.linkedVideoImage.asset).url()}
                                 alt={data.linkedVideoImage.alt || "Linked video image"}
-                                className="w-full h-auto object-cover rounded-lg mb-[1vh]"
+                                className="w-full h-auto object-cover mb-[1vh]"
                             />
                         ) : null}
                     </div>
@@ -488,7 +488,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                             <img
                                 src={urlFor(data.authorImage.asset).url()}
                                 alt={data.authorImage.alt || "Author image"}
-                                className="w-full h-auto object-cover rounded-lg mb-[1vh]"
+                                className="w-full h-auto object-cover mb-[1vh]"
                             />
                         ) : null}
                     </div>

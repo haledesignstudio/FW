@@ -19,6 +19,17 @@ const MenuIcon: React.FC<MenuIconProps> = ({ stage, onClick }) => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    // Helper for transition styles
+    const transitionBase = {
+        transitionProperty: 'transform, opacity',
+        transitionDuration: '0.4s',
+        transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+    };
+    const transitionBaseDice = {
+        transitionProperty: 'transform, opacity',
+        transitionDuration: '0.5s',
+        transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+    };
     return (
         <div
             className="relative w-full h-full cursor-pointer select-none"
@@ -26,99 +37,91 @@ const MenuIcon: React.FC<MenuIconProps> = ({ stage, onClick }) => {
         >
             <div className="relative w-full h-full">
                 <div className="absolute top-0 right-0 w-[6vw] h-[6vw] md:w-[2vw] md:h-[2vw] flex items-center justify-center">
-
                     {/* Top Dot (hidden in dice stage) */}
                     <div
-                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow transition-all duration-400 ease-out"
+                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow"
                         style={{
-                            transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                            ...transitionBase,
+                            transitionDelay: stage === 2 ? '0.3s' : '0s',
                             transform: `translate(${stage === 0
-                                ? isMobile ? 'calc(-0.6vw * 3), 0px' : '-0.6vw, 0px' // Conditional scaling
+                                ? isMobile ? 'calc(-0.6vw * 3), 0px' : '-0.6vw, 0px'
                                 : stage === 1 || stage === 2
-                                    ? isMobile ? '0px, calc(-0.6vw * 3)' : '0px, -0.6vw' // Conditional scaling
+                                    ? isMobile ? '0px, calc(-0.6vw * 3)' : '0px, -0.6vw'
                                     : ''}) scale(${stage === 2 ? '0' : '1'})`,
                             opacity: stage === 2 ? 0 : 1,
-                            transitionDelay: stage === 2 ? '0.3s' : '0s',
                         }}
                     />
-
                     {/* Center Dot - Always visible */}
                     <div
-                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow transition-all duration-400 ease-out"
+                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow"
                         style={{
-                            transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                            ...transitionBase,
                             transform: `translate(0px, 0px) scale(${stage === 2 ? '1.2' : '1'})`,
                         }}
                     />
-
                     {/* Bottom Dot (hidden in dice stage) */}
                     <div
-                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow transition-all duration-400 ease-out"
+                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow"
                         style={{
-                            transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                            ...transitionBase,
+                            transitionDelay: stage === 2 ? '0.3s' : '0s',
                             transform: `translate(${stage === 0
-                                ? isMobile ? 'calc(0.6vw * 3), 0px' : '0.6vw, 0px' // Conditional scaling
+                                ? isMobile ? 'calc(0.6vw * 3), 0px' : '0.6vw, 0px'
                                 : stage === 1 || stage === 2
-                                    ? isMobile ? '0px, calc(0.6vw * 3)' : '0px, 0.6vw' // Conditional scaling
+                                    ? isMobile ? '0px, calc(0.6vw * 3)' : '0px, 0.6vw'
                                     : ''}) scale(${stage === 2 ? '0' : '1'})`,
                             opacity: stage === 2 ? 0 : 1,
-                            transitionDelay: stage === 2 ? '0.3s' : '0s',
                         }}
                     />
-
                     {/* Dice Dots (appear only in stage 2) */}
                     {/* Top Left */}
                     <div
-                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow transition-all duration-500 ease-out"
+                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow"
                         style={{
-                            transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                            ...transitionBaseDice,
                             transitionDelay: stage === 2 ? '0.2s' : '0s',
-                            transform: `translate(${stage === 2 
+                            transform: `translate(${stage === 2
                                 ? isMobile ? 'calc(-0.5vw * 3), calc(-0.5vw * 3)' : '-0.5vw, -0.5vw'
                                 : isMobile ? '0px, calc(-0.6vw * 3)' : '0px, -0.6vw'}) scale(${stage === 2 ? '1.1' : '0'})`,
                             opacity: stage === 2 ? 1 : 0,
                         }}
                     />
-
                     {/* Top Right */}
                     <div
-                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow transition-all duration-500 ease-out"
+                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow"
                         style={{
-                            transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                            ...transitionBaseDice,
                             transitionDelay: stage === 2 ? '0.2s' : '0s',
-                            transform: `translate(${stage === 2 
+                            transform: `translate(${stage === 2
                                 ? isMobile ? 'calc(0.5vw * 3), calc(-0.5vw * 3)' : '0.5vw, -0.5vw'
                                 : isMobile ? '0px, calc(-0.6vw * 3)' : '0px, -0.6vw'}) scale(${stage === 2 ? '1.1' : '0'})`,
                             opacity: stage === 2 ? 1 : 0,
                         }}
                     />
-
                     {/* Bottom Left */}
                     <div
-                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow transition-all duration-500 ease-out"
+                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow"
                         style={{
-                            transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                            ...transitionBaseDice,
                             transitionDelay: stage === 2 ? '0.3s' : '0s',
-                            transform: `translate(${stage === 2 
+                            transform: `translate(${stage === 2
                                 ? isMobile ? 'calc(-0.5vw * 3), calc(0.5vw * 3)' : '-0.5vw, 0.5vw'
                                 : isMobile ? '0px, calc(0.6vw * 3)' : '0px, 0.6vw'}) scale(${stage === 2 ? '1.1' : '0'})`,
                             opacity: stage === 2 ? 1 : 0,
                         }}
                     />
-
                     {/* Bottom Right */}
                     <div
-                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow transition-all duration-500 ease-out"
+                        className="absolute w-[1.2vw] h-[1.2vw] md:w-[0.4vw] md:h-[0.4vw] bg-black rounded-full shadow"
                         style={{
-                            transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                            ...transitionBaseDice,
                             transitionDelay: stage === 2 ? '0.3s' : '0s',
-                            transform: `translate(${stage === 2 
+                            transform: `translate(${stage === 2
                                 ? isMobile ? 'calc(0.5vw * 3), calc(0.5vw * 3)' : '0.5vw, 0.5vw'
                                 : isMobile ? '0px, calc(0.6vw * 3)' : '0px, 0.6vw'}) scale(${stage === 2 ? '1.1' : '0'})`,
                             opacity: stage === 2 ? 1 : 0,
                         }}
                     />
-
                 </div>
             </div>
         </div>

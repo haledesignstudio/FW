@@ -242,6 +242,22 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
             landscapeColSpan: 4,
             landscapeRowSpan: 2,
         },
+        {
+            id: 10,
+            content: (
+                <FadeInOnVisible>
+                    <div className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
+                        <WhatWeDoAccordion data={data} />
+                    </div>
+                </FadeInOnVisible>
+            ),
+            colSpan: 6,
+            rowSpan: 4,
+            mobileColSpan: 2,
+            mobileRowSpan: 2,
+            landscapeColSpan: 4,
+            landscapeRowSpan: 2,
+        },
 
     ];
 
@@ -390,9 +406,9 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                 ))}
                             </div>
                         </div>
-                        <div className="w-full">
+                        {/* <div className="w-full">
                             <WhatWeDoAccordion data={data} />
-                        </div>
+                        </div> */}
                     </>
                 )}
             </main>

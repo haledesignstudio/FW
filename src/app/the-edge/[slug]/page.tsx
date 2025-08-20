@@ -2,10 +2,10 @@ import { notFound } from 'next/navigation';
 import { defineQuery, groq } from 'next-sanity';
 import { client } from '@/sanity/lib/client';
 import type { PortableTextBlock } from '@portabletext/types';
-import EdgeView from '@/app/the-edge/[slug]/edgeView';
+import EdgeScenarioView from './edgeView';
+
 
 type RichText = PortableTextBlock[];
-
 type ArticleContent = {
   title: string;
   description: RichText;
@@ -43,7 +43,6 @@ const scenarioBySlugQuery = defineQuery(`
       description,
       "image": { "url": image.asset->url, "alt": image.alt }
     }
-  }
 `);
 
 export async function generateStaticParams() {
