@@ -41,7 +41,7 @@ interface EdgeScenarioDesktopViewProps {
 	slug: string;
 }
 
-export default function EdgeScenarioView({ data, slug }: EdgeScenarioDesktopViewProps) {
+export default function EdgeView({ data, slug }: EdgeScenarioDesktopViewProps) {
 	const isMobile = useIsMobile();
 	const topRef = useRef<HTMLDivElement>(null);
 	// Example: transform articleContents to carousel items (customize as needed)
