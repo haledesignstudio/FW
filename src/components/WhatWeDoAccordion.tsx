@@ -31,6 +31,7 @@ export type WhatWeDoAccordionItem = {
     prompt: PortableTextBlock[];
     entries: [WhatWeDoEntry, WhatWeDoEntry, WhatWeDoEntry];
 };
+
 function useIsMobile(breakpoint = 768) {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
