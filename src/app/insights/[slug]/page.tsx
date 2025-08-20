@@ -17,7 +17,6 @@ type Article = {
   body?: PortableTextBlock[];
   pdfUrl?: string;
 
-
   // Author (main section)
   authorName?: string;
   authorPosition?: string;
@@ -34,6 +33,15 @@ type Article = {
   linkedVideoLink?: string;
 };
 
+// Minimal Mindbullet shape for the carousel
+type MindbulletCompact = {
+  _id: string;
+  title: string;
+  slug?: string;
+  mainImage?: SanityImage;
+  body?: PortableTextBlock[];
+};
+
 // Primary fetch by slug.current
 const articleBySlugQuery = defineQuery(`
   *[_type == "article" && slug.current == $slug][0]{
@@ -45,7 +53,6 @@ const articleBySlugQuery = defineQuery(`
     image { asset, alt },
     body[],
     "pdfUrl": pdfUpload.asset->url,
-
 
     // Author (main)
     authorName,
@@ -76,7 +83,6 @@ const articleByIdQuery = defineQuery(`
     body[],
     "pdfUrl": pdfUpload.asset->url,
 
-
     // Author (main)
     authorName,
     authorPosition,
@@ -91,6 +97,17 @@ const articleByIdQuery = defineQuery(`
     linkedVideoDescription[],
     linkedVideoImage { asset, alt },
     linkedVideoLink
+  }
+`);
+
+// Mindbullets for the carousel (grab a handful)
+const mindbulletsQuery = defineQuery(`
+  *[_type == "mindbullet"] | order(publishedAt desc)[0...12]{
+    _id,
+    title,
+    "slug": slug.current,
+    mainImage { asset, alt },
+    body[]
   }
 `);
 
@@ -130,5 +147,9 @@ export default async function ArticlePage({ params }: PageProps) {
   }
 
   if (!data) notFound();
-  return <ArticleView data={data} />;
+
+  // Fetch mindbullets for the carousel
+  const mindbullets = await client.fetch<MindbulletCompact[]>(mindbulletsQuery);
+
+  return <ArticleView data={data} mindbullets={mindbullets} />;
 }

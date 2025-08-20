@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import FadeInOnVisible from "@/components/FadeInOnVisible";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
@@ -9,16 +9,17 @@ import CommonHeader from "@/components/insights/CommonHeader";
 import { getGridClasses } from "@/components/insights/grid";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import type { PortableTextBlock } from '@portabletext/types';
-import Link from 'next/link';
-
+import type { PortableTextBlock } from "@portabletext/types";
+import Link from "next/link";
+import Carousel from "@/components/Carousel";
 
 type RelatedStory = { title: string; link: string };
+
 type Mindbullet = {
   _id: string;
   title: string;
   slug?: string;
-  mainImage?: { asset?: { _type: 'reference'; _ref: string }; alt?: string };
+  mainImage?: { asset?: { _type: "reference"; _ref: string }; alt?: string };
   publishedAt: string;
   dateline: string;
   byLine?: string;
@@ -26,7 +27,17 @@ type Mindbullet = {
   RelatedStories?: RelatedStory[];
 };
 
-function splitPortableBlocks(blocks: PortableTextBlock[]): [PortableTextBlock[], PortableTextBlock[]] {
+type MoreCard = {
+  _id: string;
+  title?: string;
+  slug?: string;
+  imageUrl?: string;
+  description?: string; // plain-text body
+};
+
+function splitPortableBlocks(
+  blocks: PortableTextBlock[]
+): [PortableTextBlock[], PortableTextBlock[]] {
   const mid = Math.ceil(blocks.length / 2);
   return [blocks.slice(0, mid), blocks.slice(mid)];
 }
@@ -39,10 +50,27 @@ const ptComponents: PortableTextComponents = {
 
 interface MindbulletsViewProps {
   data: Mindbullet;
+  more: MoreCard[]; // passed from the server page (already excludes current slug)
 }
 
-const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
+const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   const [leftBlocks, rightBlocks] = splitPortableBlocks(data.body || []);
+
+  // Map 'more' to Carousel items, double-safety exclude current slug
+  const carouselItems = useMemo(() => {
+    const current = data.slug ?? "";
+    return (more || [])
+      .filter((mb) => (mb.slug ?? "") !== current)
+      .map((mb) => ({
+        src:
+          mb.imageUrl && mb.imageUrl.length > 0
+            ? mb.imageUrl
+            : "/placeholder-image.png",
+        heading: mb.title ?? "Untitled",
+        description: mb.description ?? "",
+        href: mb.slug ? `/mindbullets/${mb.slug}` : "#",
+      }));
+  }, [more, data.slug]);
 
   // --- MOBILE ---
   const mobile = (
@@ -51,6 +79,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
         <div className="col-span-4 row-span-2 text-[5vh] font-graphik leading-tight">
           Mindbullets: News from the Future
         </div>
+
         {data.mainImage?.asset && (
           <div className="col-span-4 row-span-2">
             <img
@@ -60,12 +89,15 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
             />
           </div>
         )}
+
         <div className="col-span-4 row-span-1 font-graphik text-[3vh] leading-tight">
           {data.title}
         </div>
+
         <div className="col-span-4 row-span-1 text-[2vh] font-graphik leading-tight">
           {data.byLine}
         </div>
+
         <div className="col-span-2 row-span-1 flex items-center">
           <span className="font-roboto text-[1.5vh] leading-tight">
             {new Intl.DateTimeFormat("en-GB", {
@@ -76,28 +108,82 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
             }).format(new Date(`${data.dateline}T00:00:00Z`))}
           </span>
         </div>
+
+        {/* Body */}
         <div className="col-span-4">
           <PortableText value={leftBlocks} components={ptComponents} />
           <PortableText value={rightBlocks} components={ptComponents} />
         </div>
+
+        {/* Disclaimer */}
         <div className="col-span-4 h-4" />
         <div className="col-span-4">
-          <p className="text-[3vh] font-bold leading-relaxed text-[#DC5A50]"> Warning: Hazardous thinking at work </p>
-          <p className="mt-[2vh] text-[2vh] leading-relaxed text-[#DC5A50]">Despite appearances to the contrary, Futureworld cannot and does not predict the future. Our Mindbullets scenarios are fictitious and designed purely to explore possible futures, challenge and stimulate strategic thinking. Use these at your own risk. Any reference to actual people, entities or events is entirely allegorical. Copyright Futureworld International Limited. Reproduction or distribution permitted only with recognition of Copyright and the inclusion of this disclaimer. </p>
+          <p className="text-[3vh] font-bold leading-relaxed text-[#DC5A50]">
+            {" "}
+            Warning: Hazardous thinking at work{" "}
+          </p>
+          <p className="mt-[2vh] text-[2vh] leading-relaxed text-[#DC5A50]">
+            Despite appearances to the contrary, Futureworld cannot and does not
+            predict the future. Our Mindbullets scenarios are fictitious and
+            designed purely to explore possible futures, challenge and stimulate
+            strategic thinking. Use these at your own risk. Any reference to
+            actual people, entities or events is entirely allegorical. Copyright
+            Futureworld International Limited. Reproduction or distribution
+            permitted only with recognition of Copyright and the inclusion of
+            this disclaimer.
+          </p>
         </div>
+
+        {/* Carousel (mobile) */}
+        {carouselItems.length > 0 && (
+          <div className="col-span-4 mt-[25vh]">
+            <FadeInOnVisible>
+            <div className="text-[2vh] font-bold leading-relaxed mb-[2vh]">You may also like</div>
+            <Carousel
+              items={carouselItems}
+              imageHeight="25vh"
+              captionHeight="25vh"
+              innerRowGap="4vh"
+              gap="4vh"
+              mobileImageHeight="22vh"
+              mobileCaptionHeight="22vh"
+              mobileInnerRowGap="3vh"
+              mobileGap="3vh"
+            />
+            </FadeInOnVisible>
+          </div>
+        )}
+
+        
+
         <div className="col-span-2 row-span-1">
           <FadeInOnVisible>
-            <Link href="/keynotes" className="transition font-bold cursor-pointer">
+            <Link
+              href="/keynotes"
+              className="transition font-bold cursor-pointer"
+            >
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                 See Keynotes
               </UnderlineOnHoverAnimation>
             </Link>
           </FadeInOnVisible>
         </div>
-        <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+
+        <div
+          className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           <FadeInOnVisible>
             <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: "rotate(-45deg)" }}>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                style={{ transform: "rotate(-45deg)" }}
+              >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
               Back to top
@@ -111,7 +197,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
   // --- DESKTOP ---
   const gridItems = [
     {
-      id: 'mindbullet-1',
+      id: "mindbullet-1",
       content: (
         <FadeInOnVisible>
           <h1 className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
@@ -123,26 +209,25 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
       rowSpan: 3,
     },
     {
-      id: 'mindbullet-2',
+      id: "mindbullet-2",
       content: <></>,
       colSpan: 1,
       rowSpan: 3,
     },
     {
-      id: 'mindbullet-3',
-      content:
-        data.mainImage?.asset ? (
-          <img
-            src={urlFor(data.mainImage.asset).url()}
-            alt={'Process image'}
-            className="w-full h-full object-cover"
-          />
-        ) : null,
+      id: "mindbullet-3",
+      content: data.mainImage?.asset ? (
+        <img
+          src={urlFor(data.mainImage.asset).url()}
+          alt={"Process image"}
+          className="w-full h-full object-cover"
+        />
+      ) : null,
       colSpan: 6,
       rowSpan: 3,
     },
     {
-      id: 'mindbullet-4',
+      id: "mindbullet-4",
       content: (
         <FadeInOnVisible>
           <div className="h-full flex flex-col gap-[1vh]">
@@ -159,17 +244,19 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
       rowSpan: 1,
     },
     {
-      id: 'mindbullet-5',
+      id: "mindbullet-5",
       content: (
         <div className="h-full flex items-center">
           <div className="flex flex-row items-center gap-[2vh]">
-            <div className="font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">Dateline</div>
             <div className="font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
-              {new Intl.DateTimeFormat('en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-                timeZone: 'UTC',
+              Dateline
+            </div>
+            <div className="font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
+              {new Intl.DateTimeFormat("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                timeZone: "UTC",
               }).format(new Date(`${data.dateline}T00:00:00Z`))}
             </div>
           </div>
@@ -177,12 +264,14 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
       ),
       colSpan: 6,
       rowSpan: 1,
-    }
+    },
   ];
 
   const desktop = (
     <div className="hidden md:block">
       <CommonHeader title={data.title} active="mindbullets" />
+
+      {/* Top grid */}
       <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
         {gridItems.map((item) => (
           <div
@@ -197,6 +286,10 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
           </div>
         ))}
       </div>
+
+
+
+      {/* Body + disclaimer */}
       <FadeInOnVisible>
         <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
           <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4">
@@ -209,22 +302,40 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
               </div>
             </div>
           </div>
+
           <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2">
             <div className="h-full flex items-start">
               <div className="max-w-none">
-                <p className="text-[clamp(0.95vw,2.25vh,1.125vw)] font-bold leading-relaxed text-[#DC5A50]"> Warning: Hazardous thinking at work </p>
-                <p className="mt-[2vh] text-[clamp(0.75vw,2vh,1vw)] leading-relaxed text-[#DC5A50]">Despite appearances to the contrary, Futureworld cannot and does not predict the future. Our Mindbullets scenarios are fictitious and designed purely to explore possible futures, challenge and stimulate strategic thinking. Use these at your own risk. Any reference to actual people, entities or events is entirely allegorical. Copyright Futureworld International Limited. Reproduction or distribution permitted only with recognition of Copyright and the inclusion of this disclaimer. </p>
+                <p className="text-[clamp(0.95vw,2.25vh,1.125vw)] font-bold leading-relaxed text-[#DC5A50]">
+                  {" "}
+                  Warning: Hazardous thinking at work{" "}
+                </p>
+                <p className="mt-[2vh] text-[clamp(0.75vw,2vh,1vw)] leading-relaxed text-[#DC5A50]">
+                  Despite appearances to the contrary, Futureworld cannot and
+                  does not predict the future. Our Mindbullets scenarios are
+                  fictitious and designed purely to explore possible futures,
+                  challenge and stimulate strategic thinking. Use these at your
+                  own risk. Any reference to actual people, entities or events
+                  is entirely allegorical. Copyright Futureworld International
+                  Limited. Reproduction or distribution permitted only with
+                  recognition of Copyright and the inclusion of this disclaimer.
+                </p>
               </div>
             </div>
           </div>
+
           <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
         </div>
       </FadeInOnVisible>
+
+      {/* Related links */}
       {data.RelatedStories?.length ? (
         <FadeInOnVisible>
           <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[10vh]">
             <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2">
-              <p className=" text-[clamp(0.75vw,2vh,1vw)] font-bold leading-relaxed">Links to related stories</p>
+              <p className=" text-[clamp(0.75vw,2vh,1vw)] font-bold leading-relaxed">
+                Links to related stories
+              </p>
               <ul className="list space-y-[0.75vh] mt-[2vh]">
                 {data.RelatedStories.map((r: RelatedStory, i: number) => (
                   <li key={`${r.link}-${i}`}>
@@ -234,7 +345,12 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#232323">{r.title}</UnderlineOnHoverAnimation>
+                      <UnderlineOnHoverAnimation
+                        hasStaticUnderline={true}
+                        color="#232323"
+                      >
+                        {r.title}
+                      </UnderlineOnHoverAnimation>
                     </a>
                   </li>
                 ))}
@@ -244,6 +360,22 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data }) => {
           </div>
         </FadeInOnVisible>
       ) : null}
+
+      {/* Carousel (desktop) */}
+      {carouselItems.length > 0 && (
+        <FadeInOnVisible>
+          <div className="mt-[25vh]">
+            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-relaxed mb-[2vh]">You may also like</div>
+            <Carousel
+              items={carouselItems}
+              imageHeight="25vh"
+              captionHeight="25vh"
+              innerRowGap="4vh"
+              gap="4vh"
+            />
+          </div>
+        </FadeInOnVisible>
+      )}
     </div>
   );
 

@@ -10,7 +10,9 @@ export const speakersQuery = defineQuery(`
       alt
     },
     position,
-    company
+    company,
+    mailtoSubject,
+    email
   }
 `);
 
@@ -281,7 +283,7 @@ export const podcastQuery = defineQuery(`
     subheading,
     description,
     embedLink,
-    slug,
+    "slug": slug.current,
     headerImage {
       asset->{
         url

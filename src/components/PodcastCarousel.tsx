@@ -56,20 +56,8 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-// ===== NEW: helpers for dynamic line-clamp =====
-const ALL_CLAMPS = [
-  "line-clamp-1",
-  "line-clamp-2",
-  "line-clamp-3",
-  "line-clamp-4",
-  "line-clamp-5",
-  "line-clamp-6",
-];
-function applyClamp(el: HTMLElement, lines: number) {
-  ALL_CLAMPS.forEach((c) => el.classList.remove(c));
-  el.classList.add(`line-clamp-${lines}`);
-}
-// ==============================================
+
+
 
 // Helper type to stash mounted React roots on DOM nodes (for cleanup)
 type WithRoots = { __roots?: Root[] };
@@ -126,7 +114,6 @@ export default function Carousel({
     [UNIT_WIDTH, COL_GAP]
   );
 
-  // Toggle image filter, heading weight, and description clamp based on span
   const setColSpan = useCallback(
     (el: HTMLElement, span: 1 | 2) => {
       const s = isMobile ? 1 : span;
@@ -137,7 +124,6 @@ export default function Carousel({
 
       const img = el.querySelector("img") as HTMLImageElement | null;
       const heading = el.querySelector(".carousel-heading") as HTMLElement | null;
-      const desc = el.querySelector(".carousel-desc") as HTMLElement | null;
 
       if (img) {
         img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
@@ -149,24 +135,7 @@ export default function Carousel({
             ? "carousel-heading font-bold text-2xl"
             : "carousel-heading font-semibold text-base";
       }
-      // ===== NEW: dynamic clamp per breakpoint + featured/normal =====
-      if (desc) {
-        const featuredLinesDesktop = 5;
-        const normalLinesDesktop = 3;
-        const featuredLinesMobile = 3;
-        const normalLinesMobile = 2;
-
-        const lines = isMobile
-          ? s === 2
-            ? featuredLinesMobile
-            : normalLinesMobile
-          : s === 2
-          ? featuredLinesDesktop
-          : normalLinesDesktop;
-
-        applyClamp(desc, lines);
-      }
-      // ===============================================================
+      
     },
     [UNIT_WIDTH, colHeight, isMobile]
   );
@@ -208,8 +177,8 @@ export default function Carousel({
       }
       if (item.description) {
         const d = document.createElement("div");
-        // ===== NEW: stable selector + default clamp =====
-        d.className = "carousel-desc mt-1 line-clamp-3";
+
+        d.className = "carousel-desc mt-1 ";
         // ================================================
         d.textContent = item.description;
         textWrap.appendChild(d);
@@ -239,7 +208,7 @@ export default function Carousel({
         (col as unknown as WithRoots).__roots!.push(root);
         root.render(
           <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-            Read More
+            Listen now
           </UnderlineOnHoverAnimation>
         );
       }
@@ -406,7 +375,7 @@ export default function Carousel({
                 className="inline-flex items-center gap-2 text-sm font-semibold"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                  Read More
+                  Listen Now
                 </UnderlineOnHoverAnimation>
               </a>
             ) : (
@@ -415,7 +384,7 @@ export default function Carousel({
                 className="inline-flex items-center gap-2 text-sm font-semibold"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                  Read More
+                  Listen Now
                 </UnderlineOnHoverAnimation>
               </button>
             )}

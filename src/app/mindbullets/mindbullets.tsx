@@ -2,38 +2,41 @@
 
 import Link from 'next/link';
 import { HighlightText } from '@/components/HighlightText';
-import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
+import Carousel from '@/components/Carousel';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import MindbulletArchive from '@/components/mindbulletsArchive';
 import { PortableTextBlock } from '@portabletext/types';
 import { getGridClasses } from '@/components/insights/grid';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+type MindbulletDoc = {
+  _id: string;
+  title?: string;
+  slug?: { current: string } | string;
+  mainImage?: { asset?: { url?: string } };
+  bodyPlain?: string; // ⬅️ from GROQ pt::text(body)
+};
 
 type Props = {
   title: string;
   subheading: PortableTextBlock[];
-  podcasts: {
-    _id: string;
-    headline: string;
-    subheading: string;
-    description: string;
-    embedLink?: string;
-    slug?: { current: string };
-    headerImage?: { asset: { url: string }; alt?: string };
-  }[];
+  mindbullets: MindbulletDoc[];
 };
 
+export default function Mindbullets({ title, subheading, mindbullets }: Props) {
+  // Map Mindbullet docs -> Carousel items
+  const carouselItems = mindbullets.map((mb) => {
+    const slugStr = typeof mb.slug === 'string' ? mb.slug : mb.slug?.current;
+    return {
+      src: mb.mainImage?.asset?.url || '/placeholder-image.png',
+      heading: mb.title ?? 'Untitled',
+      description: mb.bodyPlain ?? '', // ⬅️ use bodyPlain
+      href: slugStr ? `/mindbullets/${slugStr}` : '#',
+    };
+  });
 
-export default function Mindbullets({ title, subheading, podcasts }: Props) {
-  const carouselItems = podcasts.map((podcast) => ({
-    id: `podcastcarousel-${podcast._id}`,
-    image: podcast.headerImage?.asset?.url || '/placeholder-image.png',
-    heading: podcast.headline,
-    body: podcast.description,
-    link: podcast.embedLink || '#',
-  }));
-
+  // Your existing mobile helper
   function useIsMobile(breakpoint = 768) {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
@@ -63,8 +66,10 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
               </div>
             </FadeInOnVisible>
           </div>
+
           {/* Row 3: Empty */}
-          <div className="col-span-4 row-span-1"></div>
+          <div className="col-span-4 row-span-1" />
+
           {/* Row 4-5: Subheading */}
           <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
@@ -73,13 +78,27 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
               </div>
             </FadeInOnVisible>
           </div>
-          {/* Row 6-12: ResponsiveGridCarousel */}
+
+          {/* Row 6-12: Carousel */}
           <div className="col-span-4 row-span-7">
             <FadeInOnVisible>
-              <ResponsiveGridCarousel items={carouselItems} />
+              <Carousel
+                items={carouselItems}
+                // Mobile-specific sizing (adjust as you like)
+                mobileImageHeight="22vh"
+                mobileCaptionHeight="22vh"
+                mobileInnerRowGap="3vh"
+                mobileGap="3vh"
+                // Desktop defaults (used when screen grows)
+                imageHeight="25vh"
+                captionHeight="25vh"
+                innerRowGap="4vh"
+                gap="4vh"
+              />
             </FadeInOnVisible>
           </div>
-          {/* Row 13-17: MindbulletsArchive (mobile: 5 rows, 4 cols, auto-rows-auto) */}
+
+          {/* Row 13-17: Archive */}
           <div className="col-span-4 row-span-5 auto-rows-auto">
             <FadeInOnVisible>
               <div className="grid auto-rows-auto">
@@ -87,7 +106,8 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
               </div>
             </FadeInOnVisible>
           </div>
-          {/* Row 18: See Keynotes and Back to top */}
+
+          {/* Row 18: See Keynotes + Back to top */}
           <div className="col-span-2 row-span-1">
             <FadeInOnVisible>
               <Link href="/keynotes" className="transition font-bold cursor-pointer">
@@ -97,30 +117,33 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
               </Link>
             </FadeInOnVisible>
           </div>
-          <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+          <div
+            className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
+            onClick={handleBackToTop}
+          >
             <FadeInOnVisible>
-                <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    style={{ transform: 'rotate(-45deg)' }}
-                  >
-                    <path d="M12 19V5M5 12l7-7 7 7" />
-                  </svg>
-                  Back to top
-                </span>
-              </FadeInOnVisible>
+              <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  style={{ transform: 'rotate(-45deg)' }}
+                >
+                  <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+                Back to top
+              </span>
+            </FadeInOnVisible>
           </div>
         </div>
       </main>
     );
   }
 
-  // Desktop grid config (unchanged)
+  // Desktop grid config
   const gridItems = [
     {
       id: 'mindbullets-1',
@@ -134,12 +157,7 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
       colSpan: 5,
       rowSpan: 3,
     },
-    {
-      id: 'mindbullets-2',
-      content: <></>,
-      colSpan: 1,
-      rowSpan: 3,
-    },
+    { id: 'mindbullets-2', content: <></>, colSpan: 1, rowSpan: 3 },
     {
       id: 'mindbullets-3',
       content: (
@@ -152,23 +170,20 @@ export default function Mindbullets({ title, subheading, podcasts }: Props) {
       colSpan: 4,
       rowSpan: 1,
     },
-    {
-      id: 'mindbullets-4',
-      content: <></>,
-      colSpan: 2,
-      rowSpan: 1,
-    },
-    {
-      id: 'mindbullets-5',
-      content: <></>,
-      colSpan: 6,
-      rowSpan: 1,
-    },
+    { id: 'mindbullets-4', content: <></>, colSpan: 2, rowSpan: 1 },
+    { id: 'mindbullets-5', content: <></>, colSpan: 6, rowSpan: 1 },
     {
       id: 'mindbullets-6',
       content: (
         <FadeInOnVisible>
-          <ResponsiveGridCarousel items={carouselItems} />
+          {/* ⬇️ Carousel fed by Mindbullets */}
+          <Carousel
+            items={carouselItems}
+            imageHeight="25vh"
+            captionHeight="25vh"
+            innerRowGap="4vh"
+            gap="4vh"
+          />
         </FadeInOnVisible>
       ),
       colSpan: 6,
