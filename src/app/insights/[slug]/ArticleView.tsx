@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import FadeInOnVisible from "@/components/FadeInOnVisible";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
@@ -12,22 +12,21 @@ import Footer from "@/components/footer";
 import type { PortableTextBlock } from "@portabletext/types";
 import Link from "next/link";
 import type { PortableTextComponentProps } from "@portabletext/react";
-
+import Carousel from "@/components/Carousel";
 
 type SanityAssetRef = { _type: "reference"; _ref: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string };
 
+// Article data (unchanged)
 type Article = {
     _id: string;
     slug?: string;
     title: string;
     byline?: string;
-    datePublished?: string; 
+    datePublished?: string;
     image?: SanityImage;
     body?: PortableTextBlock[];
     pdfUrl?: string;
-
-
 
     authorName?: string;
     authorPosition?: string;
@@ -35,13 +34,21 @@ type Article = {
     authorImage?: SanityImage;
     authorLinkedin?: string;
 
-
     hasLinkedVideo?: boolean;
     linkedVideoTitle?: string;
     linkedVideoSubheading?: string;
     linkedVideoDescription?: PortableTextBlock[];
     linkedVideoImage?: SanityImage;
     linkedVideoLink?: string;
+};
+
+// Minimal Mindbullet passed from server for the carousel
+type MindbulletCompact = {
+    _id: string;
+    title: string;
+    slug?: string;
+    mainImage?: SanityImage;
+    body?: PortableTextBlock[];
 };
 
 function splitPortableBlocks(blocks: PortableTextBlock[] = []): [PortableTextBlock[], PortableTextBlock[]] {
@@ -60,7 +67,6 @@ type EmbedBlockValue = {
     url?: string;
     title?: string;
 };
-
 
 const ptComponents: PortableTextComponents = {
     block: {
@@ -94,13 +100,41 @@ const ptComponents: PortableTextComponents = {
     },
 };
 
+// tiny helper to plain-text a PT body for the carousel description
+function toPlainText(blocks: PortableTextBlock[] = []): string {
+    return blocks
+        .map((b) => {
+            const children = (b.children || []) as Array<{ text?: string }>;
+            return children.map((c) => c.text || "").join("");
+        })
+        .join("\n")
+        .replace(/\s+/g, " ")
+        .trim();
+}
 
 interface ArticleViewProps {
     data: Article;
+    mindbullets?: MindbulletCompact[]; // ⬅️ new prop from server
 }
 
-const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
+const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => {
     const [leftBlocks, rightBlocks] = splitPortableBlocks(data.body);
+
+    // Map Mindbullets to Carousel items
+    const carouselItems = useMemo(() => {
+        return (mindbullets || [])
+            .map((m) => {
+                const src =
+                    m.mainImage?.asset ? urlFor(m.mainImage.asset).url() : "/placeholder-image.png";
+                const description = toPlainText(m.body).slice(0, 400);
+                return {
+                    src,
+                    heading: m.title,
+                    description,
+                    href: m.slug ? `/mindbullets/${m.slug}` : "#",
+                };
+            });
+    }, [mindbullets]);
 
     const AuthorBlock = (
         <>
@@ -227,10 +261,29 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
                     </div>
                 ) : null}
 
-
                 {/* Author & Linked Video (mobile) */}
                 <div className="col-span-4">{AuthorBlock}</div>
                 <div className="col-span-4">{LinkedVideoBlock}</div>
+
+                {/* Carousel (mobile) */}
+                {carouselItems.length > 0 && (
+                    <div className="col-span-4 mt-[25vh]">
+                        <FadeInOnVisible>
+                            <div className="text-[2vh] font-bold leading-relaxed mb-[2vh]">You may also like</div>
+                            <Carousel
+                                items={carouselItems}
+                                imageHeight="25vh"
+                                captionHeight="25vh"
+                                innerRowGap="4vh"
+                                gap="4vh"
+                                mobileImageHeight="22vh"
+                                mobileCaptionHeight="22vh"
+                                mobileInnerRowGap="3vh"
+                                mobileGap="3vh"
+                            />
+                        </FadeInOnVisible>
+                    </div>
+                )}
 
                 <div className="col-span-2 row-span-1 mt-4">
                     <FadeInOnVisible>
@@ -241,6 +294,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
                         </Link>
                     </FadeInOnVisible>
                 </div>
+
 
                 <div
                     className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
@@ -339,14 +393,13 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
                         </div>
                     </div>
 
-                    <div className="col-span-2">
-
-                    </div>
+                    <div className="col-span-2">{/* spacer / aux column */}</div>
 
                     <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
                 </div>
             </FadeInOnVisible>
 
+            {/* Linked Video section ... (unchanged) */}
             <FadeInOnVisible>
                 <div className="grid gap-[2vh] grid-cols-6 mt-[25vh]">
                     <div className="col-span-3 flex flex-col">
@@ -366,7 +419,6 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
                             ) : null}
                         </div>
 
-                        {/* Push this one to the bottom */}
                         <div className="mt-auto text-[clamp(0.8vw,2vh,1vw)] font-graphik leading-[clamp(0.8vw,2vh,1vw)]">
                             <a
                                 href={data.linkedVideoLink}
@@ -378,7 +430,6 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
                             </a>
                         </div>
                     </div>
-
 
                     <div className="col-span-3">
                         {data.linkedVideoImage?.asset ? (
@@ -394,8 +445,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
                 </div>
             </FadeInOnVisible>
 
-
-
+            {/* About the Author section ... (unchanged) */}
             <FadeInOnVisible>
                 <div className="grid gap-[2vh] grid-cols-6 mt-[25vh]">
                     <div className="col-span-3 flex flex-col">
@@ -430,8 +480,6 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
                                     Download PDF
                                 </a>
                             ) : null}
-
-
                         </div>
                     </div>
 
@@ -448,6 +496,21 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data }) => {
                     <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
                 </div>
             </FadeInOnVisible>
+            {/* --- Mindbullets Carousel at the bottom --- */}
+            {carouselItems.length > 0 && (
+                <FadeInOnVisible>
+                    <div className="mt-[25vh]">
+                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-relaxed mb-[2vh]">You may also like</div>
+                        <Carousel
+                            items={carouselItems}
+                            imageHeight="25vh"
+                            captionHeight="25vh"
+                            innerRowGap="4vh"
+                            gap="4vh"
+                        />
+                    </div>
+                </FadeInOnVisible>
+            )}
         </div>
     );
 

@@ -12,6 +12,8 @@ import { HighlightText } from '@/components/HighlightText';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import useIsMobile from '@/hooks/useIsMobile';
+  
+import Carousel, { type CarouselItem } from '@/components/Carousel';
 
 type RichText = PortableTextBlock[];
 type ArticleContent = {
@@ -472,6 +474,20 @@ export default function EdgeScenarioView({ data, slug }: EdgeScenarioDesktopView
 						</div>
 					</div>
 				</FadeInOnVisible>
+        {carouselItems.length > 0 && (
+                    <FadeInOnVisible>
+                        <div className="mt-[25vh]">
+                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-relaxed mb-[2vh]">Mindbullets you may like</div>
+                            <Carousel
+                                items={carouselItems}
+                                imageHeight="25vh"
+                                captionHeight="25vh"
+                                innerRowGap="4vh"
+                                gap="4vh"
+                            />
+                        </div>
+                    </FadeInOnVisible>
+                )}
 			</main>
 			<Footer />
 		</>

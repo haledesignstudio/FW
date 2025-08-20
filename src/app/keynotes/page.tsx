@@ -43,15 +43,19 @@ type Speaker = {
     name: string;
     bio: PortableTextBlock[];
     image?: SanityImage;
+    mailtoSubject?: string;
+    email?: string;
 };
-
 
 type SpeakerForClient = {
     _id: string;
     name: string;
     bio: PortableTextBlock[];
     image: { asset: string; alt?: string };
+    mailtoSubject?: string;
+    email?: string;
 };
+
 
 type SpeakerWithImage = Speaker & { image: SanityImage & { asset: SanityRef } };
 
@@ -83,7 +87,10 @@ export default async function KeynotesPage() {
                     asset: urlFor(s.image).url(),
                     alt: s.image.alt || '',
                 },
+                mailtoSubject: s.mailtoSubject || '',
+                email: s.email || '',
             })) || [];
+
 
 
     // const headerItems = commonHeader(doc.title, 'keynotes');
@@ -99,14 +106,14 @@ export default async function KeynotesPage() {
             <Header />
             <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
                 {/* Header grid */}
-                    {/* Desktop: grid items */}
-                    {/* {headerItems.map((item) => (
+                {/* Desktop: grid items */}
+                {/* {headerItems.map((item) => (
                         <div key={item.id} className={getGridClasses(item)}>
                             {item.content}
                         </div>
                     ))} */}
-                    {/* Mobile: client component renders its own grid */}
-                    <CommonHeader title={doc.title} active="keynotes" />
+                {/* Mobile: client component renders its own grid */}
+                <CommonHeader title={doc.title} active="keynotes" />
 
                 {/* Client-side keynotes content */}
                 <Keynotes keynotes={keynotes} speakers={speakers} />

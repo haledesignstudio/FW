@@ -4,7 +4,7 @@
 import type { PortableTextBlock } from '@portabletext/types';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
-import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
+import PodcastCarousel from '@/components/PodcastCarousel';
 import { getGridClasses } from '@/components/insights/grid';
 import useIsMobile from '@/hooks/useIsMobile';
 import { useCallback } from 'react';
@@ -15,9 +15,19 @@ type Podcast = {
   subheading: string;
   description: string;
   embedLink?: string;
-  slug?: { current: string };
+  slug?: { current: string } | string; // ← allow either
   headerImage?: { asset: { url: string }; alt?: string };
 };
+
+const basePath = "/podcast";
+
+const hrefFromSlug = (p: Podcast) => {
+  const s = p.slug;
+  const slugStr = typeof s === "string" ? s : s?.current;
+  return slugStr ? `${basePath}/${encodeURIComponent(slugStr)}` : "#";
+};
+
+
 
 export default function PodcastSection({
   title,
@@ -30,12 +40,14 @@ export default function PodcastSection({
 }) {
   const isMobile = useIsMobile();
   const carouselItems = podcasts.map((p) => ({
-    id: `podcast-${p._id}`,
-    image: p.headerImage?.asset?.url || '/placeholder-image.png',
+    src: p.headerImage?.asset?.url || "/placeholder-image.png",
     heading: p.headline,
-    body: p.description,
-    link: p.embedLink || '#',
+    description: p.description,
+    href: hrefFromSlug(p), // ← now works for both string or {current}
   }));
+
+
+
 
   const handleBackToTop = useCallback(() => {
     if (typeof window !== 'undefined') {
@@ -67,7 +79,8 @@ export default function PodcastSection({
         {/* Row 5+: Carousel (col 1-4) */}
         <div className="col-span-4 row-end-auto">
           <FadeInOnVisible>
-            <ResponsiveGridCarousel items={carouselItems} />
+            <PodcastCarousel items={carouselItems} />
+
           </FadeInOnVisible>
         </div>
         {/* Back to Top Button (col 3-4, right aligned) */}
@@ -141,7 +154,8 @@ export default function PodcastSection({
       id: 'podcast-6',
       content: (
         <FadeInOnVisible>
-          <ResponsiveGridCarousel items={carouselItems} />
+          <PodcastCarousel items={carouselItems} />
+
         </FadeInOnVisible>
       ),
       colSpan: 6,

@@ -20,6 +20,13 @@ export default defineType({
       validation: (Rule) => Rule.required().max(120),
     }),
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: { source: 'headline', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'subheading',
       title: 'Subheading',
       type: 'string',

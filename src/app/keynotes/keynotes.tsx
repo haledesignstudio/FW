@@ -38,6 +38,8 @@ type SpeakerForClient = {
   name: string;
   bio: PortableTextBlock[];
   image: { asset: string; alt?: string };
+  mailtoSubject?: string;
+    email?: string;
 };
 
 type Props = { keynotes: KeynotesData };
