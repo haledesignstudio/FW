@@ -1,132 +1,198 @@
 import { defineType, defineField } from 'sanity'
-// default article schema for now while we wait to migrate the content from FW site
+
+/**
+ * Shared rich text config: blocks + images + simple embeds
+ * Render the `embed` object in your front-end PortableText components.
+ */
+const RICH_TEXT_OF = [
+  {
+    type: 'block',
+    styles: [
+      { title: 'Normal', value: 'normal' },
+      { title: 'H1', value: 'h1' },
+      { title: 'H2', value: 'h2' },
+      { title: 'H3', value: 'h3' },
+      { title: 'Quote', value: 'blockquote' },
+    ],
+    marks: {
+      decorators: [
+        { title: 'Strong', value: 'strong' },
+        { title: 'Emphasis', value: 'em' },
+        { title: 'Underline', value: 'underline' },
+      ],
+      annotations: [
+        {
+          name: 'link',
+          type: 'object',
+          title: 'Link',
+          fields: [
+            { name: 'href', type: 'url', title: 'URL' },
+            { name: 'openInNewTab', type: 'boolean', title: 'Open in new tab' },
+          ],
+        },
+      ],
+    },
+  },
+  { type: 'image', options: { hotspot: true } },
+  {
+    // Simple rich media embed
+    name: 'embed',
+    title: 'Embed',
+    type: 'object',
+    fields: [
+      { name: 'title', type: 'string', title: 'Title' },
+      {
+        name: 'provider',
+        type: 'string',
+        title: 'Provider',
+        options: {
+          list: ['YouTube', 'Vimeo', 'SoundCloud', 'Spotify', 'Other'],
+          layout: 'dropdown',
+        },
+      },
+      {
+        name: 'url',
+        type: 'url',
+        title: 'URL',
+        description: 'Paste the share/embed URL',
+      },
+    ],
+    preview: {
+      select: { title: 'title', subtitle: 'provider' },
+    },
+  },
+]
+
 const article = defineType({
   name: 'article',
   title: 'Article',
   type: 'document',
   fields: [
+    // Core
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required()
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96
-      },
-      validation: (Rule) => Rule.required()
+      options: { source: 'title', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'excerpt',
-      title: 'Excerpt',
-      type: 'text',
-      description: 'Short description of the article',
-      validation: (Rule) => Rule.max(200)
-    }),
-    defineField({
-      name: 'featuredImage',
-      title: 'Featured Image',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
-    }),
-    defineField({
-      name: 'publishedAt',
-      title: 'Published At',
-      type: 'datetime',
-      initialValue: () => new Date().toISOString()
-    }),
-    defineField({
-      name: 'content',
-      title: 'Content',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          styles: [
-            { title: 'Normal', value: 'normal' },
-            { title: 'H1', value: 'h1' },
-            { title: 'H2', value: 'h2' },
-            { title: 'H3', value: 'h3' },
-            { title: 'Quote', value: 'blockquote' }
-          ],
-          marks: {
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' },
-              { title: 'Underline', value: 'underline' }
-            ],
-            annotations: [
-              {
-                name: 'link',
-                type: 'object',
-                title: 'Link',
-                fields: [
-                  {
-                    name: 'href',
-                    type: 'url',
-                    title: 'Url'
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          type: 'image',
-          options: { hotspot: true }
-        }
-      ]
-    }),
-    defineField({
-      name: 'category',
-      title: 'Category',
+      name: 'byline',
+      title: 'Byline',
       type: 'string',
-      options: {
-        list: [
-          { title: 'Technology', value: 'technology' },
-          { title: 'Innovation', value: 'innovation' },
-          { title: 'Future Trends', value: 'future-trends' },
-          { title: 'Business', value: 'business' },
-          { title: 'Research', value: 'research' }
-        ]
-      }
     }),
     defineField({
-      name: 'tags',
-      title: 'Tags',
+      name: 'datePublished',
+      title: 'Date Published',
+      type: 'string',
+      description: 'e.g. 2025-08-19',
+    }),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+
+    // Rich text body (images + embeds supported)
+    defineField({
+      name: 'body',
+      title: 'Body',
       type: 'array',
-      of: [{ type: 'string' }],
-      options: {
-        layout: 'tags'
-      }
-    })
+      of: RICH_TEXT_OF,
+    }),
+
+    // File download
+    defineField({
+      name: 'pdfUpload',
+      title: 'PDF Upload',
+      type: 'file',
+      options: { accept: 'application/pdf' },
+    }),
+    // Author (now a main section, always visible)
+    defineField({
+      name: 'authorName',
+      title: 'Author Name',
+      type: 'string',
+    }),
+    defineField({
+      name: 'authorPosition',
+      title: 'Author Position',
+      type: 'string',
+    }),
+    defineField({
+      name: 'authorBio',
+      title: 'Author Bio',
+      type: 'array',
+      of: RICH_TEXT_OF,
+    }),
+    defineField({
+      name: 'authorImage',
+      title: 'Author Image',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'authorLinkedin',
+      title: 'Author LinkedIn',
+      type: 'url',
+      validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }),
+    }),
+
+    // Optional Linked Video
+    defineField({
+      name: 'hasLinkedVideo',
+      title: 'Does this article have any videos you would like to link to?',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'linkedVideoTitle',
+      title: 'Linked Video Title',
+      type: 'string',
+      hidden: ({ document }) => !document?.hasLinkedVideo,
+    }),
+    defineField({
+      name: 'linkedVideoSubheading',
+      title: 'Linked Video Subheading',
+      type: 'string',
+      hidden: ({ document }) => !document?.hasLinkedVideo,
+    }),
+    defineField({
+      name: 'linkedVideoDescription',
+      title: 'Linked Video Description',
+      type: 'array',
+      of: RICH_TEXT_OF,
+      hidden: ({ document }) => !document?.hasLinkedVideo,
+    }),
+    defineField({
+      name: 'linkedVideoImage',
+      title: 'Linked Video Image',
+      type: 'image',
+      options: { hotspot: true },
+      hidden: ({ document }) => !document?.hasLinkedVideo,
+    }),
+    defineField({
+      name: 'linkedVideoLink',
+      title: 'Linked Video Link',
+      type: 'url',
+      hidden: ({ document }) => !document?.hasLinkedVideo,
+      validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }),
+    }),
   ],
   preview: {
     select: {
       title: 'title',
-      subtitle: 'excerpt',
-      media: 'featuredImage'
-    }
-  },
-  orderings: [
-    {
-      title: 'Published Date (Newest First)',
-      name: 'publishedAtDesc',
-      by: [{ field: 'publishedAt', direction: 'desc' }]
+      subtitle: 'byline',
+      media: 'image',
     },
-    {
-      title: 'Title A-Z',
-      name: 'titleAsc',
-      by: [{ field: 'title', direction: 'asc' }]
-    }
-  ]
+  },
 })
 
 export default article
