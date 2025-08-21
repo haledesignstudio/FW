@@ -7,6 +7,18 @@ import type { PortableTextBlock } from '@portabletext/types';
 type SanityAssetRef = { _type: 'reference'; _ref: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string };
 
+type ArticleAuthor = {
+  name: string;
+  position: string;
+  bio?: PortableTextBlock[];
+  image?: SanityImage;
+  linkedin?: string;
+};
+
+type ArticlePdf = { url: string };
+
+type RelatedStory = { title: string; link: string };
+
 type Article = {
   _id: string;
   title: string;
@@ -15,25 +27,18 @@ type Article = {
   datePublished?: string;
   image?: SanityImage;
   body?: PortableTextBlock[];
-  pdfUrl?: string;
 
-  // Author (main section)
-  authorName?: string;
-  authorPosition?: string;
-  authorBio?: PortableTextBlock[];
-  authorImage?: SanityImage;
-  authorLinkedin?: string;
+  hasPdf?: boolean;
+  pdf?: ArticlePdf | null;
 
-  // Linked Video
-  hasLinkedVideo?: boolean;
-  linkedVideoTitle?: string;
-  linkedVideoSubheading?: string;
-  linkedVideoDescription?: PortableTextBlock[];
-  linkedVideoImage?: SanityImage;
-  linkedVideoLink?: string;
+  hasAuthor?: boolean;
+  author?: ArticleAuthor | null;
+
+  hasRelatedStories?: boolean;
+  relatedStories?: RelatedStory[];
 };
 
-// Minimal Mindbullet shape for the carousel
+
 type MindbulletCompact = {
   _id: string;
   title: string;
@@ -42,7 +47,8 @@ type MindbulletCompact = {
   body?: PortableTextBlock[];
 };
 
-// Primary fetch by slug.current
+
+
 const articleBySlugQuery = defineQuery(`
   *[_type == "article" && slug.current == $slug][0]{
     _id,
@@ -52,26 +58,37 @@ const articleBySlugQuery = defineQuery(`
     datePublished,
     image { asset, alt },
     body[],
-    "pdfUrl": pdfUpload.asset->url,
 
-    // Author (main)
-    authorName,
-    authorPosition,
-    authorBio[],
-    authorImage { asset, alt },
-    authorLinkedin,
+    hasPdf,
+    "pdf": select(
+      hasPdf == true => { "url": pdfUpload.asset->url },
+      true => null
+    ),
 
-    // Linked Video (optional)
-    "hasLinkedVideo": hasLinkedVideo,
-    linkedVideoTitle,
-    linkedVideoSubheading,
-    linkedVideoDescription[],
-    linkedVideoImage { asset, alt },
-    linkedVideoLink
+
+    hasAuthor,
+    "author": select(
+      hasAuthor == true => {
+        "name": authorName,
+        "position": authorPosition,
+        "bio": authorBio[],
+        "image": { "asset": authorImage.asset, "alt": authorImage.alt },
+        "linkedin": authorLinkedin
+      },
+      true => null
+    ),
+
+
+    hasRelatedStories,
+    "relatedStories": select(
+      hasRelatedStories == true => relatedStories[]{ title, link },
+      true => []
+    )
   }
 `);
 
-// Fallback fetch by _id (used after title-based match)
+
+
 const articleByIdQuery = defineQuery(`
   *[_type == "article" && _id == $id][0]{
     _id,
@@ -81,26 +98,35 @@ const articleByIdQuery = defineQuery(`
     datePublished,
     image { asset, alt },
     body[],
-    "pdfUrl": pdfUpload.asset->url,
 
-    // Author (main)
-    authorName,
-    authorPosition,
-    authorBio[],
-    authorImage { asset, alt },
-    authorLinkedin,
+    hasPdf,
+    "pdf": select(
+      hasPdf == true => { "url": pdfUpload.asset->url },
+      true => null
+    ),
 
-    // Linked Video (optional)
-    "hasLinkedVideo": hasLinkedVideo,
-    linkedVideoTitle,
-    linkedVideoSubheading,
-    linkedVideoDescription[],
-    linkedVideoImage { asset, alt },
-    linkedVideoLink
+    hasAuthor,
+    "author": select(
+      hasAuthor == true => {
+        "name": authorName,
+        "position": authorPosition,
+        "bio": authorBio[],
+        "image": { "asset": authorImage.asset, "alt": authorImage.alt },
+        "linkedin": authorLinkedin
+      },
+      true => null
+    ),
+
+    hasRelatedStories,
+    "relatedStories": select(
+      hasRelatedStories == true => relatedStories[]{ title, link },
+      true => []
+    )
   }
 `);
 
-// Mindbullets for the carousel (grab a handful)
+
+// Mindbullets for the carousel limited to 12
 const mindbulletsQuery = defineQuery(`
   *[_type == "mindbullet"] | order(publishedAt desc)[0...12]{
     _id,
@@ -132,10 +158,10 @@ type PageProps = { params: Promise<{ slug: string }> };
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;
 
-  // 1) Try normal slug lookup
+
   let data = await client.fetch<Article | null>(articleBySlugQuery, { slug });
 
-  // 2) Fallback by title-derived slug (legacy docs)
+
   if (!data) {
     const all = await client.fetch<Array<{ _id: string; title: string }>>(
       defineQuery(`*[_type == "article"]{ _id, title }`)
@@ -148,7 +174,6 @@ export default async function ArticlePage({ params }: PageProps) {
 
   if (!data) notFound();
 
-  // Fetch mindbullets for the carousel
   const mindbullets = await client.fetch<MindbulletCompact[]>(mindbulletsQuery);
 
   return <ArticleView data={data} mindbullets={mindbullets} />;

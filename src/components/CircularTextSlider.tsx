@@ -22,7 +22,6 @@ interface Speaker {
 
 interface CircularTextSliderProps {
   speakers: Speaker[];
-  /** minimum number of labels to render on the ring (will repeat speakers to reach this) */
   minItems?: number;
 }
 
@@ -64,13 +63,13 @@ export default function CircularTextSlider({
     return repeated.slice(0, target);
   }, [speakers, minItems]);
 
-  // degrees per rendered label
+
   const stepDeg = useMemo(
     () => (displaySpeakers.length ? 360 / displaySpeakers.length : 0),
     [displaySpeakers.length]
   );
 
-  // Smoothly animate currentRotation toward targetRotation
+
   useEffect(() => {
     let raf = 0;
     const animate = () => {
@@ -85,7 +84,7 @@ export default function CircularTextSlider({
     return () => cancelAnimationFrame(raf);
   }, [targetRotation]);
 
-  // Determine which item is at the top-center (≈ 270°)
+
   useEffect(() => {
     if (!displaySpeakers.length) return;
     const target = 270;
@@ -109,7 +108,7 @@ export default function CircularTextSlider({
     setActiveIndex(bestIdx);
   }, [currentRotation, displaySpeakers.length, stepDeg]);
 
-  // Arrow handlers — rotate exactly one slot
+
   const rotateLeft = () => setTargetRotation((prev) => prev + stepDeg);
   const rotateRight = () => setTargetRotation((prev) => prev - stepDeg);
 
@@ -254,15 +253,29 @@ export default function CircularTextSlider({
               </div>
               <div className="mt-[2vh] speaker-actions flex flex-col items-start gap-[2vh]">
                 <button className="text-[clamp(0.8vw,2vh,1vw)]  font-bold leading-[clamp(0.8vw,2vh,1vw)]"
-                onClick={() => {
-                  console.log('activeSpeaker:', activeSpeaker);
-                  const slugStr = typeof activeSpeaker.slug === 'string'
-                    ? activeSpeaker.slug
-                    : activeSpeaker.slug?.current;
-                  if (slugStr) router.push(`/keynotes/${slugStr}`);
-                }}>
-                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>{"Read more about " + activeSpeaker.name}</UnderlineOnHoverAnimation></button>
+                  onClick={() => {
+                    console.log('activeSpeaker:', activeSpeaker);
+                    const slugStr = typeof activeSpeaker.slug === 'string'
+                      ? activeSpeaker.slug
+                      : activeSpeaker.slug?.current;
+                    if (slugStr) router.push(`/keynotes/${slugStr}`);
+                  }}>
+                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>{"Read more"}</UnderlineOnHoverAnimation></button>
+                <div>
+                  {activeSpeaker.email && (
+                    <a
+                      href={`mailto:${activeSpeaker.email}?subject=${encodeURIComponent(
+                        activeSpeaker.mailtoSubject || `Booking ${activeSpeaker.name}`
+                      )}`} className="text-[clamp(0.8vw,2vh,1vw)]  font-bold leading-[clamp(0.8vw,2vh,1vw)]"
+                    >
+                      <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                        {activeSpeaker.mailtoSubject}
+                      </UnderlineOnHoverAnimation>
+                    </a>
+                  )}
+                </div>
               </div>
+
 
             </div>
           </div>

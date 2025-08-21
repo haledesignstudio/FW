@@ -1,44 +1,55 @@
-// app/insights/edge/edge.tsx
 'use client';
 
 import { PortableTextBlock } from '@portabletext/types';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
-import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
+import Carousel from '@/components/Carousel';
 import { getGridClasses } from '@/components/insights/grid';
 import useIsMobile from '@/hooks/useIsMobile';
 import { useCallback } from 'react';
 import ProvocativeScenarios from '@/components/ProvocativeScenarios';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
-type Podcast = {
+type ArticleCard = {
   _id: string;
-  headline: string;
-  subheading: string;
-  description: string;
-  embedLink?: string;
-  slug?: { current: string };
-  headerImage?: { asset: { url: string }; alt?: string };
+  title: string;
+  byline?: string;
+  slug?: { current: string } | string;
+  image?: { asset?: { url?: string } };
+};
+
+type WhatBlewYourMind = {
+  embedLink: string;
+  cta: string;
+  ctaLink: string;
+  description: PortableTextBlock[];
 };
 
 export default function Edge({
   title,
   subheading,
   contentText,
-  podcasts,
+  whatBlewYourMind,
+  articles = [],
 }: {
   title: string;
   subheading: PortableTextBlock[];
   contentText: string;
-  podcasts: Podcast[];
+  whatBlewYourMind: WhatBlewYourMind;
+  articles?: ArticleCard[];
 }) {
   const isMobile = useIsMobile();
-  const carouselItems = podcasts.map((p) => ({
-    id: `edge-podcast-${p._id}`,
-    image: p.headerImage?.asset?.url || '/placeholder-image.png',
-    heading: p.headline,
-    body: p.description,
-    link: p.embedLink || '#',
-  }));
+
+  // Build Carousel items from articles
+  const carouselItems = (articles ?? []).map((a) => {
+    const slugStr = typeof a.slug === 'string' ? a.slug : a.slug?.current;
+    return {
+      src: a.image?.asset?.url || '/placeholder-image.png',
+      heading: a.title,
+      description: a.byline ?? '',
+      href: slugStr ? `/insights/${slugStr}` : '#',
+    };
+  });
 
   const handleBackToTop = useCallback(() => {
     if (typeof window !== 'undefined') {
@@ -47,24 +58,24 @@ export default function Edge({
   }, []);
 
   if (isMobile) {
-    // 4 column grid, rows as described
+
     return (
       <div className="grid grid-cols-4 gap-y-2 gap-x-2 px-2 w-full">
-        {/* Row 1-2: Title (col 1-4) */}
+
         <div className="col-span-4 row-span-2 flex items-center">
           <FadeInOnVisible>
             <div className="text-[12vw] font-graphik leading-tight">{title}</div>
           </FadeInOnVisible>
         </div>
-        {/* Row 3: Empty (col 1-4) */}
+
         <div className="col-span-4 row-span-6" />
-        {/* Row 4: contentText (col 1-4) */}
+
         <div className="col-span-4 row-span-2">
           <FadeInOnVisible>
             <div className="text-[4vw] font-roboto leading-tight">{contentText}</div>
           </FadeInOnVisible>
         </div>
-        {/* Row 5: subheading (col 1-4) */}
+
         <div className="col-span-4 row-span-2">
           <FadeInOnVisible>
             <div className="text-[4vw] font-graphik leading-tight">
@@ -72,24 +83,63 @@ export default function Edge({
             </div>
           </FadeInOnVisible>
         </div>
-        {/* Row 6: Empty (col 1-4) */}
+
         <div className="col-span-4 row-span-2" />
-        {/* Row 7+: Carousel (col 1-4) */}
+
         <div className="col-span-4 row-end-auto">
           <FadeInOnVisible>
-            <ResponsiveGridCarousel items={carouselItems} />
+            <Carousel
+              items={carouselItems}
+              mobileImageHeight="22vh"
+              mobileCaptionHeight="22vh"
+              mobileInnerRowGap="3vh"
+              mobileGap="3vh"
+              imageHeight="25vh"
+              captionHeight="25vh"
+              innerRowGap="4vh"
+              gap="4vh"
+            />
           </FadeInOnVisible>
         </div>
-        {/* After carousel: Empty row */}
-        <div className="col-span-4 row-start-auto row-end-auto" style={{ minHeight: '2vh' }} />
-        {/* ProvocativeScenarios component */}
+
+        <div className="col-span-4 row-start-auto row-end-auto" style={{ minHeight: '12vh' }} />
+
+        <div className="col-span-4 row-end-auto">
+          <div className="relative w-full pb-[56.25%]">
+            {/* 16:9 = 9/16 = 56.25% */}
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src={whatBlewYourMind.embedLink}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+          <div className="mt-[5vh] text-[4vh] font-bold leading-tight">
+            <HighlightText value={whatBlewYourMind.description} />
+          </div>
+          <div className="text-[2vh] font-graphik leading-tight mt-[5vh]">
+            <a href={whatBlewYourMind.ctaLink} target="_blank" rel="noopener noreferrer">
+              <UnderlineOnHoverAnimation hasStaticUnderline color="#232323">
+                {whatBlewYourMind.cta}
+              </UnderlineOnHoverAnimation>
+            </a>
+          </div>
+        </div>
+
+        <div className="col-span-4 row-start-auto row-end-auto" style={{ minHeight: '12vh' }} />
+
         <div className="col-span-4">
           <FadeInOnVisible>
             <ProvocativeScenarios />
           </FadeInOnVisible>
         </div>
-        {/* Back to Top Button (col 3-4, right aligned) */}
-        <div className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-4" onClick={handleBackToTop}>
+
+        <div
+          className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-4"
+          onClick={handleBackToTop}
+        >
           <FadeInOnVisible>
             <span className="underline text-[2vh] flex items-center gap-1 font-bold">
               <svg
@@ -111,7 +161,7 @@ export default function Edge({
     );
   }
 
-  // Desktop version (unchanged)
+  // Desktop version
   const gridItems = [
     {
       id: 'edge-1',
@@ -162,17 +212,55 @@ export default function Edge({
       rowSpan: 2,
     },
     {
-      id: 'edge-6',
-      content: <></>,
-      colSpan: 6,
-      rowSpan: 4,
-    },
-    {
       id: 'edge-7',
       content: (
         <FadeInOnVisible>
-          <ResponsiveGridCarousel items={carouselItems} />
+          <Carousel
+            items={carouselItems}
+            imageHeight="25vh"
+            captionHeight="25vh"
+            innerRowGap="4vh"
+            gap="4vh"
+          />
         </FadeInOnVisible>
+      ),
+      colSpan: 6,
+      rowSpan: 3,
+    },
+    {
+      id: 'edge-8',
+      content: (
+        <div className="grid grid-cols-6 gap-[2vh]">
+
+          <div className="col-span-3 grid grid-rows-[1fr_auto] h-full">
+            <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+              <HighlightText value={whatBlewYourMind.description} />
+            </div>
+
+
+            <div className="text-[clamp(0.8vw,2vh,1vw)] font-graphik leading-[clamp(0.8vw,2vh,1vw)]">
+              <a href={whatBlewYourMind.ctaLink} target="_blank" rel="noopener noreferrer">
+                <UnderlineOnHoverAnimation hasStaticUnderline color="#232323">
+                  {whatBlewYourMind.cta}
+                </UnderlineOnHoverAnimation>
+              </a>
+            </div>
+          </div>
+
+          <div className="col-span-3">
+            <div className="relative w-full pb-[56.25%]">
+              {/* 16:9 = 9/16 = 56.25% */}
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src={whatBlewYourMind.embedLink}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       ),
       colSpan: 6,
       rowSpan: 2,

@@ -1,65 +1,55 @@
 // app/insights/edge/page.tsx
 import { client } from '@/sanity/lib/client';
-import { edgePageQuery, podcastQuery } from '@/sanity/lib/queries';
+import { edgePageQuery, podcastQuery,articlesForEdgeCarouselQuery } from '@/sanity/lib/queries';
 import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import { notFound } from 'next/navigation';
-import type { PortableTextBlock } from '@portabletext/types';
 import Edge from './edge';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import ProvocativeScenarios from '@/components/ProvocativeScenarios';
 
-type EdgeDoc = {
+type ArticleCard = {
+  _id: string;
   title: string;
-  subheading: PortableTextBlock[];
-  contentText: string;
+  byline?: string;
+  slug?: { current: string } | string;
+  image?: { asset?: { url?: string } };
 };
 
-type Podcast = {
-  _id: string;
-  headline: string;
-  subheading: string;
-  description: string;
-  embedLink?: string;
-  slug?: { current: string };
-  headerImage?: { asset: { url: string }; alt?: string };
-};
+
+
 
 export default async function EdgePage() {
-  const [doc, podcasts] = await Promise.all([
-    client.fetch<EdgeDoc | null>(edgePageQuery),
-    client.fetch<Podcast[]>(podcastQuery),
+  const [doc, articles] = await Promise.all([
+    client.fetch(edgePageQuery),
+    client.fetch(podcastQuery),
+    client.fetch<ArticleCard[]>(articlesForEdgeCarouselQuery),
   ]);
 
-  if (!doc) notFound();
-
-  // Use the Edge page title for the common header and mark "edge" active
-  // const headerItems = commonHeader(doc.title, 'edge');
+  if (!doc) throw new Error('Edge doc not found'); 
 
   return (
     <>
       <Header />
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-        {/* Header grid */}
         <CommonHeader title={doc.title} active="edge" />
-
-        {/* Edge content (client) */}
-        <div className="grid gap-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-auto">
+        <div className="grid gap-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-auto [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
           <Edge
-            title={doc.title}
-            subheading={doc.subheading}
-            contentText={doc.contentText}
-            podcasts={podcasts}
-          />
+          title={doc.title}
+          subheading={doc.subheading}
+          contentText={doc.contentText}               
+          whatBlewYourMind={doc.whatBlewYourMind}
+          articles={articles}                 
+        />
         </div>
 
-        {/* Extra section beneath Edge */}
-        <FadeInOnVisible>
-          <div className="mt-[15vh]">
-            <ProvocativeScenarios />
-          </div>
-        </FadeInOnVisible>
+        <div className="hidden md:block">
+          <FadeInOnVisible>
+            <div className="mt-[30vh]">
+              <ProvocativeScenarios />
+            </div>
+          </FadeInOnVisible>
+        </div>
       </main>
       <Footer />
     </>

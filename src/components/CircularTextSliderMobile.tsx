@@ -10,6 +10,7 @@ interface Speaker {
   _id: string;
   name: string;
   slug?: { current: string } | string;
+  summary: PortableTextBlock[];
   bio: PortableTextBlock[];
   image: {
     asset: string;
@@ -174,7 +175,7 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
         
         {/* Speaker Bio - col 1-4, row 3 */}
         <div className="col-start-1 col-span-4 row-start-3 text-[1.7vh] p-2 mt-0">
-          <PortableText value={activeSpeaker.bio} />
+          <PortableText value={activeSpeaker.summary} />
         </div>
         
         {/* Wheel - col 1-4, row 4-5 */}
