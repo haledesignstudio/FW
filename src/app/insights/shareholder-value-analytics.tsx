@@ -13,7 +13,7 @@ type Props = {
   title: string;
   subheading: PortableTextBlock[];
   contentText: string;
-  iframeSource: string; // (not used in new layout, but kept for API compatibility)
+  iframeSource: string; 
   IQ_heading: PortableTextBlock[];
   IQ_subheading: string;
   IQ_context: string;
@@ -28,7 +28,6 @@ export default function ShareholderValueAnalytics(props: Props) {
     title,
     subheading,
     contentText,
-    // iframeSource, // no longer used in the new grid
     IQ_heading,
     IQ_subheading,
     IQ_context,

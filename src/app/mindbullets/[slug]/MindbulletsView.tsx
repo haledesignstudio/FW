@@ -134,27 +134,55 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           </p>
         </div>
 
+          <div className="col-span-4">
+        <div className="mt-[6vh]">
+          <div className="text-[2.5vh] font-graphik leading-tight mb-[2vh]">
+            Related stories
+          </div>
+          <ul className="space-y-[1vh]">
+            {data.RelatedStories!.map((r, i) => (
+              <li key={`${r.title}-${i}`}>
+                <a
+                  href={r.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[2.5vh] leading-relaxed"
+                >
+                  <UnderlineOnHoverAnimation
+                    hasStaticUnderline={true}
+                    color="#232323"
+                  >
+                    {r.title}
+                  </UnderlineOnHoverAnimation>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        </div>
+
+
         {/* Carousel (mobile) */}
         {carouselItems.length > 0 && (
           <div className="col-span-4 mt-[25vh]">
             <FadeInOnVisible>
-            <div className="text-[2vh] font-bold leading-relaxed mb-[2vh]">You may also like</div>
-            <Carousel
-              items={carouselItems}
-              imageHeight="25vh"
-              captionHeight="25vh"
-              innerRowGap="4vh"
-              gap="4vh"
-              mobileImageHeight="22vh"
-              mobileCaptionHeight="22vh"
-              mobileInnerRowGap="3vh"
-              mobileGap="3vh"
-            />
+              <div className="text-[2vh] font-bold leading-relaxed mb-[2vh]">You may also like</div>
+              <Carousel
+                items={carouselItems}
+                imageHeight="25vh"
+                captionHeight="25vh"
+                innerRowGap="4vh"
+                gap="4vh"
+                mobileImageHeight="22vh"
+                mobileCaptionHeight="22vh"
+                mobileInnerRowGap="3vh"
+                mobileGap="3vh"
+              />
             </FadeInOnVisible>
           </div>
         )}
 
-        
+
 
         <div className="col-span-2 row-span-1">
           <FadeInOnVisible>

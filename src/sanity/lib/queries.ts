@@ -587,12 +587,19 @@ export const keynotesPageQuery = defineQuery(`
 `);
 
 export const edgePageQuery = defineQuery(`
-  *[_type == "edgePage"][0] {
+  *[_type == "edgePage"][0]{
     title,
     subheading,
-    contentText
+    contentText,
+    whatBlewYourMind{
+      embedLink,
+      cta,
+      ctaLink,
+      description
+    }
   }
 `);
+
 
 export const podcastPageQuery = defineQuery(`
   *[_type == "podcastPage"][0] {
@@ -636,29 +643,49 @@ export const articleQuery = defineQuery(`
     datePublished,
     "image": { "url": image.asset->url },
     body[],
-    "pdfUrl": pdfUpload.asset->url,
-
-    // Author (now required/main section)
-    authorName,
-    authorPosition,
-    authorLinkedin,
-    authorBio[],
-    "authorImage": { "url": authorImage.asset->url },
-
-    // Linked Video (optional)
-    "hasLinkedVideo": hasLinkedVideo,
-    linkedVideoTitle,
-    linkedVideoSubheading,
-    linkedVideoDescription[],
-    "linkedVideoImage": { "url": linkedVideoImage.asset->url },
-    linkedVideoLink
+    hasPdf,
+    "pdf": select(
+      hasPdf == true => { "url": pdfUpload.asset->url },
+      true => null
+    ),
+    hasAuthor,
+    "author": select(
+      hasAuthor == true => {
+        name: authorName,
+        position: authorPosition,
+        linkedin: authorLinkedin,
+        bio: authorBio[],
+        "image": { "url": authorImage.asset->url }
+      },
+      true => null
+    ),
+    hasRelatedStories,
+    "relatedStories": select(
+      hasRelatedStories == true => relatedStories[]{
+        title,
+        link
+      },
+      true => []
+    )
   }
 `);
+
 
 export const careerQuery = defineQuery(`
   *[_type == "career"][0] {
     jobTitle,
     "imageUrl": image.asset->url,
     description
+  }
+`);
+
+export const articlesForEdgeCarouselQuery = defineQuery(`
+  *[_type == "article" && defined(slug.current)]
+  | order(publishedAt desc)[0...12]{
+    _id,
+    title,
+    byline,
+    slug,
+    image{ asset->{ url } }
   }
 `);

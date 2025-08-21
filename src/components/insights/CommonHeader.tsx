@@ -22,7 +22,7 @@ const categories = [
   { href: '/insights',  label: 'Shareholder Value Analytics' },
   { href: '/mindbullets', label: 'Mindbullets: News From the Future' },
   { href: '/keynotes',    label: 'Keynotes' },
-  { href: '/podcast',     label: 'Podcast', comingSoon: true },
+  { href: '/podcast',     label: 'Podcast' },
   { href: '/corporate-venturing',   label: 'Corporate Venturing', comingSoon: true },
   { href: '/the-edge',        label: 'The Edge: Insights Driven by Disruption' },
 ];
