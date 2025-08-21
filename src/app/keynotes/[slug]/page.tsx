@@ -16,6 +16,7 @@ type KeynoteSpeaker = {
     _id: string;
     name: string;
     slug?: string;
+    summary: PortableTextBlock[];
     bio: PortableTextBlock[];
     image?: SanityImage;
     domainsOfExcellence?: string[];
@@ -37,6 +38,7 @@ const speakerBySlugQuery = defineQuery(`
     name,
     "slug": slug.current,
     bio,
+    summary,
     image { asset, alt },
     domainsOfExcellence,
     socialLinks,

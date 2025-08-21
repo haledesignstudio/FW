@@ -41,7 +41,8 @@ type KeynotesDoc = {
 type Speaker = {
     _id: string;
     name: string;
-    slug?: { current: string } | string; // ⬅️ added slug
+    summary: PortableTextBlock[];
+    slug?: { current: string } | string;
     bio: PortableTextBlock[];
     image?: SanityImage;
     mailtoSubject?: string;
@@ -51,6 +52,7 @@ type Speaker = {
 type SpeakerForClient = {
     _id: string;
     name: string;
+    summary: PortableTextBlock[];
     bio: PortableTextBlock[];
     image: { asset: string; alt?: string };
     mailtoSubject?: string;
@@ -85,6 +87,7 @@ export default async function KeynotesPage() {
                 name: s.name,
                 slug: s.slug, // <-- add this line
                 bio: s.bio,
+                summary: s.summary,
                 image: {
                     asset: urlFor(s.image).url(),
                     alt: s.image.alt || '',

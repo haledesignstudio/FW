@@ -5,6 +5,7 @@ export const speakersQuery = defineQuery(`
     _id,
     slug,
     name,
+    summary,
     bio,
     image {
       asset,
@@ -281,7 +282,6 @@ export const podcastQuery = defineQuery(`
   *[_type == "podcast"] | order(_createdAt desc) {
     _id,
     headline,
-    subheading,
     description,
     embedLink,
     "slug": slug.current,
@@ -499,6 +499,7 @@ export const provocativeScenariosQuery = defineQuery(`
     "slug": slug.current,
     subheading,
     contentText,
+    finalStatement,
     "pdfMobileUrl": pdfMobile.asset->url,
     "pdfDesktopUrl": pdfDesktop.asset->url,
     hasAudio,
@@ -513,6 +514,7 @@ export const provocativeScenariosQuery = defineQuery(`
     }
   }
 `);
+
 
 
 
@@ -653,3 +655,10 @@ export const articleQuery = defineQuery(`
   }
 `);
 
+export const careerQuery = defineQuery(`
+  *[_type == "career"][0] {
+    jobTitle,
+    "imageUrl": image.asset->url,
+    description
+  }
+`);

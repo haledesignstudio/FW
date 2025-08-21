@@ -21,18 +21,20 @@ type ArticleContent = {
 };
 
 export type EdgeScenario = {
-    _id: string;
-    title: string;
-    slug?: string;
-    subheading: RichText;
-    contentText: RichText;
-    pdfMobileUrl?: string | null;
-    pdfDesktopUrl?: string | null;
-    hasAudio: boolean;
-    audioDescription?: RichText;
-    audioFileUrl?: string | null;
-    articleContents: ArticleContent[];
+  _id: string;
+  title: string;
+  slug?: string;
+  subheading: RichText;
+  contentText: RichText;
+  finalStatement: RichText;              
+  pdfMobileUrl?: string | null;
+  pdfDesktopUrl?: string | null;
+  hasAudio: boolean;
+  audioDescription?: RichText;
+  audioFileUrl?: string | null;
+  articleContents: ArticleContent[];
 };
+
 
 interface EdgeViewProps {
     data: EdgeScenario;
@@ -40,7 +42,7 @@ interface EdgeViewProps {
 }
 
 const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
-   
+
     const topGrid = [
         {
             id: 'edge-1',
@@ -200,197 +202,199 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
         },
     ];
 
-    
+
     const mobile = (
-        <div className="grid grid-cols-4 gap-y-[1.5vh] gap-y-[4vh] auto-rows-[minmax(0,auto)]">
-            {/* Row 1-2, Col 1-3: Title */}
-            <div className="col-span-3 row-span-2 flex items-end">
-                <FadeInOnVisible>
-                    <h1 className="text-[6vh] font-graphik leading-tight">{data.title}</h1>
-                </FadeInOnVisible>
-            </div>
-            {/* Row 3: Empty */}
-            <div className="col-span-4 row-span-1" />
-            {/* Row 4: ContentText */}
-            <div className="col-span-4 row-span-1">
-                <FadeInOnVisible>
-                    <div className="text-[3.5vw] font-roboto leading-tight">
-                        <PortableText value={data.contentText} />
-                    </div>
-                </FadeInOnVisible>
-            </div>
-            {/* Row 5-6: Subheading */}
-            <div className="col-span-4 row-span-2">
-                <FadeInOnVisible>
-                    <div className="text-[4vw] font-bold leading-tight">
-                        <HighlightText value={data.subheading} />
-                    </div>
-                </FadeInOnVisible>
-            </div>
-            {/* Row 7: Empty */}
-            <div className="col-span-4 row-span-1" />
-            {/* Row 8-11: Article 1 */}
-            <div className="col-span-4 row-span-4">
-                <div className="grid grid-cols-4 gap-x-[2vw] gap-y-[4vh]">
-                    <div className="col-span-4">
-                        <div className="w-full h-[25vh] overflow-hidden">
-                            {data.articleContents?.[0]?.image?.url ? (
-                                <img
-                                    src={data.articleContents[0].image.url}
-                                    alt={data.articleContents[0].title || 'Article image 1'}
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : null}
-                        </div>
-                        <div className="mt-[1.25vh]">
-                            <div className="text-[3vw] font-graphik leading-tight">
-                                {data.articleContents?.[0]?.title}
-                            </div>
-                            <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
-                                <PortableText value={data.articleContents?.[0]?.description ?? []} />
-                            </div>
-                        </div>
-                    </div>
-                    {/* Article 2 */}
-                    <div className="col-span-4">
-                        <div className="w-full h-[25vh] overflow-hidden">
-                            {data.articleContents?.[1]?.image?.url ? (
-                                <img
-                                    src={data.articleContents[1].image.url}
-                                    alt={data.articleContents[1].title || 'Article image 2'}
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : null}
-                        </div>
-                        <div className="mt-[1.25vh]">
-                            <div className="text-[3vw] font-graphik leading-tight">
-                                {data.articleContents?.[1]?.title}
-                            </div>
-                            <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
-                                <PortableText value={data.articleContents?.[1]?.description ?? []} />
-                            </div>
-                        </div>
-                    </div>
-                    {/* Article 3 */}
-                    <div className="col-span-4">
-                        <div className="w-full h-[25vh] overflow-hidden">
-                            {data.articleContents?.[2]?.image?.url ? (
-                                <img
-                                    src={data.articleContents[2].image.url}
-                                    alt={data.articleContents[2].title || 'Article image 3'}
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : null}
-                        </div>
-                        <div className="mt-[1.25vh]">
-                            <div className="text-[3vw] font-graphik leading-tight">
-                                {data.articleContents?.[2]?.title}
-                            </div>
-                            <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
-                                <PortableText value={data.articleContents?.[2]?.description ?? []} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* Row 12-19: (Articles already above, so skip extra rows) */}
-            {/* Row 20: Download buttons */}
-            <div className="col-span-1 row-span-1 flex items-center">
-                {data.pdfMobileUrl ? (
-                    <a href={`/the-edge/${data.slug}/pdf?device=mobile`} target="_blank" rel="noreferrer">
-                        <UnderlineOnHoverAnimation hasStaticUnderline>
-                            Download mobile
-                        </UnderlineOnHoverAnimation>
-                    </a>
-                ) : null}
-            </div>
-            <div className="col-start-4 col-span-1 row-span-1 flex justify-end items-center text-right">
-                {data.pdfDesktopUrl ? (
-                    <a href={`/the-edge/${data.slug}/pdf?device=desktop`} target="_blank" rel="noreferrer">
-                        <UnderlineOnHoverAnimation hasStaticUnderline>
-                            Download desktop
-                        </UnderlineOnHoverAnimation>
-                    </a>
-                ) : null}
-            </div>
-            {/* Row 21-24: Audio section if present */}
-            {data.audioDescription?.length ? (
-                <div className="col-span-4 row-span-4">
+        <div className="block md:hidden min-h-screen flex flex-col">
+            <div className="grid grid-cols-4 gap-y-[1.5vh] gap-y-[4vh] auto-rows-[minmax(0,auto)]">
+                {/* Row 1-2, Col 1-3: Title */}
+                <div className="col-span-3 row-span-2 flex items-end">
                     <FadeInOnVisible>
-                        <div className="grid gap-[2vh] grid-cols-4 mt-[5vh]">
-                            <div className="col-span-2">
-                                <div className="text-[4vw] font-bold leading-tight">
-                                    <HighlightText value={data.audioDescription} />
-                                </div>
-                            </div>
-                            <div className="col-span-2">
-                                AUDIO VIZUALISER GOES HERE:
-                            </div>
+                        <h1 className="text-[6vh] font-graphik leading-tight">{data.title}</h1>
+                    </FadeInOnVisible>
+                </div>
+                {/* Row 3: Empty */}
+                <div className="col-span-4 row-span-1" />
+                {/* Row 4: ContentText */}
+                <div className="col-span-4 row-span-1">
+                    <FadeInOnVisible>
+                        <div className="text-[3.5vw] font-roboto leading-tight">
+                            <PortableText value={data.contentText} />
                         </div>
                     </FadeInOnVisible>
                 </div>
-            ) : null}
-            {/* Row 25: Empty */}
-            <div className="col-span-4 row-span-1" />
-            {/* Row 26: Mindbullets text */}
-            <div className="col-span-4 row-span-1">
-                <FadeInOnVisible>
-                    <div className="text-[3vw] font-bold leading-tight">
-                        <HighlightText value={"Every week, Futureworld produces Mindbullets: News from the Future – a way to spark strategic thinking about leadership, innovation and digital disruption."} />
-                    </div>
-                </FadeInOnVisible>
-            </div>
-            {/* Row 27-28: Subscribe section */}
-            <div className="col-start-2 col-span-3 row-span-3">
-                <p className="text-[1.5vh] leading-tight">Subscribe for news from the future</p>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    placeholder={'Enter your e-mail'}
-                    className="outline-none border-none bg-transparent text-[2.5vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[4vh]"
-                />
-                <div className="text-[1.5vh] mt-[2vw] font-bold leading-tight">
-                    <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                        Submit
-                    </UnderlineOnHoverAnimation>
+                {/* Row 5-6: Subheading */}
+                <div className="col-span-4 row-span-2">
+                    <FadeInOnVisible>
+                        <div className="text-[4vw] font-bold leading-tight">
+                            <HighlightText value={data.subheading} />
+                        </div>
+                    </FadeInOnVisible>
                 </div>
-            </div>
-            {/* Row 29: Empty */}
-            <div className="col-span-4 row-span-1" />
-            {/* Row 21 col 1-2: Mindbullets you may like */}
-            <div className="col-span-2 row-span-1 mt-[5vh] text-[3vw] font-graphik leading-tight">
-                Mindbullets you may like
-            </div>
-            {/* Carousel for mobile */}
-            <div className="col-span-4 row-span-1">
-                <Carousel items={carouselItems} />
-            </div>
-            {/* Back to top button */}
-            <div
-                className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-                <FadeInOnVisible>
-                    <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: "rotate(-45deg)" }}>
-                            <path d="M12 19V5M5 12l7-7 7 7" />
-                        </svg>
-                        Back to top
-                    </span>
-                </FadeInOnVisible>
+                {/* Row 7: Empty */}
+                <div className="col-span-4 row-span-1" />
+                {/* Row 8-11: Article 1 */}
+                <div className="col-span-4 row-span-4">
+                    <div className="grid grid-cols-4 gap-x-[2vw] gap-y-[4vh]">
+                        <div className="col-span-4">
+                            <div className="w-full h-[25vh] overflow-hidden">
+                                {data.articleContents?.[0]?.image?.url ? (
+                                    <img
+                                        src={data.articleContents[0].image.url}
+                                        alt={data.articleContents[0].title || 'Article image 1'}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : null}
+                            </div>
+                            <div className="mt-[1.25vh]">
+                                <div className="text-[3vw] font-graphik leading-tight">
+                                    {data.articleContents?.[0]?.title}
+                                </div>
+                                <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
+                                    <PortableText value={data.articleContents?.[0]?.description ?? []} />
+                                </div>
+                            </div>
+                        </div>
+                        {/* Article 2 */}
+                        <div className="col-span-4">
+                            <div className="w-full h-[25vh] overflow-hidden">
+                                {data.articleContents?.[1]?.image?.url ? (
+                                    <img
+                                        src={data.articleContents[1].image.url}
+                                        alt={data.articleContents[1].title || 'Article image 2'}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : null}
+                            </div>
+                            <div className="mt-[1.25vh]">
+                                <div className="text-[3vw] font-graphik leading-tight">
+                                    {data.articleContents?.[1]?.title}
+                                </div>
+                                <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
+                                    <PortableText value={data.articleContents?.[1]?.description ?? []} />
+                                </div>
+                            </div>
+                        </div>
+                        {/* Article 3 */}
+                        <div className="col-span-4">
+                            <div className="w-full h-[25vh] overflow-hidden">
+                                {data.articleContents?.[2]?.image?.url ? (
+                                    <img
+                                        src={data.articleContents[2].image.url}
+                                        alt={data.articleContents[2].title || 'Article image 3'}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : null}
+                            </div>
+                            <div className="mt-[1.25vh]">
+                                <div className="text-[3vw] font-graphik leading-tight">
+                                    {data.articleContents?.[2]?.title}
+                                </div>
+                                <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
+                                    <PortableText value={data.articleContents?.[2]?.description ?? []} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Row 12-19: (Articles already above, so skip extra rows) */}
+                {/* Row 20: Download buttons */}
+                <div className="col-span-1 row-span-1 flex items-center">
+                    {data.pdfMobileUrl ? (
+                        <a href={`/the-edge/${data.slug}/pdf?device=mobile`} target="_blank" rel="noreferrer">
+                            <UnderlineOnHoverAnimation hasStaticUnderline>
+                                Download mobile
+                            </UnderlineOnHoverAnimation>
+                        </a>
+                    ) : null}
+                </div>
+                <div className="col-start-4 col-span-1 row-span-1 flex justify-end items-center text-right">
+                    {data.pdfDesktopUrl ? (
+                        <a href={`/the-edge/${data.slug}/pdf?device=desktop`} target="_blank" rel="noreferrer">
+                            <UnderlineOnHoverAnimation hasStaticUnderline>
+                                Download desktop
+                            </UnderlineOnHoverAnimation>
+                        </a>
+                    ) : null}
+                </div>
+                {/* Row 21-24: Audio section if present */}
+                {data.audioDescription?.length ? (
+                    <div className="col-span-4 row-span-4">
+                        <FadeInOnVisible>
+                            <div className="grid gap-[2vh] grid-cols-4 mt-[5vh]">
+                                <div className="col-span-2">
+                                    <div className="text-[4vw] font-bold leading-tight">
+                                        <HighlightText value={data.audioDescription} />
+                                    </div>
+                                </div>
+                                <div className="col-span-2">
+                                    AUDIO VIZUALISER GOES HERE:
+                                </div>
+                            </div>
+                        </FadeInOnVisible>
+                    </div>
+                ) : null}
+                {/* Row 25: Empty */}
+                <div className="col-span-4 row-span-1" />
+                {/* Row 26: Mindbullets text */}
+                <div className="col-span-4 row-span-1">
+                    <FadeInOnVisible>
+                        <div className="text-[3vw] font-bold leading-tight">
+                            <HighlightText value={data.finalStatement} />
+                        </div>
+                    </FadeInOnVisible>
+                </div>
+                {/* Row 27-28: Subscribe section */}
+                <div className="col-start-2 col-span-3 row-span-3">
+                    <p className="text-[1.5vh] leading-tight">Subscribe for news from the future</p>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder={'Enter your e-mail'}
+                        className="outline-none border-none bg-transparent text-[2.5vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[4vh]"
+                    />
+                    <div className="text-[1.5vh] mt-[2vw] font-bold leading-tight">
+                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                            Submit
+                        </UnderlineOnHoverAnimation>
+                    </div>
+                </div>
+                {/* Row 29: Empty */}
+                <div className="col-span-4 row-span-1" />
+                {/* Row 21 col 1-2: Mindbullets you may like */}
+                <div className="col-span-2 row-span-1 mt-[5vh] text-[3vw] font-graphik leading-tight">
+                    Mindbullets you may like
+                </div>
+                {/* Carousel for mobile */}
+                <div className="col-span-4 row-span-1">
+                    <Carousel items={carouselItems} />
+                </div>
+                {/* Back to top button */}
+                <div
+                    className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                >
+                    <FadeInOnVisible>
+                        <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: "rotate(-45deg)" }}>
+                                <path d="M12 19V5M5 12l7-7 7 7" />
+                            </svg>
+                            Back to top
+                        </span>
+                    </FadeInOnVisible>
+                </div>
             </div>
         </div>
 
     );
 
-    
+
     const desktop = (
         <div className="hidden md:block">
             <CommonHeader title={data.title} active="edge" />
 
-            
+
             <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
                 {topGrid.map((item) => (
                     <div
@@ -406,7 +410,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 ))}
             </div>
 
-            
+
             <FadeInOnVisible>
                 {data.audioDescription?.length ? (
                     <div className="grid gap-[2vh] grid-cols-6 mt-[25vh]">
@@ -421,7 +425,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                         <div className="col-span-3">
                             {data.audioDescription?.length ? (
                                 <div>
-                                    
+
                                     AUDIO VIZUALISER GOES HERE:
                                 </div>
                             ) : null}
@@ -430,16 +434,14 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 ) : null}
             </FadeInOnVisible>
 
-            
+
             <FadeInOnVisible>
                 <div className="grid gap-[2vh] grid-cols-6 mt-[25vh]">
                     <div className="col-span-3">
                         <div>
                             <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
                                 <HighlightText
-                                    value={
-                                        "Every week, Futureworld produces Mindbullets:  News from the Future – a way to spark strategic thinking about leadership, innovation and digital disruption."
-                                    }
+                                    value={data.finalStatement}
                                 />
                             </div>
                         </div>
@@ -472,7 +474,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 </div>
             </FadeInOnVisible>
 
-           
+
             {carouselItems.length > 0 && (
                 <FadeInOnVisible>
                     <div className="mt-[25vh]">

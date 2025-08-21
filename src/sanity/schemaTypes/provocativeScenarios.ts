@@ -34,7 +34,7 @@ export default defineType({
     }),
     defineField({
       name: 'contentText',
-      title: 'Content Text',
+      title: 'Short Statement',
       type: 'array',
       of: [{ type: 'block' }],
     }),
@@ -42,12 +42,12 @@ export default defineType({
     // --- ArticleContents (exactly 3 items) ---
     defineField({
       name: 'articleContents',
-      title: 'Article Contents',
+      title: 'Article Summary Items',
       type: 'array',
       of: [
         defineField({
           name: 'articleItem',
-          title: 'Article Content',
+          title: 'Article Summary',
           type: 'object',
           fields: [
             defineField({
@@ -140,6 +140,13 @@ export default defineType({
           }
           return true;
         }),
+    }),
+    defineField({
+      name: 'finalStatement',
+      title: 'Final Statement',
+      type: 'array',
+      of: [{ type: 'block' }],
+      validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {

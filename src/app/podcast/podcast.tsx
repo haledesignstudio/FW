@@ -12,7 +12,6 @@ import { useCallback } from 'react';
 type Podcast = {
   _id: string;
   headline: string;
-  subheading: string;
   description: string;
   embedLink?: string;
   slug?: { current: string } | string; // ← allow either

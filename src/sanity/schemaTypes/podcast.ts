@@ -27,12 +27,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'subheading',
-      title: 'Subheading',
-      type: 'string',
-      validation: (Rule) => Rule.max(300),
-    }),
-    defineField({
       name: 'description',
       title: 'Description',
       type: 'string',
@@ -41,6 +35,7 @@ export default defineType({
     defineField({
       name: 'embedLink',
       title: 'Embed Link',
+      description: 'e.g. https://open.spotify.com/embed/episode/5QNJ4PLy1Hu5LCEnRAqRkJ?utm_source=generator',
       type: 'url',
       validation: (Rule) =>
         Rule.uri({

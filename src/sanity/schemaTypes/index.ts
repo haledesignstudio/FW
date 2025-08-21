@@ -10,12 +10,10 @@ import contactPage from './contactPage'
 import faqPage from './faqPage'
 import termsAndConditionsPage from './termsAndConditionsPage'
 import privacyPolicyPage from './privacyPolicyPage'
-import project from './project'
 import caseStudy from './caseStudy'
 import mindbullet from './mindbullet'
 import podcast from './podcast'
 import provocativeScenario from './provocativeScenarios'
-import carouselItem from './carouselItem'
 import superchargeTomorrowPage from './superchargeTomorrowPage'
 import mindbulletsPage from './mindbulletsPage'
 import keynotesPage from './keynotesPage'
@@ -23,6 +21,7 @@ import edgePage from './edgePage'
 import podcastPage from './podcastPage'
 import corporatePage from './corporatePage'
 import shareholderPage from './shareholderPage'
+import career from './career'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -47,12 +46,11 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // Content schemas
     keynoteSpeaker,
     article,
-    project,
     caseStudy,
     mindbullet,
     podcast,
     provocativeScenario,
-    carouselItem,
-    whatWeDoPage, keynoteTopic
+    whatWeDoPage, keynoteTopic,
+    career
   ],
 }
