@@ -5,7 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import MenuIcon from './menu_icon';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+
 
 
 
@@ -17,19 +19,34 @@ const menuItems = [
             <div className="text-left">
                 <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/#tab`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/#tab' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">01</span>
                             <span>Benchmark your innovation</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/#tab`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/#tab' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">02</span>
                             <span>Our process</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/#tab`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/#tab' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">03</span>
                             <span>Case studies</span>
                         </Link>
@@ -58,13 +75,23 @@ const menuItems = [
             <div className="text-left">
                 <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/what-we-do`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/what-we-do' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">01</span>
                             <span>What we do</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/what-we-do#how-we-do-it`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/what-we-do#how-we-do-it' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">02</span>
                             <span>How we do it</span>
                         </Link>
@@ -87,84 +114,108 @@ const menuItems = [
     { label: '', href: '' },
     // Update the INSIGHTS section in your menuItems array:
 
-{
-    label: 'INSIGHTS',
-    href: '/insights',
-    content: (
-        <div className="text-left">
-            <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
-                <li>
-                    <Link href="/insights?section=analytics" className="flex gap-[10%] hover:underline">
-                        <span>01</span>
-                        <span>Shareholder Value Analytics</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link href="/insights?section=mindbullets" className="flex gap-[10%] hover:underline">
-                        <span className="">02</span>
-                        <span>Mindbullets: News From the Future</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link href="/insights?section=keynotes" className="flex gap-[10%] hover:underline">
-                        <span className="">03</span>
-                        <span>Keynotes</span>
-                    </Link>
-                </li>
-                <li>
-                    <div className="group flex items-center group cursor-pointer">
-                        <span className="group-hover:underline">04</span>
-                        <div className="w-[10%]"></div>
-                        <span className="group-hover:underline">Podcasts</span>
-                        <div className="w-[2.5%]"></div>
-                        
-                        {/* COMING SOON slides in from bottom */}
-                        <div className="overflow-hidden h-[0.85vw] relative w-fit flex items-center">
-                            <span className="block text-[0.7vw] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
-                                (Coming Soon)
-                            </span>
+    {
+        label: 'INSIGHTS',
+        href: '/insights',
+        content: (
+            <div className="text-left">
+                <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+                    <li>
+                        <Link href="/insights" onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/insights' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
+                            <span>01</span>
+                            <span>Shareholder Value Analytics</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/mindbullets" onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/mindbullets' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
+                            <span className="">02</span>
+                            <span>Mindbullets: News From the Future</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/keynotes" onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/keynotes' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
+                            <span className="">03</span>
+                            <span>Keynotes</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/podcast" onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/podcast' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
+                            <span className="">04</span>
+                            <span>Podcast</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <div className="group flex items-center group cursor-pointer">
+                            <span className="group-hover:underline">05</span>
+                            <div className="w-[10%]"></div>
+                            <span className="group-hover:underline">Corporate Venturing</span>
+                            <div className="w-[2.5%]"></div>
+
+                            {/* COMING SOON slides in from bottom */}
+                            <div className="overflow-hidden h-[0.85vw] relative w-fit flex items-center">
+                                <span className="block text-[0.7vw] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
+                                    (Coming Soon)
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div className="group flex items-center group cursor-pointer">
-                        <span className="group-hover:underline">05</span>
-                        <div className="w-[10%]"></div>
-                        <span className="group-hover:underline">Corporate Venturing</span>
-                        <div className="w-[2.5%]"></div>
-                        
-                        {/* COMING SOON slides in from bottom */}
-                        <div className="overflow-hidden h-[0.85vw] relative w-fit flex items-center">
-                            <span className="block text-[0.7vw] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
-                                (Coming Soon)
-                            </span>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <Link href="/insights?section=edge" className="flex gap-[10%] hover:underline">
-                        <span className="">06</span>
-                        <span>The Edge: Insights Driven by Disruption</span>
-                    </Link>
-                </li>
-            </ul>
-            <Image
-                src="/menu-insights.png"
-                alt="home"
-                width={600}
-                height={400}
-                className="w-[60%] pb-[7.5vh]"
-                loading="eager"
-                priority
-            />
-            <Link href="/your-target-page">
-                <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
-                    Explore Shareholder Value Analytics
-                </span>
-            </Link>
-        </div>
-    )
-},
+                    </li>
+                    <li>
+                        <Link href="/the-edge" onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/the-edge' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
+                            <span className="">06</span>
+                            <span>The Edge: Insights Driven by Disruption</span>
+                        </Link>
+                    </li>
+                </ul>
+                <Image
+                    src="/menu-insights.png"
+                    alt="home"
+                    width={600}
+                    height={400}
+                    className="w-[60%] pb-[7.5vh]"
+                    loading="eager"
+                    priority
+                />
+                <Link href="/insights" onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/insights' } })
+                            );
+                        }}>
+                    <span className="text-[0.85vw] font-graphik  whitespace-nowrap">
+                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                            Explore Shareholder Value Analytics
+                        </UnderlineOnHoverAnimation>
+
+                    </span>
+                </Link>
+            </div>
+        )
+    },
     { label: '', href: '' },
     {
         label: 'OUR WORK',
@@ -173,38 +224,52 @@ const menuItems = [
             <div className="text-left">
                 <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/our-work#impact-statistics`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#impact-statistics' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">01</span>
                             <span>Impact statistics</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/our-work#our-clients`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#our-clients' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">02</span>
                             <span>Our clients</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/our-work#supercharge-tomorrow`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#supercharge-tomorrow' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">03</span>
                             <span>Supercharge Tomorrow</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/our-work#case-studies`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#case-studies' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">04</span>
-                            <span>Value propositions</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
-                            <span className="">05</span>
                             <span>Case studies</span>
                         </Link>
                     </li>
                 </ul>
                 <Image
-                    src="/menu-our-work.png" 
+                    src="/menu-our-work.png"
                     alt="home"
                     width={600}
                     height={400}
@@ -212,9 +277,17 @@ const menuItems = [
                     loading="eager"
                     priority
                 />
-                <Link href="/your-target-page">
-                    <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
-                        See case studies
+                <Link href={`/our-work#case-studies`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#case-studies' } })
+                            );
+                        }}>
+                    <span className="text-[0.85vw] font-graphik  whitespace-nowrap">
+                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                            See case studies
+                        </UnderlineOnHoverAnimation>
+
                     </span>
                 </Link>
             </div>
@@ -228,32 +301,52 @@ const menuItems = [
             <div className="text-left">
                 <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/people#people-who-care`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/people#people-who-care' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">01</span>
                             <span>People who care</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/people#life-at-futureworld`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/people#life-at-futureworld' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">02</span>
                             <span>Life at FutureWorld</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/people#why-join-us`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/people#why-join-us' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">03</span>
                             <span>Why join us</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={`/people#careers`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/people#careers' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">04</span>
                             <span>Careers</span>
                         </Link>
                     </li>
                 </ul>
                 <Image
-                    src="/menu-people.png" 
+                    src="/menu-people.png"
                     alt="home"
                     width={600}
                     height={400}
@@ -261,9 +354,17 @@ const menuItems = [
                     loading="eager"
                     priority
                 />
-                <Link href="/your-target-page">
-                    <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
-                        See careers
+                <Link href={`/people#careers`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/people#careers' } })
+                            );
+                        }}>
+                    <span className="text-[0.85vw] font-graphik  whitespace-nowrap">
+                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                            See careers
+                        </UnderlineOnHoverAnimation>
+
                     </span>
                 </Link>
             </div>
@@ -276,27 +377,32 @@ const menuItems = [
         content: (
             <div className="text-left">
                 <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
+                        <Link href={"mailto:info@futureworld.org"} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: "mailto:info@futureworld.org" } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
                             <span className="">01</span>
-                            <span>Schedule a call</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
-                            <span className="">02</span>
                             <span>Send an email</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/our-process" className="flex gap-[10%] hover:underline">
-                            <span className="">03</span>
+                        <Link href={`/contact#book-keynote`} onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/contact#book-keynote' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
+                            <span className="">02</span>
                             <span>Book a keynote</span>
                         </Link>
                     </li>
                 </ul>
                 <Image
-                    src="/menu-contact.png" 
+                    src="/menu-contact.png"
                     alt="home"
                     width={600}
                     height={400}
@@ -304,9 +410,17 @@ const menuItems = [
                     loading="eager"
                     priority
                 />
-                <Link href="/your-target-page">
-                    <span className="bg-black text-white text-center text-sm font-medium inline-block w-[60%] text-[0.65vw] whitespace-nowrap py-[2.5%]">
-                        Explore Keynote topics
+                <Link href="/keynotes" onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/keynotes' } })
+                            );
+                        }}>
+                    <span className="text-[0.85vw] font-graphik  whitespace-nowrap">
+                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                            Explore Keynote Topics
+                        </UnderlineOnHoverAnimation>
+
                     </span>
                 </Link>
             </div>
@@ -380,13 +494,15 @@ const Header: React.FC = () => {
     // Get current pathname to conditionally style based on page
     const pathname = usePathname();
     const isHomepage = pathname === '/';
-    
+
     // Mobile detection with hydration safety
     const [isClient, setIsClient] = useState(false);
-    
+
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+
 
     const [activePair, setActivePair] = useState<number | null>(null);
     const [hovering, setHovering] = useState(false);
@@ -395,8 +511,11 @@ const Header: React.FC = () => {
     const [stage, setStage] = useState(0); // 0 = closed, 1 = animating, 2 = open
     const [isAnimating, setIsAnimating] = useState(false); // animation lock
 
+    const router = useRouter();
+
     // Check if mobile
     const isMobileScreen = isClient && window.innerWidth < 768;
+
 
     // Mobile menu items - simplified for mobile layout
     const mobileMenuItems = [
@@ -433,6 +552,40 @@ const Header: React.FC = () => {
             }, 800);
         }
     };
+
+    const closeMenuAndWait = React.useCallback((): Promise<void> => {
+        return new Promise<void>((resolve) => {
+            if (isAnimating) { resolve(); return; }
+            setIsAnimating(true);
+            setStage(1);                    // start closing transition
+            setTimeout(() => setStage(0), 300);
+            setTimeout(() => {
+                setMenuOpen(false);
+                setIsAnimating(false);
+                setActivePair(null);
+                setHovering(false);
+                // ensure the DOM has painted the closed state
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => resolve());
+                });
+            }, 800);                        // <- match your existing close duration
+        });
+    }, [isAnimating, setIsAnimating, setStage, setMenuOpen, setActivePair, setHovering]);
+
+
+    useEffect(() => {
+        const handler = (e: Event) => {
+            const href = (e as CustomEvent<{ href: string }>).detail?.href;
+            if (!href) return;
+            closeMenuAndWait().then(() => {
+                // navigate only after the close animation + 2 paints
+                router.push(href);
+            });
+        };
+        document.addEventListener('fw:navigateAfterClose', handler as EventListener);
+        return () => document.removeEventListener('fw:navigateAfterClose', handler as EventListener);
+    }, [closeMenuAndWait, router]);
+
 
 
 
@@ -543,11 +696,10 @@ const Header: React.FC = () => {
                                 variants={isHomepage ? menuVariants : menuVariantsOtherPages}
                                 className="w-screen bg-[#F9F7F2] relative left-0 z-40 overflow-hidden"
                             >
-                                <div className={`grid grid-cols-4 p-[2vh] ${
-                                    isHomepage 
-                                        ? 'gap-[1vh] auto-rows-[5vh]' 
-                                        : 'gap-[1vh] auto-rows-[5vh]'
-                                }`}>
+                                <div className={`grid grid-cols-4 p-[2vh] ${isHomepage
+                                    ? 'gap-[1vh] auto-rows-[5vh]'
+                                    : 'gap-[1vh] auto-rows-[5vh]'
+                                    }`}>
                                     {/* Conditional empty rows - 3 for homepage, 4 for other pages */}
                                     <div className="col-span-4"></div>
                                     <div className="col-span-4"></div>
@@ -555,7 +707,7 @@ const Header: React.FC = () => {
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
-                                    
+
                                     {/* Menu Items with conditional sizing */}
                                     {mobileMenuItems.map((item, index) => (
                                         <motion.div
@@ -567,11 +719,10 @@ const Header: React.FC = () => {
                                         >
                                             <Link
                                                 href={item.href}
-                                                className={`text-black font-bold hover:underline ${
-                                                    isHomepage 
-                                                        ? 'text-[4vh]' 
-                                                        : 'text-[4vh]'
-                                                }`}
+                                                className={`text-black font-bold hover:underline ${isHomepage
+                                                    ? 'text-[4vh]'
+                                                    : 'text-[4vh]'
+                                                    }`}
                                                 onClick={() => setMenuOpen(false)}
                                             >
                                                 {item.label}
@@ -627,8 +778,8 @@ const Header: React.FC = () => {
                                 exit="exit"
                                 variants={isHomepage ? menuVariants : menuVariantsOtherPages}
                                 className="w-screen bg-[#F9F7F2] flex items-center justify-end relative left-0 z-40 overflow-hidden"
-                                style={{ 
-                                    height: isHomepage ? '57.5vh' : '77.5vh' 
+                                style={{
+                                    height: isHomepage ? '57.5vh' : '77.5vh'
                                 }}
                             >
                                 <div
@@ -660,11 +811,10 @@ const Header: React.FC = () => {
                                                 {info.isOdd && (
                                                     <Link
                                                         href={item.href}
-                                                        className={`text-black font-bold whitespace-nowrap ${
-                                                            isHomepage 
-                                                                ? 'text-[4vw]' 
-                                                                : 'text-[5vw]'
-                                                        }`}
+                                                        className={`text-black font-bold whitespace-nowrap ${isHomepage
+                                                            ? 'text-[4vw]'
+                                                            : 'text-[5vw]'
+                                                            }`}
                                                         style={{
                                                             writingMode: 'vertical-rl',
                                                             textOrientation: 'mixed',

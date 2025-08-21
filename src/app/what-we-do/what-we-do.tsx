@@ -246,7 +246,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
             id: 10,
             content: (
                 <FadeInOnVisible>
-                    <div className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
+                    <div id="how-we-do-it" className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
                         <WhatWeDoAccordion data={data} />
                     </div>
                 </FadeInOnVisible>

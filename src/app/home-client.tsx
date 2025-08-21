@@ -108,9 +108,9 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 1,
       content: (
         <FadeInOnVisible>
-          <div data-sanity={JSON.stringify({ 
-            _type: 'homePage', 
-            _id: data._id, 
+          <div data-sanity={JSON.stringify({
+            _type: 'homePage',
+            _id: data._id,
             _path: 'headline'
           })}>
             <MainTitleAnimation
@@ -145,9 +145,9 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 3,
       content: (
         <FadeInOnVisible>
-          <div className="prose max-w-none text-[2vh] font-bold leading-tight" data-sanity={JSON.stringify({ 
-            _type: 'homePage', 
-            _id: data._id, 
+          <div className="prose max-w-none text-[2vh] font-bold leading-tight" data-sanity={JSON.stringify({
+            _type: 'homePage',
+            _id: data._id,
             _path: 'subheading'
           })}>
             <HighlightText value={data.subheading} />
@@ -198,9 +198,9 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="text-[1.5vh] leading-tight" data-sanity={JSON.stringify({ 
-            _type: 'homePage', 
-            _id: data._id, 
+          <div className="text-[1.5vh] leading-tight" data-sanity={JSON.stringify({
+            _type: 'homePage',
+            _id: data._id,
             _path: 'body'
           })}>
             <PortableText value={data.body} />
@@ -219,9 +219,9 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 8,
       content: (
         <FadeInOnVisible>
-          <div className="text-[1.5vh] font-graphik leading-tight" data-sanity={JSON.stringify({ 
-            _type: 'homePage', 
-            _id: data._id, 
+          <div className="text-[1.5vh] font-graphik leading-tight" data-sanity={JSON.stringify({
+            _type: 'homePage',
+            _id: data._id,
             _path: 'cta'
           })}>
             <a
@@ -302,9 +302,9 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 1,
       content: (
         <FadeInOnVisible>
-          <div data-sanity={JSON.stringify({ 
-            _type: 'homePage', 
-            _id: data._id, 
+          <div data-sanity={JSON.stringify({
+            _type: 'homePage',
+            _id: data._id,
             _path: 'headline'
           })}>
             <MainTitleAnimation
@@ -347,9 +347,9 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 4,
       content: (
         <FadeInOnVisible>
-          <div className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight" data-sanity={JSON.stringify({ 
-            _type: 'homePage', 
-            _id: data._id, 
+          <div className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight" data-sanity={JSON.stringify({
+            _type: 'homePage',
+            _id: data._id,
             _path: 'subheading'
           })}>
             <HighlightText value={data.subheading} />
@@ -367,9 +367,9 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 5,
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3vh,1.5vw)] leading-tight" data-sanity={JSON.stringify({ 
-            _type: 'homePage', 
-            _id: data._id, 
+          <div className="text-[clamp(1vw,3vh,1.5vw)] leading-tight" data-sanity={JSON.stringify({
+            _type: 'homePage',
+            _id: data._id,
             _path: 'body'
           })}>
             <PortableText value={data.body} />
@@ -397,9 +397,9 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)]" data-sanity={JSON.stringify({ 
-            _type: 'homePage', 
-            _id: data._id, 
+          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)]" data-sanity={JSON.stringify({
+            _type: 'homePage',
+            _id: data._id,
             _path: 'cta'
           })}>
             <a
@@ -474,24 +474,24 @@ export default function HomeClient({ data }: HomeClientProps) {
           <div className="p-[2vh] bg-[#F9F7F2]">
             <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh]">
               <div className="col-span-2"></div>
-                <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
-                  <FadeInOnVisible>
-                    <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        style={{ transform: 'rotate(-45deg)' }}
-                      >
-                        <path d="M12 19V5M5 12l7-7 7 7" />
-                      </svg>
-                      Back to top
-                    </span>
-                  </FadeInOnVisible>
-                </div>
+              <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
+                <FadeInOnVisible>
+                  <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      style={{ transform: 'rotate(-45deg)' }}
+                    >
+                      <path d="M12 19V5M5 12l7-7 7 7" />
+                    </svg>
+                    Back to top
+                  </span>
+                </FadeInOnVisible>
+              </div>
             </div>
           </div>
         </div>
@@ -508,7 +508,9 @@ export default function HomeClient({ data }: HomeClientProps) {
             </div>
           </div>
           <FadeInOnVisible>
+            <div id="tab">
             <HomeAccordion data={data} />
+            </div>
           </FadeInOnVisible>
         </div>
       </main>
