@@ -67,7 +67,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
     position: '',
     message: ''
   });
-  const [formStatus, setFormStatus] = useState<'idle'|'sending'|'sent'|'error'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [isMobile, setIsMobile] = useState(false);
 
   // Mobile check
@@ -118,7 +118,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             {/* Row 1: Main heading (cols 1-3) */}
             <div className="col-span-3 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <MainTitleAnimation 
+                <MainTitleAnimation
                   text={data.pageHeader.mainTitle}
                   typeSpeed={60}
                   delay={500}
@@ -148,9 +148,9 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 ) : (
-                  <Image 
-                    src="/placeholder-image.png" 
-                    alt="Contact" 
+                  <Image
+                    src="/placeholder-image.png"
+                    alt="Contact"
                     className="w-full h-full object-cover"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -170,52 +170,52 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             <div className="col-span-3 row-span-3">
               <FadeInOnVisible>
                 <form onSubmit={handleSubmit} className="h-full flex flex-col justify-start gap-[1vh]">
-                  <input 
-                    name="name" 
-                    value={form.name} 
-                    onChange={handleChange} 
-                    placeholder={data.contactForm?.namePlaceholder || "Name and Surname"} 
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]" 
-                    required 
+                  <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder={data.contactForm?.namePlaceholder || "Name and Surname"}
+                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
+                    required
                   />
-                  <input 
-                    name="email" 
-                    value={form.email} 
-                    onChange={handleChange} 
-                    placeholder={data.contactForm?.emailPlaceholder || "Email"} 
-                    type="email" 
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]" 
-                    required 
+                  <input
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder={data.contactForm?.emailPlaceholder || "Email"}
+                    type="email"
+                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
+                    required
                   />
-                  <input 
-                    name="phone" 
-                    value={form.phone} 
-                    onChange={handleChange} 
-                    placeholder={data.contactForm?.phonePlaceholder || "Phone Number"} 
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]" 
+                  <input
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    placeholder={data.contactForm?.phonePlaceholder || "Phone Number"}
+                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
                   />
-                  <input 
-                    name="company" 
-                    value={form.company} 
-                    onChange={handleChange} 
-                    placeholder={data.contactForm?.companyPlaceholder || "Company"} 
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]" 
+                  <input
+                    name="company"
+                    value={form.company}
+                    onChange={handleChange}
+                    placeholder={data.contactForm?.companyPlaceholder || "Company"}
+                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
                   />
-                  <input 
-                    name="position" 
-                    value={form.position} 
-                    onChange={handleChange} 
-                    placeholder={data.contactForm?.positionPlaceholder || "Position"} 
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]" 
+                  <input
+                    name="position"
+                    value={form.position}
+                    onChange={handleChange}
+                    placeholder={data.contactForm?.positionPlaceholder || "Position"}
+                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
                   />
-                  <textarea 
-                    name="message" 
-                    value={form.message} 
-                    onChange={handleChange} 
-                    placeholder={data.contactForm?.messagePlaceholder || "Message"} 
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh] resize-none" 
-                    rows={3} 
-                    required 
+                  <textarea
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
+                    placeholder={data.contactForm?.messagePlaceholder || "Message"}
+                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh] resize-none"
+                    rows={3}
+                    required
                   />
                   {formStatus === 'sent' && <p className="text-green-600 text-[1.5vh]">Message sent!</p>}
                   {formStatus === 'error' && <p className="text-red-600 text-[1.5vh]">Error sending message. Please try again.</p>}
@@ -231,8 +231,8 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             <div className="col-span-1 row-span-1 flex items-start justify-end">
               <FadeInOnVisible>
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     onClick={() => document.querySelector('form')?.requestSubmit()}
                     className="text-[2vh] font-bold leading-tight bg-transparent border-none outline-none cursor-pointer"
                   >
@@ -248,7 +248,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             {/* Row 12: Book a keynote heading (cols 1-3) */}
             <div className="col-span-3 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <MainTitleAnimation 
+                <MainTitleAnimation
                   text={data.bookingKeynote?.title || "Book a Keynote"}
                   typeSpeed={60}
                   delay={1500}
@@ -295,7 +295,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
               </FadeInOnVisible>
             </div>
             <div className="col-span-1 row-span-1"></div>
-            
+
             {/* Row 19: Back to top button (col 4) */}
             <div className="col-span-1 row-span-1"></div>
             <div className="col-span-2 row-span-1 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
@@ -331,7 +331,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
         <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
           {/* ROW 2: Main Title (col-span-3) + Subheading (col-span-3) */}
           <div className="col-span-3 row-span-1 flex items-start bg-[#F9F7F2]">
-            <MainTitleAnimation 
+            <MainTitleAnimation
               text={data.pageHeader.mainTitle}
               typeSpeed={60}
               delay={500}
@@ -352,9 +352,9 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             ) : (
-              <Image 
-                src="/placeholder-image.png" 
-                alt="Contact" 
+              <Image
+                src="/placeholder-image.png"
+                alt="Contact"
                 className="w-full h-full object-cover"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -393,8 +393,8 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           {/* ROW 5: Keynote Title (cols 1-3) */}
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="h-full w-full flex items-start justify-start">
-              <div className="w-full max-w-full">
-                <MainTitleAnimation 
+              <div id="book-keynote" className="w-full max-w-full">
+                <MainTitleAnimation
                   text={data.bookingKeynote?.title || "Book a Keynote"}
                   typeSpeed={60}
                   delay={1500}

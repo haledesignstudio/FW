@@ -10,6 +10,8 @@ import { HighlightText } from '@/components/HighlightText';
 import CountingAnimation from '@/components/countingAnimation';
 import PartnersMarquee from '@/components/PartnersMarquee';
 import OurWorkAccordion from "@/components/OurWorkAccordion";
+import { PortableText } from '@portabletext/react';
+
 
 export type OurWorkContent = {
   _id: string;
@@ -106,7 +108,7 @@ interface OurWorkClientProps {
 export default function OurWorkClient({ data }: OurWorkClientProps) {
   // Mobile detection with hydration safety
   const [isClient, setIsClient] = useState(false);
-  
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -153,7 +155,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       id: 3,
       content: (
         <FadeInOnVisible>
-          <div className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+          <div id="impact-statistics" className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
             <HighlightText value={data.subheading} />
           </div>
         </FadeInOnVisible>
@@ -301,16 +303,80 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 10,
       content: (
+        <div>
+
+        </div>
+
+      ),
+      colSpan: 6,
+      rowSpan: 1,
+      mobileColSpan: 2,
+      mobileRowSpan: 1,
+      landscapeColSpan: 4,
+      landscapeRowSpan: 1,
+    },
+    {
+      id: 11,
+      content: (
+        <section id="our-clients" className="h-full flex">
+          <div className="w-full grid grid-cols-3 gap-[6vh]">
+            {data.testimonials.slice(0, 3).map((t, i) => (
+              <div key={i} className="">
+                {/* Quote */}
+                <div className="text-[clamp(1.2vw,3vh,1.5vw)] leading-tight font-roboto">
+                  <PortableText value={t.quote} />
+                </div>
+
+                {/* Author */}
+                <div className="mt-[2.5vh] text-black">
+                  <div className="text-[clamp(1.2vw,3vh,1.5vw)] leading-tight font-roboto">
+                    &ndash; {t.name}
+                  </div>
+                  <div className="text-[clamp(1.2vw,3vh,1.5vw)] leading-tight font-roboto">
+                    {t.jobTitle}{t.company ? `, ${t.company}` : ''}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ),
+      colSpan: 6,
+      rowSpan: 2,
+      mobileColSpan: 2,
+      mobileRowSpan: 1,
+      landscapeColSpan: 4,
+      landscapeRowSpan: 1,
+    },
+
+    {
+      id: 12,
+      content: (
         <div className="h-full flex items-center">
           <PartnersMarquee
             partners={data.partners}
-            durationSec={40}     // slower loop
+            durationSec={40}     // loop time
             logoHeightVh={8}     // logo height
             gap="5vw"            // spacing between logos
             edgeFadeVw={8}       // edge fade width; set 0 to disable
-            fadeBg="#F9F7F2"     // your page background for the fades
+            fadeBg="#F9F7F2"     // page background for the fades
             direction="left"
           />
+        </div>
+
+      ),
+      colSpan: 6,
+      rowSpan: 1,
+      mobileColSpan: 2,
+      mobileRowSpan: 1,
+      landscapeColSpan: 4,
+      landscapeRowSpan: 1,
+    },
+    {
+      id: 13,
+      content: (
+        <div>
+
         </div>
 
       ),
@@ -441,10 +507,29 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 </div>
 
                 {/* Row 9-11: Testimonials Carousel (placeholder) */}
-                <div className="col-span-4 row-span-3 flex items-center justify-center">
-                  <div className="text-center">
-                    <p className="text-[3.5vw]">Testimonials carousel - coming soon</p>
-                  </div>
+                <div className="col-span-4 row-span-14 mt-[5vh] flex items-center justify-center">
+                  <section id="our-clients" className="h-full flex">
+                    <div className="w-full grid col-span-4 gap-[6vh]">
+                      {data.testimonials.slice(0, 3).map((t, i) => (
+                        <div key={i} className="">
+                          {/* Quote */}
+                          <div className="text-[3vh] leading-tight font-roboto">
+                            <PortableText value={t.quote} />
+                          </div>
+
+                          {/* Author */}
+                          <div className="mt-[2.5vh] text-black">
+                            <div className="text-[3vh] leading-tight font-roboto">
+                              &ndash; {t.name}
+                            </div>
+                            <div className="text-[3vh] leading-tight font-roboto">
+                              {t.jobTitle}{t.company ? `, ${t.company}` : ''}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
                 </div>
 
                 {/* Row 12: Empty */}
@@ -515,6 +600,11 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
             </div>
 
             {/* Accordion Section for Desktop - Full Width Edge-to-Edge */}
+            <div id="supercharge-tomorrow" className="h-full flex items-center">
+            </div>
+            <div id="case-studies" className="h-full flex items-center">
+            </div>
+
             <div className="mt-[4vh]">
               <FadeInOnVisible>
                 <OurWorkAccordion data={data} />

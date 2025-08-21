@@ -1,6 +1,6 @@
 // app/insights/edge/page.tsx
 import { client } from '@/sanity/lib/client';
-import { edgePageQuery, podcastQuery,articlesForEdgeCarouselQuery } from '@/sanity/lib/queries';
+import { edgePageQuery, articlesForEdgeCarouselQuery } from '@/sanity/lib/queries';
 import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -22,7 +22,6 @@ type ArticleCard = {
 export default async function EdgePage() {
   const [doc, articles] = await Promise.all([
     client.fetch(edgePageQuery),
-    client.fetch(podcastQuery),
     client.fetch<ArticleCard[]>(articlesForEdgeCarouselQuery),
   ]);
 

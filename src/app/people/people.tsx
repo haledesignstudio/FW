@@ -423,7 +423,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
       id: 1,
       content: (
         <FadeInOnVisible>
-          <div className="h-full w-full flex items-start justify-start">
+          <div id="people-who-care" className="h-full w-full flex items-start justify-start">
             <div className="w-full max-w-full">
               <MainTitleAnimation 
                 text={data.pageHeader.mainTitle}
@@ -516,7 +516,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
       id: 6,
       content: (
         <FadeInOnVisible>
-          <div className="h-full w-full flex items-end justify-start">
+          <div id="life-at-futureworld" className="h-full w-full flex items-end justify-start">
             <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-semibold">
               {data.sections.subheading1}
             </h2>
@@ -740,7 +740,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
       id: 19,
       content: (
         <FadeInOnVisible>
-          <div className="h-full w-full flex items-start justify-start">
+          <div id="why-join-us" className="h-full w-full flex items-start justify-start">
             <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-semibold">
               {data.sections.whyJoinUsSection?.mainHeading}
             </h2>
@@ -783,7 +783,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
       id: 24,
       content: (
         <FadeInOnVisible>
-          <div className="h-full w-full flex items-end justify-start">
+          <div id="careers" className="h-full w-full flex items-end justify-start">
             <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-semibold">
               {data.sections.carouselHeading}
             </h2>

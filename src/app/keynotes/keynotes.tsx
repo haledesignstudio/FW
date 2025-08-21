@@ -11,6 +11,7 @@ import type { PortableTextBlock } from '@portabletext/types';
 import type { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import CircularTextSliderMobile from '@/components/CircularTextSliderMobile';
+import Link from 'next/link';
 
 
 const CircularTextSlider = dynamic(() => import('@/components/CircularTextSlider'), { ssr: false });
@@ -59,15 +60,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
   const topicSection = keynotes?.topicSection;
   const speakerSection = keynotes?.speakerSection;
 
-  // For scroll-to-speakers button
-  const handleScrollToSlider = () => {
-    if (typeof window !== 'undefined') {
-      const el = document.getElementById('circular-text-slider');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
+
 
   return [
     {
@@ -158,15 +151,14 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
         <div className="flex flex-col justify-start h-full">
           <FadeInOnVisible>
             <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-bold leading-[clamp(0.9vw,2.25vh,1.125vw)]">
-              <button
+              <Link href={'/keynotes#speakers'}
                 className="transition cursor-pointer bg-transparent border-none p-0 m-0 text-inherit font-inherit"
                 style={{ textAlign: 'left' }}
-                onClick={handleScrollToSlider}
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   {speakerSection?.speakerCTA2 || 'See Speakers'}
                 </UnderlineOnHoverAnimation>
-              </button>
+              </Link>
             </div>
           </FadeInOnVisible>
         </div>
@@ -179,15 +171,6 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
 
 export function KeynoteBottom({ keynotes }: Props): GridItem[] {
   const speakerSection = keynotes?.speakerSection;
-
-  const handleScrollToSlider = () => {
-    if (typeof window !== 'undefined') {
-      const el = document.getElementById('circular-text-slider');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
 
   return [
     {
@@ -273,15 +256,14 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
         <div className="flex flex-col justify-start h-full">
           <FadeInOnVisible>
             <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-bold leading-[clamp(0.9vw,2.25vh,1.125vw)]">
-              <button
+              <Link href={'/keynotes#speakers'}
                 className="transition cursor-pointer bg-transparent border-none p-0 m-0 text-inherit font-inherit"
                 style={{ textAlign: 'left' }}
-                onClick={handleScrollToSlider}
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   {speakerSection?.speakerCTA2 || 'See Speakers'}
                 </UnderlineOnHoverAnimation>
-              </button>
+              </Link>
             </div>
           </FadeInOnVisible>
         </div>
@@ -303,13 +285,6 @@ export default function Keynotes({
   const topicSection = keynotes?.topicSection;
   const speakerSection = keynotes?.speakerSection;
 
-  // Scroll to circular text slider
-  const handleScrollToSlider = () => {
-    const el = document.getElementById('circular-text-slider');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   if (isMobile) {
     return (
@@ -338,12 +313,11 @@ export default function Keynotes({
             </a>
           </div>
           <div className="col-span-2 flex items-end justify-end mt-[2vh]">
-            <button
+            <Link href={'/keynotes#speakers-mobile'}
               className="text-[3.5vw] font-bold underline"
-              onClick={handleScrollToSlider}
             >
               {speakerSection.speakerCTA2 || 'See Speakers'}
-            </button>
+            </Link>
           </div>
           {/* Empty row */}
           <div className="col-span-4 h-[2vh]" />
@@ -383,12 +357,11 @@ export default function Keynotes({
             </a>
           </div>
           <div className="col-span-2 flex items-end justify-end mt-[2vh]">
-            <button
+            <Link href={'/keynotes#speakers'}
               className="text-[3.5vw] font-bold underline"
-              onClick={handleScrollToSlider}
             >
               {speakerSection.speakerCTA2 || 'See Speakers'}
-            </button>
+            </Link>
           </div>
           {/* Empty row */}
           <div className="col-span-4 h-[2vh]" />
@@ -396,7 +369,7 @@ export default function Keynotes({
 
         {/* Circular Text Slider */}
         <FadeInOnVisible>
-          <div className="w-full mt-[8vh]" id="circular-text-slider">
+          <div className="w-full mt-[8vh]" id="speakers-mobile">
             <CircularTextSliderMobile speakers={speakers} />
           </div>
         </FadeInOnVisible>
@@ -429,7 +402,7 @@ export default function Keynotes({
         ))}
       </div>
       <FadeInOnVisible>
-        <div className="w-full mt-[20vh]" id="circular-text-slider">
+        <div id="speakers" className="w-full mt-[20vh]">
           <CircularTextSlider speakers={speakers} />
         </div>
       </FadeInOnVisible>
