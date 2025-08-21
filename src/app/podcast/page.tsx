@@ -16,7 +16,6 @@ type PodcastPageDoc = {
 type Podcast = {
   _id: string;
   headline: string;
-  subheading: string;
   description: string;
   embedLink?: string;
   slug?: { current: string };

@@ -7,13 +7,6 @@ export default defineType({
   title: 'Keynote Topic',
   type: 'document',
 
-  preview: {
-    prepare() {
-      return {
-        title: 'Keynote Topic',
-      };
-    },
-  },
 
   fields: [
     defineField({
@@ -71,13 +64,14 @@ export default defineType({
               validation: (Rule) => Rule.required(),
             }),
           ],
-          preview: {
-            select: {
-              title: 'heading',
-            },
-          },
         }),
       ],
     }),
   ],
+  preview: {
+            select: {
+              title: 'topicTitle',
+              media: 'topicImage',
+            },
+          },
 });

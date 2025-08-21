@@ -11,7 +11,6 @@ export type PodcastDoc = {
   _id: string;
   headline: string;
   slug?: string; // normalized below
-  subheading?: string | null;
   description?: string | null;
   embedLink?: string | null; // URL
   headerImage?: SanityImage | null;
@@ -22,7 +21,6 @@ const podcastBySlugQuery = defineQuery(`
     _id,
     headline,
     "slug": slug.current,
-    subheading,
     description,
     embedLink,
     headerImage { asset, alt }

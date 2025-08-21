@@ -22,6 +22,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'summary',
+      title: 'Summary',
+      type: 'array',
+      of: [{ type: 'block' }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'bio',
       title: 'Bio',
       type: 'array',
@@ -35,13 +42,6 @@ export default defineType({
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative text',
-        },
-      ],
     }),
     defineField({
       name: 'domainsOfExcellence',

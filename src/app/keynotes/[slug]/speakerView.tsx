@@ -16,6 +16,7 @@ type SpeakerViewProps = {
     domainsOfExcellence?: string[];
     socialLinks?: { x?: string; linkedin?: string; facebook?: string; instagram?: string; youtube?: string };
     bio: unknown;
+    summary: unknown;
     mailtoSubject?: string;
     email?: string;
     slug?: string;

@@ -41,6 +41,7 @@ type KeynotesDoc = {
 type Speaker = {
     _id: string;
     name: string;
+    summary: PortableTextBlock[];
     bio: PortableTextBlock[];
     image?: SanityImage;
     mailtoSubject?: string;
@@ -50,6 +51,7 @@ type Speaker = {
 type SpeakerForClient = {
     _id: string;
     name: string;
+    summary: PortableTextBlock[];
     bio: PortableTextBlock[];
     image: { asset: string; alt?: string };
     mailtoSubject?: string;
@@ -83,6 +85,7 @@ export default async function KeynotesPage() {
                 _id: s._id,
                 name: s.name,
                 bio: s.bio,
+                summary: s.summary,
                 image: {
                     asset: urlFor(s.image).url(),
                     alt: s.image.alt || '',

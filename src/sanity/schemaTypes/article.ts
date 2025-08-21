@@ -91,7 +91,7 @@ const article = defineType({
       name: 'datePublished',
       title: 'Date Published',
       type: 'string',
-      description: 'e.g. 2025-08-19',
+      description: 'e.g. 04 July 2022',
     }),
     defineField({
       name: 'image',
@@ -189,7 +189,6 @@ const article = defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'byline',
       media: 'image',
     },
   },

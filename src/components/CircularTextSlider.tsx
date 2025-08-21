@@ -8,6 +8,7 @@ import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 interface Speaker {
   _id: string;
   name: string;
+  summary: PortableTextBlock[];
   bio: PortableTextBlock[];
   image: {
     asset: string;
@@ -246,7 +247,7 @@ export default function CircularTextSlider({
             <div className="speaker-details">
               <div className="speaker-text">
                 <h3>{activeSpeaker.name}</h3>
-                <PortableText value={activeSpeaker.bio} />
+                <PortableText value={activeSpeaker.summary} />
               </div>
               <div className="mt-[2vh] speaker-actions flex flex-col items-start gap-[2vh]">
                 <button className="text-[clamp(0.8vw,2vh,1vw)]  font-bold leading-[clamp(0.8vw,2vh,1vw)]">

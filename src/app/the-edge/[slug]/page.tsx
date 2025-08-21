@@ -12,12 +12,14 @@ type ArticleContent = {
   image?: { url: string; alt?: string } | null;
 };
 
+
 export type EdgeScenario = {
   _id: string;
   title: string;
   slug?: string;
   subheading: RichText;
   contentText: RichText;
+  finalStatement: RichText;            
   pdfMobileUrl?: string | null;
   pdfDesktopUrl?: string | null;
   hasAudio: boolean;
@@ -26,6 +28,7 @@ export type EdgeScenario = {
   articleContents: ArticleContent[];
 };
 
+
 const scenarioBySlugQuery = defineQuery(`
   *[_type == "provocativeScenario" && slug.current == $slug][0]{
     _id,
@@ -33,6 +36,7 @@ const scenarioBySlugQuery = defineQuery(`
     "slug": slug.current,
     subheading,
     contentText,
+    finalStatement,                       
     "pdfMobileUrl": pdfMobile.asset->url,
     "pdfDesktopUrl": pdfDesktop.asset->url,
     "hasAudio": hasAudio == "yes",
@@ -45,6 +49,7 @@ const scenarioBySlugQuery = defineQuery(`
     }
   }
 `);
+
 
 export async function generateStaticParams() {
   const slugs = await client.fetch<string[]>(

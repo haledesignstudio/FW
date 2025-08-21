@@ -64,13 +64,12 @@ export const structure: StructureResolver = (S) =>
             .items([
               S.documentTypeListItem('keynoteSpeaker'),
               S.documentTypeListItem('keynoteTopic'),
-              S.documentTypeListItem('carouselItem'),
               S.documentTypeListItem('article'),
-              S.documentTypeListItem('project'),
               S.documentTypeListItem('caseStudy'),
               S.documentTypeListItem('mindbullet'),
               S.documentTypeListItem('podcast'),
               S.documentTypeListItem('provocativeScenario'),
+              S.documentTypeListItem('career'),
             ])
         ),
 
@@ -89,9 +88,7 @@ export const structure: StructureResolver = (S) =>
             'keynoteSpeaker',
             'keynoteTopic',
             'whatWeDoPage',
-            'carouselItem',
             'article',
-            'project',
             'mindbulletsPage',
             'keynotesPage',
             'edgePage',
@@ -103,6 +100,7 @@ export const structure: StructureResolver = (S) =>
             'podcast',
             'provocativeScenario',
             'superchargeTomorrowPage',
+            'career',
           ].includes(listItem.getId() || '')
       ),
     ])

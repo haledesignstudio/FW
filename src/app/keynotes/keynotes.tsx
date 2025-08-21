@@ -36,10 +36,11 @@ type KeynotesData = {
 type SpeakerForClient = {
   _id: string;
   name: string;
+  summary: PortableTextBlock[];
   bio: PortableTextBlock[];
   image: { asset: string; alt?: string };
   mailtoSubject?: string;
-    email?: string;
+  email?: string;
 };
 
 type Props = { keynotes: KeynotesData };
@@ -115,7 +116,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
       colSpan: 4,
       rowSpan: 1,
     },
-        {
+    {
       id: 'keynotes-6',
       content: <></>,
       colSpan: 6,
