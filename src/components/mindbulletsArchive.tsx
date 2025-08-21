@@ -116,15 +116,15 @@ const MindbulletArchive = () => {
   );
 
   return (
-    <div className="w-full relative mt-[20vh]">
+    <div className="w-full h-auto relative mt-[20vh]">
   {isMobile ? (
-        <div className="grid grid-cols-4 gap-2 w-full">
+        <div className="grid grid-cols-4 gap-2 w-full h-auto">
           {/* Row 1: Headings */}
           <div className="col-span-2 text-lg font-bold flex items-end">Mindbullets Archive</div>
           <div className="col-span-1 flex items-end">
             <button onClick={() => handleSort('publishedAt')} className="flex items-center justify-start cursor-pointer text-xs font-bold w-full">
               <span
-                className={`transition-transform duration-200 ${sortBy === 'publishedAt' && sortDirection === 'asc' ? 'rotate-[-90deg]' : 'rotate-0'} mr-1`}
+                className={`transition-transform duration-200 ${sortBy === 'publishedAt' && sortDirection === 'asc' ? 'rotate-[-45deg]' : 'rotate-0'} mr-1`}
               >
                 <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path d="M12 5v14M12 19l6-6M12 19l-6-6" />
@@ -136,7 +136,7 @@ const MindbulletArchive = () => {
           <div className="col-span-1 flex items-end">
             <button onClick={() => handleSort('dateline')} className="flex items-center justify-start cursor-pointer text-xs font-bold w-full">
               <span
-                className={`transition-transform duration-200 ${sortBy === 'dateline' && sortDirection === 'asc' ? 'rotate-[-90deg]' : 'rotate-0'} mr-1`}
+                className={`transition-transform duration-200 ${sortBy === 'dateline' && sortDirection === 'asc' ? 'rotate-[-45deg]' : 'rotate-0'} mr-1`}
               >
                 <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path d="M12 5v14M12 19l6-6M12 19l-6-6" />

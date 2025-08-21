@@ -3,6 +3,7 @@ import { defineQuery } from 'next-sanity';
 export const speakersQuery = defineQuery(`
   *[_type == "keynoteSpeaker"] | order(name asc) {
     _id,
+    slug,
     name,
     bio,
     image {

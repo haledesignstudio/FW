@@ -41,6 +41,7 @@ type KeynotesDoc = {
 type Speaker = {
     _id: string;
     name: string;
+    slug?: { current: string } | string; // ⬅️ added slug
     bio: PortableTextBlock[];
     image?: SanityImage;
     mailtoSubject?: string;
@@ -82,6 +83,7 @@ export default async function KeynotesPage() {
             .map((s) => ({
                 _id: s._id,
                 name: s.name,
+                slug: s.slug, // <-- add this line
                 bio: s.bio,
                 image: {
                     asset: urlFor(s.image).url(),

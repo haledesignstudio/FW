@@ -57,9 +57,9 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
   if (isMobile) {
     return (
       <main className="p-[2vh] bg-[#F9F7F2]">
-        <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
+  <div className="grid grid-cols-4 gap-y-2">
           {/* Row 1-2: Title */}
-          <div className="col-span-4 row-span-2">
+          <div className="col-span-4">
             <FadeInOnVisible>
               <div className="text-[5vh] font-bold font-graphik leading-tight text-left">
                 {title}
@@ -68,10 +68,10 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
           </div>
 
           {/* Row 3: Empty */}
-          <div className="col-span-4 row-span-1" />
+          <div className="col-span-4 mt-[2vh] mb-[2vh]" />
 
           {/* Row 4-5: Subheading */}
-          <div className="col-span-4 row-span-2">
+          <div className="col-span-4 mt-[2vh] mb-[2vh]">
             <FadeInOnVisible>
               <div className="text-[2.5vh] font-bold leading-tight">
                 <HighlightText value={subheading} />
@@ -80,7 +80,7 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
           </div>
 
           {/* Row 6-12: Carousel */}
-          <div className="col-span-4 row-span-7">
+          <div className="col-span-4">
             <FadeInOnVisible>
               <Carousel
                 items={carouselItems}
@@ -99,7 +99,7 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
           </div>
 
           {/* Row 13-17: Archive */}
-          <div className="col-span-4 row-span-5 auto-rows-auto">
+          <div className="col-span-4">
             <FadeInOnVisible>
               <div className="grid auto-rows-auto">
                 <MindbulletArchive />
@@ -108,7 +108,7 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
           </div>
 
           {/* Row 18: See Keynotes + Back to top */}
-          <div className="col-span-2 row-span-1">
+          <div className="col-span-2">
             <FadeInOnVisible>
               <Link href="/keynotes" className="transition font-bold cursor-pointer">
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
