@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
+import useIsMobile from '@/hooks/useIsMobile';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
@@ -122,7 +123,15 @@ const getGridClasses = (item: GridItem) => {
   return base.join(' ');
 };
 
+
+
 export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorrowPageContent }) {
+  const isMobile = useIsMobile();
+  // Back to top handler
+  const handleBackToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const items: GridItem[] = [
     {
       id: 1,
@@ -209,19 +218,82 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
     <>
       <Header />
       <main className="bg-[#F9F7F2]">
-        <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2] overflow-visible">
-          <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
-            {items.map((item) => (
-              <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
-                {item.content}
+        {isMobile ? (
+          <div className="w-full px-0 mx-0">
+            <div className="grid grid-cols-4 gap-y-2 auto-rows-[minmax(32px,auto)] px-3 py-2 w-full">
+              {/* Row 1: col 1-4: data.title with MainTitleAnimation */}
+              <div className="col-span-1 row-start-1 row-span-1">
+                <MainTitleAnimation
+                  text={data.title}
+                  typeSpeed={60}
+                  delay={500}
+                  className="text-[3.5vh] font-graphik leading-tight"
+                />
               </div>
-            ))}
+              <div className="col-span-3 row-start-1 row-span-1"></div>
+              {/* Row 2: empty */}
+              <div className="col-span-4 row-start-2 row-span-1 h-[1vh]"></div>
+              {/* Row 3: col 1-4: data.heading with FadeInOnVisible */}
+              <div className="col-span-4 row-start-3 row-span-1">
+                <FadeInOnVisible>
+                  <div className="text-[6vh] font-graphik leading-tight">{data.heading}</div>
+                </FadeInOnVisible>
+              </div>
+              {/* Row 4: empty */}
+              <div className="col-span-4 row-start-4 row-span-1 h-[1vh]"></div>
+              {/* Row 5: col 1-4: data.subheading with FadeInOnVisible */}
+              <div className="col-span-4 row-start-5 row-span-1">
+                <FadeInOnVisible>
+                  <div className="text-[2vh] font-bold">
+                    <HighlightText value={data.subheading} />
+                  </div>
+                </FadeInOnVisible>
+              </div>
+              {/* Row 6: empty */}
+              <div className="col-span-4 row-start-6 row-span-1 h-[1vh]"></div>
+              {/* Row 7: col 1-4: SuperchargeTomorrowAccordion */}
+              <div className="col-span-4 row-start-7 row-span-1">
+                <FadeInOnVisible>
+                  <SuperchargeTomorrowAccordion data={data} />
+                </FadeInOnVisible>
+              </div>
+              {/* After Accordion: Back to top button in col 3-4 */}
+              <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+                <FadeInOnVisible>
+                  <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      style={{ transform: 'rotate(-45deg)' }}
+                    >
+                      <path d="M12 19V5M5 12l7-7 7 7" />
+                    </svg>
+                    Back to top
+                  </span>
+                </FadeInOnVisible>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <FadeInOnVisible>
-          <SuperchargeTomorrowAccordion data={data} />
-        </FadeInOnVisible>
+        ) : (
+          <>
+            <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2] overflow-visible">
+              <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
+                {items.map((item) => (
+                  <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
+                    {item.content}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <FadeInOnVisible>
+              <SuperchargeTomorrowAccordion data={data} />
+            </FadeInOnVisible>
+          </>
+        )}
       </main>
       <Footer />
     </>
