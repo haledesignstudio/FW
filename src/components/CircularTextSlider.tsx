@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import { PortableTextBlock } from '@portabletext/types';
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
@@ -9,6 +10,7 @@ interface Speaker {
   _id: string;
   name: string;
   summary: PortableTextBlock[];
+  slug?: { current: string } | string;
   bio: PortableTextBlock[];
   image: {
     asset: string;
@@ -28,6 +30,7 @@ export default function CircularTextSlider({
   speakers,
   minItems = 48,
 }: CircularTextSliderProps) {
+  const router = useRouter();
   const galleryRef = useRef<HTMLDivElement>(null);
 
   // rotation (degrees)
@@ -250,21 +253,15 @@ export default function CircularTextSlider({
                 <PortableText value={activeSpeaker.summary} />
               </div>
               <div className="mt-[2vh] speaker-actions flex flex-col items-start gap-[2vh]">
-                <button className="text-[clamp(0.8vw,2vh,1vw)]  font-bold leading-[clamp(0.8vw,2vh,1vw)]">
-                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>Read more</UnderlineOnHoverAnimation></button>
-                <div>
-                  {activeSpeaker.email && (
-                    <a
-                      href={`mailto:${activeSpeaker.email}?subject=${encodeURIComponent(
-                        activeSpeaker.mailtoSubject || `Booking ${activeSpeaker.name}`
-                      )}`} className="text-[clamp(0.8vw,2vh,1vw)]  font-bold leading-[clamp(0.8vw,2vh,1vw)]"
-                    >
-                      <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                        {activeSpeaker.mailtoSubject}
-                      </UnderlineOnHoverAnimation>
-                    </a>
-                  )}
-                </div>
+                <button className="text-[clamp(0.8vw,2vh,1vw)]  font-bold leading-[clamp(0.8vw,2vh,1vw)]"
+                onClick={() => {
+                  console.log('activeSpeaker:', activeSpeaker);
+                  const slugStr = typeof activeSpeaker.slug === 'string'
+                    ? activeSpeaker.slug
+                    : activeSpeaker.slug?.current;
+                  if (slugStr) router.push(`/keynotes/${slugStr}`);
+                }}>
+                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>{"Read more about " + activeSpeaker.name}</UnderlineOnHoverAnimation></button>
               </div>
 
             </div>

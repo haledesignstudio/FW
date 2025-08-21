@@ -10,6 +10,7 @@ import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import type { PortableTextBlock } from '@portabletext/types';
 import type { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
+import CircularTextSliderMobile from '@/components/CircularTextSliderMobile';
 
 
 const CircularTextSlider = dynamic(() => import('@/components/CircularTextSlider'), { ssr: false });
@@ -35,6 +36,7 @@ type KeynotesData = {
 
 type SpeakerForClient = {
   _id: string;
+  slug?: { current: string } | string;
   name: string;
   summary: PortableTextBlock[];
   bio: PortableTextBlock[];
@@ -395,7 +397,7 @@ export default function Keynotes({
         {/* Circular Text Slider */}
         <FadeInOnVisible>
           <div className="w-full mt-[8vh]" id="circular-text-slider">
-            <CircularTextSlider speakers={speakers} />
+            <CircularTextSliderMobile speakers={speakers} />
           </div>
         </FadeInOnVisible>
       </>
