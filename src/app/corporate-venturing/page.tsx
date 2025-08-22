@@ -1,6 +1,6 @@
 // app/corporate-venturing/page.tsx
 import { client } from '@/sanity/lib/client';
-import { corporatePageQuery, podcastQuery } from '@/sanity/lib/queries';
+import { corporatePageQuery } from '@/sanity/lib/queries';
 import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -19,34 +19,48 @@ type CorporatePageDoc = {
 type Podcast = {
   _id: string;
   headline: string;
-  subheading: string;
-  description: string;
+  subheading?: string;
+  description?: string;
   embedLink?: string;
   slug?: { current: string };
   headerImage?: { asset: { url: string }; alt?: string };
 };
 
+type Article = {
+  _id: string;
+  title: string;
+  byline?: string;
+  slug?: { current: string };
+  image?: { asset: { url: string }; alt?: string };
+};
+
 export default async function CorporateVenturingPage() {
-  const [doc, podcasts] = await Promise.all([
+  const [doc, podcasts, articles] = await Promise.all([
     client.fetch<CorporatePageDoc | null>(corporatePageQuery),
-    client.fetch<Podcast[]>(podcastQuery),
+    // Podcasts where Corporate == true
+    client.fetch<Podcast[]>(
+      `*[_type == "podcast" && coalesce(corporate, Corporate) == true]{
+        _id, headline, description, embedLink, slug, 
+        headerImage{asset->{url}, alt}
+      }`
+    ),
+    // Articles where Corporate == true
+    client.fetch<Article[]>(
+      `*[_type == "article" && coalesce(corporate, Corporate) == true]{
+        _id, title, byline, slug, 
+        image{asset->{url}, alt}
+      }`
+    ),
   ]);
 
   if (!doc) notFound();
-
-  //  const headerItems = commonHeader(doc.title, 'corporate');
 
   return (
     <>
       <Header />
       <main className="p-[2vh] md:p-[4vh] bg-[#F9F7F2]">
         <CommonHeader title={doc.title} active="corporate" />
-        <div className="grid gap-[2vh] md:grid-cols-6 auto-rows-auto">
-          {/* {headerItems.map((item) => (
-                      <div key={item.id} className={getGridClasses(item)}>
-                        {item.content}
-                      </div>
-                    ))} */}
+        <div className="grid gap-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-auto [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
           <CorporateSection
             title={doc.title}
             subheading={doc.subheading}
@@ -54,6 +68,7 @@ export default async function CorporateVenturingPage() {
             CTA={doc.CTA}
             Mail={doc.Mail}
             podcasts={podcasts}
+            articles={articles}
           />
         </div>
       </main>

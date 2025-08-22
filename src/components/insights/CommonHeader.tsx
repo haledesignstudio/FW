@@ -23,7 +23,7 @@ const categories = [
   { href: '/mindbullets', label: 'Mindbullets: News From the Future' },
   { href: '/keynotes',    label: 'Keynotes' },
   { href: '/podcast',     label: 'Podcast' },
-  { href: '/corporate-venturing',   label: 'Corporate Venturing', comingSoon: true },
+  { href: '/corporate-venturing',   label: 'Corporate Venturing', comingSoon: false}, //  { href: '/corporate-venturing',   label: 'Corporate Venturing', comingSoon: true },
   { href: '/the-edge',        label: 'The Edge: Insights Driven by Disruption' },
 ];
 
@@ -149,7 +149,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
       landscapeRowSpan: 2,
     },
   ];
-  // Render grid items in parent grid
+
   return (
     <>
       <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">

@@ -4,20 +4,30 @@
 import type { PortableTextBlock } from '@portabletext/types';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
-import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
 import { getGridClasses } from '@/components/insights/grid';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import useIsMobile from '@/hooks/useIsMobile';
 import { useCallback } from 'react';
 
+// NEW: use the Carousel component
+import Carousel, { type CarouselItem } from '@/components/Carousel';
+
 type Podcast = {
   _id: string;
   headline: string;
-  subheading: string;
-  description: string;
+  subheading?: string;
+  description?: string;
   embedLink?: string;
   slug?: { current: string };
   headerImage?: { asset: { url: string }; alt?: string };
+};
+
+type Article = {
+  _id: string;
+  title: string;
+  byline?: string;
+  slug?: { current: string };
+  image?: { asset: { url: string }; alt?: string };
 };
 
 export default function CorporateSection({
@@ -27,6 +37,7 @@ export default function CorporateSection({
   CTA,
   Mail,
   podcasts,
+  articles,
 }: {
   title: string;
   subheading: PortableTextBlock[];
@@ -34,15 +45,30 @@ export default function CorporateSection({
   CTA: string;
   Mail: string;
   podcasts: Podcast[];
+  articles: Article[];
 }) {
   const isMobile = useIsMobile();
-  const carouselItems = podcasts.map((p) => ({
-    id: `corp-podcast-${p._id}`,
-    image: p.headerImage?.asset?.url || '/placeholder-image.png',
-    heading: p.headline,
-    body: p.description,
-    link: p.embedLink || '#',
+
+  // Map Podcasts -> Carousel items
+  const podcastItems: CarouselItem[] = (podcasts ?? []).map((p) => ({
+    src: p.headerImage?.asset?.url || '/placeholder-image.png',
+    heading: p.headline? `Podcast: ${p.headline}` : 'Podcast',
+    description: p.description,
+    href: p.slug?.current, 
+    readMoreText: 'Listen now',
   }));
+
+  // Map Articles -> Carousel items
+  const articleItems: CarouselItem[] = (articles ?? []).map((a) => ({
+    src: a.image?.asset?.url || '/placeholder-image.png',
+    heading: a.title ? `Article: ${a.title}` : 'Article',
+    description: a.byline,
+    href: a.slug?.current, 
+    readMoreText: 'Read article', 
+  }));
+
+  // Combine Articles + Podcasts
+  const carouselItems: CarouselItem[] = [...podcastItems, ...articleItems];
 
   const handleBackToTop = useCallback(() => {
     if (typeof window !== 'undefined') {
@@ -96,11 +122,14 @@ export default function CorporateSection({
         {/* Row 8+: Carousel (col 1-4) */}
         <div className="col-span-4 row-end-auto">
           <FadeInOnVisible>
-            <ResponsiveGridCarousel items={carouselItems} />
+            <Carousel items={carouselItems} />
           </FadeInOnVisible>
         </div>
         {/* Back to Top Button (col 3-4, right aligned) */}
-        <div className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-4" onClick={handleBackToTop}>
+        <div
+          className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-4"
+          onClick={handleBackToTop}
+        >
           <FadeInOnVisible>
             <span className="underline text-[2vh] flex items-center gap-1 font-bold">
               <svg
@@ -122,7 +151,7 @@ export default function CorporateSection({
     );
   }
 
-  // Desktop version (unchanged)
+  // Desktop version
   const gridItems = [
     {
       id: 'corporate-1',
@@ -136,12 +165,7 @@ export default function CorporateSection({
       colSpan: 5,
       rowSpan: 2,
     },
-    {
-      id: 'corporate-2',
-      content: <></>,
-      colSpan: 1,
-      rowSpan: 2,
-    },
+    { id: 'corporate-2', content: <></>, colSpan: 1, rowSpan: 2 },
     {
       id: 'corporate-3',
       content: (
@@ -166,23 +190,13 @@ export default function CorporateSection({
       colSpan: 3,
       rowSpan: 1,
     },
-    {
-      id: 'corporate-5',
-      content: <></>,
-      colSpan: 1,
-      rowSpan: 1,
-    },
-    {
-      id: 'corporate-6',
-      content: <></>,
-      colSpan: 2,
-      rowSpan: 1,
-    },
+    { id: 'corporate-5', content: <></>, colSpan: 1, rowSpan: 1 },
+    { id: 'corporate-6', content: <></>, colSpan: 2, rowSpan: 1 },
     {
       id: 'corporate-7',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
+          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] mt-[5vh]">
             <a
               href={`mailto:${Mail ?? 'info@futureworld.org'}?subject=${encodeURIComponent(CTA ?? '')}`}
               className="transition cursor-pointer"
@@ -197,23 +211,12 @@ export default function CorporateSection({
       colSpan: 2,
       rowSpan: 1,
     },
-    {
-      id: 'corporate-8',
-      content: <></>,
-      colSpan: 2,
-      rowSpan: 1,
-    },
+    { id: 'corporate-8', content: <></>, colSpan: 2, rowSpan: 1 },
     {
       id: 'corporate-9',
-      content: <></>,
-      colSpan: 6,
-      rowSpan: 4,
-    },
-    {
-      id: 'corporate-10',
       content: (
         <FadeInOnVisible>
-          <ResponsiveGridCarousel items={carouselItems} />
+          <Carousel items={carouselItems}/>
         </FadeInOnVisible>
       ),
       colSpan: 6,

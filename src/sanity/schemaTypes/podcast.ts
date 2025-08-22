@@ -42,5 +42,13 @@ export default defineType({
           scheme: ['http', 'https'],
         }),
     }),
+    defineField({
+      name: 'corporate',
+      title: 'Corporate',
+      type: 'boolean',
+      description: 'Should this podcast be included on the Corporate Venturing page?',
+      initialValue: false,
+      options: { layout: 'switch' },
+    }),
   ],
 })
