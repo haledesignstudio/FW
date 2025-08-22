@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React from "react";
+import useIsMobile from '@/hooks/useIsMobile';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { PortableTextBlock } from '@portabletext/types';
@@ -105,16 +106,9 @@ interface OurWorkClientProps {
   data: OurWorkContent;
 }
 
+
 export default function OurWorkClient({ data }: OurWorkClientProps) {
-  // Mobile detection with hydration safety
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Check if mobile
-  const isMobileScreen = isClient && window.innerWidth < 768;
+  const isMobileScreen = useIsMobile();
 
   // Handle back to top functionality
   const handleBackToTop = () => {
@@ -507,7 +501,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 </div>
 
                 {/* Row 9-11: Testimonials Carousel (placeholder) */}
-                <div className="col-span-4 row-span-14 mt-[5vh] flex items-center justify-center">
+                <div className="col-span-4 row-span-17 mt-[8vh] flex items-center justify-center">
                   <section id="our-clients" className="h-full flex">
                     <div className="w-full grid col-span-4 gap-[6vh]">
                       {data.testimonials.slice(0, 3).map((t, i) => (

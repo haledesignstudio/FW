@@ -381,7 +381,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                         <div className={[
                             "overflow-hidden transition-[max-height] duration-500",
                             !openTabs.has('case-studies')
-                                ? "max-h-[16vh]"
+                                ? "max-h-[20vh]"
                                 : "max-h-[9999px]"
                         ].join(' ')}>
                             <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
@@ -411,7 +411,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                                 
                                 {/* Section 2 Title when collapsed */}
                                 {!openTabs.has('case-studies') && (
-                                    <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                                    <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden">
                                         <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection2.heading}</h2>
                                     </div>
                                 )}
