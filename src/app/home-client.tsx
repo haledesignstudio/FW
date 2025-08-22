@@ -10,6 +10,7 @@ import { urlFor } from '@/sanity/lib/image';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
+import { usePreloader } from '@/components/PreloaderContext';
 import HomeAccordion from '@/components/HomeAccordion';
 import { HighlightText } from '@/components/HighlightText';
 
@@ -97,6 +98,8 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ data }: HomeClientProps) {
+  const { preloaderDone } = usePreloader();
+  if (!preloaderDone) return null;
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -118,6 +121,7 @@ export default function HomeClient({ data }: HomeClientProps) {
               typeSpeed={40}
               delay={100}
               className="text-[4vh] font-graphik leading-tight"
+              start={preloaderDone}
             />
           </div>
         </FadeInOnVisible>
@@ -312,6 +316,7 @@ export default function HomeClient({ data }: HomeClientProps) {
               typeSpeed={40}
               delay={100}
               className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
+              start={preloaderDone}
             />
           </div>
         </FadeInOnVisible>
@@ -458,7 +463,7 @@ export default function HomeClient({ data }: HomeClientProps) {
         {/* Mobile Layout */}
         <div className="block md:hidden">
           <div className="p-[2vh] bg-[#F9F7F2] overflow-visible">
-            <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh] overflow-visible">
+            <div className="grid gap-[2vh] grid-cols-4 auto-rows-auto overflow-visible">
               {mobileItems.map((item) => (
                 <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
                   {item.content}

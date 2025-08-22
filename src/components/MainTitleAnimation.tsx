@@ -7,22 +7,23 @@ interface MainTitleAnimationProps {
   className?: string;
   typeSpeed?: number;
   delay?: number;
+  start?: boolean;
 }
 
 export default function MainTitleAnimation({
   text,
   className = '',
   typeSpeed = 60,
-  delay = 500
+  delay = 500,
+  start = true
 }: MainTitleAnimationProps) {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
+    if (!start) return;
     let timeoutId: NodeJS.Timeout;
-    
     const startTyping = () => {
       let currentIndex = 0;
-      
       const typeNextChar = () => {
         if (currentIndex < text.length) {
           setDisplayedText(text.slice(0, currentIndex + 1));
@@ -30,18 +31,15 @@ export default function MainTitleAnimation({
           timeoutId = setTimeout(typeNextChar, typeSpeed);
         }
       };
-      
       typeNextChar();
     };
-
     timeoutId = setTimeout(startTyping, delay);
-
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
     };
-  }, [text, typeSpeed, delay]);
+  }, [text, typeSpeed, delay, start]);
 
   return (
     <>

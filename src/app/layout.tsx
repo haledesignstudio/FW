@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Preloader from '@/components/Preloader';
+import { PreloaderProvider } from '@/components/PreloaderContext';
 import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 
@@ -32,11 +33,13 @@ export default async function RootLayout({
       <body suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Preloader />
-        {children}
-        {isEnabled && (
-          <VisualEditing trailingSlash={false} />
-        )}
+        <PreloaderProvider>
+          <Preloader />
+          {children}
+          {isEnabled && (
+            <VisualEditing trailingSlash={false} />
+          )}
+        </PreloaderProvider>
       </body>
     </html>
   );

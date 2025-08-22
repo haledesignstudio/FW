@@ -1,17 +1,20 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { usePreloader } from './PreloaderContext';
 import Image from 'next/image';
 
 export default function Preloader() {
   const [stage, setStage] = useState<'gif' | 'fadeOut' | 'complete'>('gif');
   const [showPreloader, setShowPreloader] = useState(true);
+  const { setPreloaderDone } = usePreloader();
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('hasVisited');
     if (hasVisited) {
       setShowPreloader(false);
       setStage('complete');
+      setPreloaderDone(true);
     } else {
       sessionStorage.setItem('hasVisited', 'true');
       const gifTimer = setTimeout(() => {
@@ -20,6 +23,7 @@ export default function Preloader() {
 
       return () => clearTimeout(gifTimer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -27,10 +31,12 @@ export default function Preloader() {
       const fadeTimer = setTimeout(() => {
         setShowPreloader(false);
         setStage('complete');
+        setPreloaderDone(true);
       }, 500); // 0.5s fade out
 
       return () => clearTimeout(fadeTimer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage]);
 
   if (!showPreloader) return null;
