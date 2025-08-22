@@ -137,7 +137,7 @@ export default function Edge({
         </div>
 
         <div
-          className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-4"
+          className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-12"
           onClick={handleBackToTop}
         >
           <FadeInOnVisible>
