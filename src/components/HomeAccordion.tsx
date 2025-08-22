@@ -1,14 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { PortableText } from '@portabletext/react';
 import type { HomePageContent } from '@/app/home-client';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
-import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
-import { getCaseStudiesForCarousel, type CarouselCaseStudy } from '@/lib/caseStudies';
 import FadeInOnVisible from './FadeInOnVisible';
+import { client } from '@/sanity/lib/client';
+import { caseStudyQuery } from '@/sanity/lib/queries';
+import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
+import type { PortableTextBlock, PortableTextSpan } from '@portabletext/types';
 
 type HomeAccordionProps = { data: HomePageContent };
 
@@ -22,6 +24,28 @@ type GridItem = {
     landscapeColSpan?: number;
     landscapeRowSpan?: number;
 };
+
+// shape returned by your query
+type CaseStudyFromQuery = {
+  _id: string;
+  title: string;
+  slug?: string | null;
+  image?: { url?: string | null } | null;
+  summary?: PortableTextBlock[] | null; // 👈 typed, not unknown
+};
+
+function extractSummaryText(summary?: PortableTextBlock[] | null): string {
+  if (!summary || summary.length === 0) return '';
+  // find the first "block" and its first span with text
+  const block = summary.find(b => b._type === 'block');
+  if (!block || !Array.isArray(block.children)) return '';
+  const firstSpan = block.children.find(
+    (c): c is PortableTextSpan => c._type === 'span' && typeof c.text === 'string'
+  );
+  return firstSpan?.text ?? '';
+}
+
+
 
 // Custom hook to detect responsive layout
 const useResponsiveLayout = () => {
@@ -67,35 +91,46 @@ function getGridClasses(item: GridItem) {
 
 export default function HomeAccordion({ data }: HomeAccordionProps) {
     const { isMobile } = useResponsiveLayout();
-    // Changed from single string to Set of strings to track multiple open tabs
     const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
-    const [caseStudies, setCaseStudies] = useState<CarouselCaseStudy[]>([]);
+    const [caseStudies, setCaseStudies] = useState<CaseStudyFromQuery[]>([]);
 
-    // Fetch case studies on component mount
+    // Fetch case studies on component mount via your GROQ query
     useEffect(() => {
-        const loadCaseStudies = async () => {
+        const load = async () => {
             try {
-                const studies = await getCaseStudiesForCarousel();
-                setCaseStudies(studies);
+                const studies = await client.fetch<CaseStudyFromQuery[]>(caseStudyQuery);
+                setCaseStudies(studies ?? []);
             } catch (error) {
                 console.error('Error loading case studies:', error);
                 setCaseStudies([]);
             }
         };
-
-        loadCaseStudies();
+        load();
     }, []);
+
+    // Map Sanity docs -> CarouselItem[]
+    const carouselItems: CarouselItem[] = useMemo(() => {
+        return (caseStudies || []).map((cs) => {
+            // PortableText summary -> quick plain text fallback (first block/child)
+            const description = extractSummaryText(cs.summary);
+
+
+            return {
+                src: cs.image?.url ?? '',              // mainImage -> src
+                heading: cs.title,                     // title -> heading
+                description,                           // summary -> description
+                href: cs.slug ? `/case-study/${cs.slug}` : undefined, // slug -> href
+            };
+        });
+    }, [caseStudies]);
 
     // Helper function to toggle a tab's open state
     const toggleTab = (tabId: string) => {
         setOpenTabs(prevOpenTabs => {
-            const newOpenTabs = new Set(prevOpenTabs);
-            if (newOpenTabs.has(tabId)) {
-                newOpenTabs.delete(tabId);
-            } else {
-                newOpenTabs.add(tabId);
-            }
-            return newOpenTabs;
+            const next = new Set(prevOpenTabs);
+            if (next.has(tabId)) next.delete(tabId);
+            else next.add(tabId);
+            return next;
         });
     };
 
@@ -118,8 +153,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     landscapeRowSpan: 1,
                     content: (
                         <FadeInOnVisible>
-                            <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                                onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}>
+                            <div
+                                className="cursor-pointer text-[20vh] font-bold leading-none"
+                                onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
+                            >
                                 {data.section1.section1Title}
                             </div>
                         </FadeInOnVisible>
@@ -161,8 +198,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     },
                     {
                         id: 3,
-                        content:
-                            <></>,
+                        content: <></>,
                         colSpan: 3,
                         rowSpan: 1,
                         mobileColSpan: 2,
@@ -211,8 +247,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     landscapeRowSpan: 1,
                     content: (
                         <FadeInOnVisible>
-                            <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                                onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}>
+                            <div
+                                className="cursor-pointer text-[20vh] font-bold leading-none"
+                                onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
+                            >
                                 {data.section2.section2Title}
                             </div>
                         </FadeInOnVisible>
@@ -239,8 +277,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     },
                     {
                         id: 2,
-                        content:
-                            <></>,
+                        content: <></>,
                         colSpan: 1,
                         rowSpan: 1,
                         mobileColSpan: 2,
@@ -345,8 +382,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     landscapeColSpan: 6, landscapeRowSpan: 1,
                     content: (
                         <FadeInOnVisible>
-                            <div className="cursor-pointer text-[20vh] font-bold leading-none"
-                                onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}>
+                            <div
+                                className="cursor-pointer text-[20vh] font-bold leading-none"
+                                onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
+                            >
                                 {data.section3.section3Title}
                             </div>
                         </FadeInOnVisible>
@@ -371,6 +410,36 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         landscapeColSpan: 3,
                         landscapeRowSpan: 1,
                     },
+                    {
+                        id: 2,
+                        content: (
+                            <div
+                                onClick={(e) => e.stopPropagation()}
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onPointerDown={(e) => e.stopPropagation()}
+                            >
+                                <CaseStudiesCarousel
+                                    items={carouselItems}
+                                    imageHeight="25vh"
+                                    captionHeight="25vh"
+                                    innerRowGap="4vh"
+                                    gap="4vh"
+                                    mobileImageHeight="25vh"
+                                    mobileCaptionHeight="25vh"
+                                    mobileInnerRowGap="2vh"
+                                    mobileGap="0"
+                                    rounded="rounded-2xl"
+                                    ariaLabel="Case studies carousel"
+                                />
+                            </div>
+                        ),
+                        colSpan: 6,
+                        rowSpan: 3,
+                        mobileColSpan: 2,
+                        mobileRowSpan: 1,
+                        landscapeColSpan: 3,
+                        landscapeRowSpan: 1,
+                    },
                 ],
             },
         ];
@@ -381,7 +450,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                 /* Mobile Layout - Individual Tab Containers with Overlap */
                 <div className="">
                     {/* Section 1: Benchmark */}
-                    <div 
+                    <div
                         className="transition-all duration-500 overflow-hidden"
                         style={{
                             backgroundColor: '#1B1B1B',
@@ -399,23 +468,23 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 {openTabs.has('benchmark') && (
                                     <>
                                         {/* Row 1-2: Section Title */}
-                                        <div 
+                                        <div
                                             className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-center cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
                                         >
                                             <h2 className="text-[8vh] font-bold leading-none">{data.section1.section1Title}</h2>
                                         </div>
-                                        
+
                                         {/* Row 3: Section Body */}
                                         <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-white p-4">
                                             <div className="text-[2vh] font-roboto leading-tight">
                                                 <PortableText value={data.section1.section1Body} />
                                             </div>
                                         </div>
-                                        
+
                                         {/* Row 4: Empty */}
                                         <div className="col-span-4 row-start-4 h-[5vh] bg-[#1B1B1B]"></div>
-                                        
+
                                         {/* Row 5: CTA Section */}
                                         <div className="col-span-4 row-start-5 bg-[#1B1B1B] text-white p-4">
                                             <a
@@ -427,13 +496,13 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                                 </UnderlineOnHoverAnimation>
                                             </a>
                                         </div>
-                                        
+
                                         {/* Row 6: Empty */}
                                         <div className="col-span-4 row-start-6 h-[5vh] bg-[#1B1B1B]"></div>
-                                        
+
                                         {/* Row 7-10: Section Image (iframe for section 1) */}
                                         <div className="col-span-4 row-start-7 row-span-4 bg-[#1B1B1B] p-4">
-                                            <iframe 
+                                            <iframe
                                                 src="https://fw-dashboard-puce.vercel.app/"
                                                 className="w-full h-[40vh] bg-white"
                                                 title="Future World Analytics Dashboard"
@@ -441,7 +510,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         </div>
                                     </>
                                 )}
-                                
+
                                 {/* Section 1 Title when collapsed */}
                                 {!openTabs.has('benchmark') && (
                                     <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
@@ -453,7 +522,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     </div>
 
                     {/* Section 2: Process */}
-                    <div 
+                    <div
                         className="transition-all duration-500 overflow-hidden -mt-[2vh]"
                         style={{
                             backgroundColor: '#DC5A50',
@@ -471,20 +540,20 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 {openTabs.has('process') && (
                                     <>
                                         {/* Row 1: Section 2 Main Title */}
-                                        <div 
+                                        <div
                                             className="col-span-4 row-start-1 bg-[#DC5A50] text-white p-4 flex items-center cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
                                         >
                                             <h2 className="text-[8vh] font-bold leading-none">{data.section2.section2Title}</h2>
                                         </div>
-                                        
+
                                         {/* Row 2: Section Body */}
                                         <div className="col-span-4 row-start-2 bg-[#DC5A50] text-white p-4">
                                             <div className="text-[2vh] font-roboto leading-tight">
                                                 <PortableText value={data.section2.section2Body} />
                                             </div>
                                         </div>
-                                        
+
                                         {/* Row 3-7: Section Image (Col 2-4) */}
                                         <div className="col-span-1 row-start-3 row-span-5 bg-[#DC5A50]"></div>
                                         <div className="col-start-2 col-span-3 row-start-3 row-span-5 bg-[#DC5A50] p-4">
@@ -500,45 +569,45 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                                 </div>
                                             )}
                                         </div>
-                                        
+
                                         {/* Row 8: Empty */}
                                         <div className="col-span-4 row-start-8 h-[5vh] bg-[#DC5A50]"></div>
-                                        
+
                                         {/* Row 9: Section Heading1 */}
                                         <div className="col-span-4 row-start-9 bg-[#DC5A50] text-white p-4">
                                             <div className="text-[2.5vh] font-roboto leading-tight">
                                                 <PortableText value={data.section2.section2Heading1} />
                                             </div>
                                         </div>
-                                        
+
                                         {/* Row 10: Section Description1 */}
                                         <div className="col-span-4 row-start-10 bg-[#DC5A50] text-white p-4">
                                             <div className="text-[2vh] font-roboto leading-tight">
                                                 <PortableText value={data.section2.section2Description1} />
                                             </div>
                                         </div>
-                                        
+
                                         {/* Row 11: Section Heading2 */}
                                         <div className="col-span-4 row-start-11 bg-[#DC5A50] text-white p-4">
                                             <div className="text-[2.5vh] font-roboto leading-tight">
                                                 <PortableText value={data.section2.section2Heading2} />
                                             </div>
                                         </div>
-                                        
+
                                         {/* Row 12: Section Description2 */}
                                         <div className="col-span-4 row-start-12 bg-[#DC5A50] text-white p-4">
                                             <div className="text-[2vh] font-roboto leading-tight">
                                                 <PortableText value={data.section2.section2Description2} />
                                             </div>
                                         </div>
-                                        
+
                                         {/* Row 13: Section Heading3 */}
                                         <div className="col-span-4 row-start-13 bg-[#DC5A50] text-white p-4">
                                             <div className="text-[2.5vh] font-roboto leading-tight">
                                                 <PortableText value={data.section2.section2Heading3} />
                                             </div>
                                         </div>
-                                        
+
                                         {/* Row 14: Section Description3 */}
                                         <div className="col-span-4 row-start-14 bg-[#DC5A50] text-white p-4">
                                             <div className="text-[2vh] font-roboto leading-tight">
@@ -547,7 +616,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         </div>
                                     </>
                                 )}
-                                
+
                                 {/* Section 2 Title when collapsed */}
                                 {!openTabs.has('process') && (
                                     <div className="col-span-4 bg-[#DC5A50] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
@@ -559,7 +628,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     </div>
 
                     {/* Section 3: Case Studies */}
-                    <div 
+                    <div
                         className="transition-all duration-500 overflow-hidden -mt-[6vh] mb-[6vh]"
                         style={{
                             backgroundColor: '#F9F7F2',
@@ -577,28 +646,46 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 {openTabs.has('case-studies') && (
                                     <>
                                         {/* Row 1: Main Title */}
-                                        <div 
+                                        <div
                                             className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                                         >
                                             <h2 className="text-[8vh] font-bold leading-none">{data.section3.section3Title}</h2>
                                         </div>
-                                        
+
                                         {/* Row 2: Section Body */}
                                         <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black p-4">
                                             <div className="text-[2vh] font-roboto leading-tight">
                                                 <PortableText value={data.section3.section3Body} />
                                             </div>
                                         </div>
-                                        
-                                        {/* Row 3: Responsive Carousel Component */}
+
+                                        {/* Row 3: Keep your existing mobile carousel for now */}
                                         <div className="col-span-4 row-start-3 bg-[#F9F7F2] p-4">
-                                            <ResponsiveGridCarousel items={caseStudies} />
-                                            
+                                             <div
+                                onClick={(e) => e.stopPropagation()}
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onPointerDown={(e) => e.stopPropagation()}
+                            >
+                                <CaseStudiesCarousel
+                                    items={carouselItems}
+                                    imageHeight="25vh"
+                                    captionHeight="25vh"
+                                    innerRowGap="4vh"
+                                    gap="4vh"
+                                    mobileImageHeight="25vh"
+                                    mobileCaptionHeight="25vh"
+                                    mobileInnerRowGap="2vh"
+                                    mobileGap="0"
+                                    rounded="rounded-2xl"
+                                    ariaLabel="Case studies carousel"
+                                />
+                            </div>
+
                                         </div>
                                     </>
                                 )}
-                                
+
                                 {/* Section 3 Title when collapsed */}
                                 {!openTabs.has('case-studies') && (
                                     <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden">

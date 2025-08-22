@@ -22,6 +22,13 @@ const caseStudy = defineType({
       validation: (Rule) => Rule.required()
     }),
     defineField({
+      name: 'summary',
+      title: 'Summary',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Summary for the carousel'
+    }),
+    defineField({
       name: 'subheading',
       title: 'Subheading',
       type: 'string',
@@ -81,7 +88,7 @@ const caseStudy = defineType({
       of: [{ type: 'block' }],
       description: 'Section 5: Conclusion (col 5)'
     }),
-    
+
   ],
   preview: {
     select: {
