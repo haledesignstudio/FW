@@ -165,19 +165,15 @@ const menuItems = [
                         </Link>
                     </li>
                     <li>
-                        <div className="group flex items-center group cursor-pointer">
-                            <span className="group-hover:underline">05</span>
-                            <div className="w-[10%]"></div>
-                            <span className="group-hover:underline">Corporate Venturing</span>
-                            <div className="w-[2.5%]"></div>
-
-                            {/* COMING SOON slides in from bottom */}
-                            <div className="overflow-hidden h-[0.85vw] relative w-fit flex items-center">
-                                <span className="block text-[0.7vw] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
-                                    (Coming Soon)
-                                </span>
-                            </div>
-                        </div>
+                        <Link href="/corporate-venturing" onClick={(e) => {
+                            e.preventDefault();
+                            document.dispatchEvent(
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/corporate-venturing' } })
+                            );
+                        }} className="flex gap-[10%] hover:underline">
+                            <span className="">05</span>
+                            <span>Corporate Venturing</span>
+                        </Link>
                     </li>
                     <li>
                         <Link href="/the-edge" onClick={(e) => {

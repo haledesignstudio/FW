@@ -1,6 +1,5 @@
 import { defineType, defineField } from 'sanity'
 
-
 type ValidationCtx = {
   document?: {
     hasPdf?: boolean
@@ -8,7 +7,6 @@ type ValidationCtx = {
     hasRelatedStories?: boolean
   }
 }
-
 
 const RICH_TEXT_OF = [
   {
@@ -71,7 +69,6 @@ const article = defineType({
   title: 'Article',
   type: 'document',
   fields: [
- 
     defineField({
       name: 'title',
       title: 'Title',
@@ -113,7 +110,6 @@ const article = defineType({
       validation: (Rule) => Rule.required().min(1),
     }),
 
-
     defineField({
       name: 'hasPdf',
       title: 'Does this article have a pdf version?',
@@ -133,7 +129,6 @@ const article = defineType({
           return true
         }),
     }),
-
 
     defineField({
       name: 'hasAuthor',
@@ -213,7 +208,6 @@ const article = defineType({
         }),
     }),
 
-
     defineField({
       name: 'hasRelatedStories',
       title: 'Does this article have any related stories to include?',
@@ -256,6 +250,12 @@ const article = defineType({
           }
           return true
         }),
+    }),
+    defineField({
+      name: 'corporate',
+      title: 'Should this article be included on the Corporate Venturing page?',
+      type: 'boolean',
+      initialValue: false,
     }),
   ],
   preview: {

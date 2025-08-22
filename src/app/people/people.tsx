@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import ResponsiveGridCarousel from '@/components/ResponsiveGridCarousel';
+import Carousel from '@/components/CareerCarousel';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
-import { PortableTextBlock } from 'sanity';
+import type { PortableTextBlock } from '@portabletext/types';
 
 type PeoplePageContent = {
   title: string;
@@ -19,7 +19,7 @@ type PeoplePageContent = {
   pageHeader: {
     mainTitle: string;
     subheading?: string;
-    regularText?: PortableTextBlock[]; // Changed to any for portable text
+    regularText?: PortableTextBlock[];
   };
   mainImage: {
     asset: {
@@ -32,26 +32,26 @@ type PeoplePageContent = {
     subheading1?: string;
     leftSection?: {
       heading: string;
-      text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
+      text: PortableTextBlock[];
     };
     rightSection?: {
       heading: string;
-      text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
+      text: PortableTextBlock[];
     };
-    sideText?: PortableTextBlock[]; // Changed to any for portable text
+    sideText?: PortableTextBlock[];
     leftSection2?: {
       heading: string;
-      text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
+      text: PortableTextBlock[];
     };
     rightSection2?: {
       heading: string;
-      text: PortableTextBlock[]; // Changed from string to PortableTextBlock[]
+      text: PortableTextBlock[];
     };
     whyJoinUsSection?: {
       mainHeading: string;
       reasons: Array<{
         heading: string;
-        text: PortableTextBlock[]; // Changed to PortableTextBlock[] for portable text
+        text: PortableTextBlock[];
       }>;
     };
     carouselHeading?: string;
@@ -60,6 +60,16 @@ type PeoplePageContent = {
       text: string;
       linkText: string;
     };
+  };
+};
+
+type CareerDoc = {
+  _id: string;
+  jobTitle?: string;                               // maps to Carousel.heading
+  description?: PortableTextBlock[] | string;      // <-- keep rich text
+  image?: {
+    asset?: { _ref: string; _type: string };       // maps to Carousel.src (urlFor)
+    alt?: string;
   };
 };
 
@@ -122,32 +132,7 @@ const getGridClasses = (item: GridItem) => {
   return baseClasses.join(' ');
 };
 
-// Sample carousel data - replace with actual data from CMS
-const sampleCarouselItems = [
-  {
-    id: '1',
-    image: '/placeholder-image.png',
-    heading: 'Sample Project 1',
-    body: 'Description of the first project',
-    link: '/project-1'
-  },
-  {
-    id: '2',
-    image: '/placeholder-image.png',
-    heading: 'Sample Project 2',
-    body: 'Description of the second project',
-    link: '/project-2'
-  },
-  {
-    id: '3',
-    image: '/placeholder-image.png',
-    heading: 'Sample Project 3',
-    body: 'Description of the third project',
-    link: '/project-3'
-  }
-];
-
-export default function People({ data }: { data: PeoplePageContent }) {
+export default function People({ data, careers = [] }: { data: PeoplePageContent; careers?: CareerDoc[] }) {
   const [isMobile, setIsMobile] = useState(false);
 
   // Mobile check
@@ -164,6 +149,15 @@ export default function People({ data }: { data: PeoplePageContent }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Careers -> Carousel items mapping (preserve Portable Text)
+  const carouselItems = (careers || []).map((c) => ({
+    src: c.image?.asset?._ref ? urlFor(c.image.asset).url() : '/placeholder-image.png', // src ← image
+    heading: c.jobTitle ?? '',                                                          // heading ← jobTitle
+    description: c.description,                                                         // <-- keep blocks/string
+    href: 'https://fw-demo.evidence.app/',                                              // fixed
+    readMoreText: 'Apply Now',                                                          // fixed
+  }));
+
   if (isMobile) {
     return (
       <>
@@ -171,9 +165,9 @@ export default function People({ data }: { data: PeoplePageContent }) {
         <main className="p-[2vh] bg-[#F9F7F2]">
           <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
             {/* Row 1: Main heading (cols 1-2) */}
-            <div className="col-span-2 row-span-1 flex items-end justify-start">
+            <div className="col-span-2 row-span-1 flex items=end justify-start">
               <FadeInOnVisible>
-                <MainTitleAnimation 
+                <MainTitleAnimation
                   text={data.pageHeader.mainTitle}
                   typeSpeed={60}
                   delay={500}
@@ -187,9 +181,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
             <div className="col-span-2 row-span-1"></div>
             <div className="col-span-2 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <h2 className="text-[2.5vh] font-bold leading-tight">
-                  {data.pageHeader.subheading}
-                </h2>
+                <h2 className="text-[2.5vh] font-bold leading-tight">{data.pageHeader.subheading}</h2>
               </FadeInOnVisible>
             </div>
 
@@ -219,9 +211,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
             <div className="col-span-1 row-span-3"></div>
             <div className="col-span-3 row-span-3 flex flex-col items-start justify-start gap-[2vh]">
               <FadeInOnVisible>
-                <h3 className="text-[2.5vh] font-bold leading-tight">
-                  {data.sections.subheading1}
-                </h3>
+                <h3 className="text-[2.5vh] font-bold leading-tight">{data.sections.subheading1}</h3>
               </FadeInOnVisible>
               <FadeInOnVisible>
                 <div className="text-[1.8vh] leading-tight">
@@ -294,8 +284,8 @@ export default function People({ data }: { data: PeoplePageContent }) {
             {/* Row 23: Why join us main heading (cols 1-4) */}
             <div className="col-span-2 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <MainTitleAnimation 
-                  text={data.sections.whyJoinUsSection?.mainHeading || "Why Join Us"}
+                <MainTitleAnimation
+                  text={data.sections.whyJoinUsSection?.mainHeading || 'Why Join Us'}
                   typeSpeed={60}
                   delay={1500}
                   className="text-[4vh] font-bold leading-tight"
@@ -315,7 +305,10 @@ export default function People({ data }: { data: PeoplePageContent }) {
                 </h5>
                 <div className="text-[1.6vh] leading-tight">
                   {data.sections.whyJoinUsSection?.reasons[0]?.text && (
-                    <PortableText value={data.sections.whyJoinUsSection.reasons[0].text} components={portableTextComponents} />
+                    <PortableText
+                      value={data.sections.whyJoinUsSection.reasons[0].text}
+                      components={portableTextComponents}
+                    />
                   )}
                 </div>
               </FadeInOnVisible>
@@ -330,7 +323,10 @@ export default function People({ data }: { data: PeoplePageContent }) {
                 </h5>
                 <div className="text-[1.6vh] leading-tight">
                   {data.sections.whyJoinUsSection?.reasons[1]?.text && (
-                    <PortableText value={data.sections.whyJoinUsSection.reasons[1].text} components={portableTextComponents} />
+                    <PortableText
+                      value={data.sections.whyJoinUsSection.reasons[1].text}
+                      components={portableTextComponents}
+                    />
                   )}
                 </div>
               </FadeInOnVisible>
@@ -345,7 +341,10 @@ export default function People({ data }: { data: PeoplePageContent }) {
                 </h5>
                 <div className="text-[1.6vh] leading-tight">
                   {data.sections.whyJoinUsSection?.reasons[2]?.text && (
-                    <PortableText value={data.sections.whyJoinUsSection.reasons[2].text} components={portableTextComponents} />
+                    <PortableText
+                      value={data.sections.whyJoinUsSection.reasons[2].text}
+                      components={portableTextComponents}
+                    />
                   )}
                 </div>
               </FadeInOnVisible>
@@ -360,7 +359,10 @@ export default function People({ data }: { data: PeoplePageContent }) {
                 </h5>
                 <div className="text-[1.6vh] leading-tight">
                   {data.sections.whyJoinUsSection?.reasons[3]?.text && (
-                    <PortableText value={data.sections.whyJoinUsSection.reasons[3].text} components={portableTextComponents} />
+                    <PortableText
+                      value={data.sections.whyJoinUsSection.reasons[3].text}
+                      components={portableTextComponents}
+                    />
                   )}
                 </div>
               </FadeInOnVisible>
@@ -372,43 +374,47 @@ export default function People({ data }: { data: PeoplePageContent }) {
             {/* Row 34: Carousel heading (col 1) */}
             <div className="col-span-1 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <h3 className="text-[2vh] font-bold leading-tight">
-                  {data.sections.carouselHeading}
-                </h3>
+                <h3 className="text-[2vh] font-bold leading-tight">{data.sections.carouselHeading}</h3>
               </FadeInOnVisible>
             </div>
             <div className="col-span-3 row-span-1"></div>
+          </div>
 
-            {/* Row 35-46: Carousel (cols 1-4) */}
-            <div className="col-span-4 row-span-12 flex flex-col items-start justify-start gap-[2vh]">
-              <FadeInOnVisible>
-                <div className="w-full h-3/4">
-                  <ResponsiveGridCarousel items={sampleCarouselItems} />
-                </div>
-                
-              </FadeInOnVisible>
-            </div>
+          {/* Row 35-46: Carousel (cols 1-4) */}
+          <div className="col-span-4  flex flex-col items-start justify-start gap-[2vh]">
+            <FadeInOnVisible>
+              <div className="w-full h-auto">
+                <Carousel
+                  items={carouselItems}
+                  readMoreText="Apply Now"
+                  
+                />
+              </div>
+            </FadeInOnVisible>
+          </div>
 
-            {/* Row 47: Back to top button (col 4) */}
-            <div className="col-span-2 row-span-1"></div>
-            <div className="col-span-2 row-span-1 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
-              <FadeInOnVisible>
-                  <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      style={{ transform: 'rotate(-45deg)' }}
-                    >
-                      <path d="M12 19V5M5 12l7-7 7 7" />
-                    </svg>
-                    Back to top
-                  </span>
-              </FadeInOnVisible>
-            </div>
+          {/* Row 47: Back to top button (col 4) */}
+          <div className="col-span-2 row-span-1"></div>
+          <div
+            className="col-span-2 row-span-1 flex justify-end items-center cursor-pointer"
+            onClick={handleBackToTop}
+          >
+            <FadeInOnVisible>
+              <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  style={{ transform: 'rotate(-45deg)' }}
+                >
+                  <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+                Back to top
+              </span>
+            </FadeInOnVisible>
           </div>
         </main>
         <Footer />
@@ -425,7 +431,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
         <FadeInOnVisible>
           <div id="people-who-care" className="h-full w-full flex items-start justify-start">
             <div className="w-full max-w-full">
-              <MainTitleAnimation 
+              <MainTitleAnimation
                 text={data.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
@@ -446,7 +452,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
       id: 2,
       content: (
         <FadeInOnVisible>
-          <div className="h-full w-full flex items-end justify-start">
+          <div className="h-full w-full flex items=end justify-start">
             <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-bold">
               {data.pageHeader.subheading}
             </p>
@@ -764,9 +770,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
               {reason.heading}
             </h3>
             <div className="text-[1.3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.3vh]">
-              {reason.text && (
-                <PortableText value={reason.text} components={portableTextComponents} />
-              )}
+              {reason.text && <PortableText value={reason.text} components={portableTextComponents} />}
             </div>
           </div>
         </FadeInOnVisible>
@@ -813,7 +817,11 @@ export default function People({ data }: { data: PeoplePageContent }) {
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full">
-            <ResponsiveGridCarousel items={sampleCarouselItems} />
+            <Carousel
+              items={carouselItems}
+              readMoreText="Apply Now"
+              
+            />
           </div>
         </FadeInOnVisible>
       ),
@@ -837,7 +845,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
               {data.sections.carouselSidebar?.text}
             </p>
             {data.sections.carouselSidebar?.linkText && (
-              <a 
+              <a
                 href="mailto:careers@futureworld.org?subject=I want to work at Futureworld"
                 className="text-[1.3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.3vh] underline hover:no-underline"
               >
@@ -855,7 +863,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
       landscapeRowSpan: 1,
     },
     // Empty cells for carousel sidebar rows
-    ...[28, 29, 30].map(id => ({
+    ...[28, 29, 30].map((id) => ({
       id,
       content: <div></div>,
       colSpan: 1,
@@ -873,10 +881,7 @@ export default function People({ data }: { data: PeoplePageContent }) {
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
         <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
           {gridItems.map((item) => (
-            <div
-              key={item.id}
-              className={getGridClasses(item)}
-            >
+            <div key={item.id} className={getGridClasses(item)}>
               {item.content}
             </div>
           ))}

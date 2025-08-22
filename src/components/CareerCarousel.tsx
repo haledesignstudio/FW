@@ -4,11 +4,16 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import clsx from "clsx";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import { createRoot, type Root } from "react-dom/client";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 
 export type CarouselItem = {
   src: string;
   heading?: string;
-  description?: string;
+  /**
+   * Can be a plain string or Sanity Portable Text blocks
+   */
+  description?: string | PortableTextBlock[];
   href?: string; // optional Read More link
   readMoreText?: string; // OPTIONAL: per-item override label
 };
@@ -17,10 +22,10 @@ export type CarouselProps = {
   items: CarouselItem[];
 
   /** Desktop sizes */
-  imageHeight?: string;        // e.g. "25vh"
-  captionHeight?: string;      // e.g. "25vh"
-  innerRowGap?: string;        // e.g. "4vh" (between image & caption)
-  gap?: string;                // e.g. "4vh" (between columns)
+  imageHeight?: string; // e.g. "25vh"
+  captionHeight?: string; // e.g. "25vh"
+  innerRowGap?: string; // e.g. "4vh" (between image & caption)
+  gap?: string; // e.g. "4vh" (between columns)
 
   /** Mobile overrides */
   mobileImageHeight?: string;
@@ -37,6 +42,9 @@ export type CarouselProps = {
 
   /** customize the Read More label (fallback when item.readMoreText is not provided) */
   readMoreText?: string;
+
+  /** Optional: override the default block-aware PT mapping used inside description */
+  portableTextComponents?: PortableTextComponents;
 };
 
 function useIsMobile(breakpoint = 768) {
@@ -62,6 +70,7 @@ function useIsMobile(breakpoint = 768) {
 
 // ===== helpers for dynamic line-clamp =====
 const ALL_CLAMPS = [
+  "line-clamp-none", // allow unlimited lines
   "line-clamp-1",
   "line-clamp-2",
   "line-clamp-3",
@@ -71,7 +80,8 @@ const ALL_CLAMPS = [
 ];
 function applyClamp(el: HTMLElement, lines: number) {
   ALL_CLAMPS.forEach((c) => el.classList.remove(c));
-  el.classList.add(`line-clamp-${lines}`);
+  if (lines <= 0) el.classList.add("line-clamp-none");
+  else el.classList.add(`line-clamp-${lines}`);
 }
 // ==========================================
 
@@ -92,10 +102,11 @@ export default function Carousel({
   height,
   className,
   rounded = "rounded-2xl",
-  ariaLabel = "Six column image carousel",
+  ariaLabel = "Four column image carousel",
 
   // default fallback
   readMoreText = "Read More",
+  portableTextComponents,
 }: CarouselProps) {
   const isMobile = useIsMobile(768);
 
@@ -105,14 +116,17 @@ export default function Carousel({
   const INNER_GAP = isMobile ? (mobileInnerRowGap ?? innerRowGap) : innerRowGap;
   const COL_GAP = isMobile ? (mobileGap ?? gap) : gap;
 
-  const TRACK_UNITS = useMemo(() => (isMobile ? 1 : 5), [isMobile]);
+  // Desktop: 4 units visible in the track => 1 featured (span-2) + 2 normals (span-1 each)
+  const TRACK_UNITS = useMemo(() => (isMobile ? 1 : 4), [isMobile]);
   const NORMALS = useMemo(() => (isMobile ? 0 : TRACK_UNITS - 2), [isMobile, TRACK_UNITS]);
+  const TOTAL_COLS = useMemo(() => (isMobile ? 1 : TRACK_UNITS + 1), [isMobile, TRACK_UNITS]); // +1 for control column
 
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [nextIndex, setNextIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  // Base column height for non-featured items
   const colHeight = useMemo(
     () => height ?? `calc(${IMG_H} + ${INNER_GAP} + ${CAP_H})`,
     [height, IMG_H, INNER_GAP, CAP_H]
@@ -128,13 +142,67 @@ export default function Carousel({
     [UNIT_WIDTH, COL_GAP]
   );
 
+  // Block-aware PortableText mapping (preserves paragraphs, bullets, etc.)
+  const defaultPT: PortableTextComponents = useMemo(
+  () => ({
+    block: {
+      normal: ({ children }) => (
+        // mb-2 adds a small gap between paragraphs; last:mb-0 avoids
+        // extra space at the end. whitespace-pre-wrap preserves \n.
+        <p className="whitespace-pre-wrap leading-snug mb-2 last:mb-0">
+          {children}
+        </p>
+      ),
+      h1: ({ children }) => <h1 className="font-bold">{children}</h1>,
+      h2: ({ children }) => <h2 className="font-bold">{children}</h2>,
+      h3: ({ children }) => <h3 className="font-semibold">{children}</h3>,
+    },
+    list: {
+      // my-2 adds top/bottom gap around lists; space-y-1 keeps li spacing tight
+      bullet: ({ children }) => <ul className="list-disc pl-5 space-y-1 my-2">{children}</ul>,
+      number: ({ children }) => <ol className="list-decimal pl-5 space-y-1 my-2">{children}</ol>,
+    },
+    listItem: {
+      bullet: ({ children }) => <li>{children}</li>,
+      number: ({ children }) => <li>{children}</li>,
+    },
+    marks: {
+      strong: ({ children }) => <strong>{children}</strong>,
+      em: ({ children }) => <em>{children}</em>,
+      underline: ({ children }) => <u>{children}</u>,
+      link: ({ children, value }) => (
+        <a href={value?.href} target="_blank" rel="noopener noreferrer" className="underline">
+          {children}
+        </a>
+      ),
+    },
+  }),
+  []
+);
+
+
   const setColSpan = useCallback(
     (el: HTMLElement, span: 1 | 2) => {
+      // Span is only meaningful on desktop
       const s = isMobile ? 1 : span;
       el.dataset.span = String(s);
-      el.style.transition = "flex-basis 450ms cubic-bezier(.22,.61,.36,1)";
+      el.style.transition = "flex-basis 450ms cubic-bezier(.22,.61,.36,1)"; // height can't animate to 'auto'
       el.style.flex = `0 0 calc((${UNIT_WIDTH}) * ${s})`;
-      el.style.height = colHeight;
+
+      // Grid row sizing: featured gets auto-growing caption; normals stay fixed
+      if (isMobile) {
+        el.style.height = "auto"; // mobile: allow caption to grow and push UI below
+        el.style.gridTemplateRows = `${IMG_H} auto`;
+        el.style.overflow = "visible"; // let caption expand
+      } else if (s === 2) {
+        el.style.height = "auto"; // desktop featured grows
+        el.style.gridTemplateRows = `${IMG_H} auto`;
+        el.style.overflow = "visible";
+      } else {
+        el.style.height = colHeight;
+        el.style.gridTemplateRows = `${IMG_H} ${CAP_H}`;
+        el.style.overflow = "hidden";
+      }
 
       const img = el.querySelector("img") as HTMLImageElement | null;
       const heading = el.querySelector(".carousel-heading") as HTMLElement | null;
@@ -151,23 +219,16 @@ export default function Carousel({
             : "carousel-heading font-semibold text-base";
       }
       if (desc) {
-        const featuredLinesDesktop = 5;
-        const normalLinesDesktop = 3;
-        const featuredLinesMobile = 3;
-        const normalLinesMobile = 2;
+        // Non-featured: single line. Featured: unlimited lines.
+        const featuredLinesDesktop = 0; // unlimited on desktop when featured
+        const normalLinesDesktop = 1; // single line for desktop normals
 
-        const lines = isMobile
-          ? s === 2
-            ? featuredLinesMobile
-            : normalLinesMobile
-          : s === 2
-          ? featuredLinesDesktop
-          : normalLinesDesktop;
-
+        // On mobile: never clamp (both featured and normal)
+        const lines = isMobile ? 0 : (s === 2 ? featuredLinesDesktop : normalLinesDesktop);
         applyClamp(desc, lines);
       }
     },
-    [UNIT_WIDTH, colHeight, isMobile]
+    [UNIT_WIDTH, colHeight, isMobile, IMG_H, CAP_H]
   );
 
   // Build a column
@@ -177,9 +238,9 @@ export default function Carousel({
       (col as unknown as WithRoots).__roots = [];
       col.className = "col relative bg-[#F9F7F2] text-black overflow-hidden";
       col.style.display = "grid";
-      col.style.gridTemplateRows = `${IMG_H} ${CAP_H}`;
+      col.style.gridTemplateRows = `${IMG_H} ${CAP_H}`; // may be overridden by setColSpan
       col.style.rowGap = INNER_GAP;
-      col.style.height = colHeight;
+      col.style.height = colHeight; // may be overridden by setColSpan when featured
 
       // IMAGE
       const imgWrap = document.createElement("div");
@@ -207,15 +268,29 @@ export default function Carousel({
       }
       if (item.description) {
         const d = document.createElement("div");
-        d.className = "carousel-desc mt-1 line-clamp-3";
-        d.textContent = item.description;
+        d.className = "carousel-desc mt-1 line-clamp-1"; // default; setColSpan will adjust
         textWrap.appendChild(d);
+
+        const root = createRoot(d);
+        (col as unknown as WithRoots).__roots!.push(root);
+
+        if (Array.isArray(item.description)) {
+          root.render(
+            <PortableText
+              value={item.description as PortableTextBlock[]}
+              components={portableTextComponents ?? defaultPT}
+            />
+          );
+        } else {
+          // preserve line breaks in plain strings
+          root.render(<p className="whitespace-pre-wrap">{item.description}</p>);
+        }
       }
 
       // Desktop-only: Read More
       if (!isMobile) {
         const actions = document.createElement("div");
-        actions.className = "mt-auto";
+        actions.className = "mt-auto"; // stick to bottom; will be pushed down by growing text
 
         const readMore = document.createElement(item.href ? "a" : "button");
         if (item.href) {
@@ -252,7 +327,7 @@ export default function Carousel({
       col.appendChild(textWrap);
       return col as HTMLElement;
     },
-    [IMG_H, CAP_H, INNER_GAP, colHeight, isMobile, readMoreText]
+    [IMG_H, CAP_H, INNER_GAP, colHeight, isMobile, readMoreText, portableTextComponents, defaultPT]
   );
 
   useEffect(() => {
@@ -261,10 +336,12 @@ export default function Carousel({
     track.innerHTML = "";
     if (!items || items.length === 0) return;
 
+    // First (featured)
     const first = makeCol(items[0]);
     track.appendChild(first);
     setColSpan(first, isMobile ? 1 : 2);
 
+    // Then normals to fill the track
     for (let i = 1; i <= NORMALS; i++) {
       const item = items[i % items.length];
       const col = makeCol(item);
@@ -274,7 +351,7 @@ export default function Carousel({
 
     setCurrentIndex(0);
     setNextIndex((isMobile ? 1 : 1 + NORMALS) % items.length);
-  }, [items, colHeight, COL_GAP, isMobile, NORMALS, makeCol, setColSpan]);
+  }, [items, isMobile, NORMALS, makeCol, setColSpan]);
 
   const getNextItem = useCallback(() => {
     const idx = nextIndex % items.length;
@@ -298,11 +375,12 @@ export default function Carousel({
       const first = track.children[0] as HTMLElement | undefined;
       const second = track.children[1] as HTMLElement | undefined;
       if (first && second) {
-        setColSpan(first, 1);
-        setColSpan(second, 2);
+        setColSpan(first, 1); // demote old featured => fixed height
+        setColSpan(second, 2); // promote next => auto-growing height
       }
     }
 
+    // Trigger layout before transition
     void track.offsetWidth;
     track.style.transition = "transform 450ms cubic-bezier(.22,.61,.36,1)";
     track.style.transform = `translateX(${SHIFT_X})`;
@@ -310,7 +388,7 @@ export default function Carousel({
     const onDone = () => {
       track.removeEventListener("transitionend", onDone);
 
-      const firstNow = track.firstElementChild as HTMLElement & WithRoots | null;
+      const firstNow = track.firstElementChild as (HTMLElement & WithRoots) | null;
       if (firstNow) {
         firstNow.__roots?.forEach((r) => r.unmount());
         firstNow.remove();
@@ -350,10 +428,10 @@ export default function Carousel({
         <div className="flex" style={{ gap: COL_GAP }}>
           {/* Track wrapper */}
           <div
-            className="relative overflow-hidden"
+            className="relative overflow-visible" // allow tallest featured card to define height
             style={{
-              flex: isMobile ? "0 0 100%" : "0 0 calc(100% * 5 / 6)",
-              height: colHeight,
+              flex: isMobile ? "0 0 100%" : `0 0 calc(100% * ${TRACK_UNITS} / ${TOTAL_COLS})`,
+              height: "auto",
             }}
           >
             {/* Sliding track */}
@@ -361,7 +439,7 @@ export default function Carousel({
               ref={trackRef}
               role="list"
               className="flex will-change-transform"
-              style={{ gap: COL_GAP, height: colHeight }}
+              style={{ gap: COL_GAP, height: "auto", alignItems: "stretch" as React.CSSProperties["alignItems"] }}
             />
           </div>
 
@@ -370,11 +448,12 @@ export default function Carousel({
             <div
               className="bg-[#F9F7F2] text-black"
               style={{
-                flex: "0 0 calc(100% / 6)",
-                height: colHeight,
+                flex: `0 0 calc(100% / ${TOTAL_COLS})`,
+                height: "auto",
                 display: "grid",
                 gridTemplateRows: `${IMG_H} ${CAP_H}`,
                 rowGap: INNER_GAP,
+                alignSelf: "stretch",
               }}
             >
               <div className="relative flex items-end justify-end mr-[4vh]">

@@ -666,9 +666,11 @@ export const articleQuery = defineQuery(`
         link
       },
       true => []
-    )
+    ),
+    corporate
   }
 `);
+
 
 
 export const careerQuery = defineQuery(`
