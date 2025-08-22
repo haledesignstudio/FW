@@ -146,7 +146,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         id: 2,
                         content: (
                             <iframe
-                                src="https://fw-demo.evidence.app/"
+                                src="https://fw-dashboard-puce.vercel.app/"
                                 className="w-full h-full bg-white"
                                 title="Future World Analytics Dashboard"
                                 style={{ minHeight: '300px' }}
@@ -434,7 +434,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         {/* Row 7-10: Section Image (iframe for section 1) */}
                                         <div className="col-span-4 row-start-7 row-span-4 bg-[#1B1B1B] p-4">
                                             <iframe 
-                                                src="https://fw-demo.evidence.app/"
+                                                src="https://fw-dashboard-puce.vercel.app/"
                                                 className="w-full h-[40vh] bg-white"
                                                 title="Future World Analytics Dashboard"
                                             />

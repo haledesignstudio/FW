@@ -28,6 +28,7 @@ export default function ShareholderValueAnalytics(props: Props) {
     title,
     subheading,
     contentText,
+    iframeSource,
     IQ_heading,
     IQ_subheading,
     IQ_context,
@@ -41,6 +42,7 @@ export default function ShareholderValueAnalytics(props: Props) {
     title,
     subheading,
     contentText,
+    iframeSource,
     IQ_heading,
     IQ_subheading,
     IQ_context,
@@ -118,12 +120,12 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 9: Empty */}
           <div className="col-span-4 row-span-1"></div>
           {/* Row 10-14: iframe */}
-          <div className="col-span-4 row-span-5">
+          <div className="col-span-4 row-span-12">
             <FadeInOnVisible>
               <iframe
-                src="https://fw-demo.evidence.app/"
+                src={analytics.iframeSource}
                 title="Futureworld Analytics Dashboard"
-                style={{ width: '100%', height: '40vh', border: 'none'}}
+                style={{ width: '100%', height: '100vh', border: 'none'}}
                 loading="lazy"
                 allowFullScreen
               />
@@ -285,7 +287,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       content: (
         <FadeInOnVisible>
           <iframe
-            src="https://fw-demo.evidence.app/"
+            src={analytics.iframeSource}
             title="Futureworld Analytics Dashboard"
             style={{ width: '100%', height: '60vh', border: 'none', minHeight: '801px',}}
             loading="lazy"
