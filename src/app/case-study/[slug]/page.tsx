@@ -29,6 +29,7 @@ const portableTextComponents: PortableTextComponents = {
 // Type for case study data
 interface CaseStudyData {
   title: string;
+  summary: PortableTextBlock[];
   subheading: string;
   heading: string;
   abstract: string;
@@ -126,6 +127,7 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
       const caseStudyData = await client.fetch(
         groq`*[_type == "caseStudy" && slug.current == $slug][0]{
           title,
+          summary,
           subheading,
           heading,
           abstract,

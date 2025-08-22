@@ -689,3 +689,14 @@ export const articlesForEdgeCarouselQuery = defineQuery(`
     image{ asset->{ url } }
   }
 `);
+
+export const caseStudyQuery = defineQuery(`
+  *[_type == "caseStudy"] 
+    | order(coalesce(publishedAt, _updatedAt, _createdAt) desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    "image": { "url": mainImage.asset->url },
+    summary[]
+  }
+`);
