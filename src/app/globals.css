@@ -9,23 +9,40 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @font-face {
   font-family: 'Graphik';
-  src: url('/fonts/Graphik.otf') format('opentype');
+  src: url('/fonts/Graphik-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Graphik Semibold';
+  src: url('/fonts/Graphik-Semibold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto.ttf') format('truetype');
 }
 
 .font-graphik {
   font-family: 'Graphik', sans-serif !important;
 }
 
-/* Brand carousel animation */
+.font-graphik-semibold {
+  font-family: 'Graphik Semibold', sans-serif !important;
+}
+
+.font-roboto {
+  font-family: 'Roboto', sans-serif !important;
+}
+
 @keyframes scroll {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -35,24 +52,253 @@ body {
   animation: scroll 30s linear infinite;
 }
 
-/* Hide scrollbar but allow scroll */
 html,
 body {
-  scrollbar-width: none;         /* Firefox */
-  -ms-overflow-style: none;      /* IE 10+ */
-  overflow-y: scroll;            /* Ensure scroll still works */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
 }
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  display: none;                 /* Chrome, Safari and Opera */
+  display: none;
 }
 
-/* TypeMotion animation styles */
 .split {
   will-change: transform, opacity;
 }
 
 .split * {
   will-change: transform, opacity;
+}
+
+
+/* BODY COPY — SMALL */
+.dt-body-sm {
+  font-family: 'Roboto', sans-serif;
+  font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+  line-height: clamp(1.1rem, 4.6vw, 1.35rem);
+}
+
+.dt-body-sm>p {
+  margin-bottom: clamp(1.1rem, 4.6vw, 1.35rem);
+}
+
+.dt-body-sm>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-body-sm {
+    font-size: clamp(0.7vw, 1.85vh, 0.925vw);
+    line-height: clamp(0.8vw, 2vh, 1vw);
+  }
+
+  .dt-body-sm>p {
+    margin-bottom: clamp(0.8vw, 2vh, 1vw);
+  }
+}
+
+/* BODY COPY — LARGE */
+.dt-body-lg {
+  font-family: 'Roboto', sans-serif;
+  font-size: clamp(1.05rem, 4.6vw, 1.25rem);
+  line-height: clamp(1.3rem, 5.8vw, 1.5rem);
+}
+
+.dt-body-lg>p {
+  margin-bottom: clamp(1.3rem, 5.8vw, 1.5rem);
+}
+
+.dt-body-lg>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-body-lg {
+    font-size: clamp(0.95vw, 2.3vh, 1.15vw);
+    line-height: clamp(1vw, 2.75vh, 1.375vw);
+  }
+
+  .dt-body-lg>p {
+    margin-bottom: clamp(1vw, 2.75vh, 1.375vw);
+  }
+}
+
+/* BUTTON — PRIMARY */
+.dt-btn {
+  font-family: 'Graphik Semibold', sans-serif;
+  font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+  line-height: clamp(1.15rem, 4.6vw, 1.35rem);
+}
+
+.dt-btn>p {
+  margin-bottom: clamp(1.15rem, 4.6vw, 1.35rem);
+}
+
+.dt-btn>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-btn {
+    font-size: clamp(0.75vw, 2vh, 1vw);
+    line-height: clamp(1vw, 2.5vh, 1.25vw);
+  }
+
+  .dt-btn>p {
+    margin-bottom: clamp(1vw, 2.5vh, 1.25vw);
+  }
+}
+
+/* BUTTON — SECONDARY */
+.dt-btn-secondary {
+  font-family: 'Graphik Semibold', sans-serif;
+  font-size: clamp(0.8rem, 3.2vw, 0.95rem);
+  line-height: clamp(1rem, 4.2vw, 1.2rem);
+}
+
+.dt-btn-secondary>p {
+  margin-bottom: clamp(1rem, 4.2vw, 1.2rem);
+}
+
+.dt-btn-secondary>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-btn-secondary {
+    font-size: clamp(0.4vw, 1.3vh, 0.65vw);
+    line-height: clamp(0.9vw, 2.3vh, 1.15vw);
+  }
+
+  .dt-btn-secondary>p {
+    margin-bottom: clamp(0.9vw, 2.3vh, 1.15vw);
+  }
+}
+
+/* HEADINGS */
+.dt-h1 {
+  font-family: 'Graphik Semibold', sans-serif;
+  font-size: clamp(12vw, 12vh, 14vw);
+  line-height: clamp(12.5vw, 13vh, 14.5vw);
+}
+
+.dt-h1>p {
+  margin-bottom: clamp(12.5vw, 13vh, 14.5vw);
+}
+
+.dt-h1>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-h1 {
+    font-size: clamp(8vw, 18.5vh, 9.25vw);
+    line-height: clamp(8.5vw, 19.5vh, 9.75vw);
+  }
+
+  .dt-h1>p {
+    margin-bottom: clamp(8.5vw, 19.5vh, 9.75vw);
+  }
+}
+
+.dt-h2 {
+  font-family: 'Graphik Semibold', sans-serif;
+  font-size: clamp(8vw, 9.5vh, 10vw);
+  line-height: clamp(8.5vw, 10.5vh, 10.5vw);
+}
+
+.dt-h2>p {
+  margin-bottom: clamp(8.5vw, 10.5vh, 10.5vw);
+}
+
+.dt-h2>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-h2 {
+    font-size: clamp(3.75vw, 9.25vh, 4.625vw);
+    line-height: clamp(4vw, 10.18vh, 5.09vw);
+  }
+
+  .dt-h2>p {
+    margin-bottom: clamp(4vw, 10.18vh, 5.09vw);
+  }
+}
+
+.dt-h3 {
+  font-family: 'Graphik Semibold', sans-serif;
+  font-size: clamp(6vw, 7.5vh, 7.5vw);
+  line-height: clamp(6.5vw, 8vh, 8vw);
+}
+
+.dt-h3>p {
+  margin-bottom: clamp(6.5vw, 8vh, 8vw);
+}
+
+.dt-h3>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-h3 {
+    font-size: clamp(1.5vw, 4.45vh, 2.225vw);
+    line-height: clamp(1.9vw, 4.8vh, 2.4vw);
+  }
+
+  .dt-h3>p {
+    margin-bottom: clamp(1.9vw, 4.8vh, 2.4vw);
+  }
+}
+
+.dt-h4 {
+  font-family: 'Graphik', sans-serif;
+  font-size: clamp(5vw, 6.2vh, 6.2vw);
+  line-height: clamp(5.5vw, 6.8vh, 6.8vw);
+}
+
+.dt-h4>p {
+  margin-bottom: clamp(5.5vw, 6.8vh, 6.8vw);
+}
+
+.dt-h4>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-h4 {
+    font-size: clamp(1vw, 2.75vh, 1.375vw);
+    line-height: clamp(1.2vw, 3.42vh, 1.71vw);
+  }
+
+  .dt-h4>p {
+    margin-bottom: clamp(1.2vw, 3.42vh, 1.71vw);
+  }
+}
+
+.dt-h5 {
+  font-family: 'Graphik Semibold', sans-serif;
+  font-size: clamp(4.2vw, 5.2vh, 5.2vw);
+  line-height: clamp(4.8vw, 5.8vh, 5.8vw);
+}
+
+.dt-h5>p {
+  margin-bottom: clamp(4.8vw, 5.8vh, 5.8vw);
+}
+
+.dt-h5>p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) and (min-aspect-ratio:1/1) {
+  .dt-h5 {
+    font-size: clamp(0.7vw, 2vh, 1vw);
+    line-height: clamp(0.9vw, 2.5vh, 1.25vw);
+  }
+
+  .dt-h5>p {
+    margin-bottom: clamp(0.9vw, 2.5vh, 1.25vw);
+  }
 }

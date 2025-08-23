@@ -94,7 +94,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
           text="Insights"
           typeSpeed={60}
           delay={500}
-          className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
+          className="dt-h2"
         />
       ),
       colSpan: 4,
@@ -109,9 +109,9 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
       content: (
         <>
           <FadeInOnVisible>
-            <span className="text-[2.5vh] font-bold block">Categories</span>
+            <span className="text-[clamp(0.9vw,2.5vh,1.25vw)] font-graphik-semibold leading-[clamp(0.7vw,2vh,1vw)] block">Categories</span>
           </FadeInOnVisible>
-          <ul className="text-[2.5vh] leading-[2vh] space-y-[1.75vh] mt-[2vh]">
+          <ul className="text-[clamp(0.9vw,2.5vh,1.25vw)] font-graphik leading-[clamp(0.7vw,2vh,1vw)] space-y-[1.75vh] mt-[4vh]">
             {categories.map((cat) => (
               <li key={cat.href}>
                 {cat.comingSoon ? (

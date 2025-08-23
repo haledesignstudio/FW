@@ -109,7 +109,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                     text={data.heading}
                     typeSpeed={60}
                     delay={500}
-                    className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-balance"
+                    className="dt-h2"
                 />
             ),
             colSpan: 2,
@@ -135,7 +135,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
             id: 3,
             content: (
                 <FadeInOnVisible>
-                    <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+                    <div className="dt-h3">
                         <HighlightText value={data.subheading} />
                     </div>
                 </FadeInOnVisible>
@@ -163,7 +163,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
             id: 5,
             content: (
                 <FadeInOnVisible>
-                    <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,3vh,1.5vw)] ">
+                    <div className="dt-btn">
                         <a
                             href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.cta ?? '')}`}
                             className="transition cursor-pointer"
@@ -198,7 +198,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
             id: 7,
             content: (
                 <FadeInOnVisible>
-                    <div className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
+                    <div className="dt-body-sm">
                         <PortableText value={data.statement1} />
                     </div>
                 </FadeInOnVisible>
@@ -214,7 +214,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
             id: 8,
             content: (
                 <FadeInOnVisible>
-                    <div className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
+                    <div className="dt-body-sm">
                         <PortableText value={data.statement2} />
                     </div>
                 </FadeInOnVisible>
@@ -230,29 +230,13 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
             id: 9,
             content: (
                 <FadeInOnVisible>
-                    <div className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
+                    <div className="dt-body-sm">
                         <PortableText value={data.statement3} />
                     </div>
                 </FadeInOnVisible>
             ),
             colSpan: 1,
             rowSpan: 1,
-            mobileColSpan: 2,
-            mobileRowSpan: 2,
-            landscapeColSpan: 4,
-            landscapeRowSpan: 2,
-        },
-        {
-            id: 10,
-            content: (
-                <FadeInOnVisible>
-                    <div id="how-we-do-it" className="text-[clamp(0.75vw,2vh,1vw)] leading-tight">
-                        <WhatWeDoAccordion data={data} />
-                    </div>
-                </FadeInOnVisible>
-            ),
-            colSpan: 6,
-            rowSpan: 4,
             mobileColSpan: 2,
             mobileRowSpan: 2,
             landscapeColSpan: 4,
@@ -406,9 +390,9 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                 ))}
                             </div>
                         </div>
-                        {/* <div className="w-full">
+                         <div className="w-full">
                             <WhatWeDoAccordion data={data} />
-                        </div> */}
+                        </div> 
                     </>
                 )}
             </main>

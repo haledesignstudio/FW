@@ -209,7 +209,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       id: 'analytics-1',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <div className="dt-h1">
             {analytics.title}
           </div>
         </FadeInOnVisible>
@@ -227,7 +227,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       id: 'analytics-3',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
+          <div className="dt-h4">
             {analytics.contentText}
           </div>
         </FadeInOnVisible>
@@ -239,7 +239,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       id: 'analytics-4',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+          <div className="dt-h3">
             <HighlightText value={analytics.subheading} />
           </div>
         </FadeInOnVisible>
@@ -258,7 +258,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       content: (
         <div className="flex items-center h-full">
           <FadeInOnVisible>
-            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
+            <div className="dt-btn">
               <a
                 href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
                   analytics.CTA1 ?? ''
@@ -302,7 +302,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       id: 'analytics-10',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
+          <div className="dt-h4">
             {analytics.IQ_context}
           </div>
         </FadeInOnVisible>
@@ -314,7 +314,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       id: 'analytics-11',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1.9vw,4.75vh,2.3vw)] font-bold leading-tight">
+          <div className="dt-h3">
             <HighlightText value={analytics.IQ_heading} />
           </div>
         </FadeInOnVisible>
@@ -339,7 +339,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       content: (
         <div className="flex items-end h-full">
           <FadeInOnVisible>
-            <div className="text-[clamp(1vw,2.75vh,1.3vw)] leading-tight">
+            <div className="dt-body-lg">
               {analytics.IQ_subheading}
             </div>
           </FadeInOnVisible>
@@ -365,7 +365,7 @@ export default function ShareholderValueAnalytics(props: Props) {
       content: (
         <div className="flex items-center h-full">
           <FadeInOnVisible>
-            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] ">
+            <div className="dt-btn">
               <a
                 href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
                   analytics.CTA2 ?? ''

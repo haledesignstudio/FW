@@ -41,10 +41,10 @@ type GridItem = {
 const portableTextComponents: PortableTextComponents = {
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc pl-6 mb-4 text-base">{children}</ul>
+      <ul className="list-disc pl-6 mb-4 dt-body-sm ">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal pl-6 mb-4 text-base">{children}</ol>
+      <ol className="list-decimal pl-6 mb-4 dt-body-sm ">{children}</ol>
     ),
   },
   listItem: {
@@ -52,7 +52,7 @@ const portableTextComponents: PortableTextComponents = {
     number: ({ children }) => <li className="mb-1">{children}</li>,
   },
   block: {
-    normal: ({ children }) => <p className="mb-2 text-base">{children}</p>,
+    normal: ({ children }) => <p className="mb-2 dt-body-sm ">{children}</p>,
   },
 };
 
@@ -146,7 +146,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
   const renderContent = () => {
     const section = privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection;
     return (
-      <div className="prose max-w-none text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight">
+      <div className="dt-body-sm">
         <PortableText value={section.content} components={portableTextComponents}/>
       </div>
     );
@@ -164,7 +164,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
                       className={`transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full`}
                   >
                       <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
-                          <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight text-black font-normal text-left">
+                          <span className="dt-body-lg text-left">
                               {category.shortLabel}
                           </span>
                       </UnderlineOnHoverAnimation>
@@ -184,7 +184,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
       id: 7,
       content: (
         <FadeInOnVisible key={`header-${selectedCategory}`}>
-          <h2 className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[3vh] font-graphik mt-auto">
+          <h2 className="dt-h3 mt-auto">
             {(privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection).sectionTitle}
           </h2>
         </FadeInOnVisible>
@@ -218,7 +218,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
                 text={privacyData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
-                className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[10vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
+                className="dt-h2"
               />
             </div>
           </div>
@@ -236,7 +236,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
       id: 10,
       content: (
         <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
-          <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
+          <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto ">
             {renderContent()}
           </div>
         </FadeInOnVisible>

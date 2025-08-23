@@ -331,7 +331,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                 text={data.accordion.heading}
                                 typeSpeed={40}
                                 delay={500}
-                                className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-[clamp(4vw,10vh,5vw)] text-balance text-[#232323]"
+                                className="dt-h2 text-balance text-[#232323]"
                             />
 
                     ),
@@ -355,7 +355,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 4,
                     content:
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-[#232323]">
+                        <div className="dt-h3 text-[#232323]">
                             <HighlightText value={data.accordion.subheading} />
                         </div>
                     ,
@@ -400,7 +400,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 201,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                        <div className="dt-h2 text-[#F9F7F2]">
                             1
                         </div>,
                     colSpan: 1,
@@ -422,7 +422,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 203,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#F9F7F2]">
+                            <div className="dt-btn text-[#F9F7F2]">
                                 {data.accordion.items[0].heading}
                             </div>
                         </div>,
@@ -438,10 +438,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 1,
                     content: (
                             <div className="h-full flex flex-col  gap-[2vh]">
-                                <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                                <div className="dt-h2 text-[#F9F7F2]">
                                     1
                                 </div>
-                                <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
+                                <div className="dt-body-sm text-[#F9F7F2]">
                                     <PortableText value={data.accordion.items[0].description} components={ptComponents} />
                                 </div>
                             </div>
@@ -466,7 +466,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 3,
                     content:
-                            <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#F9F7F2]">
+                            <div className="dt-h3 mt-[2vh] text-balance text-right text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].subheading} />
                             </div>,
                     colSpan: 2,
@@ -496,7 +496,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 5,
                     content:
                         <div className="flex h-full pt-[14.5vh]">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].prompt} />
                             </div>
                         </div>,
@@ -511,10 +511,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 6,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].entries[0].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#F9F7F2] text-balance">
                                 <PortableText value={data.accordion.items[0].entries[0].body} />
                             </div>
                         </div>,
@@ -529,10 +529,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 7,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].entries[1].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#F9F7F2] text-balance">
                                 <PortableText value={data.accordion.items[0].entries[1].body} />
                             </div>
                         </div>
@@ -548,10 +548,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 8,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].entries[2].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#F9F7F2] text-balance">
                                 <PortableText value={data.accordion.items[0].entries[2].body} />
                             </div>
                         </div>,
@@ -565,7 +565,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#F9F7F2]">
+                        <div className="dt-h1 text-[#F9F7F2]">
                             {data.accordion.items[0].heading}
                         </div>,
                     colSpan: 4,
@@ -593,13 +593,13 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 mobileRowSpan: 1,
                 landscapeColSpan: 6,
                 landscapeRowSpan: 1,
-                content: <div className="text-[20vh] font-bold leading-none">TitleTest</div>,
+                content: <div className="text-[20vh] font-bold leading-none"></div>,
             },
             collapsedItems: [
                 {
                     id: 301,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                        <div className="dt-h2 text-[#F9F7F2]">
                             2
                         </div>,
                     colSpan: 1,
@@ -621,7 +621,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 303,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#F9F7F2]">
+                            <div className="dt-btn text-[#F9F7F2]">
                                 {data.accordion.items[1].heading}
                             </div>
                         </div>,
@@ -637,10 +637,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 1,
                     content: (
                             <div className="h-full flex flex-col  gap-[2vh]">
-                                <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                                <div className="dt-h2 text-[#F9F7F2]">
                                     2
                                 </div>
-                                <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
+                                <div className="dt-body-sm text-[#F9F7F2]">
                                     <PortableText value={data.accordion.items[1].description} components={ptComponents} />
                                 </div>
                             </div>
@@ -665,7 +665,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 3,
                     content:
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#F9F7F2]">
+                        <div className="dt-h3 text-balance text-right text-[#F9F7F2]">
                             <PortableText value={data.accordion.items[1].subheading} />
                         </div>,
                     colSpan: 2,
@@ -695,7 +695,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 5,
                     content:
                         <div className="flex h-full pt-[14.5vh]">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].prompt} />
                             </div>
                         </div>,
@@ -710,10 +710,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 6,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[0].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[0].body} />
                             </div>
                         </div>,
@@ -728,10 +728,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 7,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[1].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[1].body} />
                             </div>
                         </div>,
@@ -746,10 +746,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 8,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[2].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].entries[2].body} />
                             </div>
                         </div>,
@@ -763,7 +763,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#F9F7F2]">
+                        <div className="dt-h1 text-[#F9F7F2]">
                             {data.accordion.items[1].heading}
                         </div>,
                     colSpan: 4,
@@ -797,7 +797,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 401,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#232323]">
+                        <div className="dt-h2 text-[#232323]">
                             3
                         </div>,
                     colSpan: 1,
@@ -819,7 +819,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 403,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik leading-tight text-[#232323]">
+                            <div className="dt-btn text-[#232323]">
                                 {data.accordion.items[2].heading}
                             </div>
                         </div>,
@@ -834,11 +834,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                            <div className="h-full flex flex-col  gap-[2vh]">
-                                <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#232323]">
+                            <div className="h-full flex flex-col  gap-[6vh]">
+                                <div className="dt-h2 text-[#232323]">
                                     3
                                 </div>
-                                <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
+                                <div className="dt-body-sm text-[#232323]">
                                     <PortableText value={data.accordion.items[2].description} components={ptComponents} />
                                 </div>
                             </div>
@@ -863,7 +863,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 3,
                     content:
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#232323]">
+                        <div className="dt-h3 text-balance text-right text-[#232323]">
                             <PortableText value={data.accordion.items[2].subheading} />
                         </div>,
                     colSpan: 2,
@@ -893,7 +893,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 5,
                     content:
                         <div className="flex h-full pt-[14.5vh]">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
+                            <div className="dt-h5 text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].prompt} />
                             </div>
                         </div>,
@@ -908,10 +908,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 6,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
+                            <div className="dt-h5 text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[0].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[0].body} />
                             </div>
                         </div>,
@@ -926,10 +926,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 7,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
+                            <div className="dt-h5 text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[1].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[1].body} />
                             </div>
                         </div>,
@@ -944,10 +944,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 8,
                     content:
                         <div className="relative h-full">
-                            <div className="text-[clamp(0.5vw,2vh,1vw)] font-bold leading-tight text-balance text-[#232323]">
+                            <div className="dt-h5 text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[2].title} />
                             </div>
-                            <div className="absolute top-[8vh] left-0 text-[clamp(0.25vw,1.5vh,0.75vw)] font-roboto leading-tight text-[#232323]">
+                            <div className="dt-body-sm absolute top-[8vh] left-0 text-[#232323]">
                                 <PortableText value={data.accordion.items[2].entries[2].body} />
                             </div>
                         </div>,
@@ -961,7 +961,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                        <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-tight text-[#232323]">
+                        <div className="dt-h1 text-[#232323]">
                             {data.accordion.items[2].heading}
                         </div>,
                     colSpan: 4,

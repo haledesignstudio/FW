@@ -211,7 +211,7 @@ export default function FAQClient({ faqData }: Props) {
               text={faqData.pageHeader.mainTitle}
               typeSpeed={60}
               delay={500}
-              className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
+              className="dt-h2"
             />
           </div>
         </div>
@@ -228,17 +228,17 @@ export default function FAQClient({ faqData }: Props) {
       id: 3,
       content: (
         <FadeInOnVisible>
-          <div className="w-full h-full flex flex-col justify-start gap-[2vh]">
+          <div className="w-full h-full flex flex-col justify-start gap-[4vh]">
             {faqData.faqs.map((faq, index) => (
               <button
                 key={index}
                 onClick={() => toggleQuestion(index)}
-                className="w-full flex items-center justify-end pointer-events-auto cursor-pointer bg-transparent border-none outline-none font-graphik font-normal"
+                className="w-full flex items-center justify-end pointer-events-auto cursor-pointer bg-transparent border-none outline-none dt-h4"
                 style={{ background: 'none' }}
               >
                 <span className="text-[3vh] w-full block text-right">
                   <UnderlineOnHoverAnimation
-                    className="text-black font-graphik font-normal"
+                    className="dt-h4"
                     isActive={selectedQuestion === index}
                   >
                     {faq.question}
@@ -284,7 +284,7 @@ export default function FAQClient({ faqData }: Props) {
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               >
-                <p className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] leading-tight text-gray-700">
+                <p className="dt-body-sm">
                   {faqData.faqs[selectedQuestion].answer}
                 </p>
               </motion.div>

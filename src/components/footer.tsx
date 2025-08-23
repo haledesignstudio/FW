@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
         {
             id: 1,
             content: (
-                <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight">
+                <p className="dt-h5">
                     {shouldAnimate ? (
                         <FutureText text="Social" delay={0} speed={50} triggerOnVisible={false} />
                     ) : (
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
         {
             id: 2,
             content: (
-                <ul className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
+                <ul className="text-[clamp(0.5vw,1.48vh,0.74vw)] font-roboto leading-[clamp(0.7vw,1.85vh,0.0.925vw)]">
                     <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="RSS" delay={1000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
                     <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Instagram" delay={1000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
                     <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Twitter" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
         {
             id: 3,
             content: (
-                <h2 className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] font-bold leading-tight">
+                <h2 className="dt-h5">
                     {shouldAnimate ? (
                         <FutureText text="Quick Links" delay={2000} speed={30} triggerOnVisible={false} />
                     ) : (
@@ -116,7 +116,7 @@ const Footer: React.FC = () => {
         {
             id: 4,
             content: (
-                <ul className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] leading-tight">
+                <ul className="text-[clamp(0.5vw,1.48vh,0.74vw)] font-roboto leading-[clamp(0.7vw,1.85vh,0.0.925vw)]">
                     <li><Link href="/contact">{shouldAnimate ? <FutureText text="Contact" delay={2000} speed={20} triggerOnVisible={false} /> : "Contact"}</Link></li>
                     <li><Link href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={2000} speed={20} triggerOnVisible={false} /> : "Keynotes"}</Link></li>
                     <li><Link href="/people">{shouldAnimate ? <FutureText text="Join us" delay={2000} speed={20} triggerOnVisible={false} /> : "Join us"}</Link></li>
@@ -137,7 +137,7 @@ const Footer: React.FC = () => {
             id: 5,
             content: (
                 <>
-                    <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] leading-tight">
+                    <p className="text-[clamp(0.5vw,1.48vh,0.74vw)] font-roboto leading-[clamp(0.7vw,1.85vh,0.0.925vw)]">
                         {shouldAnimate ? (
                             <FutureText
                                 text="Subscribe for news from the future"
@@ -171,7 +171,7 @@ const Footer: React.FC = () => {
                         className="outline-none border-none bg-transparent text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:placeholder:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:placeholder:text-[4vh]"
                     />
 
-                    <div className="text-[2vh] mt-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] font-bold leading-tight">
+                    <div className="dt-h5 mt-[2vh]">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             {shouldAnimate ? (
                                 <FutureText
@@ -238,7 +238,7 @@ const Footer: React.FC = () => {
 
                 {/* Row 1-2, Col 1-3: Subscribe section */}
                 <div className="col-span-3 row-span-1 bg-[#F9F7F2] flex flex-col justify-start">
-                    <p className="text-[2vh] font-bold leading-tight mb-[1vh]">
+                    <p className="dt-body-lg mb-[1vh]">
                         {shouldAnimate ? (
                             <FutureText
                                 text="Subscribe for news from the future"
@@ -269,10 +269,10 @@ const Footer: React.FC = () => {
                         name="email"
                         required
                         placeholder={shouldAnimate ? placeholder || ' ' : 'Enter your e-mail'}
-                        className="outline-none border-none bg-transparent text-[2vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[3vh] mb-[2vh]"
+                        className="outline-none border-none bg-transparent text-[2vh] text-base placeholder-gray placeholder:font-graphik-semibold placeholder:text-[clamp(1.2vw,3vh,1.5vw)] mb-[4vh]"
                     />
 
-                    <div className="text-[2vh] font-bold leading-tight text-left">
+                    <div className="dt-h5 text-left">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             {shouldAnimate ? (
                                 <FutureText
@@ -293,7 +293,7 @@ const Footer: React.FC = () => {
 
                 {/* Row 3-5, Col 1: Social links */}
                 <div className="col-span-1 row-span-2 bg-[#F9F7F2] flex flex-col justify-start">
-                    <p className="text-[2vh] font-bold leading-tight mb-[1vh]">
+                    <p className="dt-h5 mb-[1vh]">
                         {shouldAnimate ? (
                             <FutureText text="Social" delay={0} speed={50} triggerOnVisible={false} />
                         ) : (
@@ -315,7 +315,7 @@ const Footer: React.FC = () => {
 
                 {/* Row 3-5, Col 3-4: Quick links */}
                 <div className="col-span-2 row-span-2 bg-[#F9F7F2] flex flex-col justify-start">
-                    <h2 className="text-[2vh] font-bold leading-tight mb-[1vh]">
+                    <h2 className="dt-h5 mb-[1vh]">
                         {shouldAnimate ? (
                             <FutureText text="Quick Links" delay={2000} speed={30} triggerOnVisible={false} />
                         ) : (

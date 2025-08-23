@@ -9,6 +9,7 @@ import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import type { PortableTextBlock } from '@portabletext/types';
+import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 
 type PeoplePageContent = {
   title: string;
@@ -387,7 +388,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
                 <Carousel
                   items={carouselItems}
                   readMoreText="Apply Now"
-                  
+
                 />
               </div>
             </FadeInOnVisible>
@@ -435,7 +436,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
                 text={data.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
-                className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
+                className="dt-h2"
               />
             </div>
           </div>
@@ -453,7 +454,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items=end justify-start">
-            <p className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-bold">
+            <p className="dt-h3">
               {data.pageHeader.subheading}
             </p>
           </div>
@@ -471,7 +472,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-start">
-            <div className="text-[1.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh]">
+            <div className="dt-body-sm">
               {data.pageHeader.regularText && (
                 <PortableText value={data.pageHeader.regularText} components={portableTextComponents} />
               )}
@@ -523,7 +524,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div id="life-at-futureworld" className="h-full w-full flex items-end justify-start">
-            <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-semibold">
+            <h2 className="dt-h3">
               {data.sections.subheading1}
             </h2>
           </div>
@@ -542,7 +543,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-end">
-            <h3 className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-semibold text-right">
+            <h3 className="dt-h5 text-right">
               {data.sections.leftSection?.heading}
             </h3>
           </div>
@@ -560,7 +561,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-start">
-            <div className="text-[1.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh]">
+            <div className="dt-body-sm">
               {data.sections.leftSection?.text && (
                 <PortableText value={data.sections.leftSection.text} components={portableTextComponents} />
               )}
@@ -580,7 +581,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-end">
-            <h3 className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-semibold text-right">
+            <h3 className="dt-h5 text-right">
               {data.sections.rightSection?.heading}
             </h3>
           </div>
@@ -598,7 +599,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-start">
-            <div className="text-[1.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh]">
+            <div className="dt-body-sm">
               {data.sections.rightSection?.text && (
                 <PortableText value={data.sections.rightSection.text} components={portableTextComponents} />
               )}
@@ -628,7 +629,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-start">
-            <div className="text-[1.3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.3vh]">
+            <div className="dt-body-sm">
               {data.sections.sideText && (
                 <PortableText value={data.sections.sideText} components={portableTextComponents} />
               )}
@@ -649,7 +650,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-end">
-            <h3 className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-semibold text-right">
+            <h3 className="dt-h5 text-right">
               {data.sections.leftSection2?.heading}
             </h3>
           </div>
@@ -667,7 +668,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-start">
-            <div className="text-[1.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh]">
+            <div className="dt-body-sm">
               {data.sections.leftSection2?.text && (
                 <PortableText value={data.sections.leftSection2.text} components={portableTextComponents} />
               )}
@@ -687,7 +688,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-end">
-            <h3 className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-semibold text-right">
+            <h3 className="dt-h5 text-right">
               {data.sections.rightSection2?.heading}
             </h3>
           </div>
@@ -705,7 +706,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex items-start justify-start">
-            <div className="text-[1.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh]">
+            <div className="dt-body-sm">
               {data.sections.rightSection2?.text && (
                 <PortableText value={data.sections.rightSection2.text} components={portableTextComponents} />
               )}
@@ -747,7 +748,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div id="why-join-us" className="h-full w-full flex items-start justify-start">
-            <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-semibold">
+            <h2 className="dt-h3">
               {data.sections.whyJoinUsSection?.mainHeading}
             </h2>
           </div>
@@ -766,10 +767,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex flex-col items-start justify-start">
-            <h3 className="text-[1.8vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.8vh] font-semibold mb-2">
+            <h3 className="dt-h5 mb-[6vh]">
               {reason.heading}
             </h3>
-            <div className="text-[1.3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.3vh]">
+            <div className="dt-body-sm">
               {reason.text && <PortableText value={reason.text} components={portableTextComponents} />}
             </div>
           </div>
@@ -782,13 +783,12 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       landscapeColSpan: 4,
       landscapeRowSpan: 1,
     })) || []),
-    // ROW 10: Carousel heading
     {
       id: 24,
       content: (
         <FadeInOnVisible>
           <div id="careers" className="h-full w-full flex items-end justify-start">
-            <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-semibold">
+            <h2 className="dt-h3">
               {data.sections.carouselHeading}
             </h2>
           </div>
@@ -820,7 +820,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <Carousel
               items={carouselItems}
               readMoreText="Apply Now"
-              
+
             />
           </div>
         </FadeInOnVisible>
@@ -838,18 +838,21 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible>
           <div className="h-full w-full flex flex-col items-start justify-start">
-            <h3 className="text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] font-semibold mb-2">
+            <h3 className="dt-h5">
               {data.sections.carouselSidebar?.heading}
             </h3>
-            <p className="text-[1.3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.3vh] mb-4">
+            <p className="dt-body-sm mt-[2vh]">
               {data.sections.carouselSidebar?.text}
             </p>
             {data.sections.carouselSidebar?.linkText && (
               <a
                 href="mailto:careers@futureworld.org?subject=I want to work at Futureworld"
-                className="text-[1.3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.3vh] underline hover:no-underline"
+                className="dt-btn"
               >
-                {data.sections.carouselSidebar.linkText}
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  {data.sections.carouselSidebar.linkText}
+                </UnderlineOnHoverAnimation>
+
               </a>
             )}
           </div>

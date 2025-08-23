@@ -335,11 +335,11 @@ export default function Contact({ data }: { data: ContactPageContent }) {
               text={data.pageHeader.mainTitle}
               typeSpeed={60}
               delay={500}
-              className="text-[4vh] font-bold leading-tight"
+              className="dt-h2"
             />
           </div>
           <div className="col-span-3 row-span-1 flex items-start bg-[#F9F7F2]">
-            <h2 className="text-[2.5vh] font-bold">{data.contactFormSubheading || 'Get in Touch'}</h2>
+            <h2 className="dt-h3">{data.contactFormSubheading || 'Get in Touch'}</h2>
           </div>
           {/* ROWS 3-5: Image (col-span-6) */}
           <div className="col-span-6 row-span-3 bg-[#F9F7F2] flex items-center justify-center relative">
@@ -363,7 +363,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           </div>
           {/* ROW 6: Text (col-span-2) */}
           <div className="col-span-2 row-span-1 bg-[#F9F7F2] flex items-end justify-start">
-            <p className="text-[1.2vh] text-gray-700">{data.contactFormIntro || "We'd love to connect. We just need to know:"}</p>
+            <p className="dt-body-sm">{data.contactFormIntro || "We'd love to connect. We just need to know:"}</p>
           </div>
           {/* ROWS 7-8: Contact Form (col-span-1-5) + Submit Button (col-6) */}
           <form className="col-span-5 row-span-2 bg-[#F9F7F2] flex flex-col justify-center p-6" onSubmit={handleSubmit}>
@@ -384,9 +384,12 @@ export default function Contact({ data }: { data: ContactPageContent }) {
               tabIndex={0}
               onClick={() => document.querySelector('form')?.requestSubmit()}
               onKeyPress={e => { if (e.key === 'Enter' || e.key === ' ') document.querySelector('form')?.requestSubmit(); }}
-              className="cursor-pointer text-[1.5vh] text-black font-semibold mt-4 mr-4 select-none underline"
+              className="dt-btn cursor-pointer select-none"
             >
-              Send
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Send
+              </UnderlineOnHoverAnimation>
+              
             </span>
           </div>
 
@@ -398,7 +401,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                   text={data.bookingKeynote?.title || "Book a Keynote"}
                   typeSpeed={60}
                   delay={1500}
-                  className="text-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[6vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[6vh] font-bold leading-tight"
+                  className="dt-h2"
                 />
               </div>
             </div>
@@ -412,14 +415,16 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           {/* ROW 5: Text + Link (cols 5-6) */}
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="h-full w-full flex flex-col items-start justify-start">
-              <p className="text-[1.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh] mb-4">
+              <p className="dt-body-sm">
                 {data.bookingKeynote?.text || "Contact us to book a keynote speaker for your event."}
               </p>
               <Link
                 href="/speakers"
-                className="text-[1.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh] underline hover:no-underline"
+                className="dt-btn"
               >
-                Visit Keynote Speakers Page
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Find the right speaker for your executive team
+              </UnderlineOnHoverAnimation>
               </Link>
             </div>
           </div>
@@ -427,7 +432,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           {/* ROW 6: Keynote Subheading (cols 1-3) */}
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="h-full w-full flex items-start justify-start">
-              <h2 className="text-[2.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2.5vh] font-bold">
+              <h2 className="dt-h3">
                 {data.keynoteSubheading || "Keynote Speakers"}
               </h2>
             </div>

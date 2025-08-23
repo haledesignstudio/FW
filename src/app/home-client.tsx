@@ -315,7 +315,7 @@ export default function HomeClient({ data }: HomeClientProps) {
               text={data.headline}
               typeSpeed={40}
               delay={100}
-              className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
+              className="dt-h2"
               start={preloaderDone}
             />
           </div>
@@ -352,7 +352,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 4,
       content: (
         <FadeInOnVisible>
-          <div className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight" data-sanity={JSON.stringify({
+          <div className="dt-h3" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'subheading'
@@ -372,7 +372,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 5,
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3vh,1.5vw)] leading-tight" data-sanity={JSON.stringify({
+          <div className="dt-body-sm" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'body'
@@ -402,7 +402,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)]" data-sanity={JSON.stringify({
+          <div className="dt-btn" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'cta'

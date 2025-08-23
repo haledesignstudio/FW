@@ -149,7 +149,7 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
       id: 'mindbullets-1',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <div className="dt-h1">
             {title}
           </div>
         </FadeInOnVisible>
@@ -162,7 +162,7 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
       id: 'mindbullets-3',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
+          <div className="dt-h3">
             <HighlightText value={subheading} />
           </div>
         </FadeInOnVisible>
@@ -176,7 +176,6 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
       id: 'mindbullets-6',
       content: (
         <FadeInOnVisible>
-          {/* ⬇️ Carousel fed by Mindbullets */}
           <Carousel
             items={carouselItems}
             imageHeight="25vh"

@@ -354,10 +354,10 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
       content: (
         <FadeInOnVisible>
           <div className="h-full flex flex-col gap-[7.5vh]">
-            <div className="font-graphik text-[clamp(4vw,10vh,5vw)] leading-[clamp(4vw,10vh,5vw)] text-balance">
+            <div className="dt-h2 text-balance">
               {data.title}
             </div>
-            <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
+            <div className="dt-h3">
               {data.byline}
             </div>
           </div>
@@ -369,7 +369,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
     {
       id: "article-4",
       content: (
-        <div className="font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
+        <div className="dt-body-lg">
           {data.datePublished}
         </div>
       ),
@@ -400,10 +400,10 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
         <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
           <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4">
             <div className="grid grid-cols-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
-              <div className="prose max-w-none text-[clamp(0.75vw,2vh,1vw)] leading-relaxed">
+              <div className="dt-body-sm">
                 <PortableText value={leftBlocks} components={ptComponents} />
               </div>
-              <div className="prose max-w-none text-[clamp(0.75vw,2vh,1vw)] leading-relaxed">
+              <div className="dt-body-sm">
                 <PortableText value={rightBlocks} components={ptComponents} />
               </div>
             </div>
@@ -411,13 +411,13 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
 
 
           <div className="col-span-2">
-            <div className="mt-auto text-[clamp(0.8vw,2vh,1vw)] font-graphik leading-[clamp(0.8vw,2vh,1vw)] justify-end flex gap-[2vh] flex-wrap">
+            <div className="mt-auto dt-btn justify-end flex gap-[2vh] flex-wrap">
               {data.hasPdf && data.pdf?.url ? (
                 <a
                   href={data.pdf.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold"
+                  className="dt-btn"
                 >
                   <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                     Download PDF
@@ -436,16 +436,16 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
         <FadeInOnVisible>
           <div className="grid gap-[2vh] grid-cols-6 mt-[25vh]">
             <div className="col-span-3 flex flex-col">
-              <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
+              <div className="dt-h3">
                 About the Author
               </div>
 
-              <div className="mt-[10vh] text-[clamp(0.8vw,2vh,1vw)] font-graphik leading-[clamp(0.8vw,2vh,1vw)]">
+              <div className="mt-[10vh] dt-h5">
                 {data.author.name ? <span>{data.author.name}</span> : null}
                 {data.author.position ? <>, {data.author.position}</> : null}
               </div>
 
-              <div className="text-[clamp(0.8vw,2vh,1vw)] font-roboto leading-tight">
+              <div className="dt-body-sm">
                 {data.author.bio?.length ? (
                   <div className="mt-[2.5vh]">
                     <PortableText value={data.author.bio} components={ptComponents} />
@@ -453,7 +453,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                 ) : null}
               </div>
 
-              <div className="mt-auto text-[clamp(0.8vw,2vh,1vw)] font-graphik leading-[clamp(0.8vw,2vh,1vw)] flex gap-[2vh] flex-wrap">
+              <div className="mt-auto dt-btn flex gap-[2vh] flex-wrap">
                 {data.author.linkedin ? (
                   <a
                     href={data.author.linkedin}
@@ -488,7 +488,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
       {data.hasRelatedStories && (data.relatedStories?.length ?? 0) > 0 ? (
         <FadeInOnVisible>
           <div className="mt-[25vh]">
-            <p className=" text-[clamp(0.75vw,2vh,1vw)] font-bold leading-relaxed">
+            <p className="dt-h5">
               Links to related stories
             </p>
             <ul className="list space-y-[0.75vh] mt-[2vh]">
@@ -498,7 +498,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                     href={rs.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[clamp(0.75vw,2vh,1vw)] leading-relaxed"
+                    className="dt-body-lg"
                   >
                     <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#232323">
                       {rs.title}

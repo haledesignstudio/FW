@@ -156,7 +156,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
               const [firstName, ...rest] = data.name.split(' ');
               const lastName = rest.join(' ');
               return (
-                <h1 className="text-[clamp(6vw,16vh,8vw)] font-graphik leading-[clamp(6vw,16vh,8vw)] -rotate-90 origin-top-right">
+                <h1 className="text-[clamp(6vw,16vh,8vw)] font-graphik-semibold leading-[clamp(6vw,16vh,8vw)] -rotate-90 origin-top-right">
                   {firstName}<br />{lastName}
                 </h1>
               );
@@ -165,14 +165,14 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
         </FadeInOnVisible>
         {socialLinksArr.length > 0 && (
           <FadeInOnVisible>
-            <div className="w-full flex flex-col items-end gap-[0vh]">
+            <div className="w-full flex flex-col items-end gap-[0.5vh]">
               {socialLinksArr.map(([label, url]) => (
                 <a
                   key={label}
                   href={url as string}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[clamp(0.95vw,2.5vh,1.25vw)] text-right font-graphik"
+                  className="dt-btn text-right"
                 >
                   <UnderlineOnHoverAnimation hasStaticUnderline>
                     {label}
@@ -200,12 +200,12 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
         {data.domainsOfExcellence?.length ? (
           <FadeInOnVisible>
             <div className="flex flex-col gap-[5vh]">
-              <div className="text-[clamp(0.95vw,2.5vh,1.25vw)] font-graphik">Domains of excellence</div>
+              <div className="dt-h5">Domains of excellence</div>
               <div className="flex flex-col flex-wrap gap-[1vh]">
                 {data.domainsOfExcellence.map((d, i) => (
                   <span
                     key={`${d}-${i}`}
-                    className="text-[clamp(1.5vw,5vh,2.5vw)] font-graphik leading-[clamp(1.5vw,5vh,2.5vw)]"
+                    className="dt-h3"
                   >
                     {d}
                   </span>
@@ -219,8 +219,8 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
       <div className="col-span-1 row-span-3">
         <FadeInOnVisible>
           <div className="flex flex-col gap-[5vh]">
-            <div className="text-[clamp(0.95vw,2.5vh,1.25vw)] font-graphik leading-[clamp(0.95vw,2.5vh,1.25vw)]">Bio</div>
-            <div className="flex flex-col flex-wrap gap-[1vh] font-roboto text-[clamp(0.4vw,1.5vh,0.75vw)] leading-tight">
+            <div className="dt-h5">Bio</div>
+            <div className="flex flex-col flex-wrap gap-[1vh] dt-body-sm">
               <PortableText value={data.bio as PortableTextBlock[]} />
             </div>
           </div>
@@ -229,7 +229,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
       {/* Book and next speaker */}
       <div className="col-span-1 row-span-1 h-full flex flex-col justify-between">
         <FadeInOnVisible>
-          <div className="text-[clamp(0.95vw,2.5vh,1.25vw)] font-graphik leading-tight text-balance">
+          <div className="dt-btn text-balance pt-[10vh]">
             <a
               href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.mailtoSubject ?? '')}`}
               className="transition cursor-pointer"
@@ -241,7 +241,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
           </div>
         </FadeInOnVisible>
         <FadeInOnVisible>
-          <div className="text-[clamp(0.95vw,2.5vh,1.25vw)] font-graphik leading-tight text-balance">
+          <div className="dt-btn text-balance">
             {nextSlug ? (
               <Link href={`/keynotes/${nextSlug}`} className="inline-block">
                 <UnderlineOnHoverAnimation hasStaticUnderline>

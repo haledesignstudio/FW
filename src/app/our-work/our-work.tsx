@@ -123,7 +123,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           text={data.title}
           typeSpeed={40}
           delay={500}
-          className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight"
+          className="dt-h2"
         />
       ),
       colSpan: 4,
@@ -149,7 +149,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       id: 3,
       content: (
         <FadeInOnVisible>
-          <div id="impact-statistics" className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+          <div id="impact-statistics" className="dt-h3">
             <HighlightText value={data.subheading} />
           </div>
         </FadeInOnVisible>
@@ -180,7 +180,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           <FadeInOnVisible>
             {(inView) => (
               <>
-                <div className="text-[clamp(3vw,7vh,3.5vw)] font-graphik leading-tight">
+                <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
                   <CountingAnimation start={inView} target={data.statistics[0].statisticValue} />
                 </div>
                 <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[0].statisticName}</div>
@@ -204,7 +204,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           <FadeInOnVisible>
             {(inView) => (
               <>
-                <div className="text-[clamp(3vw,7vh,3.5vw)] font-graphik leading-tight">
+                <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
                   <CountingAnimation start={inView} target={data.statistics[1].statisticValue} />
                 </div>
                 <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[1].statisticName}</div>
@@ -214,7 +214,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
         </div>
       ),
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 2,
       mobileRowSpan: 2,
       landscapeColSpan: 4,
@@ -228,7 +228,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           <FadeInOnVisible>
             {(inView) => (
               <>
-                <div className="text-[clamp(3vw,7vh,3.5vw)] font-graphik leading-tight">
+                <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
                   <CountingAnimation start={inView} target={data.statistics[2].statisticValue} />
                 </div>
                 <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[2].statisticName}</div>
@@ -239,7 +239,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
 
       ),
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 2,
       mobileRowSpan: 2,
       landscapeColSpan: 4,
@@ -253,7 +253,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           <FadeInOnVisible>
             {(inView) => (
               <>
-                <div className="text-[clamp(3vw,7vh,3.5vw)] font-graphik leading-tight">
+                <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
                   <CountingAnimation start={inView} target={data.statistics[3].statisticValue} />
                 </div>
                 <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[3].statisticName}</div>
@@ -263,7 +263,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
         </div>
       ),
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 2,
       mobileRowSpan: 2,
       landscapeColSpan: 4,
@@ -277,7 +277,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           <FadeInOnVisible>
             {(inView) => (
               <>
-                <div className="text-[clamp(3vw,7vh,3.5vw)] font-graphik leading-tight">
+                <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
                   <CountingAnimation start={inView} target={data.statistics[4].statisticValue} />
                 </div>
                 <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[4].statisticName}</div>
@@ -287,27 +287,12 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
         </div>
       ),
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 2,
       mobileRowSpan: 2,
       landscapeColSpan: 4,
       landscapeRowSpan: 2,
 
-    },
-    {
-      id: 10,
-      content: (
-        <div>
-
-        </div>
-
-      ),
-      colSpan: 6,
-      rowSpan: 1,
-      mobileColSpan: 2,
-      mobileRowSpan: 1,
-      landscapeColSpan: 4,
-      landscapeRowSpan: 1,
     },
     {
       id: 11,
@@ -317,16 +302,16 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
             {data.testimonials.slice(0, 3).map((t, i) => (
               <div key={i} className="">
                 {/* Quote */}
-                <div className="text-[clamp(1.2vw,3vh,1.5vw)] leading-tight font-roboto">
+                <div className="dt-h4">
                   <PortableText value={t.quote} />
                 </div>
 
                 {/* Author */}
                 <div className="mt-[2.5vh] text-black">
-                  <div className="text-[clamp(1.2vw,3vh,1.5vw)] leading-tight font-roboto">
+                  <div className="dt-h4">
                     &ndash; {t.name}
                   </div>
-                  <div className="text-[clamp(1.2vw,3vh,1.5vw)] leading-tight font-roboto">
+                  <div className="dt-h4">
                     {t.jobTitle}{t.company ? `, ${t.company}` : ''}
                   </div>
                 </div>

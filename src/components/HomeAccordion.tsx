@@ -154,7 +154,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     content: (
                         <FadeInOnVisible>
                             <div
-                                className="cursor-pointer text-[20vh] font-bold leading-none"
+                                className="dt-h1 cursor-pointer"
                                 onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
                             >
                                 {data.section1.section1Title}
@@ -167,7 +167,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         id: 1,
                         content: (
                             <FadeInOnVisible>
-                                <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
+                                <div className="dt-h4 text-white">
                                     <PortableText value={data.section1.section1Body} />
                                 </div>
                             </FadeInOnVisible>
@@ -211,7 +211,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible>
                                 <div className="h-full flex flex-col justify-end">
-                                    <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
+                                    <div className="dt-btn">
                                         <a
                                             href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
                                             className="transition cursor-pointer"
@@ -248,7 +248,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     content: (
                         <FadeInOnVisible>
                             <div
-                                className="cursor-pointer text-[20vh] font-bold leading-none"
+                                className="dt-h1 cursor-pointer"
                                 onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
                             >
                                 {data.section2.section2Title}
@@ -262,7 +262,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible>
                                 <div className="h-full flex flex-col justify-end">
-                                    <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
+                                    <div className="dt-h4 text-white">
                                         <PortableText value={data.section2.section2Body} />
                                     </div>
                                 </div>
@@ -310,10 +310,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible>
                                 <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
-                                    <div className="text-[2vh] font-roboto leading-tight text-white">
+                                    <div className="dt-h5">
                                         <PortableText value={data.section2.section2Heading1} />
                                     </div>
-                                    <div className="text-[1.75vh] font-roboto leading-tight text-white">
+                                    <div className="dt-body-sm">
                                         <PortableText value={data.section2.section2Description1} />
                                     </div>
                                 </div>
@@ -332,10 +332,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible>
                                 <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
-                                    <div className="text-[2vh] font-roboto leading-tight text-white">
+                                    <div className="dt-h5">
                                         <PortableText value={data.section2.section2Heading2} />
                                     </div>
-                                    <div className="text-[1.75vh] font-roboto leading-tight text-white">
+                                    <div className="dt-body-sm">
                                         <PortableText value={data.section2.section2Description2} />
                                     </div>
                                 </div>
@@ -353,10 +353,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible>
                                 <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
-                                    <div className="text-[2vh] font-roboto leading-tight text-white">
+                                    <div className="dt-h5">
                                         <PortableText value={data.section2.section2Heading3} />
                                     </div>
-                                    <div className="text-[1.75vh] font-roboto leading-tight text-white">
+                                    <div className="dt-body-sm">
                                         <PortableText value={data.section2.section2Description3} />
                                     </div>
                                 </div>
@@ -383,7 +383,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     content: (
                         <FadeInOnVisible>
                             <div
-                                className="cursor-pointer text-[20vh] font-bold leading-none"
+                                className="dt-h1 cursor-pointer"
                                 onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                             >
                                 {data.section3.section3Title}
@@ -397,7 +397,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible>
                                 <div className="h-full flex flex-col justify-end">
-                                    <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-black">
+                                    <div className="dt-h4 text-black">
                                         <PortableText value={data.section3.section3Body} />
                                     </div>
                                 </div>
