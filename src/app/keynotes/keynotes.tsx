@@ -67,7 +67,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
       id: 'keynotes-1',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <div className="dt-h1">
             {topicSection.topicSectionTitle || ''}
           </div>
         </FadeInOnVisible>
@@ -91,7 +91,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
       id: 'keynotes-4',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
+          <div className="dt-body-lg">
             {topicSection.topicContentText}
           </div>
         </FadeInOnVisible>
@@ -103,7 +103,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
       id: 'keynotes-5',
       content: (
         <FadeInOnVisible>
-          <div className="prose max-w-none text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+          <div className="dt-h3">
             <HighlightText value={topicSection.topicSectionSubtitle} />
           </div>
         </FadeInOnVisible>
@@ -129,7 +129,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
       content: (
         <div className="flex flex-col justify-start h-full">
           <FadeInOnVisible>
-            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
+            <div className="dt-btn">
               <a
                 href={`mailto:${speakerSection?.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection?.speakerCTA1 ?? '')}`}
                 className="transition cursor-pointer"
@@ -150,7 +150,7 @@ export function KeynoteTop({ keynotes }: Props): GridItem[] {
       content: (
         <div className="flex flex-col justify-start h-full">
           <FadeInOnVisible>
-            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-bold leading-[clamp(0.9vw,2.25vh,1.125vw)]">
+            <div className="dt-btn">
               <Link href={'/keynotes#speakers'}
                 className="transition cursor-pointer bg-transparent border-none p-0 m-0 text-inherit font-inherit"
                 style={{ textAlign: 'left' }}
@@ -183,7 +183,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       id: 'keynotes-11',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <div className="dt-h1">
             {speakerSection.speakerSectionTitle || ''}
           </div>
         </FadeInOnVisible>
@@ -201,7 +201,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       id: 'keynotes-13',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3.5vh,1.75vw)] leading-tight">
+          <div className="dt-body-lg">
             {speakerSection.speakerContentText}
           </div>
         </FadeInOnVisible>
@@ -213,7 +213,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       id: 'keynotes-14',
       content: (
         <FadeInOnVisible>
-          <div className="whitespace-pre-line text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+          <div className="dt-h3">
             <HighlightText value={speakerSection.speakerSectionSubtitle} />
           </div>
         </FadeInOnVisible>
@@ -232,7 +232,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       content: (
         <div className="flex flex-col justify-start h-full">
           <FadeInOnVisible>
-            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
+            <div className="dt-btn">
               <a
                 href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
                   speakerSection.speakerCTA1 ?? ''
@@ -255,7 +255,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       content: (
         <div className="flex flex-col justify-start h-full">
           <FadeInOnVisible>
-            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-bold leading-[clamp(0.9vw,2.25vh,1.125vw)]">
+            <div className="dt-btn">
               <Link href={'/keynotes#speakers'}
                 className="transition cursor-pointer bg-transparent border-none p-0 m-0 text-inherit font-inherit"
                 style={{ textAlign: 'left' }}

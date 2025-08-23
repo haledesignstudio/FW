@@ -85,7 +85,7 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
       id: 'podcast-1',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <div className="dt-h1">
             {pageTitle}
           </div>
         </FadeInOnVisible>
@@ -103,7 +103,7 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
       id: 'podcast-3',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
+          <div className="dt-h3">
             <HighlightText value={pageSubheading} />
           </div>
         </FadeInOnVisible>

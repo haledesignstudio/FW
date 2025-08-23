@@ -228,7 +228,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       id: "mindbullet-1",
       content: (
         <FadeInOnVisible>
-          <h1 className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <h1 className="dt-h1">
             Mindbullets: News from the Future
           </h1>
         </FadeInOnVisible>
@@ -259,10 +259,10 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       content: (
         <FadeInOnVisible>
           <div className="h-full flex flex-col gap-[1vh]">
-            <div className="font-graphik text-[10vh] leading-tight text-balance">
+            <div className="dt-h2 text-balance">
               {data.title}
             </div>
-            <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
+            <div className="dt-h3">
               {data.byLine}
             </div>
           </div>
@@ -276,10 +276,10 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       content: (
         <div className="h-full flex items-center">
           <div className="flex flex-row items-center gap-[2vh]">
-            <div className="font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
+            <div className="dt-body-lg">
               Dateline
             </div>
-            <div className="font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
+            <div className="dt-body-lg">
               {new Intl.DateTimeFormat("en-GB", {
                 day: "numeric",
                 month: "long",
@@ -322,10 +322,10 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
         <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
           <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4">
             <div className="grid grid-cols-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
-              <div className="prose max-w-none text-[clamp(0.75vw,2vh,1vw)] leading-relaxed">
+              <div className="dt-body-sm">
                 <PortableText value={leftBlocks} components={ptComponents} />
               </div>
-              <div className="prose max-w-none text-[clamp(0.75vw,2vh,1vw)] leading-relaxed">
+              <div className="dt-body-sm">
                 <PortableText value={rightBlocks} components={ptComponents} />
               </div>
             </div>
@@ -334,11 +334,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2">
             <div className="h-full flex items-start">
               <div className="max-w-none">
-                <p className="text-[clamp(0.95vw,2.25vh,1.125vw)] font-bold leading-relaxed text-[#DC5A50]">
+                <p className="dt-h5 text-[#DC5A50]">
                   {" "}
                   Warning: Hazardous thinking at work{" "}
                 </p>
-                <p className="mt-[2vh] text-[clamp(0.75vw,2vh,1vw)] leading-relaxed text-[#DC5A50]">
+                <p className="mt-[2vh] dt-body-sm text-[#DC5A50]">
                   Despite appearances to the contrary, Futureworld cannot and
                   does not predict the future. Our Mindbullets scenarios are
                   fictitious and designed purely to explore possible futures,
@@ -360,8 +360,8 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       {data.RelatedStories?.length ? (
         <FadeInOnVisible>
           <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[10vh]">
-            <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2">
-              <p className=" text-[clamp(0.75vw,2vh,1vw)] font-bold leading-relaxed">
+            <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-6">
+              <p className="dt-h5">
                 Links to related stories
               </p>
               <ul className="list space-y-[0.75vh] mt-[2vh]">
@@ -369,7 +369,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
                   <li key={`${r.link}-${i}`}>
                     <a
                       href={r.link}
-                      className="text-[clamp(0.75vw,2vh,1vw)] leading-relaxed"
+                      className="dt-body-lg"
                       target="_blank"
                       rel="noreferrer"
                     >

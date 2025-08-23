@@ -8,8 +8,6 @@ import { getGridClasses } from '@/components/insights/grid';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import useIsMobile from '@/hooks/useIsMobile';
 import { useCallback } from 'react';
-
-// NEW: use the Carousel component
 import Carousel, { type CarouselItem } from '@/components/Carousel';
 
 type Podcast = {
@@ -54,7 +52,7 @@ export default function CorporateSection({
     src: p.headerImage?.asset?.url || '/placeholder-image.png',
     heading: p.headline? `Podcast: ${p.headline}` : 'Podcast',
     description: p.description,
-    href: p.slug?.current, 
+    href: p.slug?.current ? `/podcast/${p.slug.current}` : '#',
     readMoreText: 'Listen now',
   }));
 
@@ -63,7 +61,7 @@ export default function CorporateSection({
     src: a.image?.asset?.url || '/placeholder-image.png',
     heading: a.title ? `Article: ${a.title}` : 'Article',
     description: a.byline,
-    href: a.slug?.current, 
+    href: a.slug?.current ? `/insights/${a.slug.current}` : '#',
     readMoreText: 'Read article', 
   }));
 
@@ -157,7 +155,7 @@ export default function CorporateSection({
       id: 'corporate-1',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <div className="dt-h1">
             {title}
           </div>
         </FadeInOnVisible>
@@ -170,7 +168,7 @@ export default function CorporateSection({
       id: 'corporate-3',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight">
+          <div className="dt-h4">
             {contentText}
           </div>
         </FadeInOnVisible>
@@ -182,7 +180,7 @@ export default function CorporateSection({
       id: 'corporate-4',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
+          <div className="dt-h3">
             <HighlightText value={subheading} />
           </div>
         </FadeInOnVisible>
@@ -196,7 +194,7 @@ export default function CorporateSection({
       id: 'corporate-7',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(0.9vw,2.25vh,1.125vw)]  font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)] mt-[5vh]">
+          <div className="dt-btn mt-[5vh]">
             <a
               href={`mailto:${Mail ?? 'info@futureworld.org'}?subject=${encodeURIComponent(CTA ?? '')}`}
               className="transition cursor-pointer"

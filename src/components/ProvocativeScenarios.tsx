@@ -52,12 +52,12 @@ export default function ProvocativeScenarios() {
   }
 
   return (
-    <div className="flex flex-col w-full bg-[#F9F7F2] space-y-[3vh]">
+    <div className="flex flex-col w-full bg-[#F9F7F2] space-y-[1vh]">
       {scenarios.map((scenario) => (
         <Link
           key={scenario._id}
           href={`/the-edge/${scenario.slug}`}
-          className="flex items-end justify-between w-full text-left font-graphik text-[10vh] leading-[10vh] cursor-pointer group"
+          className="flex items-end justify-between w-full text-left dt-h2 cursor-pointer group"
           aria-label={`Open ${scenario.title}`}
         >
           <span>{scenario.title}</span>

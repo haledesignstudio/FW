@@ -134,11 +134,6 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
     });
   };
 
-  // Back to top function (already in your file)
-  const handleBackToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const tabs: {
     id: string;
     color: string;
@@ -159,7 +154,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
         content: (
           <FadeInOnVisible>
             <div
-              className="cursor-pointer text-[20vh] font-bold leading-none"
+              className="dt-h1 cursor-pointer"
               onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
             >
               {data.accordionSection1.heading}
@@ -172,7 +167,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
           id: 1,
           content: (
             <FadeInOnVisible>
-              <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-white">
+              <div className="dt-h4 text-white">
                 <PortableText value={data.accordionSection1.body} />
               </div>
             </FadeInOnVisible>
@@ -241,7 +236,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
           content: (
             <FadeInOnVisible>
               <Link href="/supercharge-tomorrow" className="h-full flex flex-col justify-end">
-                <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] font-graphik leading-[clamp(0.9vw,2.25vh,1.125vw)]">
+                <div className="dt-btn">
                   <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
                     {data.accordionSection1.cta ?? 'Get in Touch'}
                   </UnderlineOnHoverAnimation>
@@ -270,7 +265,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
         content: (
           <FadeInOnVisible>
             <div
-              className="cursor-pointer text-[20vh] font-bold leading-none"
+              className="dt-h1 cursor-pointer"
               onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
             >
               {data.accordionSection2.heading}
@@ -284,7 +279,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
           content: (
             <FadeInOnVisible>
               <div className="h-full flex flex-col justify-end">
-                <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight text-black">
+                <div className="dt-h4 text-black">
                   <PortableText value={data.accordionSection2.body} />
                 </div>
               </div>
@@ -527,18 +522,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                           />
                         </div>
 
-                        {/* Back to Top Button */}
-                        <div
-                          className="col-start-6 col-span-1 flex justify-end items-center mt-2 cursor-pointer"
-                          onClick={(e) => { e.stopPropagation(); handleBackToTop(); }}
-                        >
-                          <span className="underline text-[2vh] flex items-center gap-1">
-                            Back to top
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M12 19V5M5 12l7-7 7 7" />
-                            </svg>
-                          </span>
-                        </div>
+                        
                       </div>
                     </>
                   )}

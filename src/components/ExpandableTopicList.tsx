@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { client } from '@/sanity/lib/client';
 import { topicQuery } from '@/sanity/lib/queries';
 import { urlFor } from '@/sanity/lib/image'; // adjust path if needed
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 
 
@@ -93,7 +94,7 @@ export default function ExpandableTopicList() {
                                     {/* Row 5: contents array, left col 1-2, right col 3-4 */}
                                     <div className="col-span-2 space-y-[2vh]">
                                         {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
-                                            <div className="space-y-[1vh]" key={`left-${i}`}> 
+                                            <div className="space-y-[1vh]" key={`left-${i}`}>
                                                 <h4 className="text-[2vh] font-graphik">{item.heading}</h4>
                                                 <p className="text-[1.7vh]">{item.description}</p>
                                             </div>
@@ -101,7 +102,7 @@ export default function ExpandableTopicList() {
                                     </div>
                                     <div className="col-span-2 space-y-[2vh]">
                                         {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
-                                            <div className="space-y-[1vh]" key={`right-${i}`}> 
+                                            <div className="space-y-[1vh]" key={`right-${i}`}>
                                                 <h4 className="text-[2vh] font-bold">{item.heading}</h4>
                                                 <p className="text-[1.7vh]">{item.description}</p>
                                             </div>
@@ -133,7 +134,7 @@ export default function ExpandableTopicList() {
                                         : [...prev, index]               // open
                                 )
                             }
-                            className="flex items-end justify-between w-full text-left font-graphik text-[10vh] leading-[10vh] cursor-pointer"
+                            className="flex items-end justify-between w-full text-left dt-h2 cursor-pointer"
                         >
                             <span>{topic.topicTitle}</span>
                             <Image
@@ -159,7 +160,7 @@ export default function ExpandableTopicList() {
                             } className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
                                 {/* td-1: topicHeading */}
                                 <div className="col-span-2 row-span-1 p-[1vh]">
-                                    <p className="text-[3vh]">{topic.topicHeading}</p>
+                                    <p className="dt-h4">{topic.topicHeading}</p>
                                 </div>
                                 <div className="col-span-2 row-span-1" />
                                 {/* td-3: topicImage */}
@@ -181,8 +182,8 @@ export default function ExpandableTopicList() {
                                     <div className="space-y-[3vh]">
                                         {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`left-${i}`}>
-                                                <h4 className="text-[2.5vh] font-graphik">{item.heading}</h4>
-                                                <p className="text-[2vh]">{item.description}</p>
+                                                <h4 className="dt-h5">{item.heading}</h4>
+                                                <p className="dt-body-sm">{item.description}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -190,8 +191,8 @@ export default function ExpandableTopicList() {
                                     <div className="space-y-[3vh]">
                                         {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`right-${i}`}>
-                                                <h4 className="text-[2.5vh] font-bold">{item.heading}</h4>
-                                                <p className="text-[2vh]">{item.description}</p>
+                                                <h4 className="dt-h5">{item.heading}</h4>
+                                                <p className="dt-body-sm">{item.description}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -201,10 +202,13 @@ export default function ExpandableTopicList() {
                                 <div className="col-span-1 row-span-1 p-[1vh] flex items-end justify-end text-right">
                                     <a
                                         href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
-                                        className="text-[2vh] font-bold underline"
+                                        className="dt-btn"
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        {topic.topicButtonText}
+                                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                                            {topic.topicButtonText}
+                                        </UnderlineOnHoverAnimation>
+                                        
                                     </a>
                                 </div>
                             </div>

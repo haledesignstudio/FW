@@ -167,7 +167,7 @@ export default function Edge({
       id: 'edge-1',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <div className="dt-h1">
             {title}
           </div>
         </FadeInOnVisible>
@@ -185,7 +185,7 @@ export default function Edge({
       id: 'edge-3',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1vw,3.5vh,1.75vw)] font-roboto leading-tight">
+          <div className="dt-h4">
             {contentText}
           </div>
         </FadeInOnVisible>
@@ -197,7 +197,7 @@ export default function Edge({
       id: 'edge-4',
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-graphik leading-tight">
+          <div className="dt-h3">
             <HighlightText value={subheading} />
           </div>
         </FadeInOnVisible>
@@ -233,12 +233,12 @@ export default function Edge({
         <div className="grid grid-cols-6 gap-[2vh]">
 
           <div className="col-span-3 grid grid-rows-[1fr_auto] h-full">
-            <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+            <div className="dt-h3">
               <HighlightText value={whatBlewYourMind.description} />
             </div>
 
 
-            <div className="text-[clamp(0.8vw,2vh,1vw)] font-graphik leading-[clamp(0.8vw,2vh,1vw)]">
+            <div className="dt-btn">
               <a href={whatBlewYourMind.ctaLink} target="_blank" rel="noopener noreferrer">
                 <UnderlineOnHoverAnimation hasStaticUnderline color="#232323">
                   {whatBlewYourMind.cta}

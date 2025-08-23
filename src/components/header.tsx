@@ -17,7 +17,7 @@ const menuItems = [
         href: '/',
         content: (
             <div className="text-left">
-                <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+                <ul className="dt-body-lg whitespace-nowrap pb-[15vh]">
                     <li>
                         <Link href={`/#tab`} onClick={(e) => {
                             e.preventDefault();
@@ -73,7 +73,7 @@ const menuItems = [
         href: '/what-we-do',
         content: (
             <div className="text-left">
-                <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+                <ul className="dt-body-lg whitespace-nowrap pb-[15vh]">
                     <li>
                         <Link href={`/what-we-do`} onClick={(e) => {
                             e.preventDefault();
@@ -119,7 +119,7 @@ const menuItems = [
         href: '/insights',
         content: (
             <div className="text-left">
-                <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+                <ul className="dt-body-lg pb-[15vh]">
                     <li>
                         <Link href="/insights" onClick={(e) => {
                             e.preventDefault();
@@ -137,7 +137,7 @@ const menuItems = [
                             document.dispatchEvent(
                                 new CustomEvent('fw:navigateAfterClose', { detail: { href: '/mindbullets' } })
                             );
-                        }} className="flex gap-[10%] hover:underline">
+                        }} className="flex whitespace-nowrap gap-[10%] hover:underline">
                             <span className="">02</span>
                             <span>Mindbullets: News From the Future</span>
                         </Link>
@@ -202,7 +202,7 @@ const menuItems = [
                                 new CustomEvent('fw:navigateAfterClose', { detail: { href: '/insights' } })
                             );
                         }}>
-                    <span className="text-[0.85vw] font-graphik  whitespace-nowrap">
+                    <span className="dt-btn whitespace-nowrap">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             Explore Shareholder Value Analytics
                         </UnderlineOnHoverAnimation>
@@ -218,7 +218,7 @@ const menuItems = [
         href: '/our-work',
         content: (
             <div className="text-left">
-                <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+                <ul className="dt-body-lg whitespace-nowrap pb-[15vh]">
                     <li>
                         <Link href={`/our-work#impact-statistics`} onClick={(e) => {
                             e.preventDefault();
@@ -279,7 +279,7 @@ const menuItems = [
                                 new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#case-studies' } })
                             );
                         }}>
-                    <span className="text-[0.85vw] font-graphik  whitespace-nowrap">
+                    <span className="dt-btn whitespace-nowrap">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             See case studies
                         </UnderlineOnHoverAnimation>
@@ -295,7 +295,7 @@ const menuItems = [
         href: '/people',
         content: (
             <div className="text-left">
-                <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+                <ul className="dt-body-lg whitespace-nowrap pb-[15vh]">
                     <li>
                         <Link href={`/people#people-who-care`} onClick={(e) => {
                             e.preventDefault();
@@ -356,7 +356,7 @@ const menuItems = [
                                 new CustomEvent('fw:navigateAfterClose', { detail: { href: '/people#careers' } })
                             );
                         }}>
-                    <span className="text-[0.85vw] font-graphik  whitespace-nowrap">
+                    <span className="dt-btn whitespace-nowrap">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             See careers
                         </UnderlineOnHoverAnimation>
@@ -372,7 +372,7 @@ const menuItems = [
         href: '/contact',
         content: (
             <div className="text-left">
-                <ul className="text-[0.85vw] whitespace-nowrap pb-[15vh]">
+                <ul className="dt-body-lg whitespace-nowrap pb-[15vh]">
 
                     <li>
                         <Link href={"mailto:info@futureworld.org"} onClick={(e) => {
@@ -412,7 +412,7 @@ const menuItems = [
                                 new CustomEvent('fw:navigateAfterClose', { detail: { href: '/keynotes' } })
                             );
                         }}>
-                    <span className="text-[0.85vw] font-graphik  whitespace-nowrap">
+                    <span className="dt-btn whitespace-nowrap">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             Explore Keynote Topics
                         </UnderlineOnHoverAnimation>
@@ -807,9 +807,9 @@ const Header: React.FC = () => {
                                                 {info.isOdd && (
                                                     <Link
                                                         href={item.href}
-                                                        className={`text-black font-bold whitespace-nowrap ${isHomepage
-                                                            ? 'text-[4vw]'
-                                                            : 'text-[5vw]'
+                                                        className={`text-black font-graphik-semibold text-[clamp(3.5vw,8.8vh,4.4vw)] leading-[clamp(3.5vw,8.8vh,4.4vw)] whitespace-nowrap ${isHomepage
+                                                            ? 'font-graphik-semibold text-[clamp(3.5vw,8.8vh,4.4vw)] leading-[clamp(3.5vw,8.8vh,4.4vw)]'
+                                                            : 'font-graphik-semibold text-[clamp(3.5vw,8.8vh,4.4vw)] leading-[clamp(3.5vw,8.8vh,4.4vw)]'
                                                             }`}
                                                         style={{
                                                             writingMode: 'vertical-rl',

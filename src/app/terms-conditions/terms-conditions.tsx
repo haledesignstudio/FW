@@ -44,10 +44,10 @@ type GridItem = {
 const portableTextComponents: PortableTextComponents = {
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc pl-6 mb-4 text-base">{children}</ul>
+      <ul className="list-disc pl-6 mb-4 dt-body-sm">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal pl-6 mb-4 text-base">{children}</ol>
+      <ol className="list-decimal pl-6 mb-4 dt-body-sm">{children}</ol>
     ),
   },
   listItem: {
@@ -55,7 +55,7 @@ const portableTextComponents: PortableTextComponents = {
     number: ({ children }) => <li className="mb-1">{children}</li>,
   },
   block: {
-    normal: ({ children }) => <p className="mb-2 text-base">{children}</p>,
+    normal: ({ children }) => <p className="mb-2 dt-body-sm">{children}</p>,
   },
 };
 
@@ -166,7 +166,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                   isActive={selectedCategory === category.key}
                   className="font-normal text-black"
                 >
-                  <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal text-black">
+                  <span className="dt-body-lg">
                     {category.shortLabel}
                   </span>
                 </UnderlineOnHoverAnimation>
@@ -181,9 +181,9 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                   >
                     <UnderlineOnHoverAnimation
                       isActive={selectedCategory === secondRowCategories[index].key}
-                      className="font-normal text-black"
+                      className="dt-body-lg"
                     >
-                      <span className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[2.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[2vh] leading-tight w-full font-normal text-black">
+                      <span className="dt-body-lg">
                         {secondRowCategories[index].shortLabel}
                       </span>
                     </UnderlineOnHoverAnimation>
@@ -205,7 +205,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
       id: 7,
       content: (
         <FadeInOnVisible key={`header-${selectedCategory}`}>
-          <h2 className="text-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[4vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[3vh] font-graphik mt-auto">
+          <h2 className="dt-h3 mt-auto">
             {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
           </h2>
         </FadeInOnVisible>
@@ -239,7 +239,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                 text={termsData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
-                className="text-[5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[8vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[8vh] font-bold leading-tight"
+                className="dt-h2"
               />
             </div>
           </div>
@@ -286,7 +286,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
       content: (
         <FadeInOnVisible>
           <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
-            <div className="prose max-w-none text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[1.5vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[1.5vh] leading-tight text-gray-700">
+            <div className="dt-body-sm">
               <PortableText value={termsData.pageHeader.introText} components={portableTextComponents} />
             </div>
           </div>
