@@ -438,7 +438,7 @@ export default function HomeClient({ data }: HomeClientProps) {
     {
       id: 9,
       content: data.Image?.asset ? (
-        <FadeInOnVisible>
+        <FadeInOnVisible className="w-full h-full">
           <img
             src={urlFor(data.Image.asset).url()}
             alt={data.Image.alt || ''}

@@ -491,7 +491,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     {
       id: 4,
       content: (
-        <FadeInOnVisible>
+        <FadeInOnVisible className="w-full h-full">
           <div className="h-full w-full overflow-hidden">
             <img
               src={data.mainImage ? urlFor(data.mainImage.asset).url() : '/placeholder-image.png'}
