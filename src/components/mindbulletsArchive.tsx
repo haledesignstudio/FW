@@ -8,6 +8,7 @@ import { client } from '@/sanity/lib/client';
 import { defineQuery } from 'next-sanity';
 import { urlFor } from '@/sanity/lib/image';
 
+
 const PAGE_SIZE = 10 as const;
 
 type SortField = 'publishedAt' | 'dateline';
@@ -22,7 +23,7 @@ type Mindbullet = {
   title: string;
   slug?: string;
   mainImage?: SanityImage;
-  publishedAt: string; // stored as string in your schema
+  publishedAt: string;
   dateline: string;
   byLine?: string;
 };
@@ -204,7 +205,7 @@ const MindbulletArchive = () => {
           <div className="col-span-4 mt-2 flex">
             {!loading && displayed.length < sorted.length && (
               <button
-                className="text-400 underline font-bold bg-transparent border-none p-0 m-0 hover:text-600 transition-colors duration-150"
+                className="text-400 font-bold bg-transparent border-none p-0 m-0 hover:text-600 transition-colors duration-150"
                 style={{ boxShadow: 'none' }}
                 onClick={() => setPage(page + 1)}
               >
@@ -326,7 +327,7 @@ const MindbulletArchive = () => {
           <div className="col-span-6 mt-4">
             {!loading && displayed.length < sorted.length && (
               <button
-                className="text-400 underline font-bold bg-transparent border-none p-0 m-0 hover:text-600 transition-colors duration-150"
+                className="text-400 font-bold bg-transparent border-none p-0 m-0 hover:text-600 transition-colors duration-150"
                 style={{ boxShadow: 'none' }}
                 onClick={() => setPage(page + 1)}
               >

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @tailwind utilities;
 
+
 :root {
   --background: #F9F7F2;
   --foreground: #171717;
@@ -72,16 +73,15 @@ body::-webkit-scrollbar {
   will-change: transform, opacity;
 }
 
-
 /* BODY COPY — SMALL */
 .dt-body-sm {
   font-family: 'Roboto', sans-serif;
-  font-size: clamp(0.95rem, 3.8vw, 1.05rem);
-  line-height: clamp(1.1rem, 4.6vw, 1.35rem);
+  font-size: clamp(3.7vw,2.35vh, 4.7vw);
+  line-height: clamp(4.16vw,2.58vh, 5.16vw);
 }
 
 .dt-body-sm>p {
-  margin-bottom: clamp(1.1rem, 4.6vw, 1.35rem);
+  margin-bottom: clamp(4.16vw,2.58vh, 5.16vw);
 }
 
 .dt-body-sm>p:last-child {
@@ -102,12 +102,12 @@ body::-webkit-scrollbar {
 /* BODY COPY — LARGE */
 .dt-body-lg {
   font-family: 'Roboto', sans-serif;
-  font-size: clamp(1.05rem, 4.6vw, 1.25rem);
-  line-height: clamp(1.3rem, 5.8vw, 1.5rem);
+  font-size: clamp(4.8vw,2.93vh, 5.86vw);
+  line-height: clamp(5.8vw, 3.52vh, 7.04vw);
 }
 
 .dt-body-lg>p {
-  margin-bottom: clamp(1.3rem, 5.8vw, 1.5rem);
+  margin-bottom: clamp(5.8vw, 3.52vh, 7.04vw);
 }
 
 .dt-body-lg>p:last-child {
@@ -128,12 +128,12 @@ body::-webkit-scrollbar {
 /* BUTTON — PRIMARY */
 .dt-btn {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(0.95rem, 3.8vw, 1.1rem);
-  line-height: clamp(1.15rem, 4.6vw, 1.35rem);
+  font-size: clamp(4vw,2.58vh, 5.16vw);
+  line-height: clamp(5vw,3.17vh, 6.34vw);
 }
 
 .dt-btn>p {
-  margin-bottom: clamp(1.15rem, 4.6vw, 1.35rem);
+  margin-bottom: clamp(5vw,3.17vh, 6.34vw);
 }
 
 .dt-btn>p:last-child {
@@ -154,12 +154,12 @@ body::-webkit-scrollbar {
 /* BUTTON — SECONDARY */
 .dt-btn-secondary {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(0.8rem, 3.2vw, 0.95rem);
-  line-height: clamp(1rem, 4.2vw, 1.2rem);
+  font-size: clamp(2.2vw, 1.64vh, 3.28vw);
+  line-height: clamp(4.75vw,2.93vh, 5.86vw);
 }
 
 .dt-btn-secondary>p {
-  margin-bottom: clamp(1rem, 4.2vw, 1.2rem);
+  margin-bottom: clamp(4.75vw,2.93vh, 5.86vw);
 }
 
 .dt-btn-secondary>p:last-child {
@@ -180,12 +180,12 @@ body::-webkit-scrollbar {
 /* HEADINGS */
 .dt-h1 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(12vw, 12vh, 14vw);
-  line-height: clamp(12.5vw, 13vh, 14.5vw);
+  font-size: clamp(35vw,23.47vh, 46.94vw);
+  line-height: clamp(35vw,24.65vh,49.3vw);
 }
 
 .dt-h1>p {
-  margin-bottom: clamp(12.5vw, 13vh, 14.5vw);
+  margin-bottom: clamp(35vw,24.65vh,49.3vw);
 }
 
 .dt-h1>p:last-child {
@@ -205,12 +205,12 @@ body::-webkit-scrollbar {
 
 .dt-h2 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(8vw, 9.5vh, 10vw);
-  line-height: clamp(8.5vw, 10.5vh, 10.5vw);
+  font-size: clamp(15vw,11.74vh, 23.48vw);
+  line-height: clamp(18vw,12.91vh, 25.82vw);
 }
 
 .dt-h2>p {
-  margin-bottom: clamp(8.5vw, 10.5vh, 10.5vw);
+  margin-bottom: clamp(18vw,12.91vh, 25.82vw);
 }
 
 .dt-h2>p:last-child {
@@ -230,12 +230,12 @@ body::-webkit-scrollbar {
 
 .dt-h3 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(6vw, 7.5vh, 7.5vw);
-  line-height: clamp(6.5vw, 8vh, 8vw);
+  font-size: clamp(7vw,5.63vh, 11.26vw);
+  line-height: clamp(9vw,6.1vh, 12.2vw);
 }
 
 .dt-h3>p {
-  margin-bottom: clamp(6.5vw, 8vh, 8vw);
+  margin-bottom: clamp(9vw,6.1vh, 12.2vw);
 }
 
 .dt-h3>p:last-child {
@@ -244,23 +244,23 @@ body::-webkit-scrollbar {
 
 @media (min-width:768px) and (min-aspect-ratio:1/1) {
   .dt-h3 {
-    font-size: clamp(1.5vw, 4.45vh, 2.225vw);
-    line-height: clamp(1.9vw, 4.8vh, 2.4vw);
+    font-size: clamp(1.5vw,4.45vh,2.225vw);
+    line-height: clamp(1.9vw,4.8vh,2.4vw);
   }
 
   .dt-h3>p {
-    margin-bottom: clamp(1.9vw, 4.8vh, 2.4vw);
+    margin-bottom: clamp(1.9vw,4.8vh,2.4vw);
   }
 }
 
 .dt-h4 {
   font-family: 'Graphik', sans-serif;
-  font-size: clamp(5vw, 6.2vh, 6.2vw);
-  line-height: clamp(5.5vw, 6.8vh, 6.8vw);
+  font-size: clamp(5vw,3.52vh, 7.04vw);
+  line-height: clamp(6.25vw,4.34vh,8.68vw);
 }
 
 .dt-h4>p {
-  margin-bottom: clamp(5.5vw, 6.8vh, 6.8vw);
+  margin-bottom: clamp(6.25vw,4.34vh,8.68vw);
 }
 
 .dt-h4>p:last-child {
@@ -280,12 +280,12 @@ body::-webkit-scrollbar {
 
 .dt-h5 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(4.2vw, 5.2vh, 5.2vw);
-  line-height: clamp(4.8vw, 5.8vh, 5.8vw);
+  font-size: clamp(3.75vw,2.58vh, 5.16vw);
+  line-height: clamp(4.5vw, 3.17vh, 6.34vw);
 }
 
 .dt-h5>p {
-  margin-bottom: clamp(4.8vw, 5.8vh, 5.8vw);
+  margin-bottom: clamp(4.5vw, 3.17vh, 6.34vw);
 }
 
 .dt-h5>p:last-child {
