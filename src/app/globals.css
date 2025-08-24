@@ -76,12 +76,12 @@ body::-webkit-scrollbar {
 /* BODY COPY — SMALL */
 .dt-body-sm {
   font-family: 'Roboto', sans-serif;
-  font-size: clamp(3.7vw,2.35vh, 4.7vw);
-  line-height: clamp(4.16vw,2.58vh, 5.16vw);
+  font-size: clamp(2.4vw,1.64vh, 3.28vw);
+  line-height: clamp(3.4vw,2.35vh, 4.7vw);
 }
 
 .dt-body-sm>p {
-  margin-bottom: clamp(4.16vw,2.58vh, 5.16vw);
+  margin-bottom: clamp(3.4vw,2.35vh, 4.7vw);
 }
 
 .dt-body-sm>p:last-child {
@@ -102,12 +102,12 @@ body::-webkit-scrollbar {
 /* BODY COPY — LARGE */
 .dt-body-lg {
   font-family: 'Roboto', sans-serif;
-  font-size: clamp(4.8vw,2.93vh, 5.86vw);
-  line-height: clamp(5.8vw, 3.52vh, 7.04vw);
+  font-size: clamp(3.15vw,2.11vh, 4.22vw);
+  line-height: clamp(4.2vw,2.82vh,5.64vw);
 }
 
 .dt-body-lg>p {
-  margin-bottom: clamp(5.8vw, 3.52vh, 7.04vw);
+  margin-bottom: clamp(4.2vw,2.82vh,5.64vw);
 }
 
 .dt-body-lg>p:last-child {
@@ -128,12 +128,12 @@ body::-webkit-scrollbar {
 /* BUTTON — PRIMARY */
 .dt-btn {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(4vw,2.58vh, 5.16vw);
-  line-height: clamp(5vw,3.17vh, 6.34vw);
+  font-size: clamp(2.7vw,1.88vh, 3.76vw);
+  line-height: clamp(3.5vw,2.35vh, 4.7vw);
 }
 
 .dt-btn>p {
-  margin-bottom: clamp(5vw,3.17vh, 6.34vw);
+  margin-bottom: clamp(3.5vw,2.35vh, 4.7vw);
 }
 
 .dt-btn>p:last-child {
@@ -154,12 +154,12 @@ body::-webkit-scrollbar {
 /* BUTTON — SECONDARY */
 .dt-btn-secondary {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(2.2vw, 1.64vh, 3.28vw);
-  line-height: clamp(4.75vw,2.93vh, 5.86vw);
+  font-size: clamp(2.4vw,1.64vh, 3.28vw);
+  line-height: clamp(3.5vw,2.35vh, 4.7vw);
 }
 
 .dt-btn-secondary>p {
-  margin-bottom: clamp(4.75vw,2.93vh, 5.86vw);
+  margin-bottom: clamp(3.5vw,2.35vh, 4.7vw);
 }
 
 .dt-btn-secondary>p:last-child {
@@ -180,12 +180,12 @@ body::-webkit-scrollbar {
 /* HEADINGS */
 .dt-h1 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(35vw,23.47vh, 46.94vw);
-  line-height: clamp(35vw,24.65vh,49.3vw);
+  font-size: clamp(8.7vw,5.87vh,11.74vw);
+  line-height: clamp(9.6vw,6.46vh,12.92vw);
 }
 
 .dt-h1>p {
-  margin-bottom: clamp(35vw,24.65vh,49.3vw);
+  margin-bottom: clamp(9.6vw,6.46vh,12.92vw);
 }
 
 .dt-h1>p:last-child {
@@ -205,12 +205,12 @@ body::-webkit-scrollbar {
 
 .dt-h2 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(11.74vh);
-  line-height: clamp(12.91vh);
+  font-size: clamp(6.15vw,4.11vh, 8.22vw);
+  line-height: clamp(7vw,4.69vh, 9.38vw);
 }
 
 .dt-h2>p {
-  margin-bottom: clamp(18vw,12.91vh, 25.82vw);
+  margin-bottom: clamp(7vw,4.69vh, 9.38vw);
 }
 
 .dt-h2>p:last-child {
@@ -230,12 +230,12 @@ body::-webkit-scrollbar {
 
 .dt-h3 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(7vw,5.63vh, 11.26vw);
-  line-height: clamp(9vw,6.1vh, 12.2vw);
+  font-size: clamp(3.5vw,2.35vh, 4.7vw);
+  line-height: clamp(3.8vw,2.58vh, 5.16vw);
 }
 
 .dt-h3>p {
-  margin-bottom: clamp(9vw,6.1vh, 12.2vw);
+  margin-bottom: clamp(3.8vw,2.58vh, 5.16vw);
 }
 
 .dt-h3>p:last-child {
@@ -255,12 +255,12 @@ body::-webkit-scrollbar {
 
 .dt-h4 {
   font-family: 'Graphik', sans-serif;
-  font-size: clamp(5vw,3.52vh, 7.04vw);
-  line-height: clamp(6.25vw,4.34vh,8.68vw);
+  font-size: clamp(3.15vw,2.11vh, 4.22vw);
+  line-height: clamp(3.5vw,2.35vh, 4.7vw);
 }
 
 .dt-h4>p {
-  margin-bottom: clamp(6.25vw,4.34vh,8.68vw);
+  margin-bottom: clamp(3.5vw,2.35vh, 4.7vw);
 }
 
 .dt-h4>p:last-child {
@@ -280,12 +280,12 @@ body::-webkit-scrollbar {
 
 .dt-h5 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(3.75vw,2.58vh, 5.16vw);
-  line-height: clamp(4.5vw, 3.17vh, 6.34vw);
+  font-size: clamp(3vw,1.76vh, 3.52vw);
+  line-height: clamp(3.15vw,2.11vh, 4.22vw);
 }
 
 .dt-h5>p {
-  margin-bottom: clamp(4.5vw, 3.17vh, 6.34vw);
+  margin-bottom: clamp(3.15vw,2.11vh, 4.22vw);
 }
 
 .dt-h5>p:last-child {
