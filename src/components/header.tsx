@@ -715,10 +715,7 @@ const Header: React.FC = () => {
                                         >
                                             <Link
                                                 href={item.href}
-                                                className={`text-black font-bold hover:underline ${isHomepage
-                                                    ? 'text-[4vh]'
-                                                    : 'text-[4vh]'
-                                                    }`}
+                                                className={`dt-h2 dt-btn text-black font-bold hover:underline`}
                                                 onClick={() => setMenuOpen(false)}
                                             >
                                                 {item.label}

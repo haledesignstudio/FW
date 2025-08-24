@@ -472,12 +472,12 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                             className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-center cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
                                         >
-                                            <h2 className="text-[8vh] font-bold leading-none">{data.section1.section1Title}</h2>
+                                            <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
                                         </div>
 
                                         {/* Row 3: Section Body */}
                                         <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-white p-4">
-                                            <div className="text-[2vh] font-roboto leading-tight">
+                                            <div className="dt-h4">
                                                 <PortableText value={data.section1.section1Body} />
                                             </div>
                                         </div>
@@ -489,10 +489,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         <div className="col-span-4 row-start-5 bg-[#1B1B1B] text-white p-4">
                                             <a
                                                 href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
-                                                className="transition cursor-pointer"
+                                                className="transition cursor-pointer dt-btn"
                                             >
                                                 <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
-                                                    <span className="text-[3vh] font-graphik">{data.section1.section1CTA ?? 'Get in Touch'}</span>
+                                                    {data.section1.section1CTA ?? 'Get in Touch'}
                                                 </UnderlineOnHoverAnimation>
                                             </a>
                                         </div>
@@ -514,7 +514,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 {/* Section 1 Title when collapsed */}
                                 {!openTabs.has('benchmark') && (
                                     <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
-                                        <h2 className="text-[8vh] font-bold leading-none">{data.section1.section1Title}</h2>
+                                        <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
                                     </div>
                                 )}
                             </div>
@@ -544,12 +544,12 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                             className="col-span-4 row-start-1 bg-[#DC5A50] text-white p-4 flex items-center cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
                                         >
-                                            <h2 className="text-[8vh] font-bold leading-none">{data.section2.section2Title}</h2>
+                                            <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
                                         </div>
 
                                         {/* Row 2: Section Body */}
                                         <div className="col-span-4 row-start-2 bg-[#DC5A50] text-white p-4">
-                                            <div className="text-[2vh] font-roboto leading-tight">
+                                            <div className="dt-h4">
                                                 <PortableText value={data.section2.section2Body} />
                                             </div>
                                         </div>
@@ -575,42 +575,42 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                         {/* Row 9: Section Heading1 */}
                                         <div className="col-span-4 row-start-9 bg-[#DC5A50] text-white p-4">
-                                            <div className="text-[2.5vh] font-roboto leading-tight">
+                                            <div className="dt-h5">
                                                 <PortableText value={data.section2.section2Heading1} />
                                             </div>
                                         </div>
 
                                         {/* Row 10: Section Description1 */}
                                         <div className="col-span-4 row-start-10 bg-[#DC5A50] text-white p-4">
-                                            <div className="text-[2vh] font-roboto leading-tight">
+                                            <div className="dt-body-sm">
                                                 <PortableText value={data.section2.section2Description1} />
                                             </div>
                                         </div>
 
                                         {/* Row 11: Section Heading2 */}
                                         <div className="col-span-4 row-start-11 bg-[#DC5A50] text-white p-4">
-                                            <div className="text-[2.5vh] font-roboto leading-tight">
+                                            <div className="dt-h5">
                                                 <PortableText value={data.section2.section2Heading2} />
                                             </div>
                                         </div>
 
                                         {/* Row 12: Section Description2 */}
                                         <div className="col-span-4 row-start-12 bg-[#DC5A50] text-white p-4">
-                                            <div className="text-[2vh] font-roboto leading-tight">
+                                            <div className="dt-body-sm">
                                                 <PortableText value={data.section2.section2Description2} />
                                             </div>
                                         </div>
 
                                         {/* Row 13: Section Heading3 */}
                                         <div className="col-span-4 row-start-13 bg-[#DC5A50] text-white p-4">
-                                            <div className="text-[2.5vh] font-roboto leading-tight">
+                                            <div className="dt-h5">
                                                 <PortableText value={data.section2.section2Heading3} />
                                             </div>
                                         </div>
 
                                         {/* Row 14: Section Description3 */}
                                         <div className="col-span-4 row-start-14 bg-[#DC5A50] text-white p-4">
-                                            <div className="text-[2vh] font-roboto leading-tight">
+                                            <div className="dt-body-sm">
                                                 <PortableText value={data.section2.section2Description3} />
                                             </div>
                                         </div>
@@ -620,7 +620,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 {/* Section 2 Title when collapsed */}
                                 {!openTabs.has('process') && (
                                     <div className="col-span-4 bg-[#DC5A50] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
-                                        <h2 className="text-[8vh] font-bold leading-none">{data.section2.section2Title}</h2>
+                                        <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
                                     </div>
                                 )}
                             </div>
@@ -650,12 +650,12 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                             className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                                         >
-                                            <h2 className="text-[8vh] font-bold leading-none">{data.section3.section3Title}</h2>
+                                            <h2 className="dt-h1 leading-none">{data.section3.section3Title}</h2>
                                         </div>
 
                                         {/* Row 2: Section Body */}
                                         <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black p-4">
-                                            <div className="text-[2vh] font-roboto leading-tight">
+                                            <div className="dt-h4">
                                                 <PortableText value={data.section3.section3Body} />
                                             </div>
                                         </div>
@@ -689,7 +689,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 {/* Section 3 Title when collapsed */}
                                 {!openTabs.has('case-studies') && (
                                     <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden">
-                                        <h2 className="text-[8vh] font-bold leading-none">{data.section3.section3Title}</h2>
+                                        <h2 className="dt-h1 leading-none">{data.section3.section3Title}</h2>
                                     </div>
                                 )}
                             </div>

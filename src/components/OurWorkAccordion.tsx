@@ -329,7 +329,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                     {/* Row 3: Section Body */}
                     <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-white p-4">
-                      <div className="dt-h4 font-roboto leading-tight">
+                      <div className="dt-h4">
                         <PortableText value={data.accordionSection1.body} />
                       </div>
                     </div>
@@ -371,7 +371,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                         {/* Bottom Left (spans 2 cols): CTA Button */}
                         <div className="col-span-2 p-4 flex items-end justify-start">
-                          <Link href="/supercharge-tomorrow" className="dt-btn font-graphik">
+                          <Link href="/supercharge-tomorrow" className="dt-btn">
                             <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
                               {data.accordionSection1.cta ?? 'Get in Touch'}
                             </UnderlineOnHoverAnimation>
@@ -420,7 +420,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                     {/* Row 2: Section Body */}
                     <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black p-4">
-                      <div className="dt-h4 font-roboto leading-tight">
+                      <div className="dt-h4">
                         <PortableText value={data.accordionSection2.body} />
                       </div>
                     </div>

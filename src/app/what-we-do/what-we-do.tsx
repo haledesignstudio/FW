@@ -260,7 +260,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                         text={data.heading}
                                         typeSpeed={60}
                                         delay={500}
-                                        className="text-[6vw] font-graphik leading-tight text-balance"
+                                        className="dt-h2 text-balance"
                                     />
                                 </FadeInOnVisible>
                             </div>
@@ -272,7 +272,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             {/* Row 3-4: Subheading (col 1-4) */}
                             <div className="col-span-4 row-span-2 flex items-center">
                                 <FadeInOnVisible>
-                                    <div className="text-[4vw] font-bold leading-tight">
+                                    <div className="dt-h3">
                                         <HighlightText value={data.subheading} />
                                     </div>
                                 </FadeInOnVisible>
@@ -284,7 +284,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             {/* Row 6: Statement 1 (col 1-4) */}
                             <div className="col-span-4 row-span-1 flex items-center">
                                 <FadeInOnVisible>
-                                    <div className="text-[3.5vw] leading-tight">
+                                    <div className="dt-body-sm">
                                         <PortableText value={data.statement1} />
                                     </div>
                                 </FadeInOnVisible>
@@ -293,7 +293,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             {/* Row 7: Statement 2 (col 1-4) */}
                             <div className="col-span-4 row-span-1 flex items-center">
                                 <FadeInOnVisible>
-                                    <div className="text-[3.5vw] leading-tight">
+                                    <div className="dt-body-sm">
                                         <PortableText value={data.statement2} />
                                     </div>
                                 </FadeInOnVisible>
@@ -302,7 +302,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             {/* Row 8: Statement 3 (col 1-4) */}
                             <div className="col-span-4 row-span-1 flex items-center">
                                 <FadeInOnVisible>
-                                    <div className="text-[3.5vw] leading-tight">
+                                    <div className="dt-body-sm">
                                         <PortableText value={data.statement3} />
                                     </div>
                                 </FadeInOnVisible>
@@ -312,7 +312,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             <div className="col-span-2"></div>
                             <div className="col-span-2 row-span-1 flex items-center justify-end">
                                 <FadeInOnVisible>
-                                    <div className="text-[3vw] font-graphik leading-tight">
+                                    <div className="dt-btn">
                                         <a
                                             href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.cta ?? '')}`}
                                             className="transition cursor-pointer"
@@ -332,7 +332,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                         text={data.accordion.heading}
                                         typeSpeed={60}
                                         delay={500}
-                                        className="text-[6vw] font-graphik leading-tight text-balance"
+                                        className="dt-h2 text-balance"
                                     />
                                 </FadeInOnVisible>
                             </div>
@@ -344,7 +344,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             {/* Row 12-13: Accordion Subheading (col 1-4) */}
                             <div className="col-span-4 row-span-2 flex items-center">
                                 <FadeInOnVisible>
-                                    <div className="text-[4vw] font-bold leading-tight">
+                                    <div className="dt-h3">
                                         <HighlightText value={data.accordion.subheading} />
                                     </div>
                                 </FadeInOnVisible>
@@ -360,7 +360,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                         <div className="grid grid-cols-4 gap-[2vh] mt-[4vh]">
                             <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
                                 <FadeInOnVisible>
-                                    <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                                    <span className="underline dt-btn flex items-center gap-1 font-bold">
                                         <svg
                                             width="18"
                                             height="18"

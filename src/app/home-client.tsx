@@ -120,7 +120,7 @@ export default function HomeClient({ data }: HomeClientProps) {
               text={data.headline}
               typeSpeed={40}
               delay={100}
-              className="text-[4vh] font-graphik leading-tight"
+              className="dt-h2"
               start={preloaderDone}
             />
           </div>
@@ -149,7 +149,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 3,
       content: (
         <FadeInOnVisible>
-          <div className="prose max-w-none text-[2vh] font-bold leading-tight" data-sanity={JSON.stringify({
+          <div className="dt-h3" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'subheading'
@@ -202,7 +202,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="text-[1.5vh] leading-tight" data-sanity={JSON.stringify({
+          <div className="dt-body-sm" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'body'
@@ -223,7 +223,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 8,
       content: (
         <FadeInOnVisible>
-          <div className="text-[1.5vh] font-graphik leading-tight" data-sanity={JSON.stringify({
+          <div className="dt-btn" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'cta'
@@ -481,7 +481,7 @@ export default function HomeClient({ data }: HomeClientProps) {
               <div className="col-span-2"></div>
               <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
                 <FadeInOnVisible>
-                  <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                  <span className="underline dt-btn flex items-center gap-1">
                     <svg
                       width="18"
                       height="18"

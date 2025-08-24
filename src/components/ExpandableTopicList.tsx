@@ -58,7 +58,7 @@ export default function ExpandableTopicList() {
                                     )
                                 }
                             >
-                                <span className="col-span-3 text-left font-graphik text-[3vh] leading-tight">{topic.topicTitle}</span>
+                                <span className="col-span-3 text-left dt-h2">{topic.topicTitle}</span>
                                 <span className="col-span-1 flex justify-end items-end">
                                     <Image
                                         src="/accordion-open.png"
@@ -89,22 +89,22 @@ export default function ExpandableTopicList() {
                                     </div>
                                     {/* Row 4: topic heading col-span-4 */}
                                     <div className="col-span-4 mb-[2vh]">
-                                        <h3 className="text-[2.5vh] font-bold">{topic.topicHeading}</h3>
+                                        <h3 className="dt-h3">{topic.topicHeading}</h3>
                                     </div>
                                     {/* Row 5: contents array, left col 1-2, right col 3-4 */}
                                     <div className="col-span-2 space-y-[2vh]">
                                         {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`left-${i}`}>
-                                                <h4 className="text-[2vh] font-graphik">{item.heading}</h4>
-                                                <p className="text-[1.7vh]">{item.description}</p>
+                                                <h4 className="dt-h5">{item.heading}</h4>
+                                                <p className="dt-body-sm">{item.description}</p>
                                             </div>
                                         ))}
                                     </div>
                                     <div className="col-span-2 space-y-[2vh]">
                                         {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`right-${i}`}>
-                                                <h4 className="text-[2vh] font-bold">{item.heading}</h4>
-                                                <p className="text-[1.7vh]">{item.description}</p>
+                                                <h4 className="dt-h5">{item.heading}</h4>
+                                                <p className="dt-body-sm">{item.description}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -112,7 +112,7 @@ export default function ExpandableTopicList() {
                                     <div className="col-start-3 col-span-2 flex items-end justify-end mt-[2vh]">
                                         <a
                                             href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
-                                            className="text-[2vh] font-bold underline"
+                                            className="dt-btn underline"
                                             onClick={e => e.stopPropagation()}
                                         >
                                             {topic.topicButtonText}

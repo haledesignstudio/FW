@@ -232,8 +232,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             {/* Closed state: only row 1 visible, click to open */}
                             {!isOpen && (
                                 <div className="grid grid-cols-4 min-h-[7vh] items-center px-3 py-2 w-full">
-                                    <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik leading-tight">{idx + 1}</div>
-                                    <div className="col-span-3 row-start-1 row-span-1 text-right text-[5vh] font-graphik leading-tight truncate">{item.heading}</div>
+                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
+                                    <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
                                 </div>
                             )}
                             {/* Open state: full vertical accordion */}
@@ -241,14 +241,14 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                 <div className="grid grid-cols-4 gap-y-1  items-center auto-rows-[minmax(50px,auto)] px-3 py-2 w-full">
 
                                     {/* Row 5: col 1: number, col 2-4: subheading (first word in row 5, rest in row 6) */}
-                                    <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik leading-tight">{idx + 1}</div>
+                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
                                     {/* Subheading split: first word row 5, rest row 6 */}
                                     {(() => {
                                         const subheading = item.subheading && item.subheading.length > 0 ? item.subheading[0].children?.[0]?.text || '' : '';
                                         const [firstWord, ...rest] = subheading.split(' ');
                                         return <>
-                                            <div className="col-span-3 row-start-1 row-span-1 text-right text-[5vh] font-graphik leading-tight">{firstWord}</div>
-                                            <div className="col-start-2 row-start-2 row-span-1 col-span-3 text-right text-[2vh] font-graphik leading-tight">{rest.join(' ')}</div>
+                                            <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight">{firstWord}</div>
+                                            <div className="col-start-2 row-start-2 row-span-1 col-span-3 text-right dt-h3 leading-tight">{rest.join(' ')}</div>
                                         </>;
                                     })()}
                                     {/* Row 7-8: Image (col 1-4) */}
@@ -263,28 +263,28 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                         </div>
                                     )}
                                     {/* Row 9-11: Description (col 1-4) */}
-                                    <div className="col-span-4 text-[2vh] font-roboto leading-tight mt-2 pb-4">
+                                    <div className="col-span-4 dt-h4 mt-2 pb-4">
                                         <PortableText value={item.description} components={ptComponents} />
                                     </div>
                                     {/* Row 12: Empty */}
                                     <div className="col-span-4 h-[1vh]"></div>
                                     {/* Row 13: col 1-2: prompt, col 3-4: entry 0 */}
-                                    <div className="col-span-2 text-[2vh] font-bold leading-tight">
+                                    <div className="col-span-2 dt-h5 leading-tight">
                                         <PortableText value={item.prompt} />
                                     </div>
                                     <div className="col-span-2">
-                                        <div className="font-bold text-[2vh] pb-4"><PortableText value={item.entries[0].title} /></div>
-                                        <div className="text-[1.5vh] pb-4"><PortableText value={item.entries[0].body} /></div>
+                                        <div className="dt-h5 pb-4"><PortableText value={item.entries[0].title} /></div>
+                                        <div className="dt-body-sm pb-4"><PortableText value={item.entries[0].body} /></div>
                                     </div>
                                     {/* Row 15-16: col 3-4: entry 1 */}
                                     <div className="col-start-3 col-span-2">
-                                        <div className="font-bold text-[2vh] pb-4"><PortableText value={item.entries[1].title} /></div>
-                                        <div className="text-[1.5vh] pb-4"><PortableText value={item.entries[1].body} /></div>
+                                        <div className="dt-h5 pb-4"><PortableText value={item.entries[1].title} /></div>
+                                        <div className="dt-body-sm pb-4"><PortableText value={item.entries[1].body} /></div>
                                     </div>
                                     {/* Row 17-18: col 3-4: entry 2 */}
                                     <div className="col-start-3 col-span-2">
-                                        <div className="font-bold text-[2vh] pb-4"><PortableText value={item.entries[2].title} /></div>
-                                        <div className="text-[1.5vh] pb-4"><PortableText value={item.entries[2].body} /></div>
+                                        <div className="dt-h5 pb-4"><PortableText value={item.entries[2].title} /></div>
+                                        <div className="dt-body-sm pb-4"><PortableText value={item.entries[2].body} /></div>
                                     </div>
                                 </div>
                             )}

@@ -269,10 +269,10 @@ const Footer: React.FC = () => {
                         name="email"
                         required
                         placeholder={shouldAnimate ? placeholder || ' ' : 'Enter your e-mail'}
-                        className="outline-none border-none bg-transparent text-[2vh] text-base placeholder-gray placeholder:font-graphik-semibold placeholder:text-[clamp(1.2vw,3vh,1.5vw)] mb-[4vh]"
+                        className="outline-none border-none bg-transparent dt-body-sm placeholder:dt-body-sm mb-[4vh]"
                     />
 
-                    <div className="dt-h5 text-left">
+                    <div className="dt-btn text-left">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             {shouldAnimate ? (
                                 <FutureText
@@ -300,7 +300,7 @@ const Footer: React.FC = () => {
                             "Social"
                         )}
                     </p>
-                    <ul className="text-[1.5vh] leading-tight space-y-2">
+                    <ul className="dt-body-sm leading-tight space-y-2">
                         <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="RSS" delay={1000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
                         <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Instagram" delay={1000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
                         <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Twitter" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
@@ -322,7 +322,7 @@ const Footer: React.FC = () => {
                             "Quick Links"
                         )}
                     </h2>
-                    <ul className="text-[1.5vh] leading-tight space-y-2">
+                    <ul className="dt-body-sm leading-tight space-y-2">
                         <li><Link href="/contact">{shouldAnimate ? <FutureText text="Contact" delay={2000} speed={20} triggerOnVisible={false} /> : "Contact"}</Link></li>
                         <li><Link href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={2000} speed={20} triggerOnVisible={false} /> : "Keynotes"}</Link></li>
                         <li><Link href="/people">{shouldAnimate ? <FutureText text="Join us" delay={2000} speed={20} triggerOnVisible={false} /> : "Join us"}</Link></li>
