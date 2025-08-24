@@ -4,6 +4,7 @@ import React from 'react';
 import type { PortableTextBlock } from '@portabletext/types';
 import { PortableText } from '@portabletext/react';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import AudioVisualiser from '@/components/audioVisualiser';
 import { getGridClasses } from '@/components/insights/grid';
 import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
@@ -205,6 +206,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
 
     const mobile = (
         <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
+            <CommonHeader title={data.title} active="edge"/>
             <div className="grid grid-cols-4 gap-y-[1.5vh] gap-y-[4vh] auto-rows-[minmax(0,auto)]">
                 {/* Row 1-2, Col 1-3: Title */}
                 <div className="col-span-3 row-span-2 flex items-end">
@@ -321,13 +323,21 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                     <div className="col-span-4 row-span-4">
                         <FadeInOnVisible>
                             <div className="grid gap-[2vh] grid-cols-4 mt-[5vh]">
-                                <div className="col-span-2">
+                                <div className="col-span-4">
                                     <div className="text-[4vw] font-bold leading-tight">
                                         <HighlightText value={data.audioDescription} />
                                     </div>
                                 </div>
-                                <div className="col-span-2">
-                                    AUDIO VIZUALISER GOES HERE:
+                                <div className="col-span-4 flex items-center justify-center">
+                                    {data.audioFileUrl ? (
+                                        <AudioVisualiser
+                                            audioSrc={data.audioFileUrl}
+                                            size={200}
+                                            color="#75c8d6ff"
+                                            backgroundColor="#000000ff"
+                                            className="w-full h-[200px] flex items-center justify-center"
+                                        />
+                                    ) : null}
                                 </div>
                             </div>
                         </FadeInOnVisible>
@@ -422,13 +432,16 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             ) : null}
                         </div>
 
-                        <div className="col-span-3">
-                            {data.audioDescription?.length ? (
-                                <div>
-
-                                    AUDIO VIZUALISER GOES HERE:
-                                </div>
-                            ) : null}
+                        <div className="col-span-2 col-start-4 flex items-center justify-center">
+                                {data.audioFileUrl ? (
+                                    <AudioVisualiser
+                                        audioSrc={data.audioFileUrl}
+                                        size={300}
+                                        color="#75c8d6ff"
+                                        backgroundColor="#000000ff"
+                                        className="w-full h-[300px] flex items-center justify-center"
+                                    />
+                                ) : null}
                         </div>
                     </div>
                 ) : null}

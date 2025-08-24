@@ -152,69 +152,16 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
     );
   }
 
+  // Desktop grid: row 1 col 1-3 = mainTitle, row 1 col 4-5 = category buttons (vertical), row 2 col 2-3 = category header, row 3-4 col 4-6 = content (scrollable)
   const items: GridItem[] = [
-    // Category buttons across the first row (columns 1-6)
-    ...categories.map((category, index) => ({
-        id: index + 1,
-        content: (
-            <FadeInOnVisible>
-              <div className="w-full h-full flex flex-col items-start justify-end relative z-50 pointer-events-auto">
-                  <button
-                      onClick={() => setSelectedCategory(category.key)}
-                      className={`transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full`}
-                  >
-                      <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
-                          <span className="dt-body-lg text-left">
-                              {category.shortLabel}
-                          </span>
-                      </UnderlineOnHoverAnimation>
-                  </button>
-              </div>
-            </FadeInOnVisible>
-        ),
-        colSpan: 1,
-        rowSpan: 1,
-        mobileColSpan: 1,
-        mobileRowSpan: 1,
-        landscapeColSpan: 1,
-        landscapeRowSpan: 1,
-    })),
-    // Category header - Left side (columns 1-2, row 2)
+    // Row 1 col 1-3: Main Title
     {
-      id: 7,
-      content: (
-        <FadeInOnVisible key={`header-${selectedCategory}`}>
-          <h2 className="dt-h3 mt-auto">
-            {(privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection).sectionTitle}
-          </h2>
-        </FadeInOnVisible>
-      ),
-      colSpan: 2,
-      rowSpan: 1,
-      mobileColSpan: 2,
-      mobileRowSpan: 1,
-      landscapeColSpan: 2,
-      landscapeRowSpan: 1,
-    },
-    // Empty spacer columns 3-4 for row 2
-    {
-      id: 8,
-      content: <></>,
-      colSpan: 2,
-      rowSpan: 1,
-      mobileColSpan: 0,
-      mobileRowSpan: 0,
-      landscapeColSpan: 2,
-      landscapeRowSpan: 1,
-    },
-    // Privacy Policy main header - Right side (columns 5-6, row 2)
-    {
-      id: 9,
+      id: 1,
       content: (
         <FadeInOnVisible>
-          <div className="flex items-center justify-start h-full w-full overflow-hidden">
+          <div className="flex items-center h-full w-full overflow-hidden">
             <div className="w-full max-w-full">
-              <MainTitleAnimation 
+              <MainTitleAnimation
                 text={privacyData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
@@ -224,39 +171,119 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
           </div>
         </FadeInOnVisible>
       ),
-      colSpan: 2,
+      colSpan: 3,
       rowSpan: 1,
-      mobileColSpan: 2,
-      mobileRowSpan: 1,
-      landscapeColSpan: 2,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 3,
       landscapeRowSpan: 1,
     },
-    // Category content - Scrollable area (columns 1-2, rows 3-4)
+    // Row 1 col 4-5: Category buttons (vertical stack, left aligned)
     {
-      id: 10,
+      id: 2,
       content: (
-        <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
-          <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto ">
-            {renderContent()}
+        <FadeInOnVisible>
+          <div className="flex flex-col items-start justify-start gap-2 h-full w-full">
+            {categories.map((category) => (
+              <button
+                key={category.key}
+                onClick={() => setSelectedCategory(category.key)}
+                className={`transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full`}
+              >
+                <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
+                  <span className="dt-body-lg text-left">
+                    {category.shortLabel}
+                  </span>
+                </UnderlineOnHoverAnimation>
+              </button>
+            ))}
           </div>
         </FadeInOnVisible>
       ),
       colSpan: 2,
-      rowSpan: 2,
-      mobileColSpan: 2,
-      mobileRowSpan: 2,
-      landscapeColSpan: 2,
-      landscapeRowSpan: 2,
-    },
-    // Empty spacer columns 3-4 for rows 3-4
-    {
-      id: 11,
-      content: <></>,
-      colSpan: 2,
-      rowSpan: 2,
+      rowSpan: 1,
       mobileColSpan: 0,
       mobileRowSpan: 0,
       landscapeColSpan: 2,
+      landscapeRowSpan: 1,
+    },
+    // Row 1 col 6: Empty cell
+    {
+      id: 3,
+      content: <></>,
+      colSpan: 1,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 1,
+      landscapeRowSpan: 1,
+    },
+    // Row 2 col 1: Empty cell
+    {
+      id: 4,
+      content: <></>,
+      colSpan: 1,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 1,
+      landscapeRowSpan: 1,
+    },
+    // Row 2 col 2-3: Category header
+    {
+      id: 5,
+      content: (
+        <FadeInOnVisible key={`header-${selectedCategory}`}>
+          <h2 className="dt-h3 mt-auto">
+            {(privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection).sectionTitle}
+          </h2>
+        </FadeInOnVisible>
+      ),
+      colSpan: 2,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 2,
+      landscapeRowSpan: 1,
+    },
+    // Row 2 col 4-6: Empty cell
+    {
+      id: 6,
+      content: <></>,
+      colSpan: 3,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 3,
+      landscapeRowSpan: 1,
+    },
+    // Row 3-4 col 1-3: Empty cell
+    {
+      id: 7,
+      content: <></>,
+      colSpan: 3,
+      rowSpan: 2,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 3,
+      landscapeRowSpan: 2,
+    },
+    // Row 3-4 col 4-6: Content (scrollable, hidden scrollbar)
+    {
+      id: 8,
+      content: (
+        <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
+          <div className="h-full max-h-[52vh] overflow-y-auto pr-[1vh] pointer-events-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
+            {renderContent()}
+          </div>
+        </FadeInOnVisible>
+      ),
+      colSpan: 3,
+      rowSpan: 2,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 3,
       landscapeRowSpan: 2,
     },
   ];
