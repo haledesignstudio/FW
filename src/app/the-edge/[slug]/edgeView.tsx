@@ -206,6 +206,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
 
     const mobile = (
         <div className="block md:hidden min-h-screen flex flex-col">
+            <CommonHeader title={data.title} active="edge"/>
             <div className="grid grid-cols-4 gap-y-[1.5vh] gap-y-[4vh] auto-rows-[minmax(0,auto)]">
                 {/* Row 1-2, Col 1-3: Title */}
                 <div className="col-span-3 row-span-2 flex items-end">
@@ -322,12 +323,12 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                     <div className="col-span-4 row-span-4">
                         <FadeInOnVisible>
                             <div className="grid gap-[2vh] grid-cols-4 mt-[5vh]">
-                                <div className="col-span-2">
+                                <div className="col-span-4">
                                     <div className="text-[4vw] font-bold leading-tight">
                                         <HighlightText value={data.audioDescription} />
                                     </div>
                                 </div>
-                                <div className="col-span-2 flex items-center justify-center">
+                                <div className="col-span-4 flex items-center justify-center">
                                     {data.audioFileUrl ? (
                                         <AudioVisualiser
                                             audioSrc={data.audioFileUrl}
