@@ -190,7 +190,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                             />
                         ),
                         colSpan: 3,
-                        rowSpan: 2,
+                        rowSpan: 3,
                         mobileColSpan: 2,
                         mobileRowSpan: 1,
                         landscapeColSpan: 3,
@@ -288,7 +288,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 3,
                         content: data.section2?.section2Image?.asset ? (
-                            <div className="w-full h-full relative ">
+                            <div className="w-full h-full relative mt-[10vh]">
                                 <Image
                                     src={urlFor(data.section2.section2Image.asset).url()}
                                     alt={data.section2.section2Image.alt || 'Process image'}
@@ -723,13 +723,13 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
 
                                     {/* Title as a grid item with custom spans */}
-                                    <div className={`${getGridClasses(tab.titleItem)} p-4`}>
+                                    <div className={`${getGridClasses(tab.titleItem)}`}>
                                         {tab.titleItem.content}
                                     </div>
 
                                     {/* Rest of items */}
                                     {tab.items.map((item) => (
-                                        <div key={item.id} className={`${getGridClasses(item)} p-4`}>
+                                        <div key={item.id} className={`${getGridClasses(item)}`}>
                                             {item.content}
                                         </div>
                                     ))}

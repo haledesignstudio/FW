@@ -195,7 +195,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
             <img
               src={urlFor(data.accordionSection1.mainImage.asset).url()}
               alt={'Process image'}
-              className="w-[80vw] h-[120vh] object-contain mt-[-40vh]"
+              className="w-[80vw] h-[100vh] object-contain mt-[-30vh]"
             />
           ) : null,
           colSpan: 3,
@@ -234,7 +234,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
         {
           id: 6,
           content: (
-            <FadeInOnVisible>
+            <FadeInOnVisible className="h-full flex flex-col justify-end">
               <Link href="/supercharge-tomorrow" className="h-full flex flex-col justify-end">
                 <div className="dt-btn">
                   <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
@@ -277,7 +277,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
         {
           id: 1,
           content: (
-            <FadeInOnVisible>
+            <FadeInOnVisible className="h-full flex flex-col justify-end">
               <div className="h-full flex flex-col justify-end">
                 <div className="dt-h4 text-black">
                   <PortableText value={data.accordionSection2.body} />
