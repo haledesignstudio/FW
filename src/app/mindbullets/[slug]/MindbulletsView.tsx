@@ -74,7 +74,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
 
   // --- MOBILE ---
   const mobile = (
-    <div className="block md:hidden min-h-screen flex flex-col">
+    <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
       <div className="flex-1 grid grid-cols-4 gap-y-5 w-full">
         <div className="col-span-4 row-span-2 text-[5vh] font-graphik leading-tight">
           Mindbullets: News from the Future
@@ -296,11 +296,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   ];
 
   const desktop = (
-    <div className="hidden md:block">
+    <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
       <CommonHeader title={data.title} active="mindbullets" />
 
       {/* Top grid */}
-      <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+      <div className="grid gap-[2vh] grid-cols-2 auto-rows-[25vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {gridItems.map((item) => (
           <div
             key={item.id}
@@ -410,7 +410,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   return (
     <>
       <Header />
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
+      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
         {mobile}
         {desktop}
       </main>

@@ -147,7 +147,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
   ].filter(([, url]) => !!url);
 
   return (
-    <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+    <div className="grid gap-[2vh] grid-cols-2 auto-rows-[25vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
       {/* Name and social links */}
       <div className="col-span-1 row-span-4 h-full flex flex-col justify-between">
         <FadeInOnVisible>
@@ -229,7 +229,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
       {/* Book and next speaker */}
       <div className="col-span-1 row-span-1 h-full flex flex-col justify-between">
         <FadeInOnVisible>
-          <div className="dt-btn text-balance pt-[10vh]">
+          <div className="dt-btn text-balance pt-[0vh]">
             <a
               href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.mailtoSubject ?? '')}`}
               className="transition cursor-pointer"
