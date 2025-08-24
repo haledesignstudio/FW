@@ -89,7 +89,7 @@ interface WhatWeDoClientProps {
 export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
     // Mobile detection with hydration safety
     const [isClient, setIsClient] = useState(false);
-    
+
     useEffect(() => {
         setIsClient(true);
     }, []);
@@ -381,8 +381,8 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                 ) : (
                     // DESKTOP LAYOUT (existing)
                     <>
-                        <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2] overflow-visible">
-                            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
+                        <div className="px-[1.795vw] py-[3.2vh] bg-[#F9F7F2] overflow-visible">
+                            <div className="grid grid-cols-6 auto-rows-[21vh] overflow-visible gap-x-[1.795vw] gap-y-[3.2vh]">
                                 {items.map((item) => (
                                     <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
                                         {item.content}
@@ -390,9 +390,9 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                 ))}
                             </div>
                         </div>
-                         <div className="w-full">
+                        <div className="w-full">
                             <WhatWeDoAccordion data={data} />
-                        </div> 
+                        </div>
                     </>
                 )}
             </main>

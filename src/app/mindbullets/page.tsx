@@ -44,9 +44,9 @@ export default async function MindbulletsPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F9F7F2]">
       <Header />
-      <main className="flex-1 p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh]">
+      <main className="flex-1 p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] ">
         <CommonHeader title={doc.title} active="mindbullets" />
-        <div className="grid gap-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-auto gap-y-25">
+        <div className="grid gap-[2vh] auto-rows-auto gap-y-25 overflow-visible [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           <Mindbullets
             title={doc.title}
             subheading={doc.subheading}

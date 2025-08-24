@@ -382,7 +382,7 @@ export default function Keynotes({
   const keynoteBottom = KeynoteBottom({ keynotes });
   return (
     <>
-      <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+      <div className="grid grid-cols-6 auto-rows-[21vh] overflow-visible gap-x-[1.795vw] gap-y-[3.2vh]">
         {keynoteTop.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
             {item.content}
@@ -394,7 +394,7 @@ export default function Keynotes({
           <ExpandableTopicList />
         </div>
       </FadeInOnVisible>
-      <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+      <div className="grid grid-cols-6 auto-rows-[21vh] overflow-visible gap-x-[1.795vw] gap-y-[3.2vh]">
         {keynoteBottom.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
             {item.content}

@@ -239,7 +239,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             {/* Open state: full vertical accordion */}
                             {isOpen && (
                                 <div className="grid grid-cols-4 gap-y-1  items-center auto-rows-[minmax(50px,auto)] px-3 py-2 w-full">
-                                    
+
                                     {/* Row 5: col 1: number, col 2-4: subheading (first word in row 5, rest in row 6) */}
                                     <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik leading-tight">{idx + 1}</div>
                                     {/* Subheading split: first word row 5, rest row 6 */}
@@ -327,12 +327,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 2,
                     content: (
-                            <MainTitleAnimation
-                                text={data.accordion.heading}
-                                typeSpeed={40}
-                                delay={500}
-                                className="dt-h2 text-balance text-[#232323]"
-                            />
+                        <MainTitleAnimation
+                            text={data.accordion.heading}
+                            typeSpeed={40}
+                            delay={500}
+                            className="dt-h2 text-balance text-[#232323]"
+                        />
 
                     ),
                     colSpan: 2,
@@ -437,14 +437,14 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                            <div className="h-full flex flex-col  gap-[2vh]">
-                                <div className="dt-h2 text-[#F9F7F2]">
-                                    1
-                                </div>
-                                <div className="dt-body-sm text-[#F9F7F2]">
-                                    <PortableText value={data.accordion.items[0].description} components={ptComponents} />
-                                </div>
+                        <div className="h-full flex flex-col  gap-[2vh]">
+                            <div className="dt-h2 text-[#F9F7F2]">
+                                1
                             </div>
+                            <div className="dt-body-sm text-[#F9F7F2]">
+                                <PortableText value={data.accordion.items[0].description} components={ptComponents} />
+                            </div>
+                        </div>
                     ),
                     colSpan: 1,
                     rowSpan: 4,
@@ -466,9 +466,9 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 3,
                     content:
-                            <div className="dt-h3 mt-[2vh] text-balance text-right text-[#F9F7F2]">
-                                <PortableText value={data.accordion.items[0].subheading} />
-                            </div>,
+                        <div className="dt-h3 mt-[2vh] text-balance text-right text-[#F9F7F2]">
+                            <PortableText value={data.accordion.items[0].subheading} />
+                        </div>,
                     colSpan: 2,
                     rowSpan: 1,
                     mobileColSpan: 2,
@@ -565,8 +565,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                        <div className="dt-h1 text-[#F9F7F2]">
-                            {data.accordion.items[0].heading}
+                        <div className="flex items-end h-full">
+                            <div className="dt-h1 text-[#F9F7F2]">
+                                {data.accordion.items[0].heading}
+                            </div>
                         </div>,
                     colSpan: 4,
                     rowSpan: 2,
@@ -636,14 +638,14 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                            <div className="h-full flex flex-col  gap-[2vh]">
-                                <div className="dt-h2 text-[#F9F7F2]">
-                                    2
-                                </div>
-                                <div className="dt-body-sm text-[#F9F7F2]">
-                                    <PortableText value={data.accordion.items[1].description} components={ptComponents} />
-                                </div>
+                        <div className="h-full flex flex-col  gap-[2vh]">
+                            <div className="dt-h2 text-[#F9F7F2]">
+                                2
                             </div>
+                            <div className="dt-body-sm text-[#F9F7F2]">
+                                <PortableText value={data.accordion.items[1].description} components={ptComponents} />
+                            </div>
+                        </div>
                     ),
                     colSpan: 1,
                     rowSpan: 4,
@@ -763,8 +765,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                        <div className="dt-h1 text-[#F9F7F2]">
-                            {data.accordion.items[1].heading}
+                        <div className="flex items-end h-full">
+                            <div className="dt-h1 text-[#F9F7F2]">
+                                {data.accordion.items[1].heading}
+                            </div>
                         </div>,
                     colSpan: 4,
                     rowSpan: 2,
@@ -834,14 +838,14 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 1,
                     content: (
-                            <div className="h-full flex flex-col  gap-[6vh]">
-                                <div className="dt-h2 text-[#232323]">
-                                    3
-                                </div>
-                                <div className="dt-body-sm text-[#232323]">
-                                    <PortableText value={data.accordion.items[2].description} components={ptComponents} />
-                                </div>
+                        <div className="h-full flex flex-col  gap-[6vh]">
+                            <div className="dt-h2 text-[#232323]">
+                                3
                             </div>
+                            <div className="dt-body-sm text-[#232323]">
+                                <PortableText value={data.accordion.items[2].description} components={ptComponents} />
+                            </div>
+                        </div>
                     ),
                     colSpan: 1,
                     rowSpan: 4,
@@ -961,9 +965,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 9,
                     content:
-                        <div className="dt-h1 text-[#232323]">
-                            {data.accordion.items[2].heading}
-                        </div>,
+                        <div className="flex items-end h-full">
+                            <div className="dt-h1 text-[#232323]">
+                                {data.accordion.items[2].heading}
+                            </div>
+                        </div>
+                    ,
                     colSpan: 4,
                     rowSpan: 2,
                     mobileColSpan: 2,
@@ -1000,8 +1007,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     >
                         {/* Tiny grid when collapsed */}
                         {isCollapsed && (collapsedItems?.length ?? 0) > 0 && (
-                            <div className="p-[4vh]">
-                                <div className="grid grid-cols-1 gap-[2vh] auto-rows-[12.5vh]">
+                            <div className="px-[1.795vw] py-[3.2vh]">
+                                <div className="grid gap-x-[1.795vw] gap-y-[1.6vh] grid-cols-1 auto-rows-[10.3vh]">
                                     {collapsedItems!.map((item) => (
                                         <div key={item.id} className={`${getGridClasses(item)}`}>
                                             {item.content}
@@ -1014,8 +1021,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                         {/* Full content when active (or sec1 initial) */}
                         {/* Always show sec1 content when no tab is open (default text) */}
                         {key === 'sec1' && active === null && (
-                            <div className="p-[4vh]">
-                                <div className="grid gap-[2vh] grid-cols-4 auto-rows-[12.5vh]">
+                            <div className="px-[1.795vw] py-[3.2vh]">
+                                <div className="grid gap-x-[1.795vw] gap-y-[1.6vh] grid-cols-4 auto-rows-[10.3vh]">
                                     {items.map((item) => (
                                         <div key={item.id} className={`${getGridClasses(item)} `}>
                                             {item.content}
@@ -1026,11 +1033,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                         )}
                         {/* Animate open tab content only for sec2, sec3, sec4 */}
                         {key !== 'sec1' && active === key && (
-                            <div className="p-[4vh]">
+                            <div className="px-[1.795vw] py-[3.2vh]">
                                 <div
-                                    className={`grid gap-[2vh] grid-cols-4 auto-rows-[12.5vh] animate-scale-in-bottom-right ${
-                                        animatingSection === key ? 'scale-100' : (hasInteracted ? 'scale-0' : 'scale-100')
-                                    }`}
+                                    className={`grid gap-x-[1.795vw] gap-y-[1.6vh] grid-cols-4 auto-rows-[10.3vh] animate-scale-in-bottom-right ${animatingSection === key ? 'scale-100' : (hasInteracted ? 'scale-0' : 'scale-100')
+                                        }`}
                                     style={{
                                         transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1)',
                                         transformOrigin: 'bottom right',

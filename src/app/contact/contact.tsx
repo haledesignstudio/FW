@@ -327,8 +327,8 @@ export default function Contact({ data }: { data: ContactPageContent }) {
   return (
     <>
       <Header />
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid gap-[2vh] grid-cols-6 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {/* ROW 2: Main Title (col-span-3) + Subheading (col-span-3) */}
           <div className="col-span-3 row-span-1 flex items-start bg-[#F9F7F2]">
             <MainTitleAnimation
@@ -419,7 +419,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                 {data.bookingKeynote?.text || "Contact us to book a keynote speaker for your event."}
               </p>
               <Link
-                href="/speakers"
+                href="/keynotes#speakers"
                 className="dt-btn"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>

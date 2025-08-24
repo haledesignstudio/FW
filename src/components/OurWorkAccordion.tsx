@@ -477,14 +477,14 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
             >
               {/* Grid wrapper: collapsed shows exactly one row height */}
               <div className={[
-                "p-[4vh]",
+                "px-[1.795vw] py-[3.2vh]",
                 "overflow-hidden transition-[max-height] duration-500",
                 !isActive
-                  ? "max-h-[35vh]"
+                  ? "max-h-[34.7vh]"
                   : "max-h-[9999px]"
               ].join(' ')}
               >
-                <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+                <div className="grid grid-cols-6 auto-rows-[21vh] overflow-visible gap-x-[1.795vw] gap-y-[3.2vh]">
 
                   {/* Title */}
                   <div className={`${getGridClasses(tab.titleItem)} p-4`}>
@@ -493,7 +493,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                   {/* Items */}
                   {tab.items.map((item) => (
-                    <div key={item.id} className={`${getGridClasses(item)} p-4`}>
+                    <div key={item.id} className={`${getGridClasses(item)}`}>
                       {item.content}
                     </div>
                   ))}
@@ -501,7 +501,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                   {/* Desktop Case Studies carousel panel */}
                   {tab.id === 'case-studies' && isActive && (
                     <>
-                      <div className="col-span-6 row-start-3 row-span-4 bg-[#F9F7F2] p-4">
+                      <div className="col-span-6 row-start-3 row-span-4 bg-[#F9F7F2]">
                         <div
                           onClick={(e) => e.stopPropagation()}
                           onMouseDown={(e) => e.stopPropagation()}

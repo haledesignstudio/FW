@@ -386,7 +386,7 @@ export default function ShareholderValueAnalytics(props: Props) {
   ] as const;
 
   return (
-    <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh] mt-[2vh]">
+    <div className="grid grid-cols-6 auto-rows-[21vh] overflow-visible gap-x-[1.795vw] gap-y-[3.2vh]">
       {gridItems.map((item) => (
         <div
           key={item.id}

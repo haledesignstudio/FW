@@ -137,18 +137,8 @@ export default function PodcastSection({
       colSpan: 4,
       rowSpan: 2,
     },
-    {
-      id: 'podcast-4',
-      content: <></>,
-      colSpan: 3,
-      rowSpan: 2,
-    },
-    {
-      id: 'podcast-5',
-      content: <></>,
-      colSpan: 6,
-      rowSpan: 4,
-    },
+
+
     {
       id: 'podcast-6',
       content: (

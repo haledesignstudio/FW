@@ -461,7 +461,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       <Header />
       <main className="bg-[#F9F7F2]" data-sanity={JSON.stringify({ _type: 'homePage', _id: data._id })}>
         {/* Mobile Layout */}
-        <div className="block md:hidden">
+        <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden">
           <div className="p-[2vh] bg-[#F9F7F2] overflow-visible">
             <div className="grid gap-[2vh] grid-cols-4 auto-rows-auto overflow-visible">
               {mobileItems.map((item) => (
@@ -502,9 +502,9 @@ export default function HomeClient({ data }: HomeClientProps) {
         </div>
 
         {/* Desktop Layout */}
-        <div className="hidden md:block">
-          <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2] overflow-visible">
-            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
+        <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
+          <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2] overflow-visible">
+            <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] overflow-visible [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
               {desktopItems.map((item) => (
                 <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
                   {item.content}

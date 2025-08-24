@@ -713,14 +713,14 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         >
                             {/* Grid wrapper: collapsed shows exactly one row height */}
                             <div className={[
-                                "p-[4vh]",
+                                "[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh]",
                                 "overflow-hidden transition-[max-height] duration-500",
                                 !isActive
-                                    ? "max-h-[35vh]"
+                                    ? "max-h-[34.7vh]"
                                     : "max-h-[9999px]"
                             ].join(' ')}
                             >
-                                <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+                                <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
 
                                     {/* Title as a grid item with custom spans */}
                                     <div className={`${getGridClasses(tab.titleItem)} p-4`}>
