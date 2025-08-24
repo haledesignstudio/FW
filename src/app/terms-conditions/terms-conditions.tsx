@@ -107,11 +107,6 @@ const categories = [
   { key: 'hyperlinksSection', label: 'Hyperlinks to our content', shortLabel: 'Hyperlinks to our content'}
 ]
 
-// Take the first 6 categories for the top row
-const topRowCategories = categories.slice(0, 6)
-// The remaining categories for the bottom left of first row
-const secondRowCategories = categories.slice(6)
-
 interface TermsAndConditionsClientProps {
   termsData: TermsData
 }
