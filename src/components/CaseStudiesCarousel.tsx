@@ -95,8 +95,8 @@ function setTextVisible(textWrap: HTMLElement, visible: boolean, capH: string) {
 
 export default function Carousel({
     items,
-    imageHeight = "25vh",
-    captionHeight = "25vh",
+    imageHeight = "21vh",
+    captionHeight = "21vh",
     innerRowGap = "4vh",
     gap = "4vh",
 
@@ -242,7 +242,7 @@ export default function Carousel({
                 imgWrap.style.alignSelf = "";
                 imgWrap.style.height = normalImageHeight;
                 img.style.filter = "grayscale(100%)";
-                if (heading) heading.className = "carousel-heading font-semibold text-base";
+                if (heading) heading.className = "dt-h5";
 
                 textWrap.style.marginBottom = INNER_GAP;
                 setTextVisible(textWrap, false, CAP_H);
@@ -269,7 +269,7 @@ export default function Carousel({
                     imgWrap.style.alignSelf = "end";
                     imgWrap.style.height = featuredImageHeight;
                     img.style.filter = "none";
-                    if (heading) heading.className = "carousel-heading font-bold text-2xl";
+                    if (heading) heading.className = " font-bold text-2xl";
                     if (barFill) {
                         barFill.style.transform = "scaleX(1)";
                         barFill.style.opacity = "1";
@@ -363,7 +363,7 @@ export default function Carousel({
 
         if (item.heading) {
             const h = document.createElement("div");
-            h.className = "carousel-heading font-bold text-xl mb-2";
+            h.className = "font-bold text-xl mb-2";
             h.textContent = item.heading;
             right.appendChild(h);
         }
@@ -387,7 +387,7 @@ export default function Carousel({
         } else {
             (cta as HTMLButtonElement).type = "button";
         }
-        cta.className = "inline-flex items-center gap-2 text-base font-semibold";
+        cta.className = "inline-flex items-center gap-2 dt-btn";
         const mountSpan = document.createElement("span");
         cta.appendChild(mountSpan);
         row.appendChild(cta);
@@ -465,14 +465,14 @@ export default function Carousel({
             textWrap.style.marginBottom = INNER_GAP;
 
             const h = document.createElement("div");
-            h.className = "carousel-heading font-semibold text-base";
+            h.className = "dt-h5";
             h.style.transition =
                 "font-size 450ms cubic-bezier(.22,.61,.36,1), font-weight 450ms cubic-bezier(.22,.61,.36,1)";
             h.textContent = item.heading || "";
             textWrap.appendChild(h);
 
             const d = document.createElement("div");
-            d.className = "carousel-desc mt-1 line-clamp-3";
+            d.className = "dt-body-sm line-clamp-3";
             d.textContent = item.description || "";
             textWrap.appendChild(d);
 
@@ -485,7 +485,7 @@ export default function Carousel({
             } else {
                 (readMore as HTMLButtonElement).type = "button";
             }
-            readMore.className = "inline-flex items-center gap-2 text-sm font-semibold";
+            readMore.className = "inline-flex items-center dt-btn";
             const mountSpan = document.createElement("span");
             readMore.appendChild(mountSpan);
             actions.appendChild(readMore);

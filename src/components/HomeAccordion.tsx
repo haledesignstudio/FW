@@ -260,8 +260,8 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 1,
                         content: (
-                            <FadeInOnVisible className="h-full flex flex-col justify-end">
-                                <div className="h-full flex flex-col justify-end">
+                            <FadeInOnVisible className="h-full flex flex-col justify-end mt-[10vh] ">
+                                <div className="h-full flex flex-col justify-end ">
                                     <div className="dt-h4 text-white">
                                         <PortableText value={data.section2.section2Body} />
                                     </div>
@@ -288,7 +288,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 3,
                         content: data.section2?.section2Image?.asset ? (
-                            <div className="w-full h-full relative">
+                            <div className="w-full h-full relative ">
                                 <Image
                                     src={urlFor(data.section2.section2Image.asset).url()}
                                     alt={data.section2.section2Image.alt || 'Process image'}
@@ -299,7 +299,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                             </div>
                         ) : null,
                         colSpan: 3,
-                        rowSpan: 3,
+                        rowSpan: 4,
                         mobileColSpan: 2,
                         mobileRowSpan: 1,
                         landscapeColSpan: 3,
@@ -309,7 +309,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         id: 4,
                         content: (
                             <FadeInOnVisible>
-                                <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
+                                <div className="h-full flex flex-col gap-[2.5vh] mt-[20vh]">
                                     <div className="dt-h5">
                                         <PortableText value={data.section2.section2Heading1} />
                                     </div>
@@ -321,7 +321,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         ),
 
                         colSpan: 1,
-                        rowSpan: 2,
+                        rowSpan: 3,
                         mobileColSpan: 2,
                         mobileRowSpan: 1,
                         landscapeColSpan: 3,
@@ -331,7 +331,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         id: 5,
                         content: (
                             <FadeInOnVisible>
-                                <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
+                                <div className="h-full flex flex-col gap-[2.5vh] mt-[20vh]">
                                     <div className="dt-h5">
                                         <PortableText value={data.section2.section2Heading2} />
                                     </div>
@@ -342,7 +342,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                             </FadeInOnVisible>
                         ),
                         colSpan: 1,
-                        rowSpan: 2,
+                        rowSpan: 3,
                         mobileColSpan: 2,
                         mobileRowSpan: 1,
                         landscapeColSpan: 3,
@@ -352,7 +352,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         id: 6,
                         content: (
                             <FadeInOnVisible>
-                                <div className="h-full flex flex-col gap-[2.5vh] mt-[10vh]">
+                                <div className="h-full flex flex-col gap-[2.5vh] mt-[20vh]">
                                     <div className="dt-h5">
                                         <PortableText value={data.section2.section2Heading3} />
                                     </div>
@@ -363,7 +363,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                             </FadeInOnVisible>
                         ),
                         colSpan: 1,
-                        rowSpan: 2,
+                        rowSpan: 3,
                         mobileColSpan: 2,
                         mobileRowSpan: 1,
                         landscapeColSpan: 3,
@@ -434,7 +434,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                             </div>
                         ),
                         colSpan: 6,
-                        rowSpan: 3,
+                        rowSpan: 4,
                         mobileColSpan: 2,
                         mobileRowSpan: 1,
                         landscapeColSpan: 3,
