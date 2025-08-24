@@ -4,6 +4,7 @@ import React from 'react';
 import type { PortableTextBlock } from '@portabletext/types';
 import { PortableText } from '@portabletext/react';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import AudioVisualiser from '@/components/audioVisualiser';
 import { getGridClasses } from '@/components/insights/grid';
 import CommonHeader from '@/components/insights/CommonHeader';
 import Header from '@/components/header';
@@ -326,8 +327,16 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                                         <HighlightText value={data.audioDescription} />
                                     </div>
                                 </div>
-                                <div className="col-span-2">
-                                    AUDIO VIZUALISER GOES HERE:
+                                <div className="col-span-2 flex items-center justify-center">
+                                    {data.audioFileUrl ? (
+                                        <AudioVisualiser
+                                            audioSrc={data.audioFileUrl}
+                                            size={200}
+                                            color="#75c8d6ff"
+                                            backgroundColor="#000000ff"
+                                            className="w-full h-[200px] flex items-center justify-center"
+                                        />
+                                    ) : null}
                                 </div>
                             </div>
                         </FadeInOnVisible>
@@ -422,13 +431,16 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             ) : null}
                         </div>
 
-                        <div className="col-span-3">
-                            {data.audioDescription?.length ? (
-                                <div>
-
-                                    AUDIO VIZUALISER GOES HERE:
-                                </div>
-                            ) : null}
+                        <div className="col-span-2 col-start-4 flex items-center justify-center">
+                                {data.audioFileUrl ? (
+                                    <AudioVisualiser
+                                        audioSrc={data.audioFileUrl}
+                                        size={300}
+                                        color="#75c8d6ff"
+                                        backgroundColor="#000000ff"
+                                        className="w-full h-[300px] flex items-center justify-center"
+                                    />
+                                ) : null}
                         </div>
                     </div>
                 ) : null}

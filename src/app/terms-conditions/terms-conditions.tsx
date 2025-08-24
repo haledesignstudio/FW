@@ -60,7 +60,7 @@ const portableTextComponents: PortableTextComponents = {
 };
 
 const getGridClasses = (item: GridItem) => {
-    const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'items-start', 'relative'];
+  const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'items-start', 'relative', 'h-full'];
 
     // Mobile
     if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
@@ -146,96 +146,16 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     );
   }
 
+  // Desktop grid: row 1 col 1-2 = mainTitle, row 1 col 4-5 = category buttons (vertical), row 2 col 4 = category header, row 3-4 col 1-2 = introText (2 columns), row 3-4 col 4-6 = content (scrollable)
   const items: GridItem[] = [
-    // Category buttons across the first row (columns 1-6) - Only first 6 categories with additional ones at bottom
-    ...topRowCategories.map((category, index) => ({
-        id: index + 1,
-        content: (
-            <FadeInOnVisible>
-              <div
-              className={`w-full h-full flex flex-col items-start justify-start relative ${
-                  category.key === 'privacySection' ? 'z-50' : 'z-10'
-              } pointer-events-auto`}
-              >
-              <button
-                  onClick={() => setSelectedCategory(category.key)}
-                  className={`text-left w-full h-auto py-2 pointer-events-auto relative z-50 cursor-pointer bg-transparent border-none outline-none font-normal`}
-                  style={{ background: 'none' }}
-              >
-                <UnderlineOnHoverAnimation
-                  isActive={selectedCategory === category.key}
-                  className="font-normal text-black"
-                >
-                  <span className="dt-body-lg">
-                    {category.shortLabel}
-                  </span>
-                </UnderlineOnHoverAnimation>
-              </button>
-              {/* Additional categories for first 3 columns - positioned at bottom */}
-              {index < 3 && secondRowCategories[index] && (
-                <div className="mt-[3vh]">
-                  <button
-                    onClick={() => setSelectedCategory(secondRowCategories[index].key)}
-                    className={`text-left w-full h-auto py-2 pointer-events-auto relative z-20 cursor-pointer bg-transparent border-none outline-none font-normal`}
-                    style={{ background: 'none' }}
-                  >
-                    <UnderlineOnHoverAnimation
-                      isActive={selectedCategory === secondRowCategories[index].key}
-                      className="dt-body-lg"
-                    >
-                      <span className="dt-body-lg">
-                        {secondRowCategories[index].shortLabel}
-                      </span>
-                    </UnderlineOnHoverAnimation>
-                  </button>
-                </div>
-              )}
-            </div>
-            </FadeInOnVisible>
-        ),
-        colSpan: 1,
-        rowSpan: 1,
-        mobileColSpan: 1,
-        mobileRowSpan: 1,
-        landscapeColSpan: 1,
-        landscapeRowSpan: 1,
-    })),
-    // Category header - Left side (columns 1-2, row 2) - anchored to bottom left
+    // Row 1 col 1-2: Main Title
     {
-      id: 7,
-      content: (
-        <FadeInOnVisible key={`header-${selectedCategory}`}>
-          <h2 className="dt-h3 mt-auto">
-            {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
-          </h2>
-        </FadeInOnVisible>
-      ),
-      colSpan: 2,
-      rowSpan: 1,
-      mobileColSpan: 2,
-      mobileRowSpan: 1,
-      landscapeColSpan: 2,
-      landscapeRowSpan: 1,
-    },
-    // Empty spacer columns 3-4 for row 2
-    {
-      id: 8,
-      content: <></>,
-      colSpan: 2,
-      rowSpan: 1,
-      mobileColSpan: 0,
-      mobileRowSpan: 0,
-      landscapeColSpan: 2,
-      landscapeRowSpan: 1,
-    },
-    // Terms & Conditions main header - Right side (columns 5-6, row 2)
-    {
-      id: 9,
+      id: 1,
       content: (
         <FadeInOnVisible>
-          <div className="flex items-end justify-start h-full w-full overflow-hidden">
+          <div className="flex items-center h-full w-full overflow-hidden">
             <div className="w-full max-w-full">
-              <MainTitleAnimation 
+              <MainTitleAnimation
                 text={termsData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
@@ -247,32 +167,108 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
       ),
       colSpan: 2,
       rowSpan: 1,
-      mobileColSpan: 2,
-      mobileRowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
       landscapeColSpan: 2,
       landscapeRowSpan: 1,
     },
-    // Category content - Scrollable area (columns 1-2, rows 3-4)
+    // Row 1 col 3: Empty cell
     {
-      id: 10,
+      id: 2,
+      content: <></>,
+      colSpan: 1,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 1,
+      landscapeRowSpan: 1,
+    },
+    // Row 1 col 4-5: Category buttons (wrap to next row if needed)
+    {
+      id: 3,
       content: (
-        <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
-          <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
-            {renderContent()}
+        <FadeInOnVisible>
+          <div className="flex flex-wrap items-start content-start h-full w-full">
+            {categories.map((category) => (
+              <button
+                key={category.key}
+                onClick={() => setSelectedCategory(category.key)}
+                className={`transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full flex-shrink-0`}
+                style={{ minWidth: '120px', maxWidth: '100%' }}
+              >
+                <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
+                  <span className="dt-body-lg text-left">
+                    {category.shortLabel}
+                  </span>
+                </UnderlineOnHoverAnimation>
+              </button>
+            ))}
           </div>
         </FadeInOnVisible>
       ),
       colSpan: 2,
-      rowSpan: 2,
-      mobileColSpan: 2,
-      mobileRowSpan: 2,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
       landscapeColSpan: 2,
-      landscapeRowSpan: 2,
+      landscapeRowSpan: 1,
     },
-    // Empty spacer columns 3-4 for rows 3-4
+    // Row 1 col 6: Empty cell
     {
-      id: 11,
+      id: 4,
       content: <></>,
+      colSpan: 1,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 1,
+      landscapeRowSpan: 1,
+    },
+    // Row 2 col 1-3: Empty cell
+    {
+      id: 5,
+      content: <></>,
+      colSpan: 3,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 3,
+      landscapeRowSpan: 1,
+    },
+    // Row 2 col 4: Category header (bottom left aligned)
+    {
+      id: 6,
+      content: (
+        <FadeInOnVisible key={`header-${selectedCategory}`}>
+          <div className="h-full w-full flex flex-col justify-end items-start">
+            <h2 className="dt-h3 mb-0 pb-0">
+              {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
+            </h2>
+          </div>
+        </FadeInOnVisible>
+      ),
+      colSpan: 3,
+      rowSpan: 1,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 1,
+      landscapeRowSpan: 1,
+    },
+    // Row 3-4 col 1-2: Intro text (2 columns)
+    {
+      id: 8,
+      content: (
+        <FadeInOnVisible>
+          <div className="h-full w-full grid grid-cols-2 gap-4">
+            <div className="dt-body-sm break-words">
+              <PortableText value={termsData.pageHeader.introText.slice(0, Math.ceil(termsData.pageHeader.introText.length / 2))} components={portableTextComponents} />
+            </div>
+            <div className="dt-body-sm break-words">
+              <PortableText value={termsData.pageHeader.introText.slice(Math.ceil(termsData.pageHeader.introText.length / 2))} components={portableTextComponents} />
+            </div>
+          </div>
+        </FadeInOnVisible>
+      ),
       colSpan: 2,
       rowSpan: 2,
       mobileColSpan: 0,
@@ -280,23 +276,33 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
       landscapeColSpan: 2,
       landscapeRowSpan: 2,
     },
-    // Introductory text - Right side underneath main title (columns 5-6, rows 3-4)
+    // Row 3-4 col 3: Empty cell
     {
-      id: 12,
+      id: 9,
+      content: <></>,
+      colSpan: 1,
+      rowSpan: 2,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 1,
+      landscapeRowSpan: 2,
+    },
+    // Row 3-4 col 4-6: Content (scrollable, hidden scrollbar)
+    {
+      id: 10,
       content: (
-        <FadeInOnVisible>
-          <div className="h-[24vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[48vh] [@media(max-height:600px)_and_(max-width:768px)]:h-[30vh] overflow-y-auto pr-[1vh] pointer-events-auto">
-            <div className="dt-body-sm">
-              <PortableText value={termsData.pageHeader.introText} components={portableTextComponents} />
-            </div>
+        <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
+          <div className="h-full max-h-[52vh] overflow-y-auto pr-[1vh] pointer-events-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
+            {renderContent()}
           </div>
         </FadeInOnVisible>
       ),
-      colSpan: 2,
+      colSpan: 3,
       rowSpan: 2,
-      mobileColSpan: 2,
-      mobileRowSpan: 2,
-      landscapeColSpan: 2,
+      mobileColSpan: 0,
+      mobileRowSpan: 0,
+      landscapeColSpan: 3,
       landscapeRowSpan: 2,
     },
   ];
