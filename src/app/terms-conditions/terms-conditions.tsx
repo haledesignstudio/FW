@@ -150,7 +150,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
         <FadeInOnVisible>
           <div className="flex items-center h-full w-full overflow-hidden">
             <div className="w-full max-w-full">
-              <MainTitleAnimation
+              <MainTitleAnimation 
                 text={termsData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
@@ -340,7 +340,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                 text={termsData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
-                className="text-[4vh] font-bold leading-tight"
+                className="dt-h2"
               />
             </FadeInOnVisible>
           </div>
@@ -349,25 +349,25 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
           {/* Rows 2-10: Intro text (cols 1-4) */}
           <div className="col-span-4 row-span-8 flex items-start justify-start">
             <FadeInOnVisible>
-              <div className="prose max-w-full text-[2.5vh] leading-relaxed w-full break-words overflow-y-auto pr-[1vh] h-full">
+              <div className="prose max-w-full leading-relaxed w-full break-words overflow-y-auto pr-[1vh] h-full dt-body-sm">
                 <PortableText 
                   value={termsData.pageHeader.introText} 
                   components={{
                     ...portableTextComponents,
                     block: {
-                      normal: ({ children }) => <p className="mb-4 text-[2vh] leading-relaxed break-words">{children}</p>,
+                      normal: ({ children }) => <p className="mb-4 leading-relaxed break-words dt-body-sm">{children}</p>,
                     },
                     list: {
                       bullet: ({ children }) => (
-                        <ul className="list-disc pl-6 mb-4 text-[2vh] break-words">{children}</ul>
+                        <ul className="list-disc pl-6 mb-4 break-words dt-body-sm">{children}</ul>
                       ),
                       number: ({ children }) => (
-                        <ol className="list-decimal pl-6 mb-4 text-[2vh] break-words">{children}</ol>
+                        <ol className="list-decimal pl-6 mb-4 break-words dt-body-sm">{children}</ol>
                       ),
                     },
                     listItem: {
-                      bullet: ({ children }) => <li className="mb-2 text-[2vh] break-words">{children}</li>,
-                      number: ({ children }) => <li className="mb-2 text-[2vh] break-words">{children}</li>,
+                      bullet: ({ children }) => <li className="mb-2 break-words dt-body-sm">{children}</li>,
+                      number: ({ children }) => <li className="mb-2 break-words dt-body-sm">{children}</li>,
                     },
                     marks: {
                       strong: ({ children }) => <strong className="font-bold">{children}</strong>,
@@ -401,7 +401,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                     className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full"
                   >
                     <UnderlineOnHoverAnimation isActive={selectedCategory === category.key} className="font-normal text-black">
-                      <span className="text-[2.5vh] leading-tight text-black font-normal text-left">
+                      <span className="dt-body-lg leading-tight text-black font-normal text-left">
                         {category.shortLabel}
                       </span>
                     </UnderlineOnHoverAnimation>
@@ -414,7 +414,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
           {/* Row 16: Category header (cols 1-4, bottom left aligned) */}
           <div className="col-span-4 row-span-1 flex items-end justify-start">
             <FadeInOnVisible key={`header-${selectedCategory}`}>
-              <h2 className="text-[3vh] font-graphik">
+              <h2 className="dt-h3 font-graphik">
                 {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
               </h2>
             </FadeInOnVisible>
@@ -425,7 +425,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
         <div className="mt-[2vh] mb-[4vh]">
           <div className="flex items-start justify-start">
             <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
-              <div className="prose text-[2.5vh] leading-relaxed break-words" style={{ maxWidth: '100%', width: '100%' }}>
+              <div className="prose leading-relaxed break-words dt-body-sm" style={{ maxWidth: '100%', width: '100%' }}>
                 {(() => {
                   const section = termsData[selectedCategory as keyof TermsData] as TermsSection;
                   
@@ -439,7 +439,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                       components={{
                         ...portableTextComponents,
                         block: {
-                          normal: ({ children }) => <p className="mb-4 text-[2.5vh] leading-relaxed break-words">{children}</p>,
+                          normal: ({ children }) => <p className="mb-4 leading-relaxed break-words dt-body-sm">{children}</p>,
                         },
                         marks: {
                           link: ({ children, value }) => (
@@ -456,15 +456,15 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                         },
                         list: {
                           bullet: ({ children }) => (
-                            <ul className="list-disc pl-6 mb-4 text-[2.5vh] break-words">{children}</ul>
+                            <ul className="list-disc pl-6 mb-4 break-words dt-body-sm">{children}</ul>
                           ),
                           number: ({ children }) => (
-                            <ol className="list-decimal pl-6 mb-4 text-[2.5vh] break-words">{children}</ol>
+                            <ol className="list-decimal pl-6 mb-4 break-words dt-body-sm">{children}</ol>
                           ),
                         },
                         listItem: {
-                          bullet: ({ children }) => <li className="mb-2 text-[2.5vh] break-words">{children}</li>,
-                          number: ({ children }) => <li className="mb-2 text-[2.5vh] break-words">{children}</li>,
+                          bullet: ({ children }) => <li className="mb-2 break-words dt-body-sm">{children}</li>,
+                          number: ({ children }) => <li className="mb-2 break-words dt-body-sm">{children}</li>,
                         },
                       }}
                     />

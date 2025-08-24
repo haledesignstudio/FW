@@ -172,7 +172,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
                   text={data.pageHeader.mainTitle}
                   typeSpeed={60}
                   delay={500}
-                  className="text-[4vh] font-bold leading-tight"
+                  className="dt-h2"
                 />
               </FadeInOnVisible>
             </div>
@@ -182,7 +182,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <div className="col-span-2 row-span-1"></div>
             <div className="col-span-2 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <h2 className="text-[2.5vh] font-bold leading-tight">{data.pageHeader.subheading}</h2>
+                <h2 className="dt-h3">{data.pageHeader.subheading}</h2>
               </FadeInOnVisible>
             </div>
 
@@ -200,7 +200,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             {/* Row 5-8: Regular text (cols 1-4) */}
             <div className="col-span-4 row-span-4 flex items-start justify-start">
               <FadeInOnVisible>
-                <div className="text-[2vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.pageHeader.regularText && (
                     <PortableText value={data.pageHeader.regularText} components={portableTextComponents} />
                   )}
@@ -212,10 +212,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <div className="col-span-1 row-span-3"></div>
             <div className="col-span-3 row-span-3 flex flex-col items-start justify-start gap-[2vh]">
               <FadeInOnVisible>
-                <h3 className="text-[2.5vh] font-bold leading-tight">{data.sections.subheading1}</h3>
+                <h3 className="dt-h5">{data.sections.subheading1}</h3>
               </FadeInOnVisible>
               <FadeInOnVisible>
-                <div className="text-[1.8vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.sideText && (
                     <PortableText value={data.sections.sideText} components={portableTextComponents} />
                   )}
@@ -226,10 +226,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             {/* Row 13-15: Left section from row 7 (cols 1-4) */}
             <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <h4 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
+                <h4 className="dt-h5 mb-[1.5vh]">
                   {data.sections.leftSection?.heading}
                 </h4>
-                <div className="text-[1.6vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.leftSection?.text && (
                     <PortableText value={data.sections.leftSection.text} components={portableTextComponents} />
                   )}
@@ -240,10 +240,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             {/* Row 16-18: Right section from row 7 (cols 1-4) */}
             <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <h4 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
+                <h4 className="dt-h5 mb-[1.5vh]">
                   {data.sections.rightSection?.heading}
                 </h4>
-                <div className="text-[1.6vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.rightSection?.text && (
                     <PortableText value={data.sections.rightSection.text} components={portableTextComponents} />
                   )}
@@ -254,10 +254,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             {/* Row 19-21: Left section 2 from row 8 (cols 1-4) */}
             <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <h4 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
+                <h4 className="dt-h5 mb-[1.5vh]">
                   {data.sections.leftSection2?.heading}
                 </h4>
-                <div className="text-[1.6vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.leftSection2?.text && (
                     <PortableText value={data.sections.leftSection2.text} components={portableTextComponents} />
                   )}
@@ -268,10 +268,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             {/* Row 19-21: right section 2 from row 8 (cols 1-4) */}
             <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <h4 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
+                <h4 className="dt-h5 mb-[1.5vh]">
                   {data.sections.rightSection2?.heading}
                 </h4>
-                <div className="text-[1.6vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.rightSection2?.text && (
                     <PortableText value={data.sections.rightSection2.text} components={portableTextComponents} />
                   )}
@@ -289,7 +289,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
                   text={data.sections.whyJoinUsSection?.mainHeading || 'Why Join Us'}
                   typeSpeed={60}
                   delay={1500}
-                  className="text-[4vh] font-bold leading-tight"
+                  className="dt-h2"
                 />
               </FadeInOnVisible>
             </div>
@@ -301,10 +301,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <div className="col-span-1 row-span-1"></div>
             <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <h5 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
+                <h5 className="dt-h5 mb-[1.5vh]">
                   {data.sections.whyJoinUsSection?.reasons[0]?.heading}
                 </h5>
-                <div className="text-[1.6vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.whyJoinUsSection?.reasons[0]?.text && (
                     <PortableText
                       value={data.sections.whyJoinUsSection.reasons[0].text}
@@ -319,10 +319,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <div className="col-span-1 row-span-1"></div>
             <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <h5 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
+                <h5 className="dt-h5 mb-[1.5vh]">
                   {data.sections.whyJoinUsSection?.reasons[1]?.heading}
                 </h5>
-                <div className="text-[1.6vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.whyJoinUsSection?.reasons[1]?.text && (
                     <PortableText
                       value={data.sections.whyJoinUsSection.reasons[1].text}
@@ -337,10 +337,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <div className="col-span-1 row-span-1"></div>
             <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <h5 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
+                <h5 className="dt-h5 mb-[1.5vh]">
                   {data.sections.whyJoinUsSection?.reasons[2]?.heading}
                 </h5>
-                <div className="text-[1.6vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.whyJoinUsSection?.reasons[2]?.text && (
                     <PortableText
                       value={data.sections.whyJoinUsSection.reasons[2].text}
@@ -355,10 +355,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <div className="col-span-1 row-span-1"></div>
             <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <h5 className="text-[2vh] font-bold leading-tight mb-[1.5vh]">
+                <h5 className="dt-h5 mb-[1.5vh]">
                   {data.sections.whyJoinUsSection?.reasons[3]?.heading}
                 </h5>
-                <div className="text-[1.6vh] leading-tight">
+                <div className="dt-body-sm">
                   {data.sections.whyJoinUsSection?.reasons[3]?.text && (
                     <PortableText
                       value={data.sections.whyJoinUsSection.reasons[3].text}
@@ -375,7 +375,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             {/* Row 34: Carousel heading (col 1) */}
             <div className="col-span-1 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <h3 className="text-[2vh] font-bold leading-tight">{data.sections.carouselHeading}</h3>
+                <h3 className="dt-h5">{data.sections.carouselHeading}</h3>
               </FadeInOnVisible>
             </div>
             <div className="col-span-3 row-span-1"></div>

@@ -122,7 +122,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                   text={data.pageHeader.mainTitle}
                   typeSpeed={60}
                   delay={500}
-                  className="text-[4vh] font-bold leading-tight"
+                  className="dt-h2"
                 />
               </FadeInOnVisible>
             </div>
@@ -132,7 +132,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             <div className="col-span-1 row-span-1"></div>
             <div className="col-span-3 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <h2 className="text-[2.5vh] font-bold">{data.contactFormSubheading || 'Get in Touch'}</h2>
+                <h2 className="dt-h3">{data.contactFormSubheading || 'Get in Touch'}</h2>
               </FadeInOnVisible>
             </div>
 
@@ -162,7 +162,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             {/* Row 5: Form header (cols 1-4) */}
             <div className="col-span-4 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <p className="text-[2vh] text-gray-700">{data.contactFormIntro || "We'd love to connect. We just need to know:"}</p>
+                <p className="dt-body-sm text-gray-700">{data.contactFormIntro || "We'd love to connect. We just need to know:"}</p>
               </FadeInOnVisible>
             </div>
 
@@ -234,7 +234,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                   <button
                     type="submit"
                     onClick={() => document.querySelector('form')?.requestSubmit()}
-                    className="text-[2vh] font-bold leading-tight bg-transparent border-none outline-none cursor-pointer"
+                    className="dt-btn bg-transparent border-none outline-none cursor-pointer"
                   >
                     Submit
                   </button>
@@ -252,7 +252,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                   text={data.bookingKeynote?.title || "Book a Keynote"}
                   typeSpeed={60}
                   delay={1500}
-                  className="text-[4vh] font-bold leading-tight"
+                  className="dt-h2"
                 />
               </FadeInOnVisible>
             </div>
@@ -265,7 +265,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             <div className="col-span-1 row-span-1"></div>
             <div className="col-span-3 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <h2 className="text-[2.5vh] font-bold">
+                <h2 className="dt-h3">
                   {data.keynoteSubheading || "Keynote Speakers"}
                 </h2>
               </FadeInOnVisible>
@@ -277,7 +277,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             {/* Row 16-17: Keynote section text (cols 1-4) */}
             <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <p className="text-[2vh] text-gray-700">
+                <p className="dt-body-sm text-gray-700">
                   {data.bookingKeynote?.text || "Contact us to book a keynote speaker for your event."}
                 </p>
               </FadeInOnVisible>
@@ -288,7 +288,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
               <FadeInOnVisible>
                 <Link
                   href="/speakers"
-                  className="text-[2vh] font-bold underline hover:no-underline"
+                  className="dt-btn underline hover:no-underline"
                 >
                   Find the right speaker for your executive team
                 </Link>
@@ -300,7 +300,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             <div className="col-span-1 row-span-1"></div>
             <div className="col-span-2 row-span-1 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
               <FadeInOnVisible>
-                <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                <span className="underline dt-btn flex items-center gap-1 font-bold">
                   <svg
                     width="18"
                     height="18"

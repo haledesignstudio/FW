@@ -219,7 +219,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
   const mobile = (
     <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
       <div className="flex-1 grid grid-cols-4 gap-y-5 w-full">
-        <div className="col-span-4 row-span-2 text-[5vh] font-graphik leading-tight">
+        <div className="col-span-4 row-span-2 dt-h2">
           {data.title}
         </div>
 
@@ -234,20 +234,20 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
         )}
 
         {data.byline ? (
-          <div className="col-span-4 row-span-1 text-[2vh] font-graphik leading-tight">
+          <div className="col-span-4 row-span-1 dt-h3">
             {data.byline}
           </div>
         ) : null}
 
         {data.datePublished ? (
           <div className="col-span-2 row-span-1 flex items-center">
-            <span className="font-roboto text-[1.5vh] leading-tight">
+            <span className="dt-body-lg">
               {data.datePublished}
             </span>
           </div>
         ) : null}
 
-        <div className="col-span-4">
+        <div className="col-span-4 dt-body-sm">
           <PortableText value={leftBlocks} components={ptComponents} />
           <PortableText value={rightBlocks} components={ptComponents} />
         </div>
@@ -257,7 +257,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
           <div className="col-span-4 mt-[2vh]">
             <a
               href={data.pdf.url}
-              className="inline-block mt-[1vh] underline font-bold"
+              className="dt-btn inline-block mt-[1vh] underline font-bold"
               target="_blank"
               rel="noreferrer"
             >
@@ -276,7 +276,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
         {carouselItems.length > 0 && (
           <div className="col-span-4 mt-[10vh]">
             <FadeInOnVisible>
-              <div className="text-[2vh] font-bold leading-relaxed mb-[2vh]">
+              <div className="dt-h5 mb-[2vh]">
                 You may also like
               </div>
               <Carousel
@@ -296,7 +296,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
 
         <div className="col-span-2 row-span-1 mt-4">
           <FadeInOnVisible>
-            <Link href="/keynotes" className="transition font-bold cursor-pointer">
+            <Link href="/keynotes" className="dt-btn transition font-bold cursor-pointer">
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                 See Keynotes
               </UnderlineOnHoverAnimation>
@@ -309,7 +309,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <FadeInOnVisible>
-            <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+            <span className="underline dt-btn flex items-center gap-1">
               <svg
                 width="18"
                 height="18"

@@ -76,7 +76,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   const mobile = (
     <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
       <div className="flex-1 grid grid-cols-4 gap-y-5 w-full">
-        <div className="col-span-4 row-span-2 text-[5vh] font-graphik leading-tight">
+        <div className="col-span-4 row-span-2 dt-h1">
           Mindbullets: News from the Future
         </div>
 
@@ -90,16 +90,16 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           </div>
         )}
 
-        <div className="col-span-4 row-span-1 font-graphik text-[3vh] leading-tight">
+        <div className="col-span-4 row-span-1 dt-h2">
           {data.title}
         </div>
 
-        <div className="col-span-4 row-span-1 text-[2vh] font-graphik leading-tight">
+        <div className="col-span-4 row-span-1 dt-h3">
           {data.byLine}
         </div>
 
         <div className="col-span-2 row-span-1 flex items-center">
-          <span className="font-roboto text-[1.5vh] leading-tight">
+          <span className="dt-body-lg">
             {new Intl.DateTimeFormat("en-GB", {
               day: "numeric",
               month: "long",
@@ -110,7 +110,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
         </div>
 
         {/* Body */}
-        <div className="col-span-4">
+        <div className="col-span-4 dt-body-sm">
           <PortableText value={leftBlocks} components={ptComponents} />
           <PortableText value={rightBlocks} components={ptComponents} />
         </div>
@@ -118,11 +118,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
         {/* Disclaimer */}
         <div className="col-span-4 h-4" />
         <div className="col-span-4">
-          <p className="text-[3vh] font-bold leading-relaxed text-[#DC5A50]">
+          <p className="dt-h5 text-[#DC5A50]">
             {" "}
             Warning: Hazardous thinking at work{" "}
           </p>
-          <p className="mt-[2vh] text-[2vh] leading-relaxed text-[#DC5A50]">
+          <p className="mt-[2vh] dt-body-sm text-[#DC5A50]">
             Despite appearances to the contrary, Futureworld cannot and does not
             predict the future. Our Mindbullets scenarios are fictitious and
             designed purely to explore possible futures, challenge and stimulate
@@ -134,39 +134,38 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           </p>
         </div>
 
-          <div className="col-span-4">
-        <div className="mt-[6vh]">
-          <div className="text-[2.5vh] font-graphik leading-tight mb-[2vh]">
-            Related stories
-          </div>
-          <ul className="space-y-[1vh]">
-            {data.RelatedStories!.map((r, i) => (
-              <li key={`${r.title}-${i}`}>
-                <a
-                  href={r.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[2.5vh] leading-relaxed"
-                >
-                  <UnderlineOnHoverAnimation
-                    hasStaticUnderline={true}
-                    color="#232323"
+        <div className="col-span-4">
+          <div className="mt-[6vh]">
+            <div className="dt-h5 mb-[2vh]">
+              Related stories
+            </div>
+            <ul className="space-y-[1vh]">
+              {data.RelatedStories!.map((r, i) => (
+                <li key={`${r.title}-${i}`}>
+                  <a
+                    href={r.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="dt-body-lg"
                   >
-                    {r.title}
-                  </UnderlineOnHoverAnimation>
-                </a>
-              </li>
-            ))}
-          </ul>
+                    <UnderlineOnHoverAnimation
+                      hasStaticUnderline={true}
+                      color="#232323"
+                    >
+                      {r.title}
+                    </UnderlineOnHoverAnimation>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        </div>
-
 
         {/* Carousel (mobile) */}
         {carouselItems.length > 0 && (
           <div className="col-span-4 mt-[25vh]">
             <FadeInOnVisible>
-              <div className="text-[2vh] font-bold leading-relaxed mb-[2vh]">You may also like</div>
+              <div className="dt-h5 mb-[2vh]">You may also like</div>
               <Carousel
                 items={carouselItems}
                 imageHeight="25vh"
@@ -182,13 +181,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           </div>
         )}
 
-
-
         <div className="col-span-2 row-span-1">
           <FadeInOnVisible>
             <Link
               href="/keynotes"
-              className="transition font-bold cursor-pointer"
+              className="dt-btn font-bold cursor-pointer"
             >
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                 See Keynotes
@@ -202,7 +199,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <FadeInOnVisible>
-            <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+            <span className="underline dt-btn flex items-center gap-1 font-bold">
               <svg
                 width="18"
                 height="18"

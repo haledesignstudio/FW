@@ -384,7 +384,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                       text={data.title}
                       typeSpeed={60}
                       delay={500}
-                      className="text-[6vw] font-graphik leading-tight"
+                      className="dt-h2"
                     />
                   </FadeInOnVisible>
                 </div>
@@ -393,7 +393,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 <div className="col-span-1"></div>
                 <div className="col-span-2 row-span-3 flex items-center">
                   <FadeInOnVisible>
-                    <div className="prose max-w-none text-[4vw] font-bold leading-tight">
+                    <div className="prose max-w-none dt-h3 font-bold leading-tight">
                       <HighlightText value={data.subheading} />
                     </div>
                   </FadeInOnVisible>
@@ -408,10 +408,10 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="text-[8vw] font-graphik leading-tight">
+                          <div className="dt-h4 font-graphik leading-tight">
                             <CountingAnimation start={inView} target={data.statistics[0].statisticValue} />
                           </div>
-                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[0].statisticName}</div>
+                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[0].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -427,10 +427,10 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="text-[8vw] font-graphik leading-tight">
+                          <div className="dt-h4 font-graphik leading-tight">
                             <CountingAnimation start={inView} target={data.statistics[1].statisticValue} />
                           </div>
-                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[1].statisticName}</div>
+                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[1].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -443,10 +443,10 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="text-[8vw] font-graphik leading-tight">
+                          <div className="dt-h4 font-graphik leading-tight">
                             <CountingAnimation start={inView} target={data.statistics[2].statisticValue} />
                           </div>
-                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[2].statisticName}</div>
+                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[2].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -459,10 +459,10 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="text-[8vw] font-graphik leading-tight">
+                          <div className="dt-h4 font-graphik leading-tight">
                             <CountingAnimation start={inView} target={data.statistics[3].statisticValue} />
                           </div>
-                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[3].statisticName}</div>
+                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[3].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -475,10 +475,10 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="text-[8vw] font-graphik leading-tight">
+                          <div className="dt-h4 font-graphik leading-tight">
                             <CountingAnimation start={inView} target={data.statistics[4].statisticValue} />
                           </div>
-                          <div className="text-[3vw] font-roboto leading-tight text-black">{data.statistics[4].statisticName}</div>
+                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[4].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -492,16 +492,16 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                       {data.testimonials.slice(0, 3).map((t, i) => (
                         <div key={i} className="">
                           {/* Quote */}
-                          <div className="text-[3vh] leading-tight font-roboto">
+                          <div className="dt-h4 font-roboto">
                             <PortableText value={t.quote} />
                           </div>
 
                           {/* Author */}
                           <div className="mt-[2.5vh] text-black">
-                            <div className="text-[3vh] leading-tight font-roboto">
+                            <div className="dt-h4 font-roboto">
                               &ndash; {t.name}
                             </div>
-                            <div className="text-[3vh] leading-tight font-roboto">
+                            <div className="dt-h4 font-roboto">
                               {t.jobTitle}{t.company ? `, ${t.company}` : ''}
                             </div>
                           </div>
@@ -546,7 +546,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
               <div className="grid grid-cols-4 gap-[2vh]">
                 <div className="col-start-3 col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
                   <FadeInOnVisible>
-                    <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                    <span className="underline dt-btn flex items-center gap-1 font-bold">
                       <svg
                         width="18"
                         height="18"

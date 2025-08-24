@@ -58,13 +58,11 @@ export default function Edge({
   }, []);
 
   if (isMobile) {
-
     return (
       <div className="grid grid-cols-4 gap-y-2 gap-x-2 px-2 w-full">
-
         <div className="col-span-4 row-span-2 flex items-center">
           <FadeInOnVisible>
-            <div className="text-[12vw] font-graphik leading-tight">{title}</div>
+            <div className="dt-h1">{title}</div>
           </FadeInOnVisible>
         </div>
 
@@ -72,13 +70,13 @@ export default function Edge({
 
         <div className="col-span-4 row-span-2">
           <FadeInOnVisible>
-            <div className="text-[4vw] font-roboto leading-tight">{contentText}</div>
+            <div className="dt-h4">{contentText}</div>
           </FadeInOnVisible>
         </div>
 
         <div className="col-span-4 row-span-2">
           <FadeInOnVisible>
-            <div className="text-[4vw] font-graphik leading-tight">
+            <div className="dt-h3">
               <HighlightText value={subheading} />
             </div>
           </FadeInOnVisible>
@@ -116,10 +114,10 @@ export default function Edge({
               loading="lazy"
             />
           </div>
-          <div className="mt-[5vh] text-[4vh] font-bold leading-tight">
+          <div className="mt-[5vh] dt-h5 font-bold leading-tight">
             <HighlightText value={whatBlewYourMind.description} />
           </div>
-          <div className="text-[2vh] font-graphik leading-tight mt-[5vh]">
+          <div className="dt-btn mt-[5vh]">
             <a href={whatBlewYourMind.ctaLink} target="_blank" rel="noopener noreferrer">
               <UnderlineOnHoverAnimation hasStaticUnderline color="#232323">
                 {whatBlewYourMind.cta}
@@ -141,7 +139,7 @@ export default function Edge({
           onClick={handleBackToTop}
         >
           <FadeInOnVisible>
-            <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+            <span className="underline dt-btn flex items-center gap-1 font-bold">
               <svg
                 width="18"
                 height="18"

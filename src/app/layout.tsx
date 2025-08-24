@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
 import Preloader from '@/components/Preloader';
 import { PreloaderProvider } from '@/components/PreloaderContext';
 import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
+import ReloadOnBreakpoint from "@/components/ReloadOnBreakpoint";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,12 +29,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { isEnabled } = await draftMode();
-  
+
   return (
-    <html lang="en"  className="scroll-smooth">
+    <html lang="en" className="scroll-smooth">
       <body suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ReloadOnBreakpoint />
         <PreloaderProvider>
           <Preloader />
           {children}

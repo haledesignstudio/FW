@@ -76,7 +76,7 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 1-2: Title */}
           <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
-              <div className="text-[5vh] font-bold font-graphik leading-tight text-left">
+              <div className="dt-h1 text-left">
                 {analytics.title}
               </div>
             </FadeInOnVisible>
@@ -86,7 +86,7 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 4: ContentText */}
           <div className="col-span-3 row-span-1">
             <FadeInOnVisible>
-              <div className="text-[2.5vh] leading-tight">
+              <div className="dt-h4">
                 {analytics.contentText}
               </div>
             </FadeInOnVisible>
@@ -96,7 +96,7 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 6-7: Subheading */}
           <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
-              <div className="text-[2.5vh] font-bold leading-tight">
+              <div className="dt-h3">
                 <HighlightText value={analytics.subheading} />
               </div>
             </FadeInOnVisible>
@@ -109,7 +109,7 @@ export default function ShareholderValueAnalytics(props: Props) {
                 href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
                   analytics.CTA1 ?? ''
                 )}`}
-                className="transition font-bold cursor-pointer"
+                className="dt-btn transition cursor-pointer"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   {analytics.CTA1 ?? 'Get in Touch'}
@@ -134,7 +134,7 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 15-16: IQ_context */}
           <div className="col-span-3 row-span-2">
             <FadeInOnVisible>
-              <div className="text-[2vh] leading-tight">
+              <div className="dt-h4">
                 {analytics.IQ_context}
               </div>
             </FadeInOnVisible>
@@ -142,7 +142,7 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 17-18: IQ_heading */}
           <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
-              <div className="text-[2.3vh] font-bold leading-tight">
+              <div className="dt-h3">
                 <HighlightText value={analytics.IQ_heading} />
               </div>
             </FadeInOnVisible>
@@ -150,7 +150,7 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 19-20: IQ_subheading */}
           <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
-              <div className="text-[1.8vh] leading-tight">
+              <div className="dt-body-lg">
                 {analytics.IQ_subheading}
               </div>
             </FadeInOnVisible>
@@ -162,7 +162,7 @@ export default function ShareholderValueAnalytics(props: Props) {
                 href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
                   analytics.CTA2 ?? ''
                 )}`}
-                className="transition font-bold cursor-pointer"
+                className="dt-btn transition cursor-pointer"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   {analytics.CTA2 ?? 'Get in Touch'}
@@ -175,7 +175,7 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 22: Mindbullets button col 1-2, Back to top col 4 */}
           <div className="col-span-2 row-span-1">
             <FadeInOnVisible>
-              <Link href="/mindbullets" className="transition font-bold cursor-pointer">
+              <Link href="/mindbullets" className="dt-btn transition cursor-pointer">
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   See Mindbullets: News from the Future
                 </UnderlineOnHoverAnimation>
@@ -184,7 +184,7 @@ export default function ShareholderValueAnalytics(props: Props) {
           </div>
           <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
             <FadeInOnVisible>
-                <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                <span className="underline dt-btn flex items-center gap-1">
                   <svg
                     width="18"
                     height="18"

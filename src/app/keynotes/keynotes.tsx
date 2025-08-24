@@ -292,29 +292,29 @@ export default function Keynotes({
         {/* Topic Section */}
         <div className="grid grid-cols-4 gap-y-[2vh] auto-rows-min w-full px-[2vw] pt-[2vh]">
           {/* Row 1-2: Title */}
-          <div className="col-span-3 row-span-2 flex items-start justify-start text-left font-graphik text-[12vw] leading-tight">
+          <div className="col-span-3 row-span-2 flex items-start justify-start text-left dt-h1">
             {topicSection.topicSectionTitle}
           </div>
           {/* Row 3: Content Text */}
-          <div className="col-span-4 text-[3.5vw] leading-tight mt-[1vh]">
+          <div className="col-span-4 dt-h4 mt-[1vh]">
             {topicSection.topicContentText}
           </div>
           {/* Row 4: Subtitle */}
-          <div className="col-span-4 font-bold text-[4vw] leading-tight mt-[1vh]">
+          <div className="col-span-4 dt-h3 mt-[1vh]">
             <HighlightText value={topicSection.topicSectionSubtitle} />
           </div>
           {/* Row 5: CTA buttons */}
           <div className="col-span-2 flex items-end justify-start mt-[2vh]">
             <a
               href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
-              className="text-[3.5vw] font-graphik underline"
+              className="dt-btn underline"
             >
               {speakerSection.speakerCTA1 ?? 'Get in Touch'}
             </a>
           </div>
           <div className="col-span-2 flex items-end justify-end mt-[2vh]">
             <Link href={'/keynotes#speakers-mobile'}
-              className="text-[3.5vw] font-bold underline"
+              className="dt-btn font-bold underline"
             >
               {speakerSection.speakerCTA2 || 'See Speakers'}
             </Link>
@@ -336,29 +336,29 @@ export default function Keynotes({
         {/* Speaker Section */}
         <div className="grid grid-cols-4 gap-y-[2vh] auto-rows-min w-full px-[2vw] pt-[2vh]">
           {/* Row 1-2: Speaker Title */}
-          <div className="col-span-3 row-span-2 flex items-start justify-start text-left font-graphik text-[12vw] leading-tight">
+          <div className="col-span-3 row-span-2 flex items-start justify-start text-left dt-h1">
             {speakerSection.speakerSectionTitle}
           </div>
           {/* Row 3: Speaker Content Text */}
-          <div className="col-span-4 text-[3.5vw] leading-tight mt-[1vh]">
+          <div className="col-span-4 dt-h4 mt-[1vh]">
             {speakerSection.speakerContentText}
           </div>
           {/* Row 4: Speaker Subtitle */}
-          <div className="col-span-4 font-bold text-[4vw] leading-tight mt-[1vh]">
+          <div className="col-span-4 dt-h3 mt-[1vh]">
             <HighlightText value={speakerSection.speakerSectionSubtitle} />
           </div>
           {/* Row 5: CTA buttons */}
           <div className="col-span-2 flex items-end justify-start mt-[2vh]">
             <a
               href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
-              className="text-[3.5vw] font-graphik underline"
+              className="dt-btn underline"
             >
               {speakerSection.speakerCTA1 ?? 'Get in Touch'}
             </a>
           </div>
           <div className="col-span-2 flex items-end justify-end mt-[2vh]">
             <Link href={'/keynotes#speakers'}
-              className="text-[3.5vw] font-bold underline"
+              className="dt-btn font-bold underline"
             >
               {speakerSection.speakerCTA2 || 'See Speakers'}
             </Link>

@@ -51,7 +51,7 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
               const [firstName, ...rest] = data.name.split(' ');
               const lastName = rest.join(' ');
               return (
-                <h1 className="text-[16vw] font-graphik leading-[16vw]" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+                <h1 className="dt-h1" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
                   {firstName}<br />{lastName}
                 </h1>
               );
@@ -71,9 +71,9 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
       <div className="col-span-3 row-span-3 flex flex-col">
         {data.domainsOfExcellence?.length ? (
           <>
-            <div className="text-[5vw] font-graphik mb-[0.5vh]">Domains of excellence</div>
+            <div className="dt-h5 mb-[0.5vh]">Domains of excellence</div>
             {data.domainsOfExcellence.map((domain: string, i: number) => (
-              <span key={i} className="text-[5vw] font-bold">{domain}</span>
+              <span key={i} className="dt-h3">{domain}</span>
             ))}
           </>
         ) : null}
@@ -81,19 +81,19 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
       {/* Social links col 4, row 11-12, top right */}
       <div className="col-start-4 row-start-13 col-span-1 row-span-2 flex flex-col font-bold items-end justify-start">
         {socialLinksArr.map(([label, url], i) => (
-          <a key={i} href={url as string} target="_blank" rel="noopener noreferrer" className="text-[3vw] underline">{label}</a>
+          <a key={i} href={url as string} target="_blank" rel="noopener noreferrer" className="dt-btn underline">{label}</a>
         ))}
       </div>
       {/* Bio label and content col 1-4, row 13-17 */}
       <div className="col-span-4 row-span-5 flex flex-col items-start mt-[2vh]">
-        <div className="text-[4vw] font-graphik mb-[1vh]">Bio</div>
-  <div className="text-[3vw] whitespace-pre-line"><PortableText value={data.bio as PortableTextBlock[]} /></div>
+        <div className="dt-h5 mb-[1vh]">Bio</div>
+        <div className="dt-body-sm whitespace-pre-line"><PortableText value={data.bio as PortableTextBlock[]} /></div>
       </div>
       {/* Book button col 1-2, row 18 */}
       <div className="col-span-2 flex items-end justify-start mt-[2vh]">
         <a
           href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.mailtoSubject ?? '')}`}
-          className="text-[2vh] font-bold underline"
+          className="dt-btn font-bold underline"
         >
           Book {data.name}
         </a>
@@ -101,33 +101,33 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
       {/* Next speaker button col 3-4, row 18 */}
       <div className="col-span-2 flex items-end justify-end mt-[2vh]">
         {nextSlug ? (
-          <Link href={`/keynotes/${nextSlug}`} className="text-[2vh] font-bold underline">
+          <Link href={`/keynotes/${nextSlug}`} className="dt-btn font-bold underline">
             Next speaker
           </Link>
         ) : (
-          <span className="opacity-60 text-[2vh] font-bold underline">Next speaker</span>
+          <span className="opacity-60 dt-btn font-bold underline">Next speaker</span>
         )}
       </div>
       {/* Back to top button col 3-4, row 19 */}
       <div className="col-start-3 col-span-2 flex items-end justify-end mt-[2vh]">
         <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
-                <FadeInOnVisible>
-                  <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      style={{ transform: 'rotate(-45deg)' }}
-                    >
-                      <path d="M12 19V5M5 12l7-7 7 7" />
-                    </svg>
-                    Back to top
-                  </span>
-                </FadeInOnVisible>
-              </div>
+          <FadeInOnVisible>
+            <span className="underline dt-btn flex items-center gap-1 font-bold">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                style={{ transform: 'rotate(-45deg)' }}
+              >
+                <path d="M12 19V5M5 12l7-7 7 7" />
+              </svg>
+              Back to top
+            </span>
+          </FadeInOnVisible>
+        </div>
       </div>
     </div>
   );

@@ -324,12 +324,12 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                       className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-center cursor-pointer"
                       onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
                     >
-                      <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection1.heading}</h2>
+                      <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
                     </div>
 
                     {/* Row 3: Section Body */}
                     <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-white p-4">
-                      <div className="text-[2vh] font-roboto leading-tight">
+                      <div className="dt-h4 font-roboto leading-tight">
                         <PortableText value={data.accordionSection1.body} />
                       </div>
                     </div>
@@ -371,7 +371,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                         {/* Bottom Left (spans 2 cols): CTA Button */}
                         <div className="col-span-2 p-4 flex items-end justify-start">
-                          <Link href="/supercharge-tomorrow" className="text-[3vh] font-graphik">
+                          <Link href="/supercharge-tomorrow" className="dt-btn font-graphik">
                             <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
                               {data.accordionSection1.cta ?? 'Get in Touch'}
                             </UnderlineOnHoverAnimation>
@@ -385,7 +385,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                 {/* Section 1 Title when collapsed */}
                 {!openTabs.has('supercharge-tomorrow') && (
                   <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
-                    <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection1.heading}</h2>
+                    <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
                   </div>
                 )}
               </div>
@@ -415,12 +415,12 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                       className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer"
                       onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                     >
-                      <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection2.heading}</h2>
+                      <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>
                     </div>
 
                     {/* Row 2: Section Body */}
                     <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black p-4">
-                      <div className="text-[2vh] font-roboto leading-tight">
+                      <div className="dt-h4 font-roboto leading-tight">
                         <PortableText value={data.accordionSection2.body} />
                       </div>
                     </div>
@@ -453,7 +453,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                 {/* Section 2 Title when collapsed */}
                 {!openTabs.has('case-studies') && (
                   <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden">
-                    <h2 className="text-[8vh] font-bold leading-none">{data.accordionSection2.heading}</h2>
+                    <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>
                   </div>
                 )}
               </div>

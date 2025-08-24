@@ -81,7 +81,7 @@ export default function CorporateSection({
         {/* Row 1-2: Title (col 1-3) */}
         <div className="col-span-3 row-span-2 flex items-center">
           <FadeInOnVisible>
-            <div className="text-[12vw] font-graphik leading-tight">{title}</div>
+            <div className="dt-h1">{title}</div>
           </FadeInOnVisible>
         </div>
         {/* Row 3: Empty (col 1-4) */}
@@ -89,13 +89,13 @@ export default function CorporateSection({
         {/* Row 4: contentText (col 1-4) */}
         <div className="col-span-4 row-span-2">
           <FadeInOnVisible>
-            <div className="text-[4vw] font-roboto leading-tight">{contentText}</div>
+            <div className="dt-h4">{contentText}</div>
           </FadeInOnVisible>
         </div>
         {/* Row 5: subheading (col 1-4) */}
         <div className="col-span-4 row-span-2">
           <FadeInOnVisible>
-            <div className="text-[4vw] font-graphik leading-tight">
+            <div className="dt-h3">
               <HighlightText value={subheading} />
             </div>
           </FadeInOnVisible>
@@ -105,7 +105,7 @@ export default function CorporateSection({
         {/* Row 7: CTA (col 1-2) */}
         <div className="col-span-2 row-span-1 flex items-center">
           <FadeInOnVisible>
-            <div className="text-[3.5vw] font-graphik leading-tight">
+            <div className="dt-btn">
               <a
                 href={`mailto:${Mail ?? 'info@futureworld.org'}?subject=${encodeURIComponent(CTA ?? '')}`}
                 className="transition cursor-pointer"
@@ -129,7 +129,7 @@ export default function CorporateSection({
           onClick={handleBackToTop}
         >
           <FadeInOnVisible>
-            <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+            <span className="underline dt-btn flex items-center gap-1">
               <svg
                 width="18"
                 height="18"

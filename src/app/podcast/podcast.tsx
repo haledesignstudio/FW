@@ -62,7 +62,7 @@ export default function PodcastSection({
         <div className="col-span-4 row-span-2"></div>
         <div className="col-span-3 row-span-2 flex items-center">
           <FadeInOnVisible>
-            <div className="text-[12vw] font-graphik leading-tight">{title}</div>
+            <div className="dt-h1">{title}</div>
           </FadeInOnVisible>
         </div>
         {/* Row 2: Empty (col 1-4) */}
@@ -70,7 +70,7 @@ export default function PodcastSection({
         {/* Row 3-4: Subheading (col 1-4) */}
         <div className="col-span-4 row-span-2">
           <FadeInOnVisible>
-            <div className="text-[4vw] font-graphik leading-tight">
+            <div className="dt-h3">
               <HighlightText value={subheading} />
             </div>
           </FadeInOnVisible>
@@ -79,13 +79,12 @@ export default function PodcastSection({
         <div className="col-span-4 row-end-auto">
           <FadeInOnVisible>
             <PodcastCarousel items={carouselItems} />
-
           </FadeInOnVisible>
         </div>
         {/* Back to Top Button (col 3-4, right aligned) */}
         <div className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-4" onClick={handleBackToTop}>
           <FadeInOnVisible>
-            <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+            <span className="underline dt-btn flex items-center gap-1 font-bold">
               <svg
                 width="18"
                 height="18"

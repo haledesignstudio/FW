@@ -211,7 +211,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 {/* Row 1-2, Col 1-3: Title */}
                 <div className="col-span-3 row-span-2 flex items-end">
                     <FadeInOnVisible>
-                        <h1 className="text-[6vh] font-graphik leading-tight">{data.title}</h1>
+                        <h1 className="dt-h1">{data.title}</h1>
                     </FadeInOnVisible>
                 </div>
                 {/* Row 3: Empty */}
@@ -219,7 +219,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 {/* Row 4: ContentText */}
                 <div className="col-span-4 row-span-1">
                     <FadeInOnVisible>
-                        <div className="text-[3.5vw] font-roboto leading-tight">
+                        <div className="dt-h4">
                             <PortableText value={data.contentText} />
                         </div>
                     </FadeInOnVisible>
@@ -227,7 +227,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 {/* Row 5-6: Subheading */}
                 <div className="col-span-4 row-span-2">
                     <FadeInOnVisible>
-                        <div className="text-[4vw] font-bold leading-tight">
+                        <div className="dt-h3">
                             <HighlightText value={data.subheading} />
                         </div>
                     </FadeInOnVisible>
@@ -248,10 +248,10 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                                 ) : null}
                             </div>
                             <div className="mt-[1.25vh]">
-                                <div className="text-[3vw] font-graphik leading-tight">
+                                <div className="dt-h5">
                                     {data.articleContents?.[0]?.title}
                                 </div>
-                                <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
+                                <div className="mt-[2.5vh] dt-body-sm">
                                     <PortableText value={data.articleContents?.[0]?.description ?? []} />
                                 </div>
                             </div>
@@ -268,10 +268,10 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                                 ) : null}
                             </div>
                             <div className="mt-[1.25vh]">
-                                <div className="text-[3vw] font-graphik leading-tight">
+                                <div className="dt-h5">
                                     {data.articleContents?.[1]?.title}
                                 </div>
-                                <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
+                                <div className="mt-[2.5vh] dt-body-sm">
                                     <PortableText value={data.articleContents?.[1]?.description ?? []} />
                                 </div>
                             </div>
@@ -288,10 +288,10 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                                 ) : null}
                             </div>
                             <div className="mt-[1.25vh]">
-                                <div className="text-[3vw] font-graphik leading-tight">
+                                <div className="dt-h5">
                                     {data.articleContents?.[2]?.title}
                                 </div>
-                                <div className="mt-[2.5vh] text-[2.5vw] leading-tight">
+                                <div className="mt-[2.5vh] dt-body-sm">
                                     <PortableText value={data.articleContents?.[2]?.description ?? []} />
                                 </div>
                             </div>
@@ -324,7 +324,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                         <FadeInOnVisible>
                             <div className="grid gap-[2vh] grid-cols-4 mt-[5vh]">
                                 <div className="col-span-4">
-                                    <div className="text-[4vw] font-bold leading-tight">
+                                    <div className="dt-h3">
                                         <HighlightText value={data.audioDescription} />
                                     </div>
                                 </div>
@@ -348,23 +348,23 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 {/* Row 26: Mindbullets text */}
                 <div className="col-span-4 row-span-1">
                     <FadeInOnVisible>
-                        <div className="text-[3vw] font-bold leading-tight">
+                        <div className="dt-h3">
                             <HighlightText value={data.finalStatement} />
                         </div>
                     </FadeInOnVisible>
                 </div>
                 {/* Row 27-28: Subscribe section */}
                 <div className="col-start-2 col-span-3 row-span-3">
-                    <p className="text-[1.5vh] leading-tight">Subscribe for news from the future</p>
+                    <p className="dt-body-sm">Subscribe for news from the future</p>
                     <input
                         type="email"
                         id="email"
                         name="email"
                         required
                         placeholder={'Enter your e-mail'}
-                        className="outline-none border-none bg-transparent text-[2.5vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[4vh]"
+                        className="dt-h3 outline-none border-none bg-transparent mt-[2vh]"
                     />
-                    <div className="text-[1.5vh] mt-[2vw] font-bold leading-tight">
+                    <div className="dt-btn mt-[2vw] font-bold leading-tight">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             Submit
                         </UnderlineOnHoverAnimation>
@@ -373,7 +373,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 {/* Row 29: Empty */}
                 <div className="col-span-4 row-span-1" />
                 {/* Row 21 col 1-2: Mindbullets you may like */}
-                <div className="col-span-2 row-span-1 mt-[5vh] text-[3vw] font-graphik leading-tight">
+                <div className="col-span-2 row-span-1 mt-[5vh] dt-h5">
                     Mindbullets you may like
                 </div>
                 {/* Carousel for mobile */}
@@ -386,7 +386,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                     onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 >
                     <FadeInOnVisible>
-                        <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                        <span className="underline dt-btn flex items-center gap-1 font-bold">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: "rotate(-45deg)" }}>
                                 <path d="M12 19V5M5 12l7-7 7 7" />
                             </svg>

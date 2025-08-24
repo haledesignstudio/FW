@@ -27,34 +27,30 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
         <div className="col-span-4 row-span-2"></div>
         <div className="col-span-3 row-span-2 flex items-center">
           <FadeInOnVisible>
-            <div className="text-[12vw] font-graphik leading-tight">{pageTitle}</div>
+            <div className="dt-h1">{pageTitle}</div>
           </FadeInOnVisible>
         </div>
 
         {/* Row 3-4: Subheading (col 1-4) */}
         <div className="col-span-4 row-span-2">
           <FadeInOnVisible>
-            <div className="text-[4vw] font-graphik leading-tight">
+            <div className="dt-h3">
               <HighlightText value={pageSubheading} />
             </div>
           </FadeInOnVisible>
         </div>
 
         {/* Player */}
-        
         <div className="col-span-4">
           {data.embedLink ? (
-            
             <iframe src={data.embedLink} width="100%" height="100%" />
-           
           ) : null}
         </div>
-        
 
         {/* CTA */}
         <div className="col-span-2 row-span-1">
           <FadeInOnVisible>
-            <Link href="/keynotes" className="transition font-bold cursor-pointer">
+            <Link href="/keynotes" className="dt-btn font-bold cursor-pointer">
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                 See Keynotes
               </UnderlineOnHoverAnimation>
@@ -67,7 +63,7 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <FadeInOnVisible>
-            <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+            <span className="underline dt-btn flex items-center gap-1 font-bold">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: "rotate(-45deg)" }}>
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>

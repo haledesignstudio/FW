@@ -107,6 +107,8 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
             </FadeInOnVisible>
           </div>
 
+          <div className="col-span-4 mt-[2vh] mb-[2vh]" />
+
           {/* Row 18: See Keynotes + Back to top */}
           <div className="col-span-2">
             <FadeInOnVisible>

@@ -113,7 +113,7 @@ export default function FAQClient({ faqData }: Props) {
                   text={faqData.pageHeader.mainTitle}
                   typeSpeed={60}
                   delay={500}
-                  className="text-[5vh] font-bold leading-tight text-left"
+                  className="dt-h2 text-left"
                 />
               </div>
             </div>
@@ -136,7 +136,7 @@ export default function FAQClient({ faqData }: Props) {
                       className="text-black font-graphik font-normal"
                       isActive={selectedQuestion === index}
                     >
-                      <span className="text-[2.5vh] leading-tight">
+                      <span className="dt-h4 leading-tight">
                         {faq.question}
                       </span>
                     </UnderlineOnHoverAnimation>
@@ -145,7 +145,7 @@ export default function FAQClient({ faqData }: Props) {
                 {/* If selected, show answer below, cols 2-4 */}
                 {selectedQuestion === index && (
                   <div className="col-start-2 col-span-3 animate-fade-in mb-5 mt-5">
-                    <p className="text-[2vh] leading-tight text-gray-700">
+                    <p className="dt-body-sm leading-tight text-gray-700">
                       {faq.answer}
                     </p>
                   </div>

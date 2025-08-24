@@ -314,7 +314,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
                 text={privacyData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
-                className="text-[4vh] font-bold leading-tight"
+                className="dt-h2"
               />
             </FadeInOnVisible>
           </div>
@@ -326,7 +326,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
                   className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full"
                 >
                   <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
-                    <span className="text-[2.5vh] leading-tight text-black font-normal text-left">
+                    <span className="dt-body-lg leading-tight text-black font-normal text-left">
                       {category.shortLabel}
                     </span>
                   </UnderlineOnHoverAnimation>
@@ -341,7 +341,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
           {/* Row 6: Category header (cols 1-4, bottom left aligned) */}
           <div key="mobile-category-header" className="col-span-4 row-span-1 flex items-end justify-start">
             <FadeInOnVisible key={`mobile-header-${selectedCategory}`}>
-              <h2 className="text-[3vh] font-graphik">
+              <h2 className="dt-h3 font-graphik">
                 {(privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection).sectionTitle}
               </h2>
             </FadeInOnVisible>
@@ -352,7 +352,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
         <div className="mt-[2vh] mb-[4vh]">
           <div className="flex items-start justify-start">
             <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
-              <div className="prose text-[2.5vh] leading-relaxed break-words" style={{ maxWidth: '100%', width: '100%' }}>
+              <div className="prose leading-relaxed break-words dt-body-sm" style={{ maxWidth: '100%', width: '100%' }}>
                 {(() => {
                   const section = privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection;
                   
@@ -366,7 +366,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
                       components={{
                         ...portableTextComponents,
                         block: {
-                          normal: ({ children }) => <p className="mb-4 text-[2.5vh] leading-relaxed break-words" style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}>{children}</p>,
+                          normal: ({ children }) => <p className="mb-4 leading-relaxed break-words dt-body-sm" style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}>{children}</p>,
                         },
                         marks: {
                           link: ({ children, value }) => (
@@ -383,15 +383,15 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
                         },
                         list: {
                           bullet: ({ children }) => (
-                            <ul className="list-disc pl-6 mb-4 text-[2.5vh] break-words">{children}</ul>
+                            <ul className="list-disc pl-6 mb-4 break-words dt-body-sm">{children}</ul>
                           ),
                           number: ({ children }) => (
-                            <ol className="list-decimal pl-6 mb-4 text-[2.5vh] break-words">{children}</ol>
+                            <ol className="list-decimal pl-6 mb-4 break-words dt-body-sm">{children}</ol>
                           ),
                         },
                         listItem: {
-                          bullet: ({ children }) => <li className="mb-2 text-[2.5vh] break-words" style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}>{children}</li>,
-                          number: ({ children }) => <li className="mb-2 text-[2.5vh] break-words" style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}>{children}</li>,
+                          bullet: ({ children }) => <li className="mb-2 break-words dt-body-sm" style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}>{children}</li>,
+                          number: ({ children }) => <li className="mb-2 break-words dt-body-sm" style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}>{children}</li>,
                         },
                       }}
                     />
