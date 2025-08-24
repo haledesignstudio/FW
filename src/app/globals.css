@@ -205,8 +205,8 @@ body::-webkit-scrollbar {
 
 .dt-h2 {
   font-family: 'Graphik Semibold', sans-serif;
-  font-size: clamp(15vw,11.74vh, 23.48vw);
-  line-height: clamp(18vw,12.91vh, 25.82vw);
+  font-size: clamp(11.74vh);
+  line-height: clamp(12.91vh);
 }
 
 .dt-h2>p {

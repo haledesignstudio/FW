@@ -209,8 +209,8 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 4,
                         content: (
-                            <FadeInOnVisible>
-                                <div className="h-full flex flex-col justify-end">
+                            <FadeInOnVisible className="h-full flex flex-col justify-end ">
+                                <div className="h-full flex flex-col justify-end ">
                                     <div className="dt-btn">
                                         <a
                                             href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
@@ -260,7 +260,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 1,
                         content: (
-                            <FadeInOnVisible>
+                            <FadeInOnVisible className="h-full flex flex-col justify-end">
                                 <div className="h-full flex flex-col justify-end">
                                     <div className="dt-h4 text-white">
                                         <PortableText value={data.section2.section2Body} />
@@ -395,7 +395,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 1,
                         content: (
-                            <FadeInOnVisible>
+                            <FadeInOnVisible className="h-full flex flex-col justify-end">
                                 <div className="h-full flex flex-col justify-end">
                                     <div className="dt-h4 text-black">
                                         <PortableText value={data.section3.section3Body} />
@@ -716,7 +716,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 "[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh]",
                                 "overflow-hidden transition-[max-height] duration-500",
                                 !isActive
-                                    ? "max-h-[34.7vh]"
+                                    ? "max-h-[34vh]"
                                     : "max-h-[9999px]"
                             ].join(' ')}
                             >
