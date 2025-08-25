@@ -300,11 +300,11 @@ export default function Keynotes({
             {topicSection.topicSectionTitle}
           </div>
           {/* Row 3: Content Text */}
-          <div className="col-span-4 dt-h4 mt-[1vh]">
+          <div className="col-span-4 row-span-2 dt-h4 mt-[1vh]">
             {topicSection.topicContentText}
           </div>
           {/* Row 4: Subtitle */}
-          <div className="col-span-4 dt-h3 mt-[1vh]">
+          <div className="col-span-4 row-span-2 dt-h3 mt-[1vh]">
             <HighlightText value={topicSection.topicSectionSubtitle} />
           </div>
           {/* Row 5: CTA buttons */}
