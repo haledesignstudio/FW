@@ -297,7 +297,6 @@ export default function AudioVisualiser(props: AudioVisualiserProps) {
             <button
               type="button"
               onClick={handlePlayPause}
-              onTouchStart={handlePlayPause}
               disabled={!audioReady}
               style={{
                 position: 'absolute',
