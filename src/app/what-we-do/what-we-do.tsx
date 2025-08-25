@@ -252,7 +252,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                 {isMobileScreen ? (
                     // MOBILE LAYOUT
                     <div className="p-[2vh] bg-[#F9F7F2]">
-                        <div className="grid grid-cols-4 gap-[2vh] auto-rows-[5vh]">
+                        <div className="grid grid-cols-4 gap-[2vh] auto-rows-[6.25vh]">
                             {/* Row 1: Heading (col 1-3) */}
                             <div className="col-span-3 row-span-1 flex items-center">
                                 <FadeInOnVisible>

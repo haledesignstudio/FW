@@ -294,7 +294,7 @@ export default function Keynotes({
     return (
       <>
         {/* Topic Section */}
-        <div className="grid grid-cols-4 gap-y-[2vh] auto-rows-min w-full px-[2vw] pt-[2vh]">
+        <div className="grid grid-cols-4 gap-y-[2vh] auto-rows-[6.25vh] w-full px-[2vw] pt-[2vh]">
           {/* Row 1-2: Title */}
           <div className="col-span-3 row-span-2 flex items-start justify-start text-left dt-h1">
             {topicSection.topicSectionTitle}
@@ -308,7 +308,7 @@ export default function Keynotes({
             <HighlightText value={topicSection.topicSectionSubtitle} />
           </div>
           {/* Row 5: CTA buttons */}
-          <div className="col-span-2 flex items-end justify-start mt-[2vh]">
+          <div className="col-span-2 row-span-2 flex items-end justify-start mt-[2vh]">
             <a
               href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
               className="dt-btn underline"
@@ -316,7 +316,7 @@ export default function Keynotes({
               {speakerSection.speakerCTA1 ?? 'Get in Touch'}
             </a>
           </div>
-          <div className="col-span-2 flex items-end justify-end mt-[2vh]">
+          <div className="col-span-2 row-span-2 flex items-end justify-end mt-[2vh]">
             <Link href={'/keynotes#speakers-mobile'}
               className="dt-btn font-bold underline"
             >

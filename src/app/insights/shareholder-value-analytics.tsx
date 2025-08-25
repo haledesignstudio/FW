@@ -72,7 +72,7 @@ export default function ShareholderValueAnalytics(props: Props) {
   if (isMobile) {
     return (
       <main className="p-[2vh] bg-[#F9F7F2]">
-        <div className="grid grid-cols-4 gap-y-2 auto-rows-[8vh]">
+        <div className="grid grid-cols-4 gap-y-2 auto-rows-[6.25vh]">
           {/* Row 1-2: Title */}
           <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
@@ -120,12 +120,12 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 9: Empty */}
           <div className="col-span-4 row-span-1"></div>
           {/* Row 10-14: iframe */}
-          <div className="col-span-4 row-span-12">
+          <div className="col-span-4 row-span-10">
             <FadeInOnVisible>
               <iframe
                 src={analytics.iframeSource}
                 title="Futureworld Analytics Dashboard"
-                style={{ width: '100%', height: '100vh', border: 'none'}}
+                style={{ width: '100%', height: '65vh', border: 'none'}}
                 loading="lazy"
                 allowFullScreen
               />
@@ -148,7 +148,7 @@ export default function ShareholderValueAnalytics(props: Props) {
             </FadeInOnVisible>
           </div>
           {/* Row 19-20: IQ_subheading */}
-          <div className="col-span-4 row-span-2">
+          <div className="col-span-4 row-span-3">
             <FadeInOnVisible>
               <div className="dt-body-lg">
                 {analytics.IQ_subheading}

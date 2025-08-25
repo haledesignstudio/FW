@@ -391,7 +391,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
           </div>
 
           {/* Row 47: Back to top button (col 4) */}
-          <div className="col-span-2 row-span-1"></div>
+          <div className="col-span-2 row-span-1 mt-10"></div>
           <div
             className="col-span-2 row-span-1 flex justify-end items-center cursor-pointer"
             onClick={handleBackToTop}

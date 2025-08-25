@@ -376,7 +376,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           <>
             {/* MOBILE LAYOUT */}
             <div className="p-[2vh] bg-[#F9F7F2]">
-              <div className="grid grid-cols-4 gap-[2vh] auto-rows-[5vh]">
+              <div className="grid grid-cols-4 gap-[2vh] auto-rows-[6.25vh]">
                 {/* Row 1: Main Title (col 1) */}
                 <div className="col-span-2 row-span-1 flex items-center">
                   <FadeInOnVisible>

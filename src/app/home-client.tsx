@@ -293,17 +293,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       landscapeColSpan: 3,
       landscapeRowSpan: 2,
     },
-    // Row 13: Empty (so accordion appears in row 14)
-    {
-      id: 12,
-      content: <></>,
-      colSpan: 6,
-      rowSpan: 1,
-      mobileColSpan: 4,
-      mobileRowSpan: 1,
-      landscapeColSpan: 4,
-      landscapeRowSpan: 1,
-    },
+
   ];
 
   // Desktop items (keep existing logic for desktop)
@@ -472,7 +462,7 @@ export default function HomeClient({ data }: HomeClientProps) {
         {/* Mobile Layout */}
         <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden">
           <div className="p-[2vh] bg-[#F9F7F2] overflow-visible">
-            <div className="grid gap-[2vh] grid-cols-4 auto-rows-auto overflow-visible">
+            <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh] overflow-visible">
               {mobileItems.map((item) => (
                 <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
                   {item.content}

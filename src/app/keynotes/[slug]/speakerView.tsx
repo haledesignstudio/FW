@@ -41,7 +41,7 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
   ].filter(([, url]) => !!url);
 
   return (
-    <div className="grid grid-cols-4 auto-rows-min gap-y-[2vh] w-full px-[2vw] pt-[2vh]">
+    <div className="grid grid-cols-4 auto-rows-[6.25vh] gap-y-[2vh] w-full px-[2vw] pt-[2vh]">
       {/* Name rotated, col 1-2, row 1-6 */}
       <div className="col-span-4 row-span-2"></div>
       <div className="col-span-2 row-span-2 flex items-start justify-start self-start">
