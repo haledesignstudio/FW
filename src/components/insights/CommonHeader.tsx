@@ -44,7 +44,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
             text="Insights"
             typeSpeed={60}
             delay={500}
-            className="text-[clamp(4vw,10vh,8vw)] font-graphik leading-tight"
+            className="dt-h2 leading-tight"
           />
         </div>
         {/* Row 2: Categories header (cols 2-4) */}

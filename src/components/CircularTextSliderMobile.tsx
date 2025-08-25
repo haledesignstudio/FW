@@ -117,7 +117,7 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
 
   return (
     activeSpeaker && (
-      <div className="grid grid-cols-4 grid-rows-5 w-full bg-[#F9F7F2] relative overflow-x-hidden">
+      <div className="grid grid-cols-4 w-full bg-[#F9F7F2] relative overflow-x-hidden">
         {/* Speaker Image - col 1-2, row 1-2 */}
         <img
           src={activeSpeaker.image.asset}
@@ -153,7 +153,7 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
         </div>
         
         {/* Book Button - col 3-4, row 2 */}
-        <div className="col-start-3 col-span-2 row-start-2 flex items-start justify-end p-2 mt-20">
+        <div className="col-start-3 col-span-2 row-start-2 flex items-end justify-end p-2 mb-15">
           {activeSpeaker.email && (
             <a
               href={`mailto:${activeSpeaker.email}?subject=${encodeURIComponent(
@@ -174,12 +174,33 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
         </div>
         
         {/* Speaker Bio - col 1-4, row 3 */}
-        <div className="col-start-1 col-span-4 row-start-3 text-[1.7vh] p-2 mt-0">
+        <div className="col-start-1 col-span-4 row-start-3 min-h-[15vh] text-[1.7vh] p-2 mt-0">
           <PortableText value={activeSpeaker.summary} />
         </div>
+
         
-        {/* Wheel - col 1-4, row 4-5 */}
-        <div className="col-start-1 col-span-4 row-start-4 row-end-6 w-full h-[48vh] relative overflow-hidden">
+        {/* Navigation Arrows Row - col 1-4, row 4 */}
+        <div className="col-start-1 col-span-4 flex flex-row items-center justify-between px-4 py-2">
+          <button
+            type="button"
+            className="w-8 h-8 flex items-center justify-center"
+            aria-label="Previous"
+            onClick={rotateLeft}
+          >
+            <img src="/carousel-arrow.png" alt="Previous" style={{ transform: "rotate(180deg)", width: "50%", height: "50%" }} />
+          </button>
+          <button
+            type="button"
+            className="w-8 h-8 flex items-center justify-center"
+            aria-label="Next"
+            onClick={rotateRight}
+          >
+            <img src="/carousel-arrow.png" alt="Next" style={{ width: "50%", height: "50%" }} />
+          </button>
+        </div>
+
+        {/* Wheel - col 1-4, row 5-6 */}
+        <div className="col-start-1 col-span-4 row-start-6 row-end-8 w-full h-[48vh] relative overflow-hidden">
           <div
             ref={galleryRef}
             className="absolute left-1/2 bottom-[-12vh]"
@@ -216,24 +237,6 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
           {/* Bottom cut-off overlay */}
           <div className="pointer-events-none absolute left-0 bottom-0 w-full h-1/2 bg-[#F9F7F2]" />
         </div>
-        
-        {/* Navigation Arrows */}
-        <button
-          type="button"
-          className="absolute left-2 bottom-10 w-8 h-8 flex items-center justify-center z-30"
-          aria-label="Previous"
-          onClick={rotateLeft}
-        >
-          <img src="/carousel-arrow.png" alt="Previous" style={{ transform: "rotate(180deg)", width: "50%", height: "50%" }} />
-        </button>
-        <button
-          type="button"
-          className="absolute right-2 bottom-10 w-8 h-8 flex items-center justify-center z-30"
-          aria-label="Next"
-          onClick={rotateRight}
-        >
-          <img src="/carousel-arrow.png" alt="Next" style={{ width: "50%", height: "50%" }} />
-        </button>
       </div>
     )
   );

@@ -65,7 +65,7 @@ export default function ExpandableTopicList() {
                                         alt={isOpen ? 'Collapse' : 'Expand'}
                                         width={24}
                                         height={24}
-                                        className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+                                        className={`transition-transform duration-300 ${isOpen ? 'rotate-45' : 'rotate-0'}`}
                                         style={{ alignSelf: 'flex-end' }}
                                     />
                                 </span>
