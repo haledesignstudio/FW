@@ -429,7 +429,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 201,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-center text-[#F9F7F2]">
+                        <div className="dt-h2 text-center text-[#F9F7F2]">
                             1
                         </div>,
                     colSpan: 1,
@@ -451,7 +451,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 203,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik text-center leading-tight text-[#F9F7F2]">
+                            <div className="dt-btn text-[#F9F7F2]">
                                 {data.accordionSection1.heading}
                             </div>
                         </div>,
@@ -466,7 +466,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 1,
                     content: (
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                        <div className="dt-h2 text-[#F9F7F2]">
                             1
                         </div>
                     ),
@@ -491,7 +491,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 3,
                     content: (
 
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance pt-[2vh] text-right text-[#F9F7F2]">
+                        <div className="dt-h3 text-balance pt-[2vh] text-right text-[#F9F7F2]">
                             <PortableText
                                 value={data.accordionSection1.subheading}
                                 components={ptComponents}
@@ -525,7 +525,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 5,
                     content:
-                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                        <div className="dt-body-sm text-[#F9F7F2]">
                             <PortableText value={data.accordionSection1.description} components={ptComponents} />
                         </div>,
                     colSpan: 1,
@@ -548,7 +548,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 7,
                     content:
-                        <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] pt-[4vh] font-roboto leading-tight text-[#F9F7F2]">
+                        <div className="dt-body-sm pt-[4vh] text-[#F9F7F2]">
                             <PortableText value={data.accordionSection1.statements[0].body} components={ptComponents} />
                         </div>,
                     colSpan: 1,
@@ -561,7 +561,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 8,
                     content:
-                        <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] pt-[4vh] font-roboto leading-tight text-[#F9F7F2]">
+                        <div className="dt-body-sm pt-[4vh] text-[#F9F7F2]">
                             <PortableText value={data.accordionSection1.statements[1].body} components={ptComponents} />
                         </div>,
                     colSpan: 1,
@@ -574,7 +574,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 9,
                     content:
-                        <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] pt-[4vh] font-roboto leading-tight text-[#F9F7F2]">
+                        <div className="dt-body-sm pt-[4vh] text-[#F9F7F2]">
                             <PortableText value={data.accordionSection1.statements[2].body} components={ptComponents} />
                         </div>,
                     colSpan: 1,
@@ -587,7 +587,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 10,
                     content:
-                        <div className="text-[clamp(0.25vw,1.5vh,0.75vw)] pt-[4vh] font-roboto leading-tight text-[#F9F7F2]">
+                        <div className="dt-body-sm pt-[4vh] text-[#F9F7F2]">
                             <PortableText value={data.accordionSection1.statements[3].body} components={ptComponents} />
                         </div>,
                     colSpan: 1,
@@ -601,7 +601,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 11,
                     content:
                         <div className="flex items-end h-full">
-                            <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)] text-[#F9F7F2]">
+                            <div className="dt-h1 text-[#F9F7F2]">
                                 {data.accordionSection1.heading}
                             </div>
                         </div>,
@@ -626,7 +626,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 13,
                     content:
                         <div className="flex items-end h-full justify-end text-right pb-[4vh]">
-                            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] text-[#F9F7F2] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)] ">
+                            <div className="dt-btn">
                                 <a
                                     href={`mailto:${data.accordionSection1.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
                                     className="transition cursor-pointer"
@@ -669,7 +669,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 301,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-center text-[#F9F7F2]">
+                        <div className="dt-h2 text-center text-[#F9F7F2]">
                             2
                         </div>,
                     colSpan: 1,
@@ -691,7 +691,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 303,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik text-center leading-tight text-[#F9F7F2]">
+                            <div className="dt-btn text-center text-[#F9F7F2]">
                                 {data.accordionSection2.heading}
                             </div>
                         </div>,
@@ -706,7 +706,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 1,
                     content: (
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#F9F7F2]">
+                        <div className="dt-h2 text-[#F9F7F2]">
                             2
                         </div>
                     ),
@@ -730,7 +730,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 3,
                     content: (
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance text-right text-[#F9F7F2] pt-[2vh]">
+                        <div className="dt-h3 text-balance text-right text-[#F9F7F2] pt-[2vh]">
                             <PortableText
                                 value={data.accordionSection2.subheading}
                                 components={ptComponents}
@@ -747,7 +747,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 4,
                     content:
-                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                        <div className="dt-body-sm text-[#F9F7F2]">
                             <PortableText value={data.accordionSection2.section1.description} components={ptComponents} />
                         </div>,
                     colSpan: 1,
@@ -761,10 +761,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 5,
                     content:
                         <div className="h-full flex flex-col gap-[1vh]">
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section1.statements[0].heading} components={ptComponents} />
                             </div>
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section1.statements[0].body} components={ptComponents} />
                             </div>
                         </div>,
@@ -779,10 +779,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 6,
                     content:
                         <div className="h-full flex flex-col gap-[1vh]">
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section1.statements[1].heading} components={ptComponents} />
                             </div>
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section1.statements[1].body} components={ptComponents} />
                             </div>
                         </div>,
@@ -797,10 +797,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 7,
                     content:
                         <div className="h-full flex flex-col gap-[1vh]">
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section1.statements[2].heading} components={ptComponents} />
                             </div>
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section1.statements[2].body} components={ptComponents} />
                             </div>
                         </div>,
@@ -814,7 +814,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 8,
                     content:
-                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                        <div className="dt-body-sm text-[#F9F7F2]">
                             <PortableText value={data.accordionSection2.section2.description} components={ptComponents} />
                         </div>,
                     colSpan: 1,
@@ -828,10 +828,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 9,
                     content: 
                     <div className="h-full flex flex-col gap-[1vh]">
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section2.statements[0].heading} components={ptComponents} />
                             </div>
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section2.statements[0].body} components={ptComponents} />
                             </div>
                         </div>,
@@ -846,10 +846,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 10,
                     content: 
                     <div className="h-full flex flex-col gap-[1vh]">
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-bold leading-tight text-balance text-[#F9F7F2]">
+                            <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section2.statements[1].heading} components={ptComponents} />
                             </div>
-                            <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#F9F7F2]">
+                            <div className="dt-body-sm text-[#F9F7F2]">
                                 <PortableText value={data.accordionSection2.section2.statements[1].body} components={ptComponents} />
                             </div>
                         </div>,
@@ -875,7 +875,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 12,
                     content: 
                     <div className="flex items-end h-full">
-                            <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)] text-[#F9F7F2]">
+                            <div className="dt-h1 text-[#F9F7F2]">
                                 {data.accordionSection2.heading}
                             </div>
                         </div>,
@@ -890,7 +890,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 13,
                     content: 
                     <div className="flex items-end h-full justify-end text-right pb-[4vh]">
-                            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] text-[#F9F7F2] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)] ">
+                            <div className="dt-btn">
                                 <a
                                     href={`mailto:${data.accordionSection2.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
                                     className="transition cursor-pointer"
@@ -936,7 +936,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 401,
                     content:
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-center text-[#232323]">
+                        <div className="dt-h2 text-center text-[#232323]">
                             3
                         </div>,
                     colSpan: 1,
@@ -958,7 +958,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 403,
                     content:
                         <div className="h-full flex flex-col justify-end ">
-                            <div className="text-[clamp(0.75vw,2.25vh,1.125vw)] font-graphik text-center leading-tight text-[#232323]">
+                            <div className="dt-btn text-center leading-tight text-[#232323]">
                                 {data.accordionSection3.heading}
                             </div>
                         </div>,
@@ -973,7 +973,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 1,
                     content: (
-                        <div className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-[#232323]">
+                        <div className="dt-h2 text-[#232323]">
                             3
                         </div>
                     ),
@@ -998,7 +998,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 3,
                     content: (
 
-                        <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight text-balance pt-[2vh] text-right text-[#232323]">
+                        <div className="dt-h3 text-balance pt-[2vh] text-right text-[#232323]">
                             <PortableText
                                 value={data.accordionSection3.subheading}
                                 components={ptComponents}
@@ -1031,7 +1031,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 5,
                     content:
-                        <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-[#232323]">
+                        <div className="dt-body-sm text-[#232323]">
                             <PortableText value={data.accordionSection3.description} components={ptComponents} />
                         </div>,
                     colSpan: 1,
@@ -1066,7 +1066,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 8,
                     content:
                         <div className="flex items-end h-full">
-                            <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)] text-[#232323]">
+                            <div className="dt-h1 text-[#232323]">
                                 {data.accordionSection3.heading}
                             </div>
                         </div>,
@@ -1091,7 +1091,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 10,
                     content:
                         <div className="flex items-end h-full justify-end text-right pb-[4vh]">
-                            <div className="text-[clamp(0.9vw,2.25vh,1.125vw)] text-[#232323] font-graphik leading-[clamp(0.9vw,3vh,1.5vw)] ">
+                            <div className="dt-btn">
                                 <a
                                     href={`mailto:${data.accordionSection3.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
                                     className="transition cursor-pointer"
@@ -1139,8 +1139,8 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     >
                         {/* Tiny grid when collapsed */}
                         {isCollapsed && (collapsedItems?.length ?? 0) > 0 && (
-                            <div className="p-[4vh]">
-                                <div className="grid grid-cols-1 gap-[2vh] auto-rows-[12.5vh]">
+                            <div className="px-[1.795vw] py-[3.2vh]">
+                                <div className="grid gap-x-[1.795vw] gap-y-[1.6vh] grid-cols-1 auto-rows-[10.3vh]">
                                     {collapsedItems!.map((item) => (
                                         <div key={item.id} className={`${getGridClasses(item)}`}>
                                             {item.content}
@@ -1152,8 +1152,8 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
 
                         {/* Full content when active (or sec1 initial) */}
                         {showContent && (
-                            <div className="p-[4vh]">
-                                <div className="grid gap-[2vh] grid-cols-4 auto-rows-[12.5vh]">
+                            <div className="px-[1.795vw] py-[3.2vh]">
+                                <div className="grid gap-x-[1.795vw] gap-y-[1.6vh] grid-cols-4 auto-rows-[10.3vh]">
                                     {items.map((item) => (
                                         <div key={item.id} className={`${getGridClasses(item)} `}>
                                             {item.content}

@@ -176,7 +176,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 5,
       content: (
-        <div className="h-full flex flex-col mt-[12.5vh] gap-[2vh]">
+        <div className="h-full flex flex-col gap-[2vh]">
           <FadeInOnVisible>
             {(inView) => (
               <>
@@ -200,7 +200,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 6,
       content: (
-        <div className="h-full flex flex-col mt-[12.5vh] gap-[2vh]">
+        <div className="h-full flex flex-col gap-[2vh]">
           <FadeInOnVisible>
             {(inView) => (
               <>
@@ -224,7 +224,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 7,
       content: (
-        <div className="h-full flex flex-col mt-[12.5vh] gap-[2vh]">
+        <div className="h-full flex flex-col gap-[2vh]">
           <FadeInOnVisible>
             {(inView) => (
               <>
@@ -249,7 +249,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 8,
       content: (
-        <div className="h-full flex flex-col mt-[12.5vh] gap-[2vh]">
+        <div className="h-full flex flex-col gap-[2vh]">
           <FadeInOnVisible>
             {(inView) => (
               <>
@@ -273,7 +273,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 9,
       content: (
-        <div className="h-full flex flex-col mt-[12.5vh] gap-[2vh]">
+        <div className="h-full flex flex-col gap-[2vh]">
           <FadeInOnVisible>
             {(inView) => (
               <>
@@ -535,7 +535,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
             </div>
 
             {/* Accordion Section - Full Width Edge-to-Edge */}
-            <div className="mt-[4vh]">
+            <div className="">
               <FadeInOnVisible>
                 <OurWorkAccordion data={data} />
               </FadeInOnVisible>

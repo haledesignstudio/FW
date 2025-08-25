@@ -87,6 +87,7 @@ const getGridClasses = (item: GridItem) => {
     baseClasses.push('block', '[@media(max-width:767px)]:hidden');
   } else {
     baseClasses.push(`col-span-${item.mobileColSpan || item.colSpan || 1}`);
+    // FIX: Add row-span for mobile
     if (item.mobileRowSpan && item.mobileRowSpan > 0) {
       baseClasses.push(`row-span-${item.mobileRowSpan}`);
     }
@@ -97,6 +98,7 @@ const getGridClasses = (item: GridItem) => {
     baseClasses.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
   } else {
     baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan || item.colSpan || 1}`);
+    // FIX: Add row-span for landscape
     if (item.landscapeRowSpan && item.landscapeRowSpan > 0) {
       baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
     }
@@ -107,6 +109,7 @@ const getGridClasses = (item: GridItem) => {
     baseClasses.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
   } else {
     baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan || 1}`);
+    // FIX: Add row-span for desktop
     if (item.rowSpan && item.rowSpan > 0) {
       baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
     }
@@ -123,7 +126,7 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
   useEffect(() => {
     const fetchData = async () => {
       const awaitedParams = await params;
-      
+
       const caseStudyData = await client.fetch(
         groq`*[_type == "caseStudy" && slug.current == $slug][0]{
           title,
@@ -140,7 +143,7 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
         }`,
         { slug: awaitedParams.slug }
       );
-      
+
       setData(caseStudyData);
       setLoading(false);
     };
@@ -156,13 +159,14 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
   if (loading) return <div>Loading...</div>;
   if (!data) return <div className="text-red-500">Case study not found.</div>;
 
+  // Modified items array - removing image and content sections (items 6, 12-16, 23)
   const items: GridItem[] = [
     // Row 1: Title (cols 1-4)
     {
       id: 1,
-      content: <h1 className="text-9xl font-bold">{data.title}</h1>,
+      content: <h1 className="dt-h1">{data.title}</h1>,
       colSpan: 4,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 4,
       mobileRowSpan: 1,
       landscapeColSpan: 4,
@@ -171,31 +175,20 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
     // Row 1: Subheading (cols 5-6, right aligned)
     {
       id: 2,
-      content: <span className="text-lg font-medium text-right w-full flex justify-end items-center h-full">{data.subheading}</span>,
+      content: <span className="dt-body-lg text-right w-full flex justify-end items-center h-full text-balance">{data.subheading}</span>,
       colSpan: 2,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 2,
       mobileRowSpan: 1,
       landscapeColSpan: 2,
       landscapeRowSpan: 1,
     },
-    // Row 2: Blank (cols 1-6)
-    {
-      id: 3,
-      content: <div></div>,
-      colSpan: 6,
-      rowSpan: 1,
-      mobileColSpan: 6,
-      mobileRowSpan: 1,
-      landscapeColSpan: 6,
-      landscapeRowSpan: 1,
-    },
     // Row 3: Heading (cols 1-3)
     {
       id: 4,
-      content: <h2 className="text-2xl font-semibold">{data.heading}</h2>,
+      content: <h2 className="dt-h3">{data.heading}</h2>,
       colSpan: 3,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 3,
       mobileRowSpan: 1,
       landscapeColSpan: 3,
@@ -203,10 +196,10 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
     },
     // Row 3: Empty gap (col 4)
     {
-      id: 21,
+      id: 5,
       content: <div></div>,
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 1,
       mobileRowSpan: 1,
       landscapeColSpan: 1,
@@ -214,160 +207,14 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
     },
     // Row 3: Abstract (cols 5-6)
     {
-      id: 5,
-      content: <p className="text-base">{data.abstract}</p>,
+      id: 6,
+      content: <p className="dt-body-lg">{data.abstract}</p>,
       colSpan: 2,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 2,
       mobileRowSpan: 1,
       landscapeColSpan: 2,
       landscapeRowSpan: 1,
-    },
-    // Rows 4-5: Main Image (cols 1-6)
-    ...(data.mainImage ? [{
-      id: 6,
-      content: (
-        <div className="w-full h-full flex justify-center items-center">
-          <Image
-            src={urlFor(data.mainImage).width(2560).url()}
-            alt={data.title}
-            width={2560}
-            height={1440}
-            className="object-cover w-full h-full max-h-[40vh]"
-          />
-        </div>
-      ),
-      colSpan: 6,
-      rowSpan: 2,
-      mobileColSpan: 6,
-      mobileRowSpan: 2,
-      landscapeColSpan: 6,
-      landscapeRowSpan: 2,
-    }] : []),
-    // Row 6: Section Headers (cols 1-5), plus empty col 6
-    {
-      id: 7,
-      content: <h3 className="font-bold mb-2">The Concept</h3>,
-      colSpan: 1,
-      rowSpan: 1,
-      mobileColSpan: 1,
-      mobileRowSpan: 1,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 1,
-    },
-    {
-      id: 8,
-      content: <h3 className="font-bold mb-2">Methodology and Execution</h3>,
-      colSpan: 1,
-      rowSpan: 1,
-      mobileColSpan: 1,
-      mobileRowSpan: 1,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 1,
-    },
-    {
-      id: 9,
-      content: <h3 className="font-bold mb-2">Impact and Outcome</h3>,
-      colSpan: 1,
-      rowSpan: 1,
-      mobileColSpan: 1,
-      mobileRowSpan: 1,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 1,
-    },
-    {
-      id: 10,
-      content: <h3 className="font-bold mb-2">Transformation Potential</h3>,
-      colSpan: 1,
-      rowSpan: 1,
-      mobileColSpan: 1,
-      mobileRowSpan: 1,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 1,
-    },
-    {
-      id: 11,
-      content: <h3 className="font-bold mb-2">Conclusion</h3>,
-      colSpan: 1,
-      rowSpan: 1,
-      mobileColSpan: 1,
-      mobileRowSpan: 1,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 1,
-    },
-    // Row 6: Empty col 6
-    {
-      id: 22,
-      content: <div></div>,
-      colSpan: 1,
-      rowSpan: 1,
-      mobileColSpan: 1,
-      mobileRowSpan: 1,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 1,
-    },
-    // Rows 7-10: Section Texts (cols 1-5), plus empty col 6
-    {
-      id: 12,
-      content: <PortableText value={data.concept} components={portableTextComponents} />,
-      colSpan: 1,
-      rowSpan: 4,
-      mobileColSpan: 1,
-      mobileRowSpan: 4,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 4,
-    },
-    {
-      id: 13,
-      content: <PortableText value={data.methodology} components={portableTextComponents} />,
-      colSpan: 1,
-      rowSpan: 4,
-      mobileColSpan: 1,
-      mobileRowSpan: 4,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 4,
-    },
-    {
-      id: 14,
-      content: <PortableText value={data.impact} components={portableTextComponents} />,
-      colSpan: 1,
-      rowSpan: 4,
-      mobileColSpan: 1,
-      mobileRowSpan: 4,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 4,
-    },
-    {
-      id: 15,
-      content: <PortableText value={data.transformation} components={portableTextComponents} />,
-      colSpan: 1,
-      rowSpan: 4,
-      mobileColSpan: 1,
-      mobileRowSpan: 4,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 4,
-    },
-    // Conclusion content under Conclusion heading (column 5, rows 7-10)
-    {
-      id: 16,
-      content: <PortableText value={data.conclusion} components={portableTextComponents} />,
-      colSpan: 1,
-      rowSpan: 4,
-      mobileColSpan: 1,
-      mobileRowSpan: 4,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 4,
-    },
-    // Rows 7-10: Empty col 6
-    {
-      id: 23,
-      content: <div></div>,
-      colSpan: 1,
-      rowSpan: 4,
-      mobileColSpan: 1,
-      mobileRowSpan: 4,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 4,
     },
   ];
 
@@ -473,34 +320,105 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
           {/* Back to Top Button */}
           <div className="col-start-3 col-span-2 row-start-19 flex justify-end items-center mt-2 cursor-pointer bg-[#F9F7F2] p-4" onClick={handleBackToTop}>
             <FadeInOnVisible>
-                <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    style={{ transform: 'rotate(-45deg)' }}
-                  >
-                    <path d="M12 19V5M5 12l7-7 7 7" />
-                  </svg>
-                  Back to top
-                </span>
+              <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  style={{ transform: 'rotate(-45deg)' }}
+                >
+                  <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+                Back to top
+              </span>
             </FadeInOnVisible>
           </div>
         </div>
       ) : (
-        /* Desktop Layout - Original Grid System with Animations */
-        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
-          {items.map((item) => (
-            <div key={item.id} className={getGridClasses(item)}>
-              <FadeInOnVisible>
-                {item.content}
+        /* Desktop Layout - Grid + Separate Content Sections */
+        <>
+          <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+            {items.map((item) => (
+              <div key={item.id} className={getGridClasses(item)}>
+                <FadeInOnVisible>
+                  {item.content}
+                </FadeInOnVisible>
+              </div>
+            ))}
+          </div>
+
+          {/* Main Image Section */}
+          {data.mainImage?.asset && (
+            <div className="bg-[#F9F7F2]">
+              <FadeInOnVisible className="w-full h-[50vh]">
+                <img
+                  src={urlFor(data.mainImage.asset).url()}
+                  alt={data.mainImage.alt || ''}
+                  className="object-cover w-full h-full"
+                />
               </FadeInOnVisible>
             </div>
-          ))}
-        </div>
+          )}
+
+          {/* Content Sections */}
+          <div className="bg-[#F9F7F2] mt-[3.2vh]">
+            <div className="grid grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+              {/* The Concept */}
+              <div className="col-span-1">
+                <FadeInOnVisible>
+                  <h3 className="dt-h5">The Concept</h3>
+                  <div className="dt-body-sm mt-[6.4vh]">
+                    <PortableText value={data.concept} components={portableTextComponents} />
+                  </div>
+                </FadeInOnVisible>
+              </div>
+
+              {/* Methodology and execution */}
+              <div className="col-span-1">
+                <FadeInOnVisible>
+                  <h3 className="dt-h5">Methodology and execution</h3>
+                  <div className="dt-body-sm mt-[6.4vh]">
+                    <PortableText value={data.methodology} components={portableTextComponents} />
+                  </div>
+                </FadeInOnVisible>
+              </div>
+
+              {/* Impact and outcomes */}
+              <div className="col-span-1">
+                <FadeInOnVisible>
+                  <h3 className="dt-h5">Impact and outcomes</h3>
+                  <div className="dt-body-sm mt-[6.4vh]">
+                    <PortableText value={data.impact} components={portableTextComponents} />
+                  </div>
+                </FadeInOnVisible>
+              </div>
+
+              {/* Transformational potential */}
+              <div className="col-span-1">
+                <FadeInOnVisible>
+                  <h3 className="dt-h5">Transformational potential</h3>
+                  <div className="dt-body-sm mt-[6.4vh]">
+                    <PortableText value={data.transformation} components={portableTextComponents} />
+                  </div>
+                </FadeInOnVisible>
+              </div>
+
+              {/* Conclusion */}
+              <div className="col-span-1">
+                <FadeInOnVisible>
+                  <h3 className="dt-h5">Conclusion</h3>
+                  <div className="dt-body-sm mt-[6.4vh]">
+                    <PortableText value={data.conclusion} components={portableTextComponents} />
+                  </div>
+                </FadeInOnVisible>
+              </div>
+            </div>
+
+          </div>
+        </>
       )}
     </div>
   );

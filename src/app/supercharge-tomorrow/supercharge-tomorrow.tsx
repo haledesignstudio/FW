@@ -140,7 +140,7 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
           text={data.title}
           typeSpeed={60}
           delay={500}
-          className="text-[clamp(4vw,10vh,5vw)] font-graphik leading-tight text-balance"
+          className="dt-h2 text-balance"
         />
       ),
       colSpan: 2,
@@ -164,7 +164,7 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
       id: 3,
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(8vw,20vh,10vw)] font-graphik leading-[clamp(8vw,20vh,10vw)]">
+          <div className="dt-h1">
             {data.heading}
           </div>
         </FadeInOnVisible>
@@ -190,7 +190,7 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
       id: 5,
       content: (
         <FadeInOnVisible>
-          <div className="text-[clamp(1.75vw,5vh,2.5vw)] font-bold leading-tight">
+          <div className="dt-h3">
             <HighlightText value={data.subheading} />
           </div>
         </FadeInOnVisible>
@@ -280,8 +280,8 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
           </div>
         ) : (
           <>
-            <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2] overflow-visible">
-              <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh] overflow-visible">
+            <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2] overflow-visible">
+              <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] overflow-visible [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
                 {items.map((item) => (
                   <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
                     {item.content}

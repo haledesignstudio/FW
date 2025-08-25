@@ -130,7 +130,6 @@ export default function Carousel({
     // Track (desktop & mobile)
     const trackRef = useRef<HTMLDivElement | null>(null);
 
-    const [nextIndex, setNextIndex] = useState(0);
     const [windowStartIndex, setWindowStartIndex] = useState(0);
     const [, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -199,7 +198,7 @@ export default function Carousel({
 
     // ---------- DESKTOP styles ----------
     const applyDesktopStyles = useCallback(
-        (track: HTMLElement, featuredItem: CarouselItem) => {
+        (track: HTMLElement) => {
             const normalImageHeight = `calc(2 * ${IMG_H})`;
             const featuredImageHeight = `calc((2 * ${IMG_H}) + ${CAP_H} + ${INNER_GAP})`;
 
@@ -278,7 +277,6 @@ export default function Carousel({
 
                 // Neighbor right shows text
                 if (i === FEATURED_INDEX + 1) {
-                    setTextContent(el, featuredItem);
                     setTextVisible(textWrap, true, CAP_H);
                     if (desc) {
                         desc.classList.remove(
@@ -420,6 +418,7 @@ export default function Carousel({
         return slide;
     }, [IMG_H, READY_H]);
 
+
     const applyMobileStyles = useCallback((track: HTMLElement) => {
         for (let i = 0; i < track.children.length; i++) {
             const slide = track.children[i] as HTMLElement;
@@ -456,7 +455,7 @@ export default function Carousel({
 
             // TEXT
             const textWrap = document.createElement("div");
-            textWrap.className = "carousel-textwrap h-full text-left text-sm flex flex-col justify-start p-4";
+            textWrap.className = "carousel-textwrap h-full text-left text-sm flex flex-col justify-start pb-[3.2vh]";
             textWrap.style.transition = `opacity ${EASE}, max-height ${EASE}`;
             textWrap.style.overflow = "hidden";
             textWrap.style.opacity = "0";
@@ -472,7 +471,7 @@ export default function Carousel({
             textWrap.appendChild(h);
 
             const d = document.createElement("div");
-            d.className = "dt-body-sm line-clamp-3";
+            d.className = "mt-[2vh] dt-body-sm line-clamp-6";
             d.textContent = item.description || "";
             textWrap.appendChild(d);
 
@@ -508,8 +507,10 @@ export default function Carousel({
             imgWrap.style.lineHeight = "0";
 
             const img = document.createElement("img");
-            img.src = item.src;
-            img.alt = item.heading || "Carousel image";
+            const imgItem = items[(itemIndex + 1) % items.length];
+            img.src = (imgItem && imgItem.src) || item.src;
+            img.alt = (imgItem && imgItem.heading) || item.heading || "Carousel image";
+
             img.decoding = "async";
             img.loading = "lazy";
             img.className = "block w-full h-full object-cover";
@@ -543,19 +544,18 @@ export default function Carousel({
 
             return col;
         },
-        [CAP_H, IMG_H, INNER_GAP, colHeight, UNIT_WIDTH]
+        [CAP_H, IMG_H, INNER_GAP, colHeight, UNIT_WIDTH, items]
     );
 
     // Helper: apply styles for a given "start"
-    const applyForStartIndex = useCallback((startIdx: number) => {
+    const applyForStartIndex = useCallback(() => {
         const track = trackRef.current;
         if (!track || !items.length) return;
 
         if (isMobile) {
             applyMobileStyles(track);
         } else {
-            const featuredItem = items[(startIdx + FEATURED_INDEX) % items.length];
-            applyDesktopStyles(track, featuredItem);
+            applyDesktopStyles(track);
         }
     }, [FEATURED_INDEX, isMobile, items, applyDesktopStyles, applyMobileStyles]);
 
@@ -573,7 +573,6 @@ export default function Carousel({
             track.appendChild(makeMobileUnit(item, itemIndex));
             setWindowStartIndex(initialStart);
             setCurrentIndex(initialStart);
-            setNextIndex((initialStart + 1) % items.length);
             applyMobileStyles(track);
         } else {
             for (let i = 0; i < TRACK_UNITS; i++) {
@@ -583,9 +582,7 @@ export default function Carousel({
             }
             setWindowStartIndex(initialStart);
             setCurrentIndex(initialStart);
-            setNextIndex((initialStart + TRACK_UNITS) % items.length);
-            const featuredItem = items[(initialStart + FEATURED_INDEX) % items.length];
-            applyDesktopStyles(track, featuredItem);
+            applyDesktopStyles(track);
         }
     }, [
         items,
@@ -606,10 +603,9 @@ export default function Carousel({
             IMG_H: string;
             INNER_GAP: string;
             FEATURED_INDEX: number;
-            nextFeaturedItem: CarouselItem;
         }
     ) => {
-        const { CAP_H, IMG_H, INNER_GAP, FEATURED_INDEX, nextFeaturedItem } = opts;
+        const { CAP_H, IMG_H, INNER_GAP, FEATURED_INDEX } = opts;
 
         const normalH = `calc(2 * ${IMG_H})`;
         const featuredH = `calc((2 * ${IMG_H}) + ${CAP_H} + ${INNER_GAP})`;
@@ -659,12 +655,13 @@ export default function Carousel({
         setTextVisible(nextText, true, CAP_H);
 
         if (nextNeighbor && nextNeighborText) {
-            setTextContent(nextNeighbor, nextFeaturedItem);
+            // Show the neighbor’s own text; no content swap
             setTextVisible(nextNeighborText, true, CAP_H);
             nextNeighborText.style.opacity = "0";
-            void nextNeighborText.offsetHeight; // ✅ avoid no-unused-expressions
+            void nextNeighborText.offsetHeight;
             nextNeighborText.style.opacity = "1";
         }
+
 
         nextText.style.transition = "none";
         setTextVisible(nextText, false, CAP_H);
@@ -713,11 +710,12 @@ export default function Carousel({
 
     // next item
     const getNextItem = useCallback(() => {
-        const idx = nextIndex % items.length;
+        const idx = (windowStartIndex + TRACK_UNITS) % items.length;
         const item = items[idx];
-        setNextIndex((v) => (v + 1) % items.length);
         return { item, index: idx };
-    }, [nextIndex, items]);
+    }, [windowStartIndex, TRACK_UNITS, items]);
+
+
 
     // Shift left
     const shiftLeft = useCallback(() => {
@@ -726,8 +724,6 @@ export default function Carousel({
         if (!track || !items?.length) return;
 
         setIsAnimating(true);
-
-        const nextFeaturedItem = items[(windowStartIndex + FEATURED_INDEX + 1) % items.length];
 
         // Append incoming slide (mobile: unit, desktop: column)
         const { item: incomingItem, index: incomingIndex } = getNextItem();
@@ -754,7 +750,6 @@ export default function Carousel({
                 IMG_H,
                 INNER_GAP,
                 FEATURED_INDEX,
-                nextFeaturedItem,
             });
         }
 
@@ -788,7 +783,7 @@ export default function Carousel({
             // Re-apply baseline styles for new view
             setWindowStartIndex((v) => {
                 const nv = (v + 1) % items.length;
-                applyForStartIndex(nv);
+                applyForStartIndex();
                 return nv;
             });
 
@@ -864,7 +859,11 @@ export default function Carousel({
                                 rowGap: INNER_GAP,
                             }}
                         >
-                            <div className="relative flex items-end justify-end mr-[4vh]">
+                            <div
+                                className="relative flex items-end justify-end mr-[1.795vw] mb-[4vh] h-full"
+                                style={{ gridRow: "2", alignSelf: "end", justifySelf: "end" }}
+                            >
+
                                 <button
                                     type="button"
                                     onClick={shiftLeft}

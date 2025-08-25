@@ -242,10 +242,10 @@ const menuItems = [
                         </Link>
                     </li>
                     <li>
-                        <Link href={`/our-work#supercharge-tomorrow`} onClick={(e) => {
+                        <Link href={`/supercharge-tomorrow`} onClick={(e) => {
                             e.preventDefault();
                             document.dispatchEvent(
-                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#supercharge-tomorrow' } })
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/supercharge-tomorrow' } })
                             );
                         }} className="flex gap-[10%] hover:underline">
                             <span className="">03</span>
