@@ -245,11 +245,11 @@ body::-webkit-scrollbar {
 @media (min-width:768px) and (min-aspect-ratio:1/1) {
   .dt-h3 {
     font-size: clamp(1.5vw,4.45vh,2.225vw);
-    line-height: clamp(1.9vw,4.8vh,2.4vw);
+    line-height: clamp(1.9vw,4.9vh,2.45vw);
   }
 
   .dt-h3>p {
-    margin-bottom: clamp(1.9vw,4.8vh,2.4vw);
+    margin-bottom: clamp(1.9vw,4.9vh,2.45vw);
   }
 }
 
