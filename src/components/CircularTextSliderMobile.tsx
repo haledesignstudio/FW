@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useMemo, useEffect } from "react";
+import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
@@ -119,20 +120,23 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
     activeSpeaker && (
       <div className="grid grid-cols-4 w-full bg-[#F9F7F2] relative overflow-x-hidden">
         {/* Speaker Image - col 1-2, row 1-2 */}
-        <img
+        <Image
           src={activeSpeaker.image.asset}
           alt={activeSpeaker.image.alt || activeSpeaker.name}
           className="col-span-2 row-span-2 object-cover"
-          style={{ 
-            gridColumn: "1/3", 
-            gridRow: "1/3", 
-            width: '80%', 
-            height: '80%', 
-            maxWidth: 240, 
-            maxHeight: 360, 
+          style={{
+            gridColumn: "1/3",
+            gridRow: "1/3",
+            width: '80%',
+            height: '80%',
+            maxWidth: 240,
+            maxHeight: 360,
             objectPosition: 'top center',
             marginBottom: 0
           }}
+          width={240}
+          height={360}
+          priority
         />
         
         {/* Top Right: Read More - col 3-4, row 1 */}
@@ -187,7 +191,7 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
             aria-label="Previous"
             onClick={rotateLeft}
           >
-            <img src="/carousel-arrow.png" alt="Previous" style={{ transform: "rotate(180deg)", width: "50%", height: "50%" }} />
+            <Image src="/carousel-arrow.png" alt="Previous" width={32} height={32} style={{ transform: "rotate(180deg)", width: "50%", height: "50%" }} priority />
           </button>
           <button
             type="button"
@@ -195,7 +199,7 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
             aria-label="Next"
             onClick={rotateRight}
           >
-            <img src="/carousel-arrow.png" alt="Next" style={{ width: "50%", height: "50%" }} />
+            <Image src="/carousel-arrow.png" alt="Next" width={32} height={32} style={{ width: "50%", height: "50%" }} priority />
           </button>
         </div>
 

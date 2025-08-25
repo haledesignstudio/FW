@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image';
 import { PortableText } from '@portabletext/react';
 import type { OurWorkContent } from '@/app/our-work/our-work';
 import { urlFor } from '@/sanity/lib/image';
@@ -191,10 +192,13 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
         {
           id: 3,
           content: data.accordionSection1.mainImage.asset ? (
-            <img
+            <Image
               src={urlFor(data.accordionSection1.mainImage.asset).url()}
               alt={'Process image'}
               className="w-[80vw] h-[100vh] object-contain mt-[-30vh]"
+              width={1200}
+              height={900}
+              priority={false}
             />
           ) : null,
           colSpan: 3,
@@ -207,10 +211,13 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
         {
           id: 4,
           content: data.accordionSection1.brandImage.asset ? (
-            <img
+            <Image
               src={urlFor(data.accordionSection1.brandImage.asset).url()}
               alt={'Process image'}
               className="w-[70%] h-auto object-contain"
+              width={600}
+              height={300}
+              priority={false}
             />
           ) : null,
           colSpan: 2,
@@ -338,10 +345,13 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                       {/* Background Image - Full container */}
                       {data.accordionSection1.mainImage.asset && (
                         <div className="absolute inset-0">
-                          <img
+                          <Image
                             src={urlFor(data.accordionSection1.mainImage.asset).url()}
                             alt={'Main image'}
                             className="w-[75%] h-full object-cover opacity-50 ml-auto"
+                            width={900}
+                            height={900}
+                            priority={false}
                           />
                         </div>
                       )}
@@ -351,10 +361,13 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                         {/* Top Left: Brand Image */}
                         <div className="p-4 flex items-start">
                           {data.accordionSection1.brandImage.asset && (
-                            <img
+                            <Image
                               src={urlFor(data.accordionSection1.brandImage.asset).url()}
                               alt={'Brand image'}
                               className="w-full h-auto object-contain max-h-[15vh]"
+                              width={400}
+                              height={120}
+                              priority={false}
                             />
                           )}
                         </div>

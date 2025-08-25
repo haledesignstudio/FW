@@ -1,4 +1,7 @@
+
 "use client";
+
+import Image from "next/image";
 
 import React, { useMemo } from "react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
@@ -82,10 +85,14 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
 
         {data.mainImage?.asset && (
           <div className="col-span-4 row-span-2">
-            <img
+            <Image
               src={urlFor(data.mainImage.asset).url()}
               alt={data.mainImage.alt || "Mindbullet image"}
               className="w-full h-full object-cover"
+              width={800}
+              height={400}
+              sizes="(max-width: 768px) 100vw, 800px"
+              priority
             />
           </div>
         )}
@@ -242,10 +249,14 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
     {
       id: "mindbullet-3",
       content: data.mainImage?.asset ? (
-        <img
+        <Image
           src={urlFor(data.mainImage.asset).url()}
           alt={"Process image"}
           className="w-full h-full object-cover"
+          width={1200}
+          height={600}
+          sizes="(max-width: 1200px) 100vw, 1200px"
+          priority
         />
       ) : null,
       colSpan: 6,

@@ -6,6 +6,7 @@ import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import { createRoot, type Root } from "react-dom/client";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
+import Image from "next/image";
 
 export type CarouselItem = {
   src: string;
@@ -464,10 +465,13 @@ export default function Carousel({
                   disabled={isAnimating}
                   aria-label="Next"
                 >
-                  <img
+                  <Image
                     src="/carousel-arrow.png"
                     alt=""
-                    className="w-[3vh] h-auto object-contain cursor-pointer"
+                    className="w-[3vh] h-auto object-contain"
+                    width={32}
+                    height={32}
+                    priority
                   />
                 </button>
               </div>
@@ -514,11 +518,14 @@ export default function Carousel({
               disabled={isAnimating}
               className="p-2 rounded-md bg-[#F9F7F2] disabled:opacity-50"
             >
-              <img
-                src="/carousel-arrow.png"
-                alt=""
-                className="w-[3vh] h-auto object-contain"
-              />
+              <Image
+                  src="/carousel-arrow.png"
+                  alt=""
+                  className="w-[3vh] h-auto object-contain"
+                  width={32}
+                  height={32}
+                  priority
+                />
             </button>
           </div>
         )}

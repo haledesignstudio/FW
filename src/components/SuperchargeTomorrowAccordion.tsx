@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
@@ -270,11 +271,14 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                     {/* Row 3-4: col 1-4: image */}
                                     {tab.image?.asset && (
                                         <div className="col-span-4 row-start-3 row-end-5 flex justify-center items-center">
-                                            <img
+                                            <Image
                                                 src={urlFor(tab.image.asset).url()}
                                                 alt="Process image"
                                                 className="w-full max-h-[160px] h-full object-cover"
                                                 style={{ aspectRatio: '16/9' }}
+                                                width={320}
+                                                height={160}
+                                                priority={false}
                                             />
                                         </div>
                                     )}
@@ -390,11 +394,14 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                     {/* Row 3-4: col 1-4: image */}
                                     {data.accordionSection3.image?.asset && (
                                         <div className="col-span-4 row-start-3 row-end-5 flex justify-center items-center">
-                                            <img
+                                            <Image
                                                 src={urlFor(data.accordionSection3.image.asset).url()}
                                                 alt="Process image"
                                                 className="w-full max-h-[160px] h-full object-cover"
                                                 style={{ aspectRatio: '16/9' }}
+                                                width={320}
+                                                height={160}
+                                                priority={false}
                                             />
                                         </div>
                                     )}
@@ -529,10 +536,13 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 {
                     id: 4,
                     content: data.accordionSection1.image.asset ? (
-                        <img
+                        <Image
                             src={urlFor(data.accordionSection1.image.asset).url()}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
+                            width={640}
+                            height={360}
+                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,
@@ -1034,11 +1044,14 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 },
                 {
                     id: 4,
-                    content: data.accordionSection1.image.asset ? (
-                        <img
+                    content: data.accordionSection3.image.asset ? (
+                        <Image
                             src={urlFor(data.accordionSection3.image.asset).url()}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
+                            width={640}
+                            height={360}
+                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,

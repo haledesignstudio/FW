@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 import './accordion-animations.css';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
@@ -253,11 +254,14 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                     {/* Row 7-8: Image (col 1-4) */}
                                     {item.image?.asset && (
                                         <div className="col-span-4 row-start-3 row-span-2 flex justify-center items-center">
-                                            <img
+                                            <Image
                                                 src={urlFor(item.image.asset).url()}
                                                 alt="Process image"
                                                 className="w-full max-h-[160px] h-full object-cover"
                                                 style={{ aspectRatio: '16/9' }}
+                                                width={320}
+                                                height={160}
+                                                priority={false}
                                             />
                                         </div>
                                     )}
@@ -478,10 +482,13 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 4,
                     content: data.accordion.items[0].image.asset ? (
-                        <img
+                        <Image
                             src={urlFor(data.accordion.items[0].image.asset).url()}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
+                            width={640}
+                            height={360}
+                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,
@@ -679,10 +686,13 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 4,
                     content: data.accordion.items[1].image.asset ? (
-                        <img
+                        <Image
                             src={urlFor(data.accordion.items[1].image.asset).url()}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
+                            width={640}
+                            height={360}
+                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,
@@ -879,10 +889,13 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 4,
                     content: data.accordion.items[2].image.asset ? (
-                        <img
+                        <Image
                             src={urlFor(data.accordion.items[2].image.asset).url()}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
+                            width={640}
+                            height={360}
+                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,

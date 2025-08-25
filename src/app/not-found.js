@@ -10,6 +10,7 @@ export default function NotFound() {
   const sceneRef = useRef(null);
 
   useEffect(() => {
+    const currentMount = mountRef.current;
     const createScene = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
@@ -144,7 +145,6 @@ export default function NotFound() {
     createScene();
 
     return () => {
-      const currentMount = mountRef.current;
       if (sceneRef.current) {
         window.removeEventListener("resize", sceneRef.current.handleWindowResize);
         if (sceneRef.current.renderer) {

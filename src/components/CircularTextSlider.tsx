@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import { PortableTextBlock } from '@portabletext/types';
@@ -241,10 +242,14 @@ export default function CircularTextSlider({
       <div className="circular-slider-wrapper">
         {activeSpeaker && (
           <div className="speaker-info-panel">
-            <img
+            <Image
               src={activeSpeaker.image.asset}
               alt={activeSpeaker.image.alt || activeSpeaker.name}
               className="speaker-image"
+              width={120}
+              height={360}
+              style={{ objectFit: 'cover' }}
+              priority
             />
             <div className="speaker-details">
               <div className="speaker-text">
@@ -288,10 +293,13 @@ export default function CircularTextSlider({
           aria-label="Previous"
           onClick={rotateLeft}
         >
-          <img
+          <Image
             src="/carousel-arrow.png"
             alt="Previous"
+            width={36}
+            height={36}
             style={{ transform: 'rotate(180deg)', width: '100%', height: '100%' }}
+            priority
           />
         </button>
 
@@ -301,10 +309,13 @@ export default function CircularTextSlider({
           aria-label="Next"
           onClick={rotateRight}
         >
-          <img
+          <Image
             src="/carousel-arrow.png"
             alt="Next"
+            width={36}
+            height={36}
             style={{ width: '100%', height: '100%' }}
+            priority
           />
         </button>
 

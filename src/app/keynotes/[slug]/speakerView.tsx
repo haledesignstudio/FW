@@ -187,10 +187,14 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
       <div className="col-span-1 row-span-4 h-full overflow-hidden">
         {data.image?.asset && (
           <FadeInOnVisible className="h-full w-full">
-            <img
+            <Image
               src={typeof data.image.asset === 'string' ? data.image.asset : urlFor(data.image.asset).url()}
               alt={data.image.alt || 'Process image'}
               className="w-full h-full object-cover"
+              width={400}
+              height={600}
+              sizes="(max-width: 768px) 100vw, 400px"
+              priority
             />
           </FadeInOnVisible>
         )}

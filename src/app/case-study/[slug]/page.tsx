@@ -354,10 +354,13 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
           {data.mainImage?.asset && (
             <div className="bg-[#F9F7F2]">
               <FadeInOnVisible className="w-full h-[50vh]">
-                <img
+                <Image
                   src={urlFor(data.mainImage.asset).url()}
                   alt={data.mainImage.alt || ''}
                   className="object-cover w-full h-full"
+                  width={1920}
+                  height={800}
+                  priority={false}
                 />
               </FadeInOnVisible>
             </div>

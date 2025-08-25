@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react";
+import Image from 'next/image';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import SignalsFromTheFuture from '@/components/signalsFromTheFuture';
@@ -273,11 +274,15 @@ export default function HomeClient({ data }: HomeClientProps) {
     {
       id: 11,
       content: data.Image?.asset ? (
-        <FadeInOnVisible>
-          <img
+        <FadeInOnVisible className="w-full h-full">
+          <Image
             src={urlFor(data.Image.asset).url()}
             alt={data.Image.alt || ''}
             className="object-cover w-full h-full"
+            width={800}
+            height={600}
+            priority
+            sizes="(max-width: 767px) 100vw, 50vw"
           />
         </FadeInOnVisible>
       ) : null,
@@ -440,10 +445,13 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 9,
       content: data.Image?.asset ? (
         <FadeInOnVisible className="w-full h-full">
-          <img
+          <Image
             src={urlFor(data.Image.asset).url()}
             alt={data.Image.alt || ''}
             className="object-cover w-full h-full"
+            width={800}
+            height={600}
+            priority
           />
         </FadeInOnVisible>
       ) : null,

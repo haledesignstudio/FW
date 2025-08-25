@@ -210,7 +210,7 @@ export default function AudioVisualiser(props: AudioVisualiserProps) {
     }
 
     animationRef.current = requestAnimationFrame(loop);
-  }, [size, color, playing]);
+  }, [size, color, playing, height, width]);
 
 
   useEffect(() => {

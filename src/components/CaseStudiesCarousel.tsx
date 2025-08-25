@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import clsx from "clsx";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import { createRoot, type Root } from "react-dom/client";
+import Image from "next/image";
 
 export type CarouselItem = {
     src: string;
@@ -871,11 +872,14 @@ export default function Carousel({
                                     disabled={isAnimating}
                                     aria-label="Next"
                                 >
-                                    <img
+                                    <Image
                                         src="/carousel-arrow.png"
                                         alt=""
                                         className="w-[3vh] h-auto object-contain cursor-pointer"
-                                    />
+                                        width={32}
+                                        height={32}
+                                        priority
+                                        />
                                 </button>
                             </div>
                             <div />

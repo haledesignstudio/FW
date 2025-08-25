@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import Image from 'next/image';
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import FadeInOnVisible from "@/components/FadeInOnVisible";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
@@ -82,10 +83,13 @@ const ptComponents: PortableTextComponents = {
   types: {
     image: ({ value }: PortableTextComponentProps<ImageBlockValue>) =>
       value?.asset ? (
-        <img
+        <Image
           src={urlFor(value.asset).url()}
           alt={value.alt || "Embedded image"}
           className="my-4 w-full h-auto object-contain"
+          width={800}
+          height={400}
+          priority={false}
         />
       ) : null,
 
@@ -153,10 +157,13 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
       {data.hasAuthor && data.author ? (
         <div className="mt-[2vh]">
           {data.author.image?.asset ? (
-            <img
+            <Image
               src={urlFor(data.author.image.asset).url()}
               alt={data.author.image.alt || "Author image"}
               className="w-full h-auto object-cover mb-[1vh]"
+              width={400}
+              height={400}
+              priority={false}
             />
           ) : null}
 
@@ -225,10 +232,13 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
 
         {data.image?.asset && (
           <div className="col-span-4 row-span-2">
-            <img
+            <Image
               src={urlFor(data.image.asset).url()}
               alt={data.image.alt || "Article image"}
               className="w-full h-full object-cover"
+              width={1200}
+              height={600}
+              priority={false}
             />
           </div>
         )}
@@ -334,10 +344,13 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
     {
       id: "article-1",
       content: data.image?.asset ? (
-        <img
+        <Image
           src={urlFor(data.image.asset).url()}
           alt={data.image.alt || "Article image"}
           className="w-full h-full object-cover"
+          width={1200}
+          height={600}
+          priority={false}
         />
       ) : null,
       colSpan: 6,
@@ -471,10 +484,13 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
 
             <div className="col-span-3">
               {data.author.image?.asset ? (
-                <img
+                <Image
                   src={urlFor(data.author.image.asset).url()}
                   alt={data.author.image.alt || "Author image"}
                   className="w-full h-auto object-cover mb-[1vh]"
+                  width={400}
+                  height={400}
+                  priority={false}
                 />
               ) : null}
             </div>

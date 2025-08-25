@@ -1,4 +1,7 @@
+
 'use client';
+
+import Image from 'next/image';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { urlFor } from '@/sanity/lib/image';
@@ -122,13 +125,16 @@ export default function PartnersMarquee({
 
       return (
         <li key={`${keyPrefix}-${assetRef}-${i}`} className="shrink-0">
-          <img
+          <Image
             src={src}
             alt={alt}
             style={{ height: `calc(${logoHeightVh}vh)`, width: 'auto' }}
             className="block object-contain"
             loading="lazy"
-            decoding="async" // Performance hint for mobile
+            decoding="async"
+            width={160}
+            height={64}
+            unoptimized
           />
         </li>
       );
