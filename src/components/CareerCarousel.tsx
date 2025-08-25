@@ -464,7 +464,7 @@ export default function Carousel({
                 <button
                   type="button"
                   onClick={shiftLeft}
-                  className="bg-[#F9F7F2] text-black disabled:scale-103 transition-transform duration-300"
+                  className="bg-[#F9F7F2] text-black disabled:scale-103 transition-transform duration-300 cursor-pointer"
                   disabled={isAnimating}
                   aria-label="Next"
                 >
