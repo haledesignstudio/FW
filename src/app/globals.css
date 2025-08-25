@@ -73,6 +73,12 @@ body::-webkit-scrollbar {
   will-change: transform, opacity;
 }
 
+.no-scrollbar::-webkit-scrollbar { display: none; }  /* Chrome/Safari */
+.no-scrollbar { 
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
 /* BODY COPY — SMALL */
 .dt-body-sm {
   font-family: 'Roboto', sans-serif;
@@ -294,7 +300,7 @@ body::-webkit-scrollbar {
 
 @media (min-width:768px) and (min-aspect-ratio:1/1) {
   .dt-h5 {
-    font-size: clamp(0.7vw, 2vh, 1vw);
+    font-size: clamp(0.7vw,2vh,1vw);
     line-height: clamp(0.9vw, 2.5vh, 1.25vw);
   }
 

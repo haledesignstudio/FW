@@ -202,7 +202,7 @@ export function KeynoteBottom({ keynotes }: Props): GridItem[] {
       id: 'keynotes-13',
       content: (
         <FadeInOnVisible>
-          <div className="dt-body-lg">
+          <div className="dt-h4">
             {speakerSection.speakerContentText}
           </div>
         </FadeInOnVisible>
@@ -425,7 +425,7 @@ export default function Keynotes({
         ))}
       </div>
       <FadeInOnVisible>
-        <div id="speakers" className="w-full mt-[20vh]">
+        <div id="speakers" className="w-full mt-[35vh]">
           <CircularTextSlider speakers={speakers} />
         </div>
       </FadeInOnVisible>

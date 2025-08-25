@@ -220,6 +220,7 @@ export default function CorporateSection({
       colSpan: 6,
       rowSpan: 2,
     },
+    { id: 'corporate-10', content: <></>, colSpan: 1, rowSpan: 1 },
   ] as const;
 
   return (

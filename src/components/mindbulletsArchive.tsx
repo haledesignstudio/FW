@@ -115,13 +115,14 @@ const MindbulletArchive = () => {
     () => sorted.slice(0, page * PAGE_SIZE),
     [sorted, page]
   );
+  
 
   return (
     <div className="w-full h-auto relative mt-[20vh]">
-  {isMobile ? (
+      {isMobile ? (
         <div className="grid grid-cols-4 gap-2 w-full h-auto">
           {/* Row 1: Headings */}
-          <div className="col-span-2 text-lg font-bold flex items-end">Mindbullets Archive</div>
+          <div className="col-span-2 dt-h5 flex items-end">Mindbullets Archive</div>
           <div className="col-span-1 flex items-end">
             <button onClick={() => handleSort('publishedAt')} className="flex items-center justify-start cursor-pointer text-xs font-bold w-full">
               <span
@@ -154,7 +155,7 @@ const MindbulletArchive = () => {
             <>
               {displayed.map((mb) => {
                 const imgUrl = mb.mainImage?.asset
-                  ? urlFor(mb.mainImage).width(1200).height(675).fit('crop').url()
+                  ? urlFor(mb.mainImage).width(480).height(270).fit('crop').url()
                   : null;
                 return (
                   <React.Fragment key={mb._id}>
@@ -205,7 +206,7 @@ const MindbulletArchive = () => {
           <div className="col-span-4 mt-2 flex">
             {!loading && displayed.length < sorted.length && (
               <button
-                className="text-400 font-bold bg-transparent border-none p-0 m-0 hover:text-600 transition-colors duration-150"
+                className="dt-btn"
                 style={{ boxShadow: 'none' }}
                 onClick={() => setPage(page + 1)}
               >
@@ -217,35 +218,47 @@ const MindbulletArchive = () => {
           </div>
         </div>
       ) : (
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 w-full">
+        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh] w-full">
           {/* Headings */}
-          <div className="col-span-3 text-2xl font-bold flex items-end">
+          <div className="col-span-3 dt-h5 flex items-end">
             Mindbullets Archive
           </div>
-          <div className="col-start-5 font-bold flex items-end">
-            <button onClick={() => handleSort('publishedAt')} className="flex items-center cursor-pointer">
+          <div className="col-start-5 font-bold flex items-end -ml-[clamp(0.9vw,2.5vh,1.25vw)]">
+            <button onClick={() => handleSort('publishedAt')} className="flex items-center cursor-pointer dt-h5">
               <span
                 className={`transition-transform duration-200 ${sortBy === 'publishedAt' && sortDirection === 'asc'
                   ? 'rotate-[-90deg]'
                   : 'rotate-0'
                   }`}
               >
-                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <svg
+                  className="w-[clamp(0.9vw,2.5vh,1.25vw)] h-[clamp(0.9vw,2.5vh,1.25vw)]"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M12 5v14M12 19l6-6M12 19l-6-6" />
                 </svg>
               </span>
               Date Published
             </button>
           </div>
-          <div className="col-start-6 font-bold flex items-end">
-            <button onClick={() => handleSort('dateline')} className="flex items-center cursor-pointer ">
+          <div className="col-start-6 font-bold flex items-end -ml-[clamp(0.9vw,2.5vh,1.25vw)]">
+            <button onClick={() => handleSort('dateline')} className="flex items-center cursor-pointer dt-h5">
               <span
                 className={`transition-transform duration-200 ${sortBy === 'dateline' && sortDirection === 'asc'
                   ? 'rotate-[-90deg]'
                   : 'rotate-0'
                   }`}
               >
-                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <svg
+                  className="w-[clamp(0.9vw,2.5vh,1.25vw)] h-[clamp(0.9vw,2.5vh,1.25vw)]"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M12 5v14M12 19l6-6M12 19l-6-6" />
                 </svg>
               </span>
@@ -258,17 +271,17 @@ const MindbulletArchive = () => {
             {loading ? (
               <div className="opacity-60">Loading…</div>
             ) : (
-              <ul className="space-y-2">
+              <ul className="space-y-[0.5vh]">
                 {displayed.map((mb) => {
                   const imgUrl = mb.mainImage?.asset
-                    ? urlFor(mb.mainImage).width(1200).height(675).fit('crop').url()
+                    ? urlFor(mb.mainImage).width(480).height(270).fit('crop').url()
                     : null;
 
                   return (
                     <li key={mb._id}>
                       <Link
                         href={`/mindbullets/${mb.slug}`}
-                        className="cursor-pointer font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight"
+                        className="cursor-pointer dt-body-lg line-clamp-1"
                         onMouseMove={(e) => {
                           setMousePos({ x: e.clientX, y: e.clientY });
                           if (imgUrl) {
@@ -293,7 +306,7 @@ const MindbulletArchive = () => {
 
           {/* Dates */}
           <div className="col-start-5">
-            <ul className="space-y-2 font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
+            <ul className="dt-body-lg space-y-[0.5vh]">
               {displayed.map((mb) => (
                 <li key={mb._id}>
                   {new Intl.DateTimeFormat('en-GB', {
@@ -309,7 +322,7 @@ const MindbulletArchive = () => {
 
           {/* Datelines */}
           <div className="col-start-6">
-            <ul className="space-y-2 font-roboto text-[clamp(0.9vw,2.5vh,1.25vw)] leading-tight">
+            <ul className="dt-body-lg space-y-[0.5vh]">
               {displayed.map((mb) => (
                 <li key={mb._id}>
                   {new Intl.DateTimeFormat('en-GB', {
@@ -327,7 +340,7 @@ const MindbulletArchive = () => {
           <div className="col-span-6 mt-4">
             {!loading && displayed.length < sorted.length && (
               <button
-                className="text-400 font-bold bg-transparent border-none p-0 m-0 hover:text-600 transition-colors duration-150"
+                className="dt-btn bg-transparent"
                 style={{ boxShadow: 'none' }}
                 onClick={() => setPage(page + 1)}
               >
@@ -356,6 +369,7 @@ const MindbulletArchive = () => {
             objectFit: 'cover',
             pointerEvents: 'none',
             zIndex: 9999,
+            backgroundColor: '#fff',
           }}
           sizes="10vw"
         />

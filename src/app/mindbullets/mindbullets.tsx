@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from 'react';
 type MindbulletDoc = {
   _id: string;
   title?: string;
+  byLine?: string;
   slug?: { current: string } | string;
   mainImage?: { asset?: { url?: string } };
   bodyPlain?: string; // ⬅️ from GROQ pt::text(body)
@@ -30,7 +31,9 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
     const slugStr = typeof mb.slug === 'string' ? mb.slug : mb.slug?.current;
     return {
       src: mb.mainImage?.asset?.url || '/placeholder-image.png',
-      heading: mb.title ?? 'Untitled',
+      heading: mb.title
+  ? `${mb.title}${mb.byLine ? " / " + mb.byLine : ""}`
+  : 'Untitled',
       description: mb.bodyPlain ?? '', // ⬅️ use bodyPlain
       href: slugStr ? `/mindbullets/${slugStr}` : '#',
     };
@@ -90,10 +93,10 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
                 mobileInnerRowGap="3vh"
                 mobileGap="3vh"
                 // Desktop defaults (used when screen grows)
-                imageHeight="25vh"
-                captionHeight="25vh"
-                innerRowGap="4vh"
-                gap="4vh"
+                imageHeight="21vh"
+                captionHeight="21vh"
+                innerRowGap="3.2vh"
+                gap="1.795vw"
               />
             </FadeInOnVisible>
           </div>
@@ -180,23 +183,11 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
         <FadeInOnVisible>
           <Carousel
             items={carouselItems}
-            imageHeight="25vh"
-            captionHeight="25vh"
-            innerRowGap="4vh"
-            gap="4vh"
+            imageHeight="21vh"
+            captionHeight="21vh"
+            innerRowGap="3.2vh"
+            gap="1.795vw"
           />
-        </FadeInOnVisible>
-      ),
-      colSpan: 6,
-      rowSpan: 2,
-    },
-    {
-      id: 'mindbullets-7',
-      content: (
-        <FadeInOnVisible>
-          <div>
-            <MindbulletArchive />
-          </div>
         </FadeInOnVisible>
       ),
       colSpan: 6,

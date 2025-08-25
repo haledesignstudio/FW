@@ -107,12 +107,19 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
 
         <div className="col-span-2 row-span-1 flex items-center">
           <span className="dt-body-lg">
-            {new Intl.DateTimeFormat("en-GB", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-              timeZone: "UTC",
-            }).format(new Date(`${data.dateline}T00:00:00Z`))}
+            <div className="flex flex-row items-center gap-[1vw]">
+            <div className="dt-body-lg">
+              Dateline
+            </div>
+            <div className="dt-body-lg">
+              {new Intl.DateTimeFormat("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                timeZone: "UTC",
+              }).format(new Date(`${data.dateline}T00:00:00Z`))}
+            </div>
+          </div>
           </span>
         </div>
 
@@ -120,6 +127,21 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
         <div className="col-span-4 dt-body-sm">
           <PortableText value={leftBlocks} components={ptComponents} />
           <PortableText value={rightBlocks} components={ptComponents} />
+        </div>
+
+        <div className="col-span-4 row-span-2 dt-body-sm">
+          <></>
+        </div>
+
+        <div className="col-span-2 row-span-1 flex items-center">
+          <span className="dt-body-lg">
+            {new Intl.DateTimeFormat("en-GB", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+              timeZone: "UTC",
+            }).format(new Date(`${data.publishedAt}T00:00:00Z`))}
+          </span>
         </div>
 
         {/* Disclaimer */}
@@ -363,6 +385,24 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
         </div>
       </FadeInOnVisible>
+
+      {/* Body + disclaimer */}
+      <FadeInOnVisible>
+        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+          <div className="h-full flex items-center">
+            <div className="dt-body-lg">
+              {new Intl.DateTimeFormat("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                timeZone: "UTC",
+              }).format(new Date(`${data.publishedAt}T00:00:00Z`))}
+            </div>
+
+        </div>
+        </div>
+      </FadeInOnVisible>
+
 
       {/* Related links */}
       {data.RelatedStories?.length ? (

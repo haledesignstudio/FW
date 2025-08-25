@@ -145,41 +145,41 @@ export default function Carousel({
 
   // Block-aware PortableText mapping (preserves paragraphs, bullets, etc.)
   const defaultPT: PortableTextComponents = useMemo(
-  () => ({
-    block: {
-      normal: ({ children }) => (
-        // mb-2 adds a small gap between paragraphs; last:mb-0 avoids
-        // extra space at the end. whitespace-pre-wrap preserves \n.
-        <p className="whitespace-pre-wrap dt-body-sm mb-[3%] last:mb-0">
-          {children}
-        </p>
-      ),
-      h1: ({ children }) => <h1 className="font-bold">{children}</h1>,
-      h2: ({ children }) => <h2 className="font-bold">{children}</h2>,
-      h3: ({ children }) => <h3 className="font-semibold">{children}</h3>,
-    },
-    list: {
-      // my-2 adds top/bottom gap around lists; space-y-1 keeps li spacing tight
-      bullet: ({ children }) => <ul className="list-disc pl-[4%] space-y-[1%] dt-body-sm">{children}</ul>,
-      number: ({ children }) => <ol className="list-decimal pl-[4%] space-y-[1%] dt-body-sm">{children}</ol>,
-    },
-    listItem: {
-      bullet: ({ children }) => <li>{children}</li>,
-      number: ({ children }) => <li>{children}</li>,
-    },
-    marks: {
-      strong: ({ children }) => <strong>{children}</strong>,
-      em: ({ children }) => <em>{children}</em>,
-      underline: ({ children }) => <u>{children}</u>,
-      link: ({ children, value }) => (
-        <a href={value?.href} target="_blank" rel="noopener noreferrer" className="dt-btn">
-          {children}
-        </a>
-      ),
-    },
-  }),
-  []
-);
+    () => ({
+      block: {
+        normal: ({ children }) => (
+          // mb-2 adds a small gap between paragraphs; last:mb-0 avoids
+          // extra space at the end. whitespace-pre-wrap preserves \n.
+          <p className="whitespace-pre-wrap dt-body-sm mb-[3%] last:mb-0">
+            {children}
+          </p>
+        ),
+        h1: ({ children }) => <h1 className="font-bold">{children}</h1>,
+        h2: ({ children }) => <h2 className="font-bold">{children}</h2>,
+        h3: ({ children }) => <h3 className="font-semibold">{children}</h3>,
+      },
+      list: {
+        // my-2 adds top/bottom gap around lists; space-y-1 keeps li spacing tight
+        bullet: ({ children }) => <ul className="list-disc pl-[4%] space-y-[1%] dt-body-sm">{children}</ul>,
+        number: ({ children }) => <ol className="list-decimal pl-[4%] space-y-[1%] dt-body-sm">{children}</ol>,
+      },
+      listItem: {
+        bullet: ({ children }) => <li>{children}</li>,
+        number: ({ children }) => <li>{children}</li>,
+      },
+      marks: {
+        strong: ({ children }) => <strong>{children}</strong>,
+        em: ({ children }) => <em>{children}</em>,
+        underline: ({ children }) => <u>{children}</u>,
+        link: ({ children, value }) => (
+          <a href={value?.href} target="_blank" rel="noopener noreferrer" className="dt-btn">
+            {children}
+          </a>
+        ),
+      },
+    }),
+    []
+  );
 
 
   const setColSpan = useCallback(
@@ -214,13 +214,13 @@ export default function Carousel({
         img.style.filter = s === 2 || isMobile ? "none" : "grayscale(100%)";
       }
       if (heading) {
-  heading.className = isMobile
-    ? "carousel-heading dt-h5" // mobile: the single visible card is the "featured" one
-    : (s === 2
-        ? "carousel-heading dt-h5"      // desktop featured
-        : "carousel-heading dt-body-sm"  // desktop non-featured
-      );
-}
+        heading.className = isMobile
+          ? "carousel-heading dt-h5" // mobile: the single visible card is the "featured" one
+          : (s === 2
+            ? "carousel-heading dt-h5"      // desktop featured
+            : "carousel-heading dt-body-sm"  // desktop non-featured
+          );
+      }
 
       if (desc) {
         // Non-featured: single line. Featured: unlimited lines.
@@ -522,13 +522,13 @@ export default function Carousel({
               className="bg-[#F9F7F2]"
             >
               <Image
-                  src="/carousel-arrow.png"
-                  alt=""
-                  className="w-[3vh] h-auto object-contain"
-                  width={32}
-                  height={32}
-                  priority
-                />
+                src="/carousel-arrow.png"
+                alt=""
+                className="w-[3vh] h-auto object-contain"
+                width={32}
+                height={32}
+                priority
+              />
             </button>
           </div>
         )}

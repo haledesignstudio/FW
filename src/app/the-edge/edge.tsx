@@ -215,10 +215,10 @@ export default function Edge({
         <FadeInOnVisible>
           <Carousel
             items={carouselItems}
-            imageHeight="25vh"
-            captionHeight="25vh"
-            innerRowGap="4vh"
-            gap="4vh"
+            imageHeight="21vh"
+            captionHeight="21vh"
+            innerRowGap="3.2vh"
+            gap="1.795vw"
           />
         </FadeInOnVisible>
       ),
