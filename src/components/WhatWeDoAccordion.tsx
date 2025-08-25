@@ -179,7 +179,7 @@ const ptComponents: PortableTextComponents = {
 
 export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
     const isMobile = useIsMobile();
-    const [openTab, setOpenTab] = useState<number | null>(null);
+    const [openTabs, setOpenTabs] = useState<number[]>([]);
 
     const [active, setActive] = useState<Active>(null);
     const toggle = (id: Active) => setActive(prev => (prev === id ? null : id));
@@ -214,20 +214,20 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
     };
 
     if (isMobile) {
-        // Mobile vertical accordion layout
+        // Mobile vertical accordion layout with animated max-height
         return (
             <div className="w-screen -mx-[calc((100vw-100%)/2)] px-0">
                 {data.accordion.items.map((item, idx) => {
-                    const isOpen = openTab === idx;
+                    const isOpen = openTabs.includes(idx);
                     // Colors
                     const bg = idx === 0 ? '#232323' : idx === 1 ? '#DC5A50' : '#F9F7F2';
                     const fg = idx === 2 ? '#232323' : '#F9F7F2';
                     return (
                         <div
                             key={idx}
-                            className={`w-full px-0 mx-0`}
-                            style={{ background: bg, color: fg }}
-                            onClick={() => setOpenTab(isOpen ? null : idx)}
+                            className={`w-full px-0 mx-0 transition-all duration-800 overflow-hidden`}
+                            style={{ background: bg, color: fg, maxHeight: isOpen ? '9999px' : '8vh' }}
+                            onClick={() => setOpenTabs(prev => isOpen ? prev.filter(i => i !== idx) : [...prev, idx])}
                         >
                             {/* Closed state: only row 1 visible, click to open */}
                             {!isOpen && (
@@ -239,7 +239,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             {/* Open state: full vertical accordion */}
                             {isOpen && (
                                 <div className="grid grid-cols-4 gap-y-1  items-center auto-rows-[minmax(50px,auto)] px-3 py-2 w-full">
-
                                     {/* Row 5: col 1: number, col 2-4: subheading (first word in row 5, rest in row 6) */}
                                     <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
                                     {/* Subheading split: first word row 5, rest row 6 */}
@@ -281,8 +280,8 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                         <div className="dt-h5 pb-4"><PortableText value={item.entries[1].title} /></div>
                                         <div className="dt-body-sm pb-4"><PortableText value={item.entries[1].body} /></div>
                                     </div>
-                                    {/* Row 17-18: col 3-4: entry 2 */}
-                                    <div className="col-start-3 col-span-2">
+                                    {/* Row 17-18: col 1-2: entry 2 */}
+                                    <div className="col-span-2">
                                         <div className="dt-h5 pb-4"><PortableText value={item.entries[2].title} /></div>
                                         <div className="dt-body-sm pb-4"><PortableText value={item.entries[2].body} /></div>
                                     </div>

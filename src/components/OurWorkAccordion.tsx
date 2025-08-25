@@ -109,7 +109,6 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
     load();
   }, []);
 
-  // ⬇️ Map to CaseStudiesCarousel items
   const carouselItems: CarouselItem[] = useMemo(() => {
     return (caseStudies || []).map((cs) => {
       const description = extractSummaryText(cs.summary);
@@ -321,7 +320,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                   <>
                     {/* Row 1-2: Section Title */}
                     <div
-                      className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-center cursor-pointer"
+                      className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer"
                       onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
@@ -384,7 +383,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                 {/* Section 1 Title when collapsed */}
                 {!openTabs.has('supercharge-tomorrow') && (
-                  <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                  <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden">
                     <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
                   </div>
                 )}
@@ -412,7 +411,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                   <>
                     {/* Row 1: Main Title */}
                     <div
-                      className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer"
+                      className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer"
                       onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>

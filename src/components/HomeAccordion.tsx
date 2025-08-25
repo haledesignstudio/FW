@@ -183,7 +183,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         id: 2,
                         content: (
                             <iframe
-                                src="https://fw-dashboard-puce.vercel.app/"
+                                src={data.section1.section1URL}
                                 className="w-full h-full bg-white"
                                 title="Future World Analytics Dashboard"
                                 style={{ minHeight: '300px' }}
@@ -464,12 +464,12 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 ? "max-h-[16vh]"
                                 : "max-h-[9999px]"
                         ].join(' ')}>
-                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(12.5vh, max-content)' }}>
                                 {openTabs.has('benchmark') && (
                                     <>
                                         {/* Row 1-2: Section Title */}
                                         <div
-                                            className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-center cursor-pointer"
+                                            className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
                                         >
                                             <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
@@ -497,23 +497,25 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                             </a>
                                         </div>
 
-                                        {/* Row 6: Empty */}
-                                        <div className="col-span-4 row-start-6 h-[5vh] bg-[#1B1B1B]"></div>
+                                
 
                                         {/* Row 7-10: Section Image (iframe for section 1) */}
-                                        <div className="col-span-4 row-start-7 row-span-4 bg-[#1B1B1B] p-4">
-                                            <iframe
-                                                src="https://fw-dashboard-puce.vercel.app/"
-                                                className="w-full h-[40vh] bg-white"
-                                                title="Future World Analytics Dashboard"
-                                            />
-                                        </div>
+                                                                                <div className="col-span-4 row-start-6 row-span-4 bg-[#1B1B1B] p-4">
+                                                                                    <iframe
+                                                                                        src={data.section1.section1URL}
+                                                                                        className="w-full h-[40vh] bg-white"
+                                                                                        title="Future World Analytics Dashboard"
+                                                                                    />
+                                                                                </div>
+
+                                        <div className="col-span-4 row-start-7 h-[5vh] bg-[#1B1B1B]"></div>
+                                        <div className="col-span-4 row-start-8 h-[5vh] bg-[#1B1B1B]"></div>
                                     </>
                                 )}
 
                                 {/* Section 1 Title when collapsed */}
                                 {!openTabs.has('benchmark') && (
-                                    <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                                    <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[13vh] overflow-hidden">
                                         <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
                                     </div>
                                 )}
@@ -619,7 +621,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                 {/* Section 2 Title when collapsed */}
                                 {!openTabs.has('process') && (
-                                    <div className="col-span-4 bg-[#DC5A50] text-white p-4 flex items-start cursor-pointer h-[16vh] overflow-hidden">
+                                    <div className="col-span-4 bg-[#DC5A50] text-white p-4 flex items-start cursor-pointer h-[13vh] overflow-hidden">
                                         <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
                                     </div>
                                 )}

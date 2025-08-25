@@ -33,6 +33,7 @@ export type HomePageContent = {
     section1Body: PortableTextBlock[];
     section1CTA: string;
     section1Email: string;
+    section1URL: string;
   };
   section2: {
     section2Title: string;

@@ -68,7 +68,7 @@ const homePage = defineType({
         defineField({ name: 'section1Body', title: 'Body', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
         defineField({ name: 'section1CTA', title: 'CTA', type: 'string', validation: (Rule) => Rule.required() }),
         defineField({ name: 'section1Email', title: 'Email', type: 'string', validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section1URL', title: 'URL', type: 'url', validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section1URL', title: 'iframe URL', type: 'url', validation: (Rule) => Rule.required() }),
       ],
     }),
 

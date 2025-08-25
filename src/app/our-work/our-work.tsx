@@ -378,7 +378,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
             <div className="p-[2vh] bg-[#F9F7F2]">
               <div className="grid grid-cols-4 gap-[2vh] auto-rows-[5vh]">
                 {/* Row 1: Main Title (col 1) */}
-                <div className="col-span-1 row-span-1 flex items-center">
+                <div className="col-span-2 row-span-1 flex items-center">
                   <FadeInOnVisible>
                     <MainTitleAnimation
                       text={data.title}
@@ -390,7 +390,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 </div>
 
                 {/* Row 1-3: Subheading (col 3-4) */}
-                <div className="col-span-1"></div>
+                
                 <div className="col-span-2 row-span-3 flex items-center">
                   <FadeInOnVisible>
                     <div className="prose max-w-none dt-h3 font-bold leading-tight">

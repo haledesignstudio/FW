@@ -222,21 +222,21 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
           <div className="w-full px-0 mx-0">
             <div className="grid grid-cols-4 gap-y-2 auto-rows-[minmax(32px,auto)] px-3 py-2 w-full">
               {/* Row 1: col 1-4: data.title with MainTitleAnimation */}
-              <div className="col-span-1 row-start-1 row-span-1">
+              <div className="col-span-2 row-start-1 row-span-1">
                 <MainTitleAnimation
                   text={data.title}
                   typeSpeed={60}
                   delay={500}
-                  className="text-[3.5vh] font-graphik leading-tight"
+                  className="dt-h2 text-balance"
                 />
               </div>
-              <div className="col-span-3 row-start-1 row-span-1"></div>
+              <div className="col-span-2 row-start-1 row-span-1"></div>
               {/* Row 2: empty */}
               <div className="col-span-4 row-start-2 row-span-1 h-[1vh]"></div>
               {/* Row 3: col 1-4: data.heading with FadeInOnVisible */}
               <div className="col-span-4 row-start-3 row-span-1">
                 <FadeInOnVisible>
-                  <div className="text-[6vh] font-graphik leading-tight">{data.heading}</div>
+                  <div className="dt-h1">{data.heading}</div>
                 </FadeInOnVisible>
               </div>
               {/* Row 4: empty */}
@@ -244,7 +244,7 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
               {/* Row 5: col 1-4: data.subheading with FadeInOnVisible */}
               <div className="col-span-4 row-start-5 row-span-1">
                 <FadeInOnVisible>
-                  <div className="text-[2vh] font-bold">
+                  <div className="dt-h3">
                     <HighlightText value={data.subheading} />
                   </div>
                 </FadeInOnVisible>
@@ -260,7 +260,7 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
               {/* After Accordion: Back to top button in col 3-4 */}
               <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
                 <FadeInOnVisible>
-                  <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                  <span className="underline dt-h5 flex items-center gap-1">
                     <svg
                       width="18"
                       height="18"

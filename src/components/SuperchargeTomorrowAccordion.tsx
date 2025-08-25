@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
@@ -187,7 +187,30 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
     const isMobile = useIsMobile();
     const [active, setActive] = useState<Active>('sec2');
     const toggle = (id: Active) => setActive(prev => (prev === id ? 'sec2' : id));
-    const [openTab, setOpenTab] = useState<number | null>(null);
+    const [openTabs, setOpenTabs] = useState<number[]>([]);
+
+    // Desktop animation state (matches WhatWeDoAccordion)
+    const [animatingSection, setAnimatingSection] = useState<Active | null>(null);
+    const [hasInteracted, setHasInteracted] = useState(false);
+    const animationTimeout = useRef<NodeJS.Timeout | null>(null);
+    const prevActiveRef = useRef<Active | null>(null);
+    useEffect(() => {
+        if (!isMobile && active && hasInteracted) {
+            setAnimatingSection(null);
+            if (animationTimeout.current) clearTimeout(animationTimeout.current);
+            animationTimeout.current = setTimeout(() => setAnimatingSection(active), 20);
+        }
+        prevActiveRef.current = active;
+        return () => {
+            if (animationTimeout.current) clearTimeout(animationTimeout.current);
+        };
+    }, [active, isMobile, hasInteracted]);
+    const handleTabClick = (id: Active, clickable: boolean) => {
+        if (clickable) {
+            setHasInteracted(true);
+            toggle(id);
+        }
+    };
 
     if (isMobile) {
         // Mobile vertical accordion layout
@@ -216,32 +239,32 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
         return (
             <div className="w-screen -mx-[calc((100vw-100%)/2)] px-0">
                 {tabs.map((tab, idx) => {
-                    const isOpen = openTab === idx;
+                    const isOpen = openTabs.includes(idx);
                     // Colors
                     const bg = idx === 0 ? '#232323' : idx === 1 ? '#DC5A50' : '#F9F7F2';
                     const fg = idx === 2 ? '#232323' : '#F9F7F2';
                     return (
                         <div
                             key={idx}
-                            className={`w-full px-0 mx-0`}
-                            style={{ background: bg, color: fg }}
-                            onClick={() => setOpenTab(isOpen ? null : idx)}
+                            className={`w-full px-0 mx-0 transition-all duration-800 overflow-hidden`}
+                            style={{ background: bg, color: fg, maxHeight: isOpen ? '9999px' : '8vh' }}
+                            onClick={() => setOpenTabs(prev => isOpen ? prev.filter(i => i !== idx) : [...prev, idx])}
                         >
                             {/* Closed state: only row 1 visible, click to open */}
                             {!isOpen && (
-                                <div className="grid grid-cols-4 min-h-[7vh] items-center px-3 py-2 w-full">
-                                    <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik leading-tight">{tab.number}</div>
-                                    <div className="col-span-3 row-start-1 row-span-1 text-right text-[5vh] font-graphik leading-tight truncate">{tab.title}</div>
+                                <div className="grid grid-cols-4 min-h-[8vh] items-center px-3 py-2 w-full">
+                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{tab.number}</div>
+                                    <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{tab.title}</div>
                                 </div>
                             )}
                             {/* Open state: full vertical accordion for tab 1 */}
                             {isOpen && idx === 0 && (
                                 <div className="grid grid-cols-4 gap-y-4 auto-rows-[minmax(32px,auto)] px-3 py-2 w-full">
                                     {/* Row 1: col 1: number, col 3-4: title */}
-                                    <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik py-2.5 leading-tight">{tab.number}</div>
-                                    <div className="col-start-3 col-span-2 row-start-1 row-span-1 text-right text-[5vh] font-graphik leading-tight">{tab.title}</div>
+                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 py-2.5 leading-tight">{tab.number}</div>
+                                    <div className="col-start-3 col-span-2 row-start-1 row-span-1 text-right dt-h1 leading-tight">{tab.title}</div>
                                     {/* Row 2: col 3-4: subheading */}
-                                    <div className="col-start-3 col-span-2 row-start-2 row-span-1 text-right text-[2vh] font-graphik leading-tight">
+                                    <div className="col-start-3 col-span-2 row-start-2 row-span-1 text-right dt-h3 leading-tight">
                                         <PortableText value={tab.subheading ?? []} />
                                     </div>
                                     {/* Row 3-4: col 1-4: image */}
@@ -258,30 +281,30 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                     {/* Row 5: empty */}
                                     <div className="col-span-4 row-start-5 row-span-1 h-[1vh]"></div>
                                     {/* Row 6-7: col 1-4: description */}
-                                    <div className="col-span-4 row-start-6 row-end-8 text-[2vh] font-roboto leading-tight mt-2 pb-4">
+                                    <div className="col-span-4 row-start-6 row-end-8 dt-body mt-2 pb-4">
                                         <PortableText value={tab.description ?? []} />
                                     </div>
                                     {/* Row 8: col 1-2: statement 0, col 3-4: statement 1 */}
-                                    <div className="col-span-2 row-start-8 row-span-1 text-[2vh] font-roboto leading-tight pr-2">
+                                    <div className="col-span-2 row-start-8 row-span-1 dt-body pr-2">
                                         <PortableText value={tab.statements?.[0]?.body ?? []} />
                                     </div>
-                                    <div className="col-span-2 row-start-8 row-span-1 text-[2vh] font-roboto leading-tight pl-2">
+                                    <div className="col-span-2 row-start-8 row-span-1 dt-body pl-2">
                                         <PortableText value={tab.statements?.[1]?.body ?? []} />
                                     </div>
                                     {/* Row 9: empty */}
                                     <div className="col-span-4 row-start-9 row-span-1 h-[1vh]"></div>
                                     {/* Row 10: col 1-2: statement 2, col 3-4: statement 3 */}
-                                    <div className="col-span-2 row-start-10 row-span-1 text-[2vh] font-roboto leading-tight pr-2">
+                                    <div className="col-span-2 row-start-10 row-span-1 dt-body pr-2">
                                         <PortableText value={tab.statements?.[2]?.body ?? []} />
                                     </div>
-                                    <div className="col-span-2 row-start-10 row-span-1 text-[2vh] font-roboto leading-tight pl-2">
+                                    <div className="col-span-2 row-start-10 row-span-1 dt-body pl-2">
                                         <PortableText value={tab.statements?.[3]?.body ?? []} />
                                     </div>
                                     {/* Row 11: col 1-2: CTA button */}
                                     <div className="col-span-2 row-start-11 row-span-1 flex items-center">
                                         <a
                                             href={`mailto:${tab.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
-                                            className="transition cursor-pointer font-bold"
+                                            className="transition cursor-pointer dt-btn"
                                         >
                                             <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#F9F7F2">
                                                 {tab.cta ?? 'Get in Touch'}
@@ -294,66 +317,62 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                             {isOpen && idx === 1 && (
                                 <div className="grid grid-cols-4 gap-y-4 auto-rows-[minmax(32px,auto)] px-3 py-2 w-full">
                                     {/* Row 1: col 1: number, col 3-4: title */}
-                                    <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik py-2.5 leading-tight">2</div>
-                                    <div className="col-start-3 col-span-2 row-start-1 row-span-1 text-right text-[5vh] font-graphik leading-tight">{data.accordionSection2.heading}</div>
+                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 py-2.5 leading-tight">{tab.number}</div>
+                                    <div className="col-start-3 col-span-2 row-start-1 row-span-1 text-right dt-h1 leading-tight">{tab.title}</div>
                                     {/* Row 2: col 3-4: subheading */}
-                                    <div className="col-start-3 col-span-2 row-start-2 row-span-1 text-right text-[2vh] font-graphik leading-tight">
+                                    <div className="col-start-3 col-span-2 row-start-2 row-span-1 text-right dt-h3 leading-tight">
                                         <PortableText value={data.accordionSection2.subheading ?? []} />
                                     </div>
-                                    {/* Row 3-4: section1.description */}
-                                    <div className="col-span-4 row-start-3 row-end-5 text-[2vh] font-roboto leading-tight">
-                                        <PortableText value={data.accordionSection2.section1.description ?? []} />
-                                    </div>
-                                    {/* Row 5: section2.description */}
-                                    <div className="col-span-4 row-start-5 row-span-1 text-[2vh] font-roboto leading-tight">
+                                    {/* Row 3-4: col 1-4: description */}
+                                    <div className="col-span-4 row-start-3 row-end-5 dt-body">
                                         <PortableText value={data.accordionSection2.section2.description ?? []} />
                                     </div>
-                                    {/* Row 6: empty */}
-                                    <div className="col-span-4 row-start-6 row-span-1 h-[1vh]"></div>
-                                    {/* Row 7: col 1-2: section1.statements[0].heading, col 3-4: section1.statements[1].heading */}
-                                    <div className="col-span-2 row-start-7 row-span-1 text-[2vh] font-bold font-roboto leading-tight pr-2">
+                                    {/* Row 5: empty */}
+                                    <div className="col-span-4 row-start-5 row-span-1 h-[1vh]"></div>
+                                    {/* Row 6: col 1-2: section1.statements[0].heading, col 3-4: section1.statements[1].heading */}
+                                    <div className="col-span-2 row-start-6 row-span-1 dt-h5 pr-2">
                                         <PortableText value={data.accordionSection2.section1.statements[0].heading ?? []} />
                                     </div>
-                                    <div className="col-span-2 row-start-7 row-span-1 text-[2vh] font-bold font-roboto leading-tight pl-2">
+                                    <div className="col-span-2 row-start-6 row-span-1 dt-h5 pl-2">
                                         <PortableText value={data.accordionSection2.section1.statements[1].heading ?? []} />
                                     </div>
-                                    {/* Row 8: col 1-2: section1.statements[0].body, col 3-4: section1.statements[1].body */}
-                                    <div className="col-span-2 row-start-8 row-span-1 text-[2vh] font-roboto leading-tight pr-2">
+                                    {/* Row 7: col 1-2: section1.statements[0].body, col 3-4: section1.statements[1].body */}
+                                    <div className="col-span-2 row-start-7 row-span-1 dt-body pr-2">
                                         <PortableText value={data.accordionSection2.section1.statements[0].body ?? []} />
                                     </div>
-                                    <div className="col-span-2 row-start-8 row-span-1 text-[2vh] font-roboto leading-tight pl-2">
+                                    <div className="col-span-2 row-start-7 row-span-1 dt-body pl-2">
                                         <PortableText value={data.accordionSection2.section1.statements[1].body ?? []} />
                                     </div>
-                                    {/* Row 9: col 1-2: section1.statements[2].heading, col 3-4: section2.statements[0].heading */}
-                                    <div className="col-span-2 row-start-9 row-span-1 text-[2vh] font-bold font-roboto leading-tight pr-2">
+                                    {/* Row 8: col 1-2: section1.statements[2].heading, col 3-4: section2.statements[0].heading */}
+                                    <div className="col-span-2 row-start-8 row-span-1 dt-h5 pr-2">
                                         <PortableText value={data.accordionSection2.section1.statements[2].heading ?? []} />
                                     </div>
-                                    <div className="col-span-2 row-start-9 row-span-1 text-[2vh] font-bold font-roboto leading-tight pl-2">
+                                    <div className="col-span-2 row-start-8 row-span-1 dt-h5 pl-2">
                                         <PortableText value={data.accordionSection2.section2.statements[0].heading ?? []} />
                                     </div>
-                                    {/* Row 10: col 1-2: section1.statements[2].body, col 3-4: section2.statements[0].body */}
-                                    <div className="col-span-2 row-start-10 row-span-1 text-[2vh] font-roboto leading-tight pr-2">
+                                    {/* Row 9: col 1-2: section1.statements[2].body, col 3-4: section2.statements[0].body */}
+                                    <div className="col-span-2 row-start-9 row-span-1 dt-body pr-2">
                                         <PortableText value={data.accordionSection2.section1.statements[2].body ?? []} />
                                     </div>
-                                    <div className="col-span-2 row-start-10 row-span-1 text-[2vh] font-roboto leading-tight pl-2">
+                                    <div className="col-span-2 row-start-9 row-span-1 dt-body pl-2">
                                         <PortableText value={data.accordionSection2.section2.statements[0].body ?? []} />
                                     </div>
-                                    {/* Row 11: col 3-4: section2.statements[1].heading */}
-                                    <div className="col-start-3 col-span-2 row-start-11 row-span-1 text-[2vh] font-bold font-roboto leading-tight pl-2">
+                                    {/* Row 10: col 3-4: section2.statements[1].heading */}
+                                    <div className="col-start-3 col-span-2 row-start-10 row-span-1 dt-h5 pl-2">
                                         <PortableText value={data.accordionSection2.section2.statements[1].heading ?? []} />
                                     </div>
-                                    {/* Row 12: col 1-2: cta, col 3-4: section2.statements[1].body */}
-                                    <div className="col-span-2 row-start-12 row-span-1 flex items-center">
+                                    {/* Row 11: col 1-2: cta, col 3-4: section2.statements[1].body */}
+                                    <div className="col-span-2 row-start-11 row-span-1 flex items-center">
                                         <a
                                             href={`mailto:${data.accordionSection2.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
-                                            className="transition cursor-pointer font-bold"
+                                            className="transition cursor-pointer dt-btn"
                                         >
                                             <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#F9F7F2">
                                                 {data.accordionSection2.cta ?? 'Get in Touch'}
                                             </UnderlineOnHoverAnimation>
                                         </a>
                                     </div>
-                                    <div className="col-span-2 row-start-12 row-span-1 text-[2vh] font-roboto leading-tight pl-2">
+                                    <div className="col-span-2 row-start-11 row-span-1 dt-body pl-2">
                                         <PortableText value={data.accordionSection2.section2.statements[1].body ?? []} />
                                     </div>
                                 </div>
@@ -362,10 +381,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                             {isOpen && idx === 2 && (
                                 <div className="grid grid-cols-4 gap-y-4 auto-rows-[minmax(32px,auto)] px-3 py-2 w-full">
                                     {/* Row 1: col 1: number */}
-                                    <div className="col-span-1 row-start-1 row-span-1 text-[3vh] font-graphik py-2.5 leading-tight">3</div>
-                                    <div className="col-start-3 col-span-2 row-start-1 row-span-1 text-right text-[5vh] font-graphik leading-tight">{data.accordionSection3.heading}</div>
+                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 py-2.5 leading-tight">3</div>
+                                    <div className="col-start-3 col-span-2 row-start-1 row-span-1 text-right dt-h1 leading-tight">{data.accordionSection3.heading}</div>
                                     {/* Row 1: col 3-4: subheading (right aligned) */}
-                                    <div className="col-start-3 col-span-2 row-start-2 row-span-1 text-right text-[2vh] font-graphik leading-tight">
+                                    <div className="col-start-3 col-span-2 row-start-2 row-span-1 text-right dt-h3 leading-tight">
                                         <PortableText value={data.accordionSection3.subheading ?? []} />
                                     </div>
                                     {/* Row 3-4: col 1-4: image */}
@@ -380,16 +399,17 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                         </div>
                                     )}
                                     {/* Row 5: description */}
-                                    <div className="col-span-4 row-start-5 row-span-1 text-[2vh] font-roboto leading-tight">
+                                    <div className="col-span-4 row-start-5 row-span-1 dt-body">
                                         <PortableText value={data.accordionSection3.description ?? []} />
                                     </div>
                                     {/* Row 6: empty */}
+                                    
                                     <div className="col-span-4 row-start-6 row-span-1 h-[1vh]"></div>
                                     {/* Row 7: col 1-3: cta */}
                                     <div className="col-span-3 row-start-7 row-span-1 flex items-center">
                                         <a
                                             href={`mailto:${data.accordionSection3.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
-                                            className="transition cursor-pointer font-bold"
+                                            className="transition cursor-pointer dt-btn"
                                         >
                                             <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#232323">
                                                 {data.accordionSection3.cta ?? 'Get in Touch'}
@@ -1118,24 +1138,18 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
         <div className="grid grid-cols-6">
             {sections.map(({ key, clickable, bg, fg, items, collapsedItems }) => {
                 const pos = placement(key, active);
-
-
                 const isActive = active === key;
                 const isCollapsed = !isActive;
                 const showContent = isActive;
-
                 return (
                     <section
                         key={key}
                         style={{ gridColumn: `${pos.start} / span ${pos.span}`, backgroundColor: bg, color: fg }}
                         className={[
-                            'relative overflow-hidden transition-all duration-300',
+                            'relative overflow-hidden transition-all duration-800',
                             clickable ? 'cursor-pointer' : '',
-                            '',
                         ].join(' ')}
-                        onClick={() => {
-                            if (clickable) toggle(key as Active);
-                        }}
+                        onClick={() => handleTabClick(key as Active, clickable)}
                     >
                         {/* Tiny grid when collapsed */}
                         {isCollapsed && (collapsedItems?.length ?? 0) > 0 && (
@@ -1149,9 +1163,26 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                 </div>
                             </div>
                         )}
-
-                        {/* Full content when active (or sec1 initial) */}
-                        {showContent && (
+                        {/* Animate open tab content for desktop only */}
+                        {!isMobile && active === key && (
+                            <div className="px-[1.795vw] py-[3.2vh]">
+                                <div
+                                    className={`grid gap-x-[1.795vw] gap-y-[1.6vh] grid-cols-4 auto-rows-[10.3vh] animate-scale-in-bottom-right ${animatingSection === key ? 'scale-100' : (hasInteracted ? 'scale-0' : 'scale-100')}`}
+                                    style={{
+                                        transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1)',
+                                        transformOrigin: 'bottom right',
+                                    }}
+                                >
+                                    {items.map((item) => (
+                                        <div key={item.id} className={`${getGridClasses(item)} `}>
+                                            {item.content}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        {/* Default/initial or mobile content */}
+                        {(isMobile || active !== key) && showContent && (
                             <div className="px-[1.795vw] py-[3.2vh]">
                                 <div className="grid gap-x-[1.795vw] gap-y-[1.6vh] grid-cols-4 auto-rows-[10.3vh]">
                                     {items.map((item) => (
@@ -1165,7 +1196,6 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     </section>
                 );
             })}
-
         </div>
     );
 }
