@@ -208,9 +208,10 @@ export default function ExpandableTopicList() {
                                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                                             {topic.topicButtonText}
                                         </UnderlineOnHoverAnimation>
-                                        
+
                                     </a>
                                 </div>
+                                <div className="col-span-2 row-span-1" />
                             </div>
                         </div>
                     </div>

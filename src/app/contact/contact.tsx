@@ -12,10 +12,6 @@ import Link from 'next/link';
 
 type ContactPageContent = {
   title: string;
-  seo?: {
-    metaTitle?: string;
-    metaDescription?: string;
-  };
   pageHeader: {
     mainTitle: string;
   };

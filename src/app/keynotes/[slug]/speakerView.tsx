@@ -220,7 +220,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
         ) : null}
       </div>
       {/* Bio */}
-      <div className="col-span-1 row-span-3">
+      <div className="col-span-1 row-span-3 overflow-y-auto no-scrollbar">
         <FadeInOnVisible>
           <div className="flex flex-col gap-[5vh]">
             <div className="dt-h5">Bio</div>

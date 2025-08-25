@@ -134,7 +134,8 @@ export default function Carousel({
       const s = isMobile ? 1 : span;
       el.dataset.span = String(s);
       el.style.transition = "flex-basis 450ms cubic-bezier(.22,.61,.36,1)";
-      el.style.flex = `0 0 calc((${UNIT_WIDTH}) * ${s})`;
+      el.style.flex = `0 0 calc((${UNIT_WIDTH}) * ${s} + (${COL_GAP}) * (${s} - 1))`;
+
       el.style.height = colHeight;
 
       const img = el.querySelector("img") as HTMLImageElement | null;
@@ -146,10 +147,12 @@ export default function Carousel({
         img.style.filter = s === 2 || isMobile ? "none" : "grayscale(100%)";
       }
       if (heading) {
-        heading.className =
-          s === 2
-            ? "carousel-heading font-bold text-2xl"
-            : "carousel-heading font-semibold text-base";
+        heading.className = isMobile
+          ? "carousel-heading dt-h5" // mobile: the single visible card is the "featured" one
+          : (s === 2
+            ? "carousel-heading dt-h5"      // desktop featured
+            : "carousel-heading dt-body-sm"  // desktop non-featured
+          );
       }
       if (desc) {
         const featuredLinesDesktop = 5;
@@ -162,8 +165,8 @@ export default function Carousel({
             ? featuredLinesMobile
             : normalLinesMobile
           : s === 2
-          ? featuredLinesDesktop
-          : normalLinesDesktop;
+            ? featuredLinesDesktop
+            : normalLinesDesktop;
 
         applyClamp(desc, lines);
       }
@@ -183,21 +186,45 @@ export default function Carousel({
       col.style.height = colHeight;
 
       // IMAGE
-      const imgWrap = document.createElement("div");
-      imgWrap.className = "relative w-full h-full";
-      const img = document.createElement("img");
-      img.src = item.src;
-      img.alt = item.heading || "Carousel image";
-      img.decoding = "async";
-      img.loading = "lazy";
-      img.className = "w-full h-full object-cover";
-      img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
-      img.style.filter = "grayscale(100%)";
-      imgWrap.appendChild(img);
+      // IMAGE (clickable if href)
+      let imgWrap: HTMLElement;
+
+      if (item.href) {
+        const link = document.createElement("a");
+        link.href = item.href;
+        link.target = "_self";
+        link.className = "relative w-full h-full block";
+
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = item.heading || "Carousel image";
+        img.decoding = "async";
+        img.loading = "lazy";
+        img.className = "w-full h-full object-cover";
+        img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
+        img.style.filter = "grayscale(100%)";
+
+        link.appendChild(img);
+        imgWrap = link;
+      } else {
+        const div = document.createElement("div");
+        div.className = "relative w-full h-full";
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = item.heading || "Carousel image";
+        img.decoding = "async";
+        img.loading = "lazy";
+        img.className = "w-full h-full object-cover";
+        img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
+        img.style.filter = "grayscale(100%)";
+        div.appendChild(img);
+        imgWrap = div;
+      }
+
 
       // TEXT
       const textWrap = document.createElement("div");
-      textWrap.className = "h-full text-left text-sm flex flex-col justify-start p-4";
+      textWrap.className = "h-full text-left text-sm flex flex-col justify-start";
       if (item.heading) {
         const h = document.createElement("div");
         h.className = "carousel-heading font-semibold text-base";
@@ -208,7 +235,7 @@ export default function Carousel({
       }
       if (item.description) {
         const d = document.createElement("div");
-        d.className = "carousel-desc mt-1 line-clamp-3";
+        d.className = "dt-body-sm mt-[2vh] line-clamp-3";
         d.textContent = item.description;
         textWrap.appendChild(d);
       }
@@ -225,7 +252,7 @@ export default function Carousel({
         } else {
           (readMore as HTMLButtonElement).type = "button";
         }
-        readMore.className = "inline-flex items-center gap-2 text-sm font-semibold";
+        readMore.className = "inline-flex items-center dt-btn";
 
         // pick per-item label first, then fallback prop
         const label = item.readMoreText ?? readMoreText;
@@ -407,7 +434,7 @@ export default function Carousel({
             {currentItem?.href ? (
               <a
                 href={currentItem.href}
-                className="inline-flex items-center gap-2 text-sm font-semibold"
+                className="inline-flex items-center dt-btn"
                 aria-label={
                   currentItem?.heading
                     ? `${(currentItem.readMoreText ?? readMoreText)}: ${currentItem.heading}`
@@ -421,7 +448,7 @@ export default function Carousel({
             ) : (
               <button
                 type="button"
-                className="inline-flex items-center gap-2 text-sm font-semibold"
+                className="inline-flex items-center dt-btn"
                 aria-label={currentItem?.heading
                   ? `${(currentItem?.readMoreText ?? readMoreText)}: ${currentItem.heading}`
                   : (currentItem?.readMoreText ?? readMoreText)}

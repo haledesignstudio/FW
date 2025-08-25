@@ -2,10 +2,10 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import { PortableTextBlock } from '@portabletext/types';
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
+import Link from 'next/link';
 
 interface Speaker {
   _id: string;
@@ -26,11 +26,15 @@ interface CircularTextSliderProps {
   minItems?: number;
 }
 
+const getSlug = (slug: { current: string } | string | undefined): string | undefined => {
+  if (typeof slug === 'string') return slug;
+  return slug?.current;
+};
+
 export default function CircularTextSlider({
   speakers,
   minItems = 48,
 }: CircularTextSliderProps) {
-  const router = useRouter();
   const galleryRef = useRef<HTMLDivElement>(null);
 
   // rotation (degrees)
@@ -179,7 +183,7 @@ export default function CircularTextSlider({
 
         .speaker-info-panel {
           position: absolute;
-          top: -15vh;
+          top: -25vh;
           left: 80%;
           transform: translateX(-50%) translateY(-2vh);
           width: 30vw;
@@ -190,8 +194,8 @@ export default function CircularTextSlider({
           opacity: 1;
         }
         .speaker-image {
-          width: 10vh;
-          height: 30vh;
+          width: 14vw;
+          height: 45.2vh;
           object-fit: cover;
           flex-shrink: 0;
         }
@@ -216,8 +220,8 @@ export default function CircularTextSlider({
         }
         .arrow {
           position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
+          top: 30%;
+          transform: translateY(-5%);
           width: 3vh;
           height: 3vh;
           display: grid;
@@ -251,27 +255,29 @@ export default function CircularTextSlider({
               style={{ objectFit: 'cover' }}
               priority
             />
-            <div className="speaker-details">
-              <div className="speaker-text">
-                <h3>{activeSpeaker.name}</h3>
-                <PortableText value={activeSpeaker.summary} />
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-[2vh]">
+                <h3 className="dt-body-lg">{activeSpeaker.name}</h3>
+                <div className="dt-body-sm"><PortableText value={activeSpeaker.summary} /></div>
               </div>
-              <div className="mt-[2vh] speaker-actions flex flex-col items-start gap-[2vh]">
-                <button className="text-[clamp(0.8vw,2vh,1vw)]  font-bold leading-[clamp(0.8vw,2vh,1vw)]"
-                  onClick={() => {
-                    console.log('activeSpeaker:', activeSpeaker);
-                    const slugStr = typeof activeSpeaker.slug === 'string'
-                      ? activeSpeaker.slug
-                      : activeSpeaker.slug?.current;
-                    if (slugStr) router.push(`/keynotes/${slugStr}`);
-                  }}>
-                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>{"Read more"}</UnderlineOnHoverAnimation></button>
+              <div className="mt-[2vh] speaker-actions flex flex-col items-start gap-[1vh]">
+                {getSlug(activeSpeaker.slug) ? (
+                  <Link href={`/keynotes/${getSlug(activeSpeaker.slug)}`} className="dt-btn">
+                    <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                      Read more
+                    </UnderlineOnHoverAnimation>
+                  </Link>
+                ) : (
+                  <span className="dt-btn opacity-50 cursor-not-allowed">
+                    Read more
+                  </span>
+                )}
                 <div>
                   {activeSpeaker.email && (
                     <a
                       href={`mailto:${activeSpeaker.email}?subject=${encodeURIComponent(
                         activeSpeaker.mailtoSubject || `Booking ${activeSpeaker.name}`
-                      )}`} className="text-[clamp(0.8vw,2vh,1vw)]  font-bold leading-[clamp(0.8vw,2vh,1vw)]"
+                      )}`} className="dt-btn"
                     >
                       <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                         {activeSpeaker.mailtoSubject}

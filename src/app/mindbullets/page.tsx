@@ -7,6 +7,8 @@ import type { PortableTextBlock } from '@portabletext/types';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { groq } from 'next-sanity';
+import MindbulletArchive from '@/components/mindbulletsArchive';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 type MindbulletsDoc = {
   title: string;
@@ -16,6 +18,7 @@ type MindbulletsDoc = {
 type MindbulletDoc = {
   _id: string;
   title?: string;
+  byLine?:string;
   slug?: { current: string } | string;
   mainImage?: { asset?: { url?: string } };
   bodyPlain?: string; // ⬅️ we’ll fetch this from pt::text(body)
@@ -35,6 +38,7 @@ export default async function MindbulletsPage() {
     groq`*[_type == "mindbullet" && defined(slug.current)] | order(publishedAt desc) {
       _id,
       title,
+      byLine,
       slug,
       mainImage{asset->{url}},
       "bodyPlain": pt::text(body)   // ⬅️ flatten Portable Text body
@@ -53,6 +57,9 @@ export default async function MindbulletsPage() {
             mindbullets={mindbullets}
           />
         </div>
+        <FadeInOnVisible>
+        <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block"><MindbulletArchive /></div>
+        </FadeInOnVisible>
       </main>
       <Footer />
     </div>

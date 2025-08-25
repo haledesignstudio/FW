@@ -271,7 +271,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
               target="_blank"
               rel="noreferrer"
             >
-              Download PDF
+              Download article now
             </a>
           </div>
         ) : null}
@@ -433,7 +433,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                   className="dt-btn"
                 >
                   <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                    Download PDF
+                    Download article now
                   </UnderlineOnHoverAnimation>
                 </a>
               ) : null}
@@ -447,14 +447,19 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
 
       {data.hasAuthor && data.author ? (
         <FadeInOnVisible>
-          <div className="grid gap-[2vh] grid-cols-6 mt-[25vh]">
+          <div className="grid gap-[2vh] grid-cols-6 mt-[10vh]">
             <div className="col-span-3 flex flex-col">
               <div className="dt-h3">
                 About the Author
               </div>
 
               <div className="mt-[10vh] dt-h5">
-                {data.author.name ? <span>{data.author.name}</span> : null}
+                {data.author.name ?
+                  <a href={data.author.linkedin} target="_blank" rel="noopener noreferrer">
+                    <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                      <span className="">{data.author.name}</span>
+                    </UnderlineOnHoverAnimation>
+                  </a> : null}
                 {data.author.position ? <>, {data.author.position}</> : null}
               </div>
 
@@ -465,29 +470,14 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                   </div>
                 ) : null}
               </div>
-
-              <div className="mt-auto dt-btn flex gap-[2vh] flex-wrap">
-                {data.author.linkedin ? (
-                  <a
-                    href={data.author.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-bold"
-                  >
-                    <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                      Connect on LinkedIn
-                    </UnderlineOnHoverAnimation>
-                  </a>
-                ) : null}
-              </div>
             </div>
 
-            <div className="col-span-3">
+            <div className="col-span-3 row-span-1">
               {data.author.image?.asset ? (
                 <Image
                   src={urlFor(data.author.image.asset).url()}
                   alt={data.author.image.alt || "Author image"}
-                  className="w-full h-auto object-cover mb-[1vh]"
+                  className="w-full h-[45.2vh] object-cover mb-[1vh]"
                   width={400}
                   height={400}
                   priority={false}
