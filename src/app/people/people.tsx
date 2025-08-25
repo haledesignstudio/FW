@@ -13,10 +13,6 @@ import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 
 type PeoplePageContent = {
   title: string;
-  seo: {
-    metaTitle?: string;
-    metaDescription?: string;
-  };
   pageHeader: {
     mainTitle: string;
     subheading?: string;
@@ -375,7 +371,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             {/* Row 34: Carousel heading (col 1) */}
             <div className="col-span-1 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
-                <h3 className="dt-h5">{data.sections.carouselHeading}</h3>
+                <h3 className="dt-h2">{data.sections.carouselHeading}</h3>
               </FadeInOnVisible>
             </div>
             <div className="col-span-3 row-span-1"></div>
@@ -430,7 +426,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       id: 1,
       content: (
         <FadeInOnVisible>
-          <div id="people-who-care" className="h-full w-full flex items-start justify-start">
+          <div id="people-who-care" className="w-full flex items-start justify-start">
             <div className="w-full max-w-full">
               <MainTitleAnimation
                 text={data.pageHeader.mainTitle}
@@ -440,9 +436,14 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
               />
             </div>
           </div>
+          <div className="h-full w-full ml-[16.3675vw] mt-[1vh]">
+            <p className="dt-h3 text-balance">
+              {data.pageHeader.subheading}
+            </p>
+          </div>
         </FadeInOnVisible>
       ),
-      colSpan: 2,
+      colSpan: 3,
       rowSpan: 1,
       mobileColSpan: 2,
       mobileRowSpan: 1,
@@ -451,16 +452,8 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     },
     {
       id: 2,
-      content: (
-        <FadeInOnVisible>
-          <div className="h-full w-full flex items=end justify-start">
-            <p className="dt-h3">
-              {data.pageHeader.subheading}
-            </p>
-          </div>
-        </FadeInOnVisible>
-      ),
-      colSpan: 2,
+      content: <></>,
+      colSpan: 1,
       rowSpan: 1,
       mobileColSpan: 2,
       mobileRowSpan: 1,
@@ -522,8 +515,8 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     {
       id: 6,
       content: (
-        <FadeInOnVisible>
-          <div id="life-at-futureworld" className="h-full w-full flex items-end justify-start">
+        <FadeInOnVisible className="h-full flex flex-col justify-end">
+          <div id="life-at-futureworld" className="">
             <h2 className="dt-h3">
               {data.sections.subheading1}
             </h2>
@@ -638,7 +631,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
         </FadeInOnVisible>
       ),
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 2,
       mobileRowSpan: 1,
       landscapeColSpan: 4,
@@ -724,17 +717,6 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     {
       id: 17,
       content: <div></div>,
-      colSpan: 2,
-      rowSpan: 1,
-      mobileColSpan: 2,
-      mobileRowSpan: 1,
-      landscapeColSpan: 4,
-      landscapeRowSpan: 1,
-    },
-    // ROW 8: Blank
-    {
-      id: 18,
-      content: <div></div>,
       colSpan: 6,
       rowSpan: 1,
       mobileColSpan: 2,
@@ -742,6 +724,8 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       landscapeColSpan: 4,
       landscapeRowSpan: 1,
     },
+    // ROW 8: Blank
+
     // ROW 9: Why Join Us Section
     {
       id: 19,
@@ -766,12 +750,18 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       id: 20 + index,
       content: (
         <FadeInOnVisible>
-          <div className="h-full w-full flex flex-col items-start justify-start">
-            <h3 className="dt-h5 mb-[6vh]">
+          <div
+            className="h-full w-full grid"
+            style={{ gridTemplateRows: "12vh 1fr" }} 
+          >
+            <h3 className="dt-h5 overflow-hidden">
               {reason.heading}
             </h3>
-            <div className="dt-body-sm">
-              {reason.text && <PortableText value={reason.text} components={portableTextComponents} />}
+
+            <div className="dt-body-sm self-start">
+              {reason.text && (
+                <PortableText value={reason.text} components={portableTextComponents} />
+              )}
             </div>
           </div>
         </FadeInOnVisible>
@@ -786,7 +776,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     {
       id: 24,
       content: (
-        <FadeInOnVisible>
+        <FadeInOnVisible className="h-full flex flex-col justify-end">
           <div id="careers" className="h-full w-full flex items-end justify-start">
             <h2 className="dt-h3">
               {data.sections.carouselHeading}
@@ -836,27 +826,24 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     {
       id: 27,
       content: (
-        <FadeInOnVisible>
-          <div className="h-full w-full flex flex-col items-start justify-start">
-            <h3 className="dt-h5">
-              {data.sections.carouselSidebar?.heading}
-            </h3>
-            <p className="dt-body-sm mt-[2vh]">
-              {data.sections.carouselSidebar?.text}
-            </p>
+        <FadeInOnVisible className="h-full w-full flex flex-col items-start">
+          <div className="h-full w-full flex flex-col items-start pl-[0.25vw]">
+            <h3 className="dt-h5">{data.sections.carouselSidebar?.heading}</h3>
+            <p className="dt-body-sm mt-[2vh]">{data.sections.carouselSidebar?.text}</p>
+
             {data.sections.carouselSidebar?.linkText && (
               <a
                 href="mailto:careers@futureworld.org?subject=I want to work at Futureworld"
-                className="dt-btn"
+                className="dt-btn mt-auto"
               >
-                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                <UnderlineOnHoverAnimation hasStaticUnderline>
                   {data.sections.carouselSidebar.linkText}
                 </UnderlineOnHoverAnimation>
-
               </a>
             )}
           </div>
         </FadeInOnVisible>
+
       ),
       colSpan: 1,
       rowSpan: 1,

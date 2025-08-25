@@ -90,10 +90,10 @@ type WithRoots = { __roots?: Root[] };
 
 export default function Carousel({
   items,
-  imageHeight = "25vh",
-  captionHeight = "25vh",
-  innerRowGap = "4vh",
-  gap = "4vh",
+  imageHeight = "21vh",
+  captionHeight = "21vh",
+  innerRowGap = "3.2vh",
+  gap = "1.795vw",
 
   mobileImageHeight,
   mobileCaptionHeight,
@@ -150,7 +150,7 @@ export default function Carousel({
       normal: ({ children }) => (
         // mb-2 adds a small gap between paragraphs; last:mb-0 avoids
         // extra space at the end. whitespace-pre-wrap preserves \n.
-        <p className="whitespace-pre-wrap leading-snug mb-2 last:mb-0">
+        <p className="whitespace-pre-wrap dt-body-sm mb-[3%] last:mb-0">
           {children}
         </p>
       ),
@@ -160,8 +160,8 @@ export default function Carousel({
     },
     list: {
       // my-2 adds top/bottom gap around lists; space-y-1 keeps li spacing tight
-      bullet: ({ children }) => <ul className="list-disc pl-5 space-y-1 my-2">{children}</ul>,
-      number: ({ children }) => <ol className="list-decimal pl-5 space-y-1 my-2">{children}</ol>,
+      bullet: ({ children }) => <ul className="list-disc pl-[4%] space-y-[1%] dt-body-sm">{children}</ul>,
+      number: ({ children }) => <ol className="list-decimal pl-[4%] space-y-[1%] dt-body-sm">{children}</ol>,
     },
     listItem: {
       bullet: ({ children }) => <li>{children}</li>,
@@ -172,7 +172,7 @@ export default function Carousel({
       em: ({ children }) => <em>{children}</em>,
       underline: ({ children }) => <u>{children}</u>,
       link: ({ children, value }) => (
-        <a href={value?.href} target="_blank" rel="noopener noreferrer" className="underline">
+        <a href={value?.href} target="_blank" rel="noopener noreferrer" className="dt-btn">
           {children}
         </a>
       ),
@@ -214,15 +214,18 @@ export default function Carousel({
         img.style.filter = s === 2 || isMobile ? "none" : "grayscale(100%)";
       }
       if (heading) {
-        heading.className =
-          s === 2
-            ? "carousel-heading font-bold text-2xl"
-            : "carousel-heading font-semibold text-base";
-      }
+  heading.className = isMobile
+    ? "carousel-heading dt-h5" // mobile: the single visible card is the "featured" one
+    : (s === 2
+        ? "carousel-heading dt-h5"      // desktop featured
+        : "carousel-heading dt-body-sm"  // desktop non-featured
+      );
+}
+
       if (desc) {
         // Non-featured: single line. Featured: unlimited lines.
         const featuredLinesDesktop = 0; // unlimited on desktop when featured
-        const normalLinesDesktop = 1; // single line for desktop normals
+        const normalLinesDesktop = 5; // single line for desktop normals
 
         // On mobile: never clamp (both featured and normal)
         const lines = isMobile ? 0 : (s === 2 ? featuredLinesDesktop : normalLinesDesktop);
@@ -258,7 +261,7 @@ export default function Carousel({
 
       // TEXT
       const textWrap = document.createElement("div");
-      textWrap.className = "h-full text-left text-sm flex flex-col justify-start p-4";
+      textWrap.className = "h-full text-left text-sm flex flex-col justify-start";
       if (item.heading) {
         const h = document.createElement("div");
         h.className = "carousel-heading font-semibold text-base";
@@ -269,7 +272,7 @@ export default function Carousel({
       }
       if (item.description) {
         const d = document.createElement("div");
-        d.className = "carousel-desc mt-1 line-clamp-1"; // default; setColSpan will adjust
+        d.className = "carousel-desc mt-[2vh] mb-[3.2vh] line-clamp-1"; // default; setColSpan will adjust
         textWrap.appendChild(d);
 
         const root = createRoot(d);
@@ -300,7 +303,7 @@ export default function Carousel({
         } else {
           (readMore as HTMLButtonElement).type = "button";
         }
-        readMore.className = "inline-flex items-center gap-2 text-sm font-semibold";
+        readMore.className = "inline-flex items-center dt-btn";
 
         // pick per-item label first, then fallback prop
         const label = item.readMoreText ?? readMoreText;
@@ -486,7 +489,7 @@ export default function Carousel({
             {currentItem?.href ? (
               <a
                 href={currentItem.href}
-                className="inline-flex items-center gap-2 text-sm font-semibold"
+                className="inline-flex items-center dt-btn"
                 aria-label={
                   currentItem?.heading
                     ? `${(currentItem.readMoreText ?? readMoreText)}: ${currentItem.heading}`
@@ -500,7 +503,7 @@ export default function Carousel({
             ) : (
               <button
                 type="button"
-                className="inline-flex items-center gap-2 text-sm font-semibold"
+                className="inline-flex items-center dt-btn"
                 aria-label={currentItem?.heading
                   ? `${(currentItem?.readMoreText ?? readMoreText)}: ${currentItem.heading}`
                   : (currentItem?.readMoreText ?? readMoreText)}
@@ -516,7 +519,7 @@ export default function Carousel({
               onClick={shiftLeft}
               aria-label="Next"
               disabled={isAnimating}
-              className="p-2 rounded-md bg-[#F9F7F2] disabled:opacity-50"
+              className="bg-[#F9F7F2]"
             >
               <Image
                   src="/carousel-arrow.png"

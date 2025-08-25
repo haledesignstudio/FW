@@ -6,10 +6,6 @@ import type { PortableTextBlock } from '@portabletext/types';
 
 type PeoplePageContent = {
   title: string;
-  seo: {
-    metaTitle?: string;
-    metaDescription?: string;
-  };
   pageHeader: {
     mainTitle: string;
     subheading?: string;

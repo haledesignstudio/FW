@@ -335,10 +335,6 @@ export const ourWorkQuery = defineQuery(`
 export const peoplePageQuery = defineQuery(
   `*[_type == "peoplePage"][0]{
   title,
-  seo{
-    metaTitle,
-    metaDescription
-  },
   pageHeader{
     mainTitle,
     subheading,
