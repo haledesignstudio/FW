@@ -654,21 +654,27 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
             style={{ alignItems: 'flex-start' }}
           >
             {piece.summary && piece.summary.map((block: PortableTextBlock, blockIndex: number) => (
-              <div key={blockIndex}>
-                <FutureText
-                  text={((block.children || []) as Array<{ text: string }> ).map((child: { text: string }) => child.text).join('') || ''}
-                  delay={400 + (blockIndex * 200)}
-                  className="text-[clamp(0.8vw,1.8vh,1.2vw)] leading-tight"
-                  speed={5}
-                />
-              </div>
+              <motion.div
+                key={blockIndex}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4, delay: 0.2 + blockIndex * 0.15, ease: "easeOut" }}
+                className="text-[clamp(0.8vw,1.8vh,1.2vw)] leading-tight"
+              >
+                {((block.children || []) as Array<{ text: string }> ).map((child: { text: string }) => child.text).join('') || ''}
+              </motion.div>
             ))}
           </div>
           {/* Image below the summary */}
           {piece.mainImage && (
-            <div
+            <motion.div
               ref={imageRef}
               className="h-[12.5vh] mb-2 mt-2 flex items-center justify-center"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
             >
               <Image
                 src={piece.mainImage.asset._ref.startsWith('dummy-')
@@ -679,7 +685,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                 height={200}
                 className="object-cover w-full h-full"
               />
-            </div>
+            </motion.div>
           )}
         </div>
         <div className="flex items-end justify-between pt-2">

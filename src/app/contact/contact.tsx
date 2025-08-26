@@ -364,7 +364,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             <div className="col-span-4 row-span-1  items-center justify-start">
               <FadeInOnVisible>
                 <Link
-                  href="/speakers"
+                  href="/keynotes"
                   className="dt-btn underline hover:no-underline"
                 >
                   Find the right speaker for your executive team
