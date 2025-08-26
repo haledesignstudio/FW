@@ -4,17 +4,12 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import clsx from "clsx";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import { createRoot, type Root } from "react-dom/client";
-import { PortableText, type PortableTextComponents } from "@portabletext/react";
-import type { PortableTextBlock } from "@portabletext/types";
 import Image from "next/image";
 
 export type CarouselItem = {
   src: string;
   heading?: string;
-  /**
-   * Can be a plain string or Sanity Portable Text blocks
-   */
-  description?: string | PortableTextBlock[];
+  description?: string;
   href?: string; // optional Read More link
   readMoreText?: string; // OPTIONAL: per-item override label
 };
@@ -23,10 +18,10 @@ export type CarouselProps = {
   items: CarouselItem[];
 
   /** Desktop sizes */
-  imageHeight?: string; // e.g. "25vh"
-  captionHeight?: string; // e.g. "25vh"
-  innerRowGap?: string; // e.g. "4vh" (between image & caption)
-  gap?: string; // e.g. "4vh" (between columns)
+  imageHeight?: string;        // e.g. "25vh"
+  captionHeight?: string;      // e.g. "25vh"
+  innerRowGap?: string;        // e.g. "4vh" (between image & caption)
+  gap?: string;                // e.g. "4vh" (between columns)
 
   /** Mobile overrides */
   mobileImageHeight?: string;
@@ -43,9 +38,6 @@ export type CarouselProps = {
 
   /** customize the Read More label (fallback when item.readMoreText is not provided) */
   readMoreText?: string;
-
-  /** Optional: override the default block-aware PT mapping used inside description */
-  portableTextComponents?: PortableTextComponents;
 };
 
 function useIsMobile(breakpoint = 768) {
@@ -71,7 +63,6 @@ function useIsMobile(breakpoint = 768) {
 
 // ===== helpers for dynamic line-clamp =====
 const ALL_CLAMPS = [
-  "line-clamp-none", // allow unlimited lines
   "line-clamp-1",
   "line-clamp-2",
   "line-clamp-3",
@@ -81,8 +72,7 @@ const ALL_CLAMPS = [
 ];
 function applyClamp(el: HTMLElement, lines: number) {
   ALL_CLAMPS.forEach((c) => el.classList.remove(c));
-  if (lines <= 0) el.classList.add("line-clamp-none");
-  else el.classList.add(`line-clamp-${lines}`);
+  el.classList.add(`line-clamp-${lines}`);
 }
 // ==========================================
 
@@ -90,10 +80,10 @@ type WithRoots = { __roots?: Root[] };
 
 export default function Carousel({
   items,
-  imageHeight = "21vh",
-  captionHeight = "21vh",
-  innerRowGap = "3.2vh",
-  gap = "1.795vw",
+  imageHeight = "25vh",
+  captionHeight = "25vh",
+  innerRowGap = "4vh",
+  gap = "4vh",
 
   mobileImageHeight,
   mobileCaptionHeight,
@@ -103,11 +93,10 @@ export default function Carousel({
   height,
   className,
   rounded = "rounded-2xl",
-  ariaLabel = "Four column image carousel",
+  ariaLabel = "Six column image carousel",
 
   // default fallback
   readMoreText = "Read More",
-  portableTextComponents,
 }: CarouselProps) {
   const isMobile = useIsMobile(768);
 
@@ -117,17 +106,14 @@ export default function Carousel({
   const INNER_GAP = isMobile ? (mobileInnerRowGap ?? innerRowGap) : innerRowGap;
   const COL_GAP = isMobile ? (mobileGap ?? gap) : gap;
 
-  // Desktop: 4 units visible in the track => 1 featured (span-2) + 2 normals (span-1 each)
-  const TRACK_UNITS = useMemo(() => (isMobile ? 1 : 4), [isMobile]);
+  const TRACK_UNITS = useMemo(() => (isMobile ? 1 : 5), [isMobile]);
   const NORMALS = useMemo(() => (isMobile ? 0 : TRACK_UNITS - 2), [isMobile, TRACK_UNITS]);
-  const TOTAL_COLS = useMemo(() => (isMobile ? 1 : TRACK_UNITS + 1), [isMobile, TRACK_UNITS]); // +1 for control column
 
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [nextIndex, setNextIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Base column height for non-featured items
   const colHeight = useMemo(
     () => height ?? `calc(${IMG_H} + ${INNER_GAP} + ${CAP_H})`,
     [height, IMG_H, INNER_GAP, CAP_H]
@@ -143,67 +129,14 @@ export default function Carousel({
     [UNIT_WIDTH, COL_GAP]
   );
 
-  // Block-aware PortableText mapping (preserves paragraphs, bullets, etc.)
-  const defaultPT: PortableTextComponents = useMemo(
-    () => ({
-      block: {
-        normal: ({ children }) => (
-          // mb-2 adds a small gap between paragraphs; last:mb-0 avoids
-          // extra space at the end. whitespace-pre-wrap preserves \n.
-          <p className="whitespace-pre-wrap dt-body-sm mb-[3%] last:mb-0">
-            {children}
-          </p>
-        ),
-        h1: ({ children }) => <h1 className="font-bold">{children}</h1>,
-        h2: ({ children }) => <h2 className="font-bold">{children}</h2>,
-        h3: ({ children }) => <h3 className="font-semibold">{children}</h3>,
-      },
-      list: {
-        // my-2 adds top/bottom gap around lists; space-y-1 keeps li spacing tight
-        bullet: ({ children }) => <ul className="list-disc pl-[4%] space-y-[1%] dt-body-sm">{children}</ul>,
-        number: ({ children }) => <ol className="list-decimal pl-[4%] space-y-[1%] dt-body-sm">{children}</ol>,
-      },
-      listItem: {
-        bullet: ({ children }) => <li>{children}</li>,
-        number: ({ children }) => <li>{children}</li>,
-      },
-      marks: {
-        strong: ({ children }) => <strong>{children}</strong>,
-        em: ({ children }) => <em>{children}</em>,
-        underline: ({ children }) => <u>{children}</u>,
-        link: ({ children, value }) => (
-          <a href={value?.href} target="_blank" rel="noopener noreferrer" className="dt-btn">
-            {children}
-          </a>
-        ),
-      },
-    }),
-    []
-  );
-
-
   const setColSpan = useCallback(
     (el: HTMLElement, span: 1 | 2) => {
-      // Span is only meaningful on desktop
       const s = isMobile ? 1 : span;
       el.dataset.span = String(s);
-      el.style.transition = "flex-basis 450ms cubic-bezier(.22,.61,.36,1)"; // height can't animate to 'auto'
-      el.style.flex = `0 0 calc((${UNIT_WIDTH}) * ${s})`;
+      el.style.transition = "flex-basis 450ms cubic-bezier(.22,.61,.36,1)";
+      el.style.flex = `0 0 calc((${UNIT_WIDTH}) * ${s} + (${COL_GAP}) * (${s} - 1))`;
 
-      // Grid row sizing: featured gets auto-growing caption; normals stay fixed
-      if (isMobile) {
-        el.style.height = "auto"; // mobile: allow caption to grow and push UI below
-        el.style.gridTemplateRows = `${IMG_H} auto`;
-        el.style.overflow = "visible"; // let caption expand
-      } else if (s === 2) {
-        el.style.height = "auto"; // desktop featured grows
-        el.style.gridTemplateRows = `${IMG_H} auto`;
-        el.style.overflow = "visible";
-      } else {
-        el.style.height = colHeight;
-        el.style.gridTemplateRows = `${IMG_H} ${CAP_H}`;
-        el.style.overflow = "hidden";
-      }
+      el.style.height = colHeight;
 
       const img = el.querySelector("img") as HTMLImageElement | null;
       const heading = el.querySelector(".carousel-heading") as HTMLElement | null;
@@ -221,18 +154,24 @@ export default function Carousel({
             : "carousel-heading dt-body-sm"  // desktop non-featured
           );
       }
-
       if (desc) {
-        // Non-featured: single line. Featured: unlimited lines.
-        const featuredLinesDesktop = 0; // unlimited on desktop when featured
-        const normalLinesDesktop = 5; // single line for desktop normals
+        const featuredLinesDesktop = 5;
+        const normalLinesDesktop = 3;
+        const featuredLinesMobile = 3;
+        const normalLinesMobile = 2;
 
-        // On mobile: never clamp (both featured and normal)
-        const lines = isMobile ? 0 : (s === 2 ? featuredLinesDesktop : normalLinesDesktop);
+        const lines = isMobile
+          ? s === 2
+            ? featuredLinesMobile
+            : normalLinesMobile
+          : s === 2
+            ? featuredLinesDesktop
+            : normalLinesDesktop;
+
         applyClamp(desc, lines);
       }
     },
-    [UNIT_WIDTH, colHeight, isMobile, IMG_H, CAP_H]
+    [UNIT_WIDTH, colHeight, isMobile]
   );
 
   // Build a column
@@ -242,24 +181,46 @@ export default function Carousel({
       (col as unknown as WithRoots).__roots = [];
       col.className = "col relative bg-[#F9F7F2] text-black overflow-hidden";
       col.style.display = "grid";
-      col.style.gridTemplateRows = `${IMG_H} ${CAP_H}`; // may be overridden by setColSpan
+      col.style.gridTemplateRows = `${IMG_H} ${CAP_H}`;
       col.style.rowGap = INNER_GAP;
-      col.style.height = colHeight; // may be overridden by setColSpan when featured
+      col.style.height = colHeight;
 
       // IMAGE
-      const imgWrap = document.createElement("a");
-imgWrap.setAttribute("href", item.href || "/people/apply/");
-imgWrap.setAttribute("target", "_self");
-imgWrap.className = "relative w-full h-full block";
-const img = document.createElement("img");
-      img.src = item.src;
-      img.alt = item.heading || "Carousel image";
-      img.decoding = "async";
-      img.loading = "lazy";
-      img.className = "w-full h-full object-cover";
-      img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
-      img.style.filter = "grayscale(100%)";
-      imgWrap.appendChild(img);
+      // IMAGE (clickable if href)
+      let imgWrap: HTMLElement;
+
+      if (item.href) {
+        const link = document.createElement("a");
+        link.href = item.href;
+        link.target = "_self";
+        link.className = "relative w-full h-full block";
+
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = item.heading || "Carousel image";
+        img.decoding = "async";
+        img.loading = "lazy";
+        img.className = "w-full h-full object-cover";
+        img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
+        img.style.filter = "grayscale(100%)";
+
+        link.appendChild(img);
+        imgWrap = link;
+      } else {
+        const div = document.createElement("div");
+        div.className = "relative w-full h-full";
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = item.heading || "Carousel image";
+        img.decoding = "async";
+        img.loading = "lazy";
+        img.className = "w-full h-full object-cover";
+        img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
+        img.style.filter = "grayscale(100%)";
+        div.appendChild(img);
+        imgWrap = div;
+      }
+
 
       // TEXT
       const textWrap = document.createElement("div");
@@ -274,33 +235,23 @@ const img = document.createElement("img");
       }
       if (item.description) {
         const d = document.createElement("div");
-        d.className = "carousel-desc mt-[2vh] mb-[3.2vh] line-clamp-1"; // default; setColSpan will adjust
+        d.className = "dt-body-sm mt-[2vh] line-clamp-7";
+        d.textContent = item.description;
         textWrap.appendChild(d);
-
-        const root = createRoot(d);
-        (col as unknown as WithRoots).__roots!.push(root);
-
-        if (Array.isArray(item.description)) {
-          root.render(
-            <PortableText
-              value={item.description as PortableTextBlock[]}
-              components={portableTextComponents ?? defaultPT}
-            />
-          );
-        } else {
-          // preserve line breaks in plain strings
-          root.render(<p className="whitespace-pre-wrap">{item.description}</p>);
-        }
       }
 
       // Desktop-only: Read More
       if (!isMobile) {
         const actions = document.createElement("div");
-        actions.className = "mt-auto"; // stick to bottom; will be pushed down by growing text
+        actions.className = "mt-auto";
 
-        const readMore = document.createElement("a");
-readMore.setAttribute("href", item.href || "/people/apply/");
-(readMore as HTMLAnchorElement).target = "_self";
+        const readMore = document.createElement(item.href ? "a" : "button");
+        if (item.href) {
+          readMore.setAttribute("href", item.href || "#");
+          (readMore as HTMLAnchorElement).target = "_self";
+        } else {
+          (readMore as HTMLButtonElement).type = "button";
+        }
         readMore.className = "inline-flex items-center dt-btn";
 
         // pick per-item label first, then fallback prop
@@ -329,7 +280,7 @@ readMore.setAttribute("href", item.href || "/people/apply/");
       col.appendChild(textWrap);
       return col as HTMLElement;
     },
-    [IMG_H, CAP_H, INNER_GAP, colHeight, isMobile, readMoreText, portableTextComponents, defaultPT]
+    [IMG_H, CAP_H, INNER_GAP, colHeight, isMobile, readMoreText]
   );
 
   useEffect(() => {
@@ -338,12 +289,10 @@ readMore.setAttribute("href", item.href || "/people/apply/");
     track.innerHTML = "";
     if (!items || items.length === 0) return;
 
-    // First (featured)
     const first = makeCol(items[0]);
     track.appendChild(first);
     setColSpan(first, isMobile ? 1 : 2);
 
-    // Then normals to fill the track
     for (let i = 1; i <= NORMALS; i++) {
       const item = items[i % items.length];
       const col = makeCol(item);
@@ -353,7 +302,7 @@ readMore.setAttribute("href", item.href || "/people/apply/");
 
     setCurrentIndex(0);
     setNextIndex((isMobile ? 1 : 1 + NORMALS) % items.length);
-  }, [items, isMobile, NORMALS, makeCol, setColSpan]);
+  }, [items, colHeight, COL_GAP, isMobile, NORMALS, makeCol, setColSpan]);
 
   const getNextItem = useCallback(() => {
     const idx = nextIndex % items.length;
@@ -377,12 +326,11 @@ readMore.setAttribute("href", item.href || "/people/apply/");
       const first = track.children[0] as HTMLElement | undefined;
       const second = track.children[1] as HTMLElement | undefined;
       if (first && second) {
-        setColSpan(first, 1); // demote old featured => fixed height
-        setColSpan(second, 2); // promote next => auto-growing height
+        setColSpan(first, 1);
+        setColSpan(second, 2);
       }
     }
 
-    // Trigger layout before transition
     void track.offsetWidth;
     track.style.transition = "transform 450ms cubic-bezier(.22,.61,.36,1)";
     track.style.transform = `translateX(${SHIFT_X})`;
@@ -390,7 +338,7 @@ readMore.setAttribute("href", item.href || "/people/apply/");
     const onDone = () => {
       track.removeEventListener("transitionend", onDone);
 
-      const firstNow = track.firstElementChild as (HTMLElement & WithRoots) | null;
+      const firstNow = track.firstElementChild as HTMLElement & WithRoots | null;
       if (firstNow) {
         firstNow.__roots?.forEach((r) => r.unmount());
         firstNow.remove();
@@ -430,10 +378,10 @@ readMore.setAttribute("href", item.href || "/people/apply/");
         <div className="flex" style={{ gap: COL_GAP }}>
           {/* Track wrapper */}
           <div
-            className="relative overflow-visible" // allow tallest featured card to define height
+            className="relative overflow-hidden"
             style={{
-              flex: isMobile ? "0 0 100%" : `0 0 calc(100% * ${TRACK_UNITS} / ${TOTAL_COLS})`,
-              height: "auto",
+              flex: isMobile ? "0 0 100%" : "0 0 calc(100% * 5 / 6)",
+              height: colHeight,
             }}
           >
             {/* Sliding track */}
@@ -441,7 +389,7 @@ readMore.setAttribute("href", item.href || "/people/apply/");
               ref={trackRef}
               role="list"
               className="flex will-change-transform"
-              style={{ gap: COL_GAP, height: "auto", alignItems: "stretch" as React.CSSProperties["alignItems"] }}
+              style={{ gap: COL_GAP, height: colHeight }}
             />
           </div>
 
@@ -450,26 +398,25 @@ readMore.setAttribute("href", item.href || "/people/apply/");
             <div
               className="bg-[#F9F7F2] text-black"
               style={{
-                flex: `0 0 calc(100% / ${TOTAL_COLS})`,
-                height: "auto",
+                flex: "0 0 calc(100% / 6)",
+                height: colHeight,
                 display: "grid",
                 gridTemplateRows: `${IMG_H} ${CAP_H}`,
                 rowGap: INNER_GAP,
-                alignSelf: "stretch",
               }}
             >
               <div className="relative flex items-end justify-end mr-[4vh]">
                 <button
                   type="button"
                   onClick={shiftLeft}
-                  className="bg-[#F9F7F2] text-black disabled:scale-103 transition-transform duration-300 cursor-pointer"
+                  className="bg-[#F9F7F2] text-black disabled:scale-103 transition-transform duration-300"
                   disabled={isAnimating}
                   aria-label="Next"
                 >
                   <Image
                     src="/carousel-arrow.png"
                     alt=""
-                    className="w-[3vh] h-auto object-contain"
+                    className="w-[3vh] h-auto object-contain cursor-pointer"
                     width={32}
                     height={32}
                     priority
@@ -484,25 +431,40 @@ readMore.setAttribute("href", item.href || "/people/apply/");
         {/* Mobile fixed action bar */}
         {isMobile && (
           <div className="mt-2 flex items-center justify-between gap-3">
-           <a href={currentItem?.href || "/people/apply/"}
-  className="inline-flex items-center dt-btn"
-  aria-label={
-    currentItem?.heading
-      ? `${(currentItem.readMoreText ?? readMoreText)}: ${currentItem.heading}`
-      : (currentItem.readMoreText ?? readMoreText)
-  }
->
-  <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-    {currentItem.readMoreText ?? readMoreText}
-  </UnderlineOnHoverAnimation>
-</a>
+            {currentItem?.href ? (
+              <a
+                href={currentItem.href}
+                className="inline-flex items-center dt-btn"
+                aria-label={
+                  currentItem?.heading
+                    ? `${(currentItem.readMoreText ?? readMoreText)}: ${currentItem.heading}`
+                    : (currentItem.readMoreText ?? readMoreText)
+                }
+              >
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  {currentItem.readMoreText ?? readMoreText}
+                </UnderlineOnHoverAnimation>
+              </a>
+            ) : (
+              <button
+                type="button"
+                className="inline-flex items-center dt-btn"
+                aria-label={currentItem?.heading
+                  ? `${(currentItem?.readMoreText ?? readMoreText)}: ${currentItem.heading}`
+                  : (currentItem?.readMoreText ?? readMoreText)}
+              >
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  {currentItem?.readMoreText ?? readMoreText}
+                </UnderlineOnHoverAnimation>
+              </button>
+            )}
 
             <button
               type="button"
               onClick={shiftLeft}
               aria-label="Next"
               disabled={isAnimating}
-              className="bg-[#F9F7F2]"
+              className="p-2 rounded-md bg-[#F9F7F2] disabled:opacity-50"
             >
               <Image
                 src="/carousel-arrow.png"

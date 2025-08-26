@@ -150,8 +150,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
   const carouselItems = (careers || []).map((c) => ({
     src: c.image?.asset?._ref ? urlFor(c.image.asset).url() : '/placeholder-image.png', // src ← image
     heading: c.jobTitle ?? '',                                                          // heading ← jobTitle
-    description: c.description,                                                         // <-- keep blocks/string
-    href: 'https://fw-demo.evidence.app/',                                              // fixed
+    description: c.description,                                                         // <-- keep blocks/string                                          // fixed
     readMoreText: 'Apply Now',                                                          // fixed
   }));
 
@@ -752,7 +751,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
         <FadeInOnVisible>
           <div
             className="h-full w-full grid"
-            style={{ gridTemplateRows: "12vh 1fr" }} 
+            style={{ gridTemplateRows: "12vh 1fr" }}
           >
             <h3 className="dt-h5 overflow-hidden">
               {reason.heading}
