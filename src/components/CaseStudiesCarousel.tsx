@@ -327,7 +327,14 @@ export default function Carousel({
         img.className = "block w-full h-full object-cover";
         img.style.transition = `filter ${EASE}`;
         img.style.filter = "grayscale(100%)";
-        imgWrap.appendChild(img);
+        const imgLinkMobile = document.createElement(item.href ? "a" : "div");
+        imgLinkMobile.className = "block w-full h-full"; // make entire image area clickable
+        if (item.href) {
+            (imgLinkMobile as HTMLAnchorElement).href = item.href;
+            (imgLinkMobile as HTMLAnchorElement).target = "_self";
+        }
+        imgLinkMobile.appendChild(img);
+        imgWrap.appendChild(imgLinkMobile);
 
         const readyBar = document.createElement("div");
         readyBar.className = "carousel-readybar w-full";
@@ -517,7 +524,18 @@ export default function Carousel({
             img.className = "block w-full h-full object-cover";
             img.style.transition = `filter ${EASE}`;
             img.style.filter = "grayscale(100%)";
-            imgWrap.appendChild(img);
+            // Link the image to the same destination as the neighbor text's "Read More"
+            const nextHref = imgItem?.href || null;
+            if (nextHref) {
+                const a = document.createElement("a");
+                a.href = nextHref;
+                a.target = "_self";
+                a.className = "block w-full h-full";
+                a.appendChild(img);
+                imgWrap.appendChild(a);
+            } else {
+                imgWrap.appendChild(img);
+            }
 
             // READY BAR (with fill)
             const readyBar = document.createElement("div");
@@ -879,7 +897,7 @@ export default function Carousel({
                                         width={32}
                                         height={32}
                                         priority
-                                        />
+                                    />
                                 </button>
                             </div>
                             <div />

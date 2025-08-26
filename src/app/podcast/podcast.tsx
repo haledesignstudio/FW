@@ -4,7 +4,7 @@
 import type { PortableTextBlock } from '@portabletext/types';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
-import PodcastCarousel from '@/components/Carousel';
+import PodcastCarousel from '@/components/PodcastCarousel';
 import { getGridClasses } from '@/components/insights/grid';
 import useIsMobile from '@/hooks/useIsMobile';
 import { useCallback } from 'react';
