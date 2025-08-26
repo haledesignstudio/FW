@@ -702,8 +702,6 @@ const Header: React.FC = () => {
                                     {isHomepage && <div className="col-span-4"></div>}
                                     {isHomepage && <div className="col-span-4"></div>}
                                     {isHomepage && <div className="col-span-4"></div>}
-                                    {isHomepage && <div className="col-span-4"></div>}
-                                    {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
