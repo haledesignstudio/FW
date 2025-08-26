@@ -34,7 +34,7 @@ type CaseStudyFromQuery = {
   title: string;
   slug?: string | null;
   image?: { url?: string | null } | null;
-  summary?: PortableTextBlock[] | null; 
+  summary?: PortableTextBlock[] | null;
 };
 
 function extractSummaryText(summary?: PortableTextBlock[] | null): string {
@@ -91,6 +91,16 @@ function getGridClasses(item: GridItem) {
   return base.join(' ');
 }
 
+const hoverHintWhenClosed = (isActive: boolean) =>
+  !isActive
+    ? [
+      // smooth + GPU
+      "motion-safe:will-change-transform motion-safe:transition-transform motion-safe:duration-300",
+      // the hint
+      "hover:-translate-y-[4px] hover:scale-[1.01] ",
+    ].join(" ")
+    : "";
+
 export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
   const { isMobile } = useResponsiveLayout();
   const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
@@ -140,167 +150,167 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
     titleItem: GridItem;
     items: GridItem[];
   }[] = [
-    {
-      id: 'supercharge-tomorrow',
-      color: '#1B1B1B',
-      titleItem: {
-        id: 0,
-        colSpan: 6,
-        rowSpan: 2,
-        mobileColSpan: 2,
-        mobileRowSpan: 1,
-        landscapeColSpan: 6,
-        landscapeRowSpan: 1,
-        content: (
-          <FadeInOnVisible>
-            <div
-              className="dt-h1 cursor-pointer"
-              onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
-            >
-              {data.accordionSection1.heading}
-            </div>
-          </FadeInOnVisible>
-        ),
-      },
-      items: [
-        {
-          id: 1,
+      {
+        id: 'supercharge-tomorrow',
+        color: '#1B1B1B',
+        titleItem: {
+          id: 0,
+          colSpan: 6,
+          rowSpan: 2,
+          mobileColSpan: 2,
+          mobileRowSpan: 1,
+          landscapeColSpan: 6,
+          landscapeRowSpan: 1,
           content: (
             <FadeInOnVisible>
-              <div className="dt-h4 text-white">
-                <PortableText value={data.accordionSection1.body} />
+              <div
+                className="dt-h1 cursor-pointer"
+                onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
+              >
+                {data.accordionSection1.heading}
               </div>
             </FadeInOnVisible>
           ),
-          colSpan: 2,
-          rowSpan: 1,
-          mobileColSpan: 2,
-          mobileRowSpan: 1,
-          landscapeColSpan: 3,
-          landscapeRowSpan: 1,
         },
-        {
-          id: 2,
-          content: <></>,
-          colSpan: 1,
-          rowSpan: 1,
-          mobileColSpan: 2,
-          mobileRowSpan: 1,
-          landscapeColSpan: 3,
-          landscapeRowSpan: 1,
-        },
-        {
-          id: 3,
-          content: data.accordionSection1.mainImage.asset ? (
-            <Image
-              src={urlFor(data.accordionSection1.mainImage.asset).url()}
-              alt={'Process image'}
-              className="w-[80vw] h-[100vh] object-contain mt-[-30vh]"
-              width={1200}
-              height={900}
-              priority={false}
-            />
-          ) : null,
-          colSpan: 3,
-          rowSpan: 3,
-          mobileColSpan: 2,
-          mobileRowSpan: 1,
-          landscapeColSpan: 3,
-          landscapeRowSpan: 1,
-        },
-        {
-          id: 4,
-          content: data.accordionSection1.brandImage.asset ? (
-            <Image
-              src={urlFor(data.accordionSection1.brandImage.asset).url()}
-              alt={'Process image'}
-              className="w-[70%] h-auto object-contain"
-              width={600}
-              height={300}
-              priority={false}
-            />
-          ) : null,
-          colSpan: 2,
-          rowSpan: 1,
-          mobileColSpan: 2,
-          mobileRowSpan: 1,
-          landscapeColSpan: 3,
-          landscapeRowSpan: 1,
-        },
-        {
-          id: 5,
-          content: <></>,
-          colSpan: 1,
-          rowSpan: 1,
-          mobileColSpan: 2,
-          mobileRowSpan: 1,
-          landscapeColSpan: 3,
-          landscapeRowSpan: 1,
-        },
-        {
-          id: 6,
-          content: (
-            <FadeInOnVisible className="h-full flex flex-col justify-end">
-              <Link href="/supercharge-tomorrow" className="h-full flex flex-col justify-end">
-                <div className="dt-btn">
-                  <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
-                    {data.accordionSection1.cta ?? 'Get in Touch'}
-                  </UnderlineOnHoverAnimation>
+        items: [
+          {
+            id: 1,
+            content: (
+              <FadeInOnVisible>
+                <div className="dt-h4 text-[#F9F7F2]">
+                  <PortableText value={data.accordionSection1.body} />
                 </div>
-              </Link>
-            </FadeInOnVisible>
-          ),
-          colSpan: 1,
-          rowSpan: 1,
-          mobileColSpan: 2,
-          mobileRowSpan: 1,
-          landscapeColSpan: 3,
-          landscapeRowSpan: 1,
-        },
-      ],
-    },
-
-    {
-      id: 'case-studies',
-      color: '#F9F7F2',
-      titleItem: {
-        id: 0,
-        colSpan: 6, rowSpan: 1,
-        mobileColSpan: 2, mobileRowSpan: 1,
-        landscapeColSpan: 6, landscapeRowSpan: 1,
-        content: (
-          <FadeInOnVisible>
-            <div
-              className="dt-h1 cursor-pointer"
-              onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
-            >
-              {data.accordionSection2.heading}
-            </div>
-          </FadeInOnVisible>
-        ),
+              </FadeInOnVisible>
+            ),
+            colSpan: 2,
+            rowSpan: 1,
+            mobileColSpan: 2,
+            mobileRowSpan: 1,
+            landscapeColSpan: 3,
+            landscapeRowSpan: 1,
+          },
+          {
+            id: 2,
+            content: <></>,
+            colSpan: 1,
+            rowSpan: 1,
+            mobileColSpan: 2,
+            mobileRowSpan: 1,
+            landscapeColSpan: 3,
+            landscapeRowSpan: 1,
+          },
+          {
+            id: 3,
+            content: data.accordionSection1.mainImage.asset ? (
+              <Image
+                src={urlFor(data.accordionSection1.mainImage.asset).url()}
+                alt={'Process image'}
+                className="w-[80vw] h-[100vh] object-contain mt-[-30vh]"
+                width={1200}
+                height={900}
+                priority={false}
+              />
+            ) : null,
+            colSpan: 3,
+            rowSpan: 3,
+            mobileColSpan: 2,
+            mobileRowSpan: 1,
+            landscapeColSpan: 3,
+            landscapeRowSpan: 1,
+          },
+          {
+            id: 4,
+            content: data.accordionSection1.brandImage.asset ? (
+              <Image
+                src={urlFor(data.accordionSection1.brandImage.asset).url()}
+                alt={'Process image'}
+                className="w-[70%] h-auto object-contain"
+                width={600}
+                height={300}
+                priority={false}
+              />
+            ) : null,
+            colSpan: 2,
+            rowSpan: 1,
+            mobileColSpan: 2,
+            mobileRowSpan: 1,
+            landscapeColSpan: 3,
+            landscapeRowSpan: 1,
+          },
+          {
+            id: 5,
+            content: <></>,
+            colSpan: 1,
+            rowSpan: 1,
+            mobileColSpan: 2,
+            mobileRowSpan: 1,
+            landscapeColSpan: 3,
+            landscapeRowSpan: 1,
+          },
+          {
+            id: 6,
+            content: (
+              <FadeInOnVisible className="h-full flex flex-col justify-end">
+                <Link href="/supercharge-tomorrow" className="h-full flex flex-col justify-end">
+                  <div className="dt-btn">
+                    <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
+                      {data.accordionSection1.cta ?? 'Get in Touch'}
+                    </UnderlineOnHoverAnimation>
+                  </div>
+                </Link>
+              </FadeInOnVisible>
+            ),
+            colSpan: 1,
+            rowSpan: 1,
+            mobileColSpan: 2,
+            mobileRowSpan: 1,
+            landscapeColSpan: 3,
+            landscapeRowSpan: 1,
+          },
+        ],
       },
-      items: [
-        {
-          id: 1,
+
+      {
+        id: 'case-studies',
+        color: '#F9F7F2',
+        titleItem: {
+          id: 0,
+          colSpan: 6, rowSpan: 1,
+          mobileColSpan: 2, mobileRowSpan: 1,
+          landscapeColSpan: 6, landscapeRowSpan: 1,
           content: (
-            <FadeInOnVisible className="h-full flex flex-col justify-end">
-              <div className="h-full flex flex-col justify-end">
-                <div className="dt-h4 text-black">
-                  <PortableText value={data.accordionSection2.body} />
-                </div>
+            <FadeInOnVisible>
+              <div
+                className="dt-h1 cursor-pointer"
+                onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
+              >
+                {data.accordionSection2.heading}
               </div>
             </FadeInOnVisible>
           ),
-          colSpan: 2,
-          rowSpan: 1,
-          mobileColSpan: 2,
-          mobileRowSpan: 1,
-          landscapeColSpan: 3,
-          landscapeRowSpan: 1,
         },
-      ],
-    },
-  ];
+        items: [
+          {
+            id: 1,
+            content: (
+              <FadeInOnVisible className="h-full flex flex-col justify-end">
+                <div className="h-full flex flex-col justify-end">
+                  <div className="dt-h4 text-black">
+                    <PortableText value={data.accordionSection2.body} />
+                  </div>
+                </div>
+              </FadeInOnVisible>
+            ),
+            colSpan: 2,
+            rowSpan: 1,
+            mobileColSpan: 2,
+            mobileRowSpan: 1,
+            landscapeColSpan: 3,
+            landscapeRowSpan: 1,
+          },
+        ],
+      },
+    ];
 
   return (
     <div className="">
@@ -327,14 +337,14 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                   <>
                     {/* Row 1-2: Section Title */}
                     <div
-                      className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer"
+                      className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer"
                       onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
                     </div>
 
                     {/* Row 3: Section Body */}
-                    <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-white p-4">
+                    <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-[#F9F7F2] p-4">
                       <div className="dt-h4">
                         <PortableText value={data.accordionSection1.body} />
                       </div>
@@ -396,7 +406,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                 {/* Section 1 Title when collapsed */}
                 {!openTabs.has('supercharge-tomorrow') && (
-                  <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden">
+                  <div className="col-span-4 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden">
                     <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
                   </div>
                 )}
@@ -480,12 +490,19 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
           return (
             <div
               key={tab.id}
-              className="transition-all duration-500 overflow-hidden"
+              role="button"
+              aria-expanded={isActive}
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleTab(tab.id)}
+              onClick={() => toggleTab(tab.id)}
+              className={[
+                "group relative transition-all duration-500 overflow-hidden", // existing
+                hoverHintWhenClosed(isActive),                                // 👈 new
+              ].join(' ')}
               style={{
                 backgroundColor: tab.color,
                 color: tab.color === '#F9F7F2' ? '#000' : '#fff',
               }}
-              onClick={() => toggleTab(tab.id)}
             >
               {/* Grid wrapper: collapsed shows exactly one row height */}
               <div className={[
@@ -534,7 +551,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                           />
                         </div>
 
-                        
+
                       </div>
                     </>
                   )}

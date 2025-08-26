@@ -335,9 +335,9 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           <PartnersMarquee
             partners={data.partners}
             durationSec={40}     // loop time
-            logoHeightVh={8}     // logo height
-            gap="5vw"            // spacing between logos
-            edgeFadeVw={8}       // edge fade width; set 0 to disable
+            logoHeightVh={21}     // logo height
+            gap="5.385vw"            // spacing between logos
+            edgeFadeVw={1.795}       // edge fade width; set 0 to disable
             fadeBg="#F9F7F2"     // page background for the fades
             direction="left"
           />

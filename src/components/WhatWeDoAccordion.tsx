@@ -176,7 +176,15 @@ const ptComponents: PortableTextComponents = {
     },
 };
 
-
+const hoverHintWhenClosed = (isActive: boolean, isFirstSection = false) =>
+    !isActive && !isFirstSection
+        ? [
+            // smooth + GPU
+            "motion-safe:will-change-transform motion-safe:transition-transform motion-safe:duration-300",
+            // the hint
+            "hover:scale-x-[1.05] origin-right transition-transform",
+        ].join(" ")
+        : "";
 
 export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
     const isMobile = useIsMobile();
@@ -1013,7 +1021,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                         className={[
                             'relative overflow-hidden transition-all duration-300',
                             clickable ? 'cursor-pointer' : '',
-                            '',
+                            hoverHintWhenClosed(isActive, key === 'sec1'),
                         ].join(' ')}
                         onClick={() => handleTabClick(key as Active, clickable)}
                     >

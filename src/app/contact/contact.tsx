@@ -467,7 +467,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                   {/* tooltip */}
                   <span
                     className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-          bg-[#DC5A50] text-white shadow transition-opacity
+          bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity
           ${triedSubmit && getError("name") ? "opacity-100" : "opacity-0"}`}
                   >
                     {getError("name")}
@@ -487,7 +487,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                   />
                   <span
                     className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-          bg-[#DC5A50] text-white shadow transition-opacity
+          bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity
           ${triedSubmit && getError("email") ? "opacity-100" : "opacity-0"}`}
                   >
                     {getError("email")}
@@ -505,7 +505,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           ${triedSubmit && getError("phone")}`}
                   />
                   <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-          bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError("phone") ? "opacity-100" : "opacity-0"}`}>
+          bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("phone") ? "opacity-100" : "opacity-0"}`}>
                     {getError("phone")}
                   </span>
                 </div>
@@ -521,7 +521,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           ${triedSubmit && getError("company")}`}
                   />
                   <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-          bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError("company") ? "opacity-100" : "opacity-0"}`}>
+          bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("company") ? "opacity-100" : "opacity-0"}`}>
                     {getError("company")}
                   </span>
                 </div>
@@ -537,7 +537,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           ${triedSubmit && getError("position")}`}
                   />
                   <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-          bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError("position") ? "opacity-100" : "opacity-0"}`}>
+          bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("position") ? "opacity-100" : "opacity-0"}`}>
                     {getError("position")}
                   </span>
                 </div>
@@ -555,7 +555,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           ${triedSubmit && getError("message")}`}
                   />
                   <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-          bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError("message") ? "opacity-100" : "opacity-0"}`}>
+          bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("message") ? "opacity-100" : "opacity-0"}`}>
                     {getError("message")}
                   </span>
                 </div>

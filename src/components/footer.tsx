@@ -232,12 +232,12 @@ const Footer: React.FC = () => {
             ref={footerRef} 
             className={`p-[2vh] bg-[#F9F7F2] transition-opacity duration-1000 ${shouldAnimate ? 'opacity-100' : 'opacity-0'}`}
         >
-            <div className="grid gap-[2vh] grid-cols-4 auto-rows-[12.5vh]">
+            <div className="grid gap-[2vh] grid-cols-4 auto-rows-[7.701vh]">
                 {/* Row 1: Empty */}
                 <div className="col-span-4 row-span-1 bg-[#F9F7F2]"></div>
 
                 {/* Row 1-2, Col 1-3: Subscribe section */}
-                <div className="col-span-3 row-span-1 bg-[#F9F7F2] flex flex-col justify-start">
+                <div className="col-span-4 row-span-2 bg-[#F9F7F2] flex flex-col justify-start">
                     <p className="dt-body-lg mb-[1vh]">
                         {shouldAnimate ? (
                             <FutureText
@@ -289,10 +289,10 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Row 1-2, Col 4: Empty */}
-                <div className="col-span-1 row-span-1 bg-[#F9F7F2]"></div>
+
 
                 {/* Row 3-5, Col 1: Social links */}
-                <div className="col-span-1 row-span-2 bg-[#F9F7F2] flex flex-col justify-start">
+                <div className="col-span-1 row-span-3 bg-[#F9F7F2] flex flex-col justify-start">
                     <p className="dt-h5 mb-[1vh]">
                         {shouldAnimate ? (
                             <FutureText text="Social" delay={0} speed={50} triggerOnVisible={false} />
@@ -311,7 +311,7 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Row 3-5, Col 2: Empty */}
-                <div className="col-span-1 row-span-2 bg-[#F9F7F2]"></div>
+                <div className="col-span-1 row-span-3 bg-[#F9F7F2]"></div>
 
                 {/* Row 3-5, Col 3-4: Quick links */}
                 <div className="col-span-2 row-span-2 bg-[#F9F7F2] flex flex-col justify-start">
