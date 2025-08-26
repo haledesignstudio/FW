@@ -182,7 +182,17 @@ const ptComponents: PortableTextComponents = {
     },
 };
 
-
+const hoverHintWhenClosed = (isActive: boolean, isFirstSection = false) =>
+  !isActive && !isFirstSection
+    ? [
+      // smooth + GPU
+      "motion-safe:will-change-transform motion-safe:transition-transform motion-safe:duration-300",
+      // the hint
+      "hover:scale-x-[1.05] origin-right transition-transform",
+      // pop above neighbors while hovering
+      " ",
+    ].join(" ")
+    : "";
 
 export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorrowProps) {
     const isMobile = useIsMobile();
@@ -1159,8 +1169,9 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                         key={key}
                         style={{ gridColumn: `${pos.start} / span ${pos.span}`, backgroundColor: bg, color: fg }}
                         className={[
-                            'relative overflow-hidden transition-all duration-800',
+                            'relative overflow-hidden transition-all duration-300',
                             clickable ? 'cursor-pointer' : '',
+                            hoverHintWhenClosed(isActive),
                         ].join(' ')}
                         onClick={() => handleTabClick(key as Active, clickable)}
                     >

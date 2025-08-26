@@ -148,7 +148,7 @@ export default function HomeClient({ data }: HomeClientProps) {
               text={data.headline}
               typeSpeed={40}
               delay={100}
-              className="dt-h2"
+              className="dt-h2 text-balance"
               start={preloaderDone}
             />
           </div>
@@ -230,7 +230,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="dt-body-lg" data-sanity={JSON.stringify({
+          <div className="dt-body-sm" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'body'
@@ -250,7 +250,7 @@ export default function HomeClient({ data }: HomeClientProps) {
     {
       id: 8,
       content: (
-        <FadeInOnVisible>
+        <FadeInOnVisible className="flex items-end h-full text-balance">
           <div className="dt-btn" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
@@ -269,7 +269,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       ),
       colSpan: 1,
       rowSpan: 1,
-      mobileColSpan: 2,
+      mobileColSpan: 3,
       mobileRowSpan: 1,
       landscapeColSpan: 2,
       landscapeRowSpan: 2,
@@ -280,7 +280,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       content: <></>,
       colSpan: 6,
       rowSpan: 1,
-      mobileColSpan: 2,
+      mobileColSpan: 1,
       mobileRowSpan: 1,
       landscapeColSpan: 4,
       landscapeRowSpan: 2,
@@ -315,7 +315,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       colSpan: 6,
       rowSpan: 3,
       mobileColSpan: 4,
-      mobileRowSpan: 3,
+      mobileRowSpan: 2,
       landscapeColSpan: 3,
       landscapeRowSpan: 2,
     },
@@ -503,8 +503,8 @@ export default function HomeClient({ data }: HomeClientProps) {
                 <HomeAccordion data={data} />
               </FadeInOnVisible>
               {/* Back to Top Button for Mobile */}
-              <div className="p-[2vh] bg-[#F9F7F2]">
-                <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh]">
+              <div className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
+                <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
                   <div className="col-span-2"></div>
                   <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
                     <FadeInOnVisible>

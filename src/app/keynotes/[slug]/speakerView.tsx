@@ -190,7 +190,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
             <Image
               src={typeof data.image.asset === 'string' ? data.image.asset : urlFor(data.image.asset).url()}
               alt={data.image.alt || 'Process image'}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-[70%]"
               width={400}
               height={600}
               sizes="(max-width: 768px) 100vw, 400px"
