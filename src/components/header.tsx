@@ -691,15 +691,23 @@ const Header: React.FC = () => {
                                 exit="exit"
                                 variants={isHomepage ? menuVariants : menuVariantsOtherPages}
                                 className="w-screen bg-[#F9F7F2] relative left-0 z-40 overflow-hidden"
+                                style={stage === 2 ? { minHeight: '100vh' } : {}}
                             >
-                                <div className={`grid grid-cols-4 p-[2vh] ${isHomepage
+                                <div className={`grid grid-cols-4 p-[2vh] min-h-screen ${isHomepage
                                     ? 'gap-[1vh] auto-rows-[5vh]'
                                     : 'gap-[1vh] auto-rows-[5vh]'
                                     }`}>
                                     {/* Conditional empty rows - 3 for homepage, 4 for other pages */}
-                                    <div className="col-span-4"></div>
-                                    <div className="col-span-4"></div>
-                                    <div className="col-span-4"></div>
+                                    {isHomepage && <div className="col-span-4"></div>}
+                                    {isHomepage && <div className="col-span-4"></div>}
+                                    {isHomepage && <div className="col-span-4"></div>}
+                                    {isHomepage && <div className="col-span-4"></div>}
+                                    {isHomepage && <div className="col-span-4"></div>}
+                                    {!isHomepage && <div className="col-span-4"></div>}
+                                    {!isHomepage && <div className="col-span-4"></div>}
+                                    {!isHomepage && <div className="col-span-4"></div>}
+                                    {!isHomepage && <div className="col-span-4"></div>}
+                                    {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
@@ -772,7 +780,7 @@ const Header: React.FC = () => {
                                 variants={isHomepage ? menuVariants : menuVariantsOtherPages}
                                 className="w-screen bg-[#F9F7F2] flex items-center justify-end relative left-0 z-40 overflow-hidden"
                                 style={{
-                                    height: isHomepage ? '57.5vh' : '77.5vh'
+                                    height: isHomepage ? '62vh' : '79vh'
                                 }}
                             >
                                 <div

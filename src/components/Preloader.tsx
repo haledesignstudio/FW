@@ -1,10 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { usePreloader } from './PreloaderContext';
 import Image from 'next/image';
 
+
 export default function Preloader() {
+  const pathname = usePathname();
   const [stage, setStage] = useState<'gif' | 'fadeOut' | 'complete'>('gif');
   const [showPreloader, setShowPreloader] = useState(true);
   const { setPreloaderDone } = usePreloader();
@@ -39,6 +42,8 @@ export default function Preloader() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage]);
 
+  // Only render preloader on homepage
+  if (pathname !== '/') return null;
   if (!showPreloader) return null;
 
   return (

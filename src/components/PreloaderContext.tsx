@@ -10,8 +10,19 @@ interface PreloaderContextType {
 const PreloaderContext = createContext<PreloaderContextType | undefined>(undefined);
 
 export const PreloaderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [preloaderDone, setPreloaderDone] = useState(false);
-  const setDone = useCallback((done: boolean) => setPreloaderDone(done), []);
+  // Initialize from sessionStorage so it persists across reloads and remounts
+  const [preloaderDone, setPreloaderDone] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !!window.sessionStorage.getItem('hasVisited');
+    }
+    return false;
+  });
+  const setDone = useCallback((done: boolean) => {
+    setPreloaderDone(done);
+    if (done && typeof window !== 'undefined') {
+      window.sessionStorage.setItem('hasVisited', 'true');
+    }
+  }, []);
   return (
     <PreloaderContext.Provider value={{ preloaderDone, setPreloaderDone: setDone }}>
       {children}

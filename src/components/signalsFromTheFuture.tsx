@@ -138,6 +138,8 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
   const [mobileAutoplay, setMobileAutoplay] = useState(true);
   const [isClient, setIsClient] = useState(false);
+  // Track if a column was just closed to control reappear delay
+  const [justClosedColumn, setJustClosedColumn] = useState<number | null>(null);
 
   // Mobile detection with hydration safety
   useEffect(() => {
@@ -251,8 +253,12 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
       setMobileAutoplay(false); // Stop autoplay when user interacts
     }
     const newExpandedState = expandedColumn === columnIndex ? null : columnIndex;
+    // If closing, set justClosedColumn for delay logic
+    if (expandedColumn === columnIndex) {
+      setJustClosedColumn(columnIndex);
+      setTimeout(() => setJustClosedColumn(null), 500); // clear after 0.5s
+    }
     setExpandedColumn(newExpandedState);
-    
     // Resume autoplay when closing expanded content on mobile
     if ((isMobile || isMobileScreen) && newExpandedState === null) {
       setMobileAutoplay(true);
@@ -304,7 +310,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
             <FutureText
               text="Signals from the Future"
               delay={100}
-              className="text-[2vh] font-bold leading-tight"
+              className="dt-h5"
             />
           </div>
         ),
@@ -330,7 +336,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                 <FutureText
                   text={currentPiece.title}
                   delay={200}
-                  className="text-[2vh] font-normal leading-tight"
+                  className="dt-body-sm"
                 />
               </motion.div>
             </AnimatePresence>
@@ -357,20 +363,27 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
       {
         id: 5,
         content: expandedColumn !== 0 ? (
-          <div className="flex items-end justify-center h-full">
+          <motion.div
+            className="flex items-end justify-center h-full"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{
+              duration: 0.4,
+              delay: justClosedColumn === 0 ? 0.2 : 0.6,
+              ease: "easeOut"
+            }}
+            key="read-more-btn-mobile"
+          >
             <button
               onClick={() => handleReadMore(0)}
-              className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
+              className="dt-btn-secondary transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
             >
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                <FutureText
-                  text="Read More"
-                  delay={1000}
-                  className="text-[1.8vh] leading-tight font-bold"
-                />
+                <span>Read More</span>
               </UnderlineOnHoverAnimation>
             </button>
-          </div>
+          </motion.div>
         ) : <div></div>,
         colSpan: 0,
         rowSpan: 0,
@@ -398,27 +411,21 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         {
           id: 7,
           content: (
-            <motion.div 
+            <motion.div
               className="overflow-hidden"
-              initial={{ maxHeight: 0, opacity: 0 }}
-              animate={{ maxHeight: '25vh', opacity: 1 }}
-              exit={{ maxHeight: 0, opacity: 0 }}
-              transition={{ 
-                maxHeight: { duration: 0.5, ease: [0.42, 0, 0.58, 1] },
-                opacity: { duration: 0.3, ease: "easeInOut" }
-              }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
               style={{ transformOrigin: 'top' }}
             >
               <div className="pt-1">
                 <div className="text-[1.8vh] leading-tight max-h-[23vh] overflow-y-auto pr-1">
                   {currentPiece.summary && currentPiece.summary.map((block: PortableTextBlock, index: number) => (
                     <div key={index} className="mb-2">
-                      <FutureText
-                        text={((block.children || []) as Array<{ text: string }> ).map((child: { text: string }) => child.text).join('') || ''}
-                        delay={300 + (index * 200)}
-                        className="text-[1.8vh] leading-tight"
-                        speed={5}
-                      />
+                      <span className="dt-body-sm">
+                        {((block.children || []) as Array<{ text: string }> ).map((child: { text: string }) => child.text).join('') || ''}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -436,16 +443,16 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         {
           id: 8,
           content: currentPiece.mainImage ? (
-            <motion.div 
+            <motion.div
               className="flex items-center justify-center h-[8vh]"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+              transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
             >
               <Image
-                src={currentPiece.mainImage.asset._ref.startsWith('dummy-') 
-                  ? '/placeholder-image.png' 
+                src={currentPiece.mainImage.asset._ref.startsWith('dummy-')
+                  ? '/placeholder-image.png'
                   : urlFor(currentPiece.mainImage.asset).url()}
                 alt={currentPiece.mainImage.alt || currentPiece.title}
                 width={500}
@@ -485,10 +492,10 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
             >
               <button
                 onClick={() => handleReadMore(0)}
-                className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
+                className="dt-btn-secondary transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
               >
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                  <span className="text-[1.8vh] leading-tight font-bold">Read Less</span>
+                  <span>Read Less</span>
                 </UnderlineOnHoverAnimation>
               </button>
             </motion.div>
@@ -511,9 +518,9 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
             >
-              <a href={getSlugUrl(currentPiece)} className="transition cursor-pointer">
+              <a href={getSlugUrl(currentPiece)} className="dt-btn-secondary transition cursor-pointer">
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                  <span className="text-[1.8vh] leading-tight font-bold">See Article</span>
+                  <span>See Article</span>
                 </UnderlineOnHoverAnimation>
               </a>
             </motion.div>
@@ -553,7 +560,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         <FutureText
           text="Signals from the Future"
           delay={100}
-          className="text-[clamp(1.2vw,2.5vh,1.8vw)] font-bold leading-tight"
+          className="dt-h5"
         />
       </div>
     ),
@@ -572,40 +579,55 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
       content: (
         <div className="flex flex-col h-full">
           <div className="flex-1 flex flex-col justify-between">
-            <div className="flex items-start justify-start flex-1">
+            <div className="flex items-start min-h-[6vh] justify-start flex-1">
               <FutureText
                 text={piece.title}
                 delay={800 + (index * 600)}
-                className="text-[clamp(1vw,2vh,1.5vw)] font-normal leading-tight text-left"
+                className="dt-body-sm"
               />
             </div>
             {!isExpanded && (
-              <div className="flex items-end justify-start">
+              <motion.div
+                className="flex items-end justify-start"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{
+                  duration: 0.4,
+                  delay: justClosedColumn === columnIndex ? 0.2 : 0.8 + (index * 0.6),
+                  ease: "easeOut"
+                }}
+              >
                 <button
                   onClick={() => handleReadMore(columnIndex)}
-                  className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
+                  className="dt-btn-secondary transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
                 >
                   <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                    <FutureText
-                      text="Read More"
-                      delay={1200 + (index * 200)}
-                      className="text-[clamp(0.7vw,1.5vh,1vw)] leading-tight font-bold"
-                    />
+                    <span>Read More</span>
                   </UnderlineOnHoverAnimation>
                 </button>
-              </div>
+              </motion.div>
             )}
           </div>
-          <AnimatePresence mode="wait">
-            {isExpanded && (
-              <DynamicExpandedContent
-                piece={piece}
-                columnIndex={columnIndex}
-                handleReadMore={handleReadMore}
-                getSlugUrl={getSlugUrl}
-              />
-            )}
-          </AnimatePresence>
+          <div style={{ minHeight: 0, height: isExpanded ? 'auto' : 0, transition: 'height 0.5s cubic-bezier(0.42,0,0.58,1)', overflow: 'hidden' }}>
+            <AnimatePresence mode="wait">
+              {isExpanded && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                >
+                  <DynamicExpandedContent
+                    piece={piece}
+                    columnIndex={columnIndex}
+                    handleReadMore={handleReadMore}
+                    getSlugUrl={getSlugUrl}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       ),
       colSpan: 1,
@@ -631,20 +653,18 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
   const textRef = React.useRef<HTMLDivElement>(null);
   const imageRef = React.useRef<HTMLDivElement>(null);
 
-  // Reduce the extra space added to the expanded height for a more compact expansion
-  const expandedHeight = 10000;
 
     return (
       <motion.div
-        className=""
-        initial={{ maxHeight: 0, opacity: 0 }}
-        animate={{ maxHeight: expandedHeight || 500, opacity: 1 }}
-        exit={{ maxHeight: 0, opacity: 0 }}
+        className="mt-4"
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: 'auto', opacity: 1 }}
+        exit={{ height: 0, opacity: 0 }}
         transition={{
-          maxHeight: { duration: 0.6, ease: [0.42, 0, 0.58, 1] },
+          height: { duration: 0.6, ease: [0.42, 0, 0.58, 1] },
           opacity: { duration: 0.4, ease: "easeInOut" }
         }}
-        style={{ transformOrigin: 'top' }}
+        style={{ overflow: 'hidden', transformOrigin: 'top' }}
       >
         <div className="pt-[0.2vh] flex flex-col">
           {/* Summary (text) at the top */}
@@ -670,7 +690,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
           {piece.mainImage && (
             <motion.div
               ref={imageRef}
-              className="h-[12.5vh] mb-2 mt-2 flex items-center justify-center"
+              className="h-[10vh] mb-2 mt-2 flex items-center justify-center"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -689,23 +709,19 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
           )}
         </div>
         <div className="flex items-end justify-between pt-2">
-          <button
-            onClick={() => handleReadMore(columnIndex)}
-            className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
-          >
-            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-              <span className="text-[clamp(0.7vw,1.5vh,1vw)] leading-tight font-bold">
-                Read Less
-              </span>
-            </UnderlineOnHoverAnimation>
-          </button>
-          <a href={getSlugUrl(piece)} className="transition cursor-pointer">
-            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-              <span className="text-[clamp(0.7vw,1.5vh,1vw)] leading-tight font-bold">
-                See Article
-              </span>
-            </UnderlineOnHoverAnimation>
-          </a>
+            <button
+              onClick={() => handleReadMore(columnIndex)}
+              className="dt-btn-secondary transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
+            >
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                <span>Read Less</span>
+              </UnderlineOnHoverAnimation>
+            </button>
+            <a href={getSlugUrl(piece)} className="dt-btn-secondary transition cursor-pointer">
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                <span>See Article</span>
+              </UnderlineOnHoverAnimation>
+            </a>
         </div>
       </motion.div>
     );
@@ -713,7 +729,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
 
   return (
     <div className="bg-[#F9F7F2] p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] relative z-10">
-      <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-[14vh]">
+      <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-auto">
         {desktopGridItems.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
             {item.content}

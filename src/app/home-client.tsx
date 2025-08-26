@@ -101,6 +101,32 @@ interface HomeClientProps {
 
 export default function HomeClient({ data }: HomeClientProps) {
   const { preloaderDone } = usePreloader();
+  const [showSignals, setShowSignals] = React.useState(false);
+  const [showHeader, setShowHeader] = React.useState(false);
+  const [showMain, setShowMain] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!preloaderDone) return;
+    // Responsive timings
+    let isMobile = false;
+    if (typeof window !== 'undefined') {
+      isMobile = window.innerWidth < 768;
+    }
+    // You can adjust these timings as needed
+    const timings = isMobile
+      ? { header: 2500, main: 2800 } // mobile: shorter delays
+      : { header: 4500, main: 5000 }; // desktop: original delays
+
+    setShowSignals(true);
+    const headerTimer = setTimeout(() => setShowHeader(true), timings.header);
+    const mainTimer = setTimeout(() => setShowMain(true), timings.main);
+
+    return () => {
+      clearTimeout(headerTimer);
+      clearTimeout(mainTimer);
+    };
+  }, [preloaderDone]);
+
   if (!preloaderDone) return null;
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -456,69 +482,73 @@ export default function HomeClient({ data }: HomeClientProps) {
 
   return (
     <>
-      <SignalsFromTheFuture />
-      <Header />
-      <main className="bg-[#F9F7F2]" data-sanity={JSON.stringify({ _type: 'homePage', _id: data._id })}>
-        {/* Mobile Layout */}
-        <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden">
-          <div className="p-[2vh] bg-[#F9F7F2] overflow-visible">
-            <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh] overflow-visible">
-              {mobileItems.map((item) => (
-                <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
-                  {item.content}
+      {showSignals && <SignalsFromTheFuture />}
+      {showHeader && <FadeInOnVisible><Header /></FadeInOnVisible>}
+      {showMain && (
+        <>
+          <main className="bg-[#F9F7F2]" data-sanity={JSON.stringify({ _type: 'homePage', _id: data._id })}>
+            {/* Mobile Layout */}
+            <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden">
+              <div className="p-[2vh] bg-[#F9F7F2] overflow-visible">
+                <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh] overflow-visible">
+                  {mobileItems.map((item) => (
+                    <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
+                      {item.content}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-          {/* Vertical Accordion for Mobile */}
-          <FadeInOnVisible>
-            <HomeAccordion data={data} />
-          </FadeInOnVisible>
-          {/* Back to Top Button for Mobile */}
-          <div className="p-[2vh] bg-[#F9F7F2]">
-            <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh]">
-              <div className="col-span-2"></div>
-              <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
-                <FadeInOnVisible>
-                  <span className="underline dt-btn flex items-center gap-1">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      style={{ transform: 'rotate(-45deg)' }}
-                    >
-                      <path d="M12 19V5M5 12l7-7 7 7" />
-                    </svg>
-                    Back to top
-                  </span>
-                </FadeInOnVisible>
+              </div>
+              {/* Vertical Accordion for Mobile */}
+              <FadeInOnVisible>
+                <HomeAccordion data={data} />
+              </FadeInOnVisible>
+              {/* Back to Top Button for Mobile */}
+              <div className="p-[2vh] bg-[#F9F7F2]">
+                <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh]">
+                  <div className="col-span-2"></div>
+                  <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
+                    <FadeInOnVisible>
+                      <span className="underline dt-btn flex items-center gap-1">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          style={{ transform: 'rotate(-45deg)' }}
+                        >
+                          <path d="M12 19V5M5 12l7-7 7 7" />
+                        </svg>
+                        Back to top
+                      </span>
+                    </FadeInOnVisible>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Desktop Layout */}
-        <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
-          <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2] overflow-visible">
-            <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] overflow-visible [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
-              {desktopItems.map((item) => (
-                <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
-                  {item.content}
+            {/* Desktop Layout */}
+            <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
+              <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2] overflow-visible">
+                <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] overflow-visible [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+                  {desktopItems.map((item) => (
+                    <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
+                      {item.content}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              <FadeInOnVisible>
+                <div id="tab">
+                  <HomeAccordion data={data} />
+                </div>
+              </FadeInOnVisible>
             </div>
-          </div>
-          <FadeInOnVisible>
-            <div id="tab">
-            <HomeAccordion data={data} />
-            </div>
-          </FadeInOnVisible>
-        </div>
-      </main>
-      <Footer />
+          </main>
+          <Footer />
+        </>
+      )}
     </>
   );
 }

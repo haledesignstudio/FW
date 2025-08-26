@@ -30,6 +30,7 @@ export default async function RootLayout({
 }>) {
   const { isEnabled } = await draftMode();
 
+
   return (
     <html lang="en" className="scroll-smooth">
       <head>
