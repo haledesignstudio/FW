@@ -4,7 +4,7 @@
 import type { PortableTextBlock } from '@portabletext/types';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
-import PodcastCarousel from '@/components/PodcastCarousel';
+import PodcastCarousel from '@/components/Carousel';
 import { getGridClasses } from '@/components/insights/grid';
 import useIsMobile from '@/hooks/useIsMobile';
 import { useCallback } from 'react';
@@ -136,18 +136,22 @@ export default function PodcastSection({
       colSpan: 4,
       rowSpan: 2,
     },
-
-
     {
-      id: 'podcast-6',
+      id: 'podcast-4',
       content: (
         <FadeInOnVisible>
-          <PodcastCarousel items={carouselItems} />
+          <PodcastCarousel items={carouselItems} readMoreText='Listen now'/>
 
         </FadeInOnVisible>
       ),
       colSpan: 6,
       rowSpan: 2,
+    },
+    {
+      id: 'podcast-5',
+      content: <></>,
+      colSpan: 6,
+      rowSpan: 1,
     },
   ] as const;
 

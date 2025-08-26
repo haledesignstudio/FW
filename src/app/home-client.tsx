@@ -204,7 +204,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="dt-body-sm" data-sanity={JSON.stringify({
+          <div className="dt-body-lg" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'body'
@@ -368,7 +368,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 5,
       content: (
         <FadeInOnVisible>
-          <div className="dt-body-sm" data-sanity={JSON.stringify({
+          <div className="dt-body-lg" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'body'

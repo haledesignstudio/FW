@@ -12,10 +12,6 @@ import Link from 'next/link';
 
 type ContactPageContent = {
   title: string;
-  seo?: {
-    metaTitle?: string;
-    metaDescription?: string;
-  };
   pageHeader: {
     mainTitle: string;
   };
@@ -443,146 +439,151 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             )}
           </div>
           {/* ROW 6: Text (col-span-2) */}
-          <div className="col-span-2 row-span-1 bg-[#F9F7F2] flex items-end justify-start">
-            <p className="dt-body-sm">{data.contactFormIntro || "We'd love to connect. We just need to know:"}</p>
-          </div>
+          <FadeInOnVisible className="col-span-2 row-span-1 bg-[#F9F7F2] flex items-end justify-start">
+            <div className="col-span-2 row-span-1 bg-[#F9F7F2] flex items-end justify-start">
+              <p className="dt-body-sm">{data.contactFormIntro || "We'd love to connect. We just need to know:"}</p>
+            </div>
+          </FadeInOnVisible>
           {/* ROWS 7-8: Contact Form with 6-column grid layout */}
-          <form
-            noValidate
-            onSubmit={onSubmitWithUI}
-            className="col-span-6 row-span-2 bg-[#F9F7F2] grid grid-cols-6 gap-x-[1.795vw] gap-y-[3.2vh]"
-          >
-            {/* Left column: the 5 contact fields (spans 2 cols) */}
-            <div className="col-span-2 flex flex-col space-y-[3.2vh]">
-              {/* Name */}
-              <div className="relative">
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  placeholder={`${data.contactForm?.namePlaceholder ?? "Name and Surname"} *`}
-                  className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
+
+          <FadeInOnVisible className="col-span-6 row-span-2 bg-[#F9F7F2] grid grid-cols-6 gap-x-[1.795vw] gap-y-[3.2vh]">
+            <form
+              noValidate
+              onSubmit={onSubmitWithUI}
+              className="col-span-6 row-span-2 bg-[#F9F7F2] grid grid-cols-6 gap-x-[1.795vw] gap-y-[3.2vh]"
+            >
+              {/* Left column: the 5 contact fields (spans 2 cols) */}
+              <div className="col-span-2 flex flex-col space-y-[3.2vh]">
+                {/* Name */}
+                <div className="relative">
+                  <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder={`${data.contactForm?.namePlaceholder ?? "Name and Surname"} *`}
+                    className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
           ${triedSubmit && getError("name")}`}
-                />
-                {/* tooltip */}
-                <span
-                  className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
+                  />
+                  {/* tooltip */}
+                  <span
+                    className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
           bg-[#DC5A50] text-white shadow transition-opacity
           ${triedSubmit && getError("name") ? "opacity-100" : "opacity-0"}`}
-                >
-                  {getError("name")}
-                </span>
-              </div>
+                  >
+                    {getError("name")}
+                  </span>
+                </div>
 
-              {/* Email */}
-              <div className="relative">
-                <input
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  placeholder={`${data.contactForm?.emailPlaceholder ?? "Email"} *`}
-                  className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
+                {/* Email */}
+                <div className="relative">
+                  <input
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder={`${data.contactForm?.emailPlaceholder ?? "Email"} *`}
+                    className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
           ${triedSubmit && getError("email")}`}
-                />
-                <span
-                  className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
+                  />
+                  <span
+                    className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
           bg-[#DC5A50] text-white shadow transition-opacity
           ${triedSubmit && getError("email") ? "opacity-100" : "opacity-0"}`}
-                >
-                  {getError("email")}
-                </span>
-              </div>
+                  >
+                    {getError("email")}
+                  </span>
+                </div>
 
-              {/* Phone */}
-              <div className="relative">
-                <input
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleChange}
-                  placeholder={`${data.contactForm?.phonePlaceholder ?? "Phone Number"} *`}
-                  className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
+                {/* Phone */}
+                <div className="relative">
+                  <input
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    placeholder={`${data.contactForm?.phonePlaceholder ?? "Phone Number"} *`}
+                    className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
           ${triedSubmit && getError("phone")}`}
-                />
-                <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
+                  />
+                  <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
           bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError("phone") ? "opacity-100" : "opacity-0"}`}>
-                  {getError("phone")}
-                </span>
-              </div>
+                    {getError("phone")}
+                  </span>
+                </div>
 
-              {/* Company */}
-              <div className="relative">
-                <input
-                  name="company"
-                  value={form.company}
-                  onChange={handleChange}
-                  placeholder={`${data.contactForm?.companyPlaceholder ?? "Company"} *`}
-                  className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
+                {/* Company */}
+                <div className="relative">
+                  <input
+                    name="company"
+                    value={form.company}
+                    onChange={handleChange}
+                    placeholder={`${data.contactForm?.companyPlaceholder ?? "Company"} *`}
+                    className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
           ${triedSubmit && getError("company")}`}
-                />
-                <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
+                  />
+                  <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
           bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError("company") ? "opacity-100" : "opacity-0"}`}>
-                  {getError("company")}
-                </span>
-              </div>
+                    {getError("company")}
+                  </span>
+                </div>
 
-              {/* Position */}
-              <div className="relative">
-                <input
-                  name="position"
-                  value={form.position}
-                  onChange={handleChange}
-                  placeholder={`${data.contactForm?.positionPlaceholder ?? "Position"} *`}
-                  className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
+                {/* Position */}
+                <div className="relative">
+                  <input
+                    name="position"
+                    value={form.position}
+                    onChange={handleChange}
+                    placeholder={`${data.contactForm?.positionPlaceholder ?? "Position"} *`}
+                    className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full
           ${triedSubmit && getError("position")}`}
-                />
-                <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
+                  />
+                  <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
           bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError("position") ? "opacity-100" : "opacity-0"}`}>
-                  {getError("position")}
-                </span>
+                    {getError("position")}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            {/* Message (spans next 3 cols) */}
-            <div className="col-span-3 flex flex-col">
-              <div className="relative h-full">
-                <textarea
-                  name="message"
-                  value={form.message}
-                  onChange={handleChange}
-                  placeholder={`${data.contactForm?.messagePlaceholder ?? "Message"} *`}
-                  className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none h-full w-full resize-none
+              {/* Message (spans next 3 cols) */}
+              <div className="col-span-3 flex flex-col">
+                <div className="relative h-full">
+                  <textarea
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
+                    placeholder={`${data.contactForm?.messagePlaceholder ?? "Message"} *`}
+                    className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none h-full w-full resize-none
           ${triedSubmit && getError("message")}`}
-                />
-                <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
+                  />
+                  <span className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
           bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError("message") ? "opacity-100" : "opacity-0"}`}>
-                  {getError("message")}
-                </span>
+                    {getError("message")}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            {/* Submit (final col) */}
-            <div className="col-span-1 flex items-start justify-end">
-              <button
-                type="submit"
-                disabled={formStatus === "sent" || formStatus === "sending"}
-                tabIndex={0}
-                onClick={() => document.querySelector("form")?.requestSubmit()}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") document.querySelector("form")?.requestSubmit();
-                }}
-                className="dt-btn cursor-pointer select-none disabled:opacity-50 disabled:pointer-events-none disabled:cursor-default"
-              >
-                <UnderlineOnHoverAnimation hasStaticUnderline>{formStatus === "sent" ? "Sent!" : formStatus === "sending" ? "Sending…" : "Submit"}</UnderlineOnHoverAnimation>
-              </button>
-            </div>
-            {/* Status messages */}
+              {/* Submit (final col) */}
+              <div className="col-span-1 flex items-start justify-end">
+                <button
+                  type="submit"
+                  disabled={formStatus === "sent" || formStatus === "sending"}
+                  tabIndex={0}
+                  onClick={() => document.querySelector("form")?.requestSubmit()}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") document.querySelector("form")?.requestSubmit();
+                  }}
+                  className="dt-btn cursor-pointer select-none disabled:opacity-50 disabled:pointer-events-none disabled:cursor-default"
+                >
+                  <UnderlineOnHoverAnimation hasStaticUnderline>{formStatus === "sent" ? "Sent!" : formStatus === "sending" ? "Sending…" : "Submit"}</UnderlineOnHoverAnimation>
+                </button>
+              </div>
+              {/* Status messages */}
               <div className="">
                 {formStatus === "error" && <p className="text-red-600">Error sending message. Please try again.</p>}
               </div>
-          </form>
+            </form>
+          </FadeInOnVisible>
 
-          
+
           {/* ROW 5: Keynote Title (cols 1-3) */}
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="h-full w-full flex items-start justify-start">
@@ -598,6 +599,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           </div>
 
           {/* ROW 5: Empty (col 4) */}
+
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div></div>
           </div>
@@ -605,16 +607,20 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           {/* ROW 5: Text + Link (cols 5-6) */}
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="col-span-1 row-span-1 h-full flex flex-col justify-between">
+              <FadeInOnVisible>
               <p className="dt-body-sm">
                 {data.bookingKeynote?.text || "Contact us to book a keynote speaker for your event."}
               </p>
+              </FadeInOnVisible>
               <Link
-                href="/keynotes#speakers"
+                href="/keynotes"
                 className="dt-btn"
               >
+                <FadeInOnVisible>
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   Find the right speaker for your executive team
                 </UnderlineOnHoverAnimation>
+                </FadeInOnVisible>
               </Link>
             </div>
           </div>
@@ -622,9 +628,11 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           {/* ROW 6: Keynote Subheading (cols 1-3) */}
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="h-full w-full flex items-start justify-start">
+              <FadeInOnVisible>
               <h2 className="dt-h3">
                 {data.keynoteSubheading || "Keynote Speakers"}
               </h2>
+              </FadeInOnVisible>
             </div>
           </div>
 

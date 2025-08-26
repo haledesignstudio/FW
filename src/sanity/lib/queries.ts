@@ -9,7 +9,9 @@ export const speakersQuery = defineQuery(`
     bio,
     image {
       asset,
-      alt
+      alt,
+      crop,
+      hotspot
     },
     position,
     company,

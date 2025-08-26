@@ -100,11 +100,11 @@ const categories = [
   { key: 'licenseSection', label: 'License', shortLabel: 'License' },
   { key: 'disclaimerSection', label: 'Disclaimer', shortLabel: 'Disclaimer' },
   { key: 'iframesSection', label: 'iFrames', shortLabel: 'iFrames' },
-  { key: 'contentLiabilitySection', label: 'Content Liability', shortLabel: 'Content Liability' },
-  { key: 'privacySection', label: 'Your Privacy', shortLabel: 'Your Privacy' },
+  { key: 'contentLiabilitySection', label: 'Content liability', shortLabel: 'Content liability' },
+  { key: 'privacySection', label: 'Your privacy', shortLabel: 'Your privacy' },
   { key: 'reservationOfRightsSection', label: 'Reservation of Rights', shortLabel: 'Reservation of rights' },
   { key: 'removalOfLinksSection', label: 'Removal of links from our website', shortLabel: 'Removal of links from our website'},
-  { key: 'hyperlinksSection', label: 'Hyperlinks to our content', shortLabel: 'Hyperlinks to our content'}
+  { key: 'hyperlinksSection', label: 'Hyperlinking to our content', shortLabel: 'Hyperlinking to our content'}
 ]
 
 interface TermsAndConditionsClientProps {
@@ -234,7 +234,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     {
       id: 6,
       content: (
-        <FadeInOnVisible key={`header-${selectedCategory}`}>
+        <FadeInOnVisible className="h-full w-full flex flex-col justify-end items-start" key={`header-${selectedCategory}`}>
           <div className="h-full w-full flex flex-col justify-end items-start">
             <h2 className="dt-h3 mb-0 pb-0">
               {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
@@ -317,8 +317,8 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
   // Prevent hydration mismatch by showing loading state until client-side JS loads
   if (!isClient) {
     return (
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {items.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}
@@ -502,8 +502,8 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
 
   // Desktop layout
   return (
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {items.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}

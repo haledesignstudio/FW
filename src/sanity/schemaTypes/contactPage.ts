@@ -13,25 +13,6 @@ const contactPage = defineType({
       validation: (Rule) => Rule.required()
     }),
     defineField({
-      name: 'seo',
-      title: 'SEO Settings',
-      type: 'object',
-      fields: [
-        {
-          name: 'metaTitle',
-          title: 'Meta Title',
-          type: 'string',
-          validation: (Rule) => Rule.max(60)
-        },
-        {
-          name: 'metaDescription',
-          title: 'Meta Description',
-          type: 'text',
-          validation: (Rule) => Rule.max(160)
-        }
-      ]
-    }),
-    defineField({
       name: 'pageHeader',
       title: 'Page Header',
       type: 'object',
