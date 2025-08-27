@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
 
 interface FutureTextProps {
   text: string;
@@ -106,9 +107,31 @@ export function FutureText({
     }
   }, [text, delay, speed, triggerOnVisible, hasTriggered, animateText]);
 
+  // Use a key that changes when animation starts to re-trigger the fade-in
+  const [fadeKey, setFadeKey] = useState(0);
+  useEffect(() => {
+    if (isAnimating) setFadeKey((k) => k + 1);
+  }, [isAnimating]);
+
+  // Render each revealed character in a motion.span for per-letter fade-in
   return (
-    <span ref={elementRef} className={`${className} ${isAnimating ? 'text-black' : ''}`}>
-      {displayText}
+    <span
+      key={fadeKey}
+      ref={elementRef}
+      className={`${className} ${isAnimating ? 'text-black' : ''}`}
+      style={{ whiteSpace: 'pre-wrap' }}
+    >
+      {displayText.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0.15 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+          style={{ display: 'inline-block' }}
+        >
+          {char}
+        </motion.span>
+      ))}
       {isAnimating && <span className="animate-pulse">|</span>}
     </span>
   );

@@ -7,6 +7,7 @@ import type { HomePageContent } from '@/app/home-client';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import FadeInOnVisible from './FadeInOnVisible';
+import { AccordionPulse } from './AccordionPulse';
 import { client } from '@/sanity/lib/client';
 import { caseStudyQuery } from '@/sanity/lib/queries';
 import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
@@ -88,6 +89,16 @@ function getGridClasses(item: GridItem) {
     }
     return base.join(' ');
 }
+
+const hoverHintWhenClosed = (isActive: boolean) =>
+    !isActive
+        ? [
+            // smooth + GPU
+            "motion-safe:will-change-transform motion-safe:transition-transform motion-safe:duration-300",
+            // the hint
+            "hover:scale-[1.01] ",
+        ].join(" ")
+        : "";
 
 export default function HomeAccordion({ data }: HomeAccordionProps) {
     const { isMobile } = useResponsiveLayout();
@@ -444,6 +455,13 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
             },
         ];
 
+    // For pulse: find all closed tabs, assign delay by their order
+    const closedTabs = tabs.filter(tab => !openTabs.has(tab.id));
+    const closedTabDelays: Record<string, number> = {};
+    closedTabs.forEach((tab, idx) => {
+        closedTabDelays[tab.id] = idx;
+    });
+
     return (
         <div className="">
             {isMobile ? (
@@ -500,13 +518,13 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 
 
                                         {/* Row 7-10: Section Image (iframe for section 1) */}
-                                                                                <div className="col-span-4 row-start-6 row-span-4 bg-[#1B1B1B] p-4">
-                                                                                    <iframe
-                                                                                        src={data.section1.section1URL}
-                                                                                        className="w-full h-[40vh] bg-white"
-                                                                                        title="Future World Analytics Dashboard"
-                                                                                    />
-                                                                                </div>
+                                        <div className="col-span-4 row-start-6 row-span-4 bg-[#1B1B1B] p-4">
+                                            <iframe
+                                                src={data.section1.section1URL}
+                                                className="w-full h-[40vh] bg-white"
+                                                title="Future World Analytics Dashboard"
+                                            />
+                                        </div>
 
                                         <div className="col-span-4 row-start-7 h-[5vh] bg-[#1B1B1B]"></div>
                                         <div className="col-span-4 row-start-8 h-[5vh] bg-[#1B1B1B]"></div>
@@ -515,8 +533,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                 {/* Section 1 Title when collapsed */}
                                 {!openTabs.has('benchmark') && (
-                                    <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[13vh] overflow-hidden">
-                                        <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
+                                    <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden relative z-10">
+                                        <AccordionPulse pulse delay={closedTabDelays['benchmark'] ?? 0} paused={openTabs.size > 0}>
+                                            <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
+                                        </AccordionPulse>
                                     </div>
                                 )}
                             </div>
@@ -611,7 +631,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         </div>
 
                                         {/* Row 14: Section Description3 */}
-                                        <div className="col-span-4 row-start-14 bg-[#DC5A50] text-white p-4">
+                                        <div className="col-span-4 row-start-14 row-span-3 bg-[#DC5A50] text-white p-4">
                                             <div className="dt-body-sm">
                                                 <PortableText value={data.section2.section2Description3} />
                                             </div>
@@ -621,8 +641,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                 {/* Section 2 Title when collapsed */}
                                 {!openTabs.has('process') && (
-                                    <div className="col-span-4 bg-[#DC5A50] text-white p-4 flex items-start cursor-pointer h-[13vh] overflow-hidden">
-                                        <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
+                                    <div className="col-span-4 bg-[#DC5A50] text-white p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden relative z-10">
+                                        <AccordionPulse pulse delay={closedTabDelays['process'] ?? 0} paused={openTabs.size > 0}>
+                                            <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
+                                        </AccordionPulse>
                                     </div>
                                 )}
                             </div>
@@ -664,25 +686,25 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                         {/* Row 3: Keep your existing mobile carousel for now */}
                                         <div className="col-span-4 row-start-3 bg-[#F9F7F2] p-4">
-                                             <div
-                                onClick={(e) => e.stopPropagation()}
-                                onMouseDown={(e) => e.stopPropagation()}
-                                onPointerDown={(e) => e.stopPropagation()}
-                            >
-                                <CaseStudiesCarousel
-                                    items={carouselItems}
-                                    imageHeight="25vh"
-                                    captionHeight="25vh"
-                                    innerRowGap="4vh"
-                                    gap="4vh"
-                                    mobileImageHeight="25vh"
-                                    mobileCaptionHeight="25vh"
-                                    mobileInnerRowGap="2vh"
-                                    mobileGap="0"
-                                    rounded="rounded-2xl"
-                                    ariaLabel="Case studies carousel"
-                                />
-                            </div>
+                                            <div
+                                                onClick={(e) => e.stopPropagation()}
+                                                onMouseDown={(e) => e.stopPropagation()}
+                                                onPointerDown={(e) => e.stopPropagation()}
+                                            >
+                                                <CaseStudiesCarousel
+                                                    items={carouselItems}
+                                                    imageHeight="25vh"
+                                                    captionHeight="25vh"
+                                                    innerRowGap="4vh"
+                                                    gap="4vh"
+                                                    mobileImageHeight="25vh"
+                                                    mobileCaptionHeight="25vh"
+                                                    mobileInnerRowGap="2vh"
+                                                    mobileGap="0"
+                                                    rounded="rounded-2xl"
+                                                    ariaLabel="Case studies carousel"
+                                                />
+                                            </div>
 
                                         </div>
                                     </>
@@ -690,8 +712,10 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                 {/* Section 3 Title when collapsed */}
                                 {!openTabs.has('case-studies') && (
-                                    <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden">
-                                        <h2 className="dt-h1 leading-none">{data.section3.section3Title}</h2>
+                                    <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden relative z-10">
+                                        <AccordionPulse pulse delay={closedTabDelays['case-studies'] ?? 0} paused={openTabs.size > 0}>
+                                            <h2 className="dt-h1 leading-none">{data.section3.section3Title}</h2>
+                                        </AccordionPulse>
                                     </div>
                                 )}
                             </div>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import { AccordionPulse } from './AccordionPulse';
 import type { PortableTextBlock } from '@portabletext/react';
 import useIsMobile from '@/hooks/useIsMobile';
 import './accordion-animations.css';
@@ -200,6 +201,8 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
     const toggle = (id: Active) => setActive(prev => (prev === id ? 'sec2' : id));
     const [openTabs, setOpenTabs] = useState<number[]>([]);
 
+    // No pulse logic for desktop; only mobile closed tabs will pulse
+
     // Desktop animation state (matches WhatWeDoAccordion)
     const [animatingSection, setAnimatingSection] = useState<Active | null>(null);
     const [hasInteracted, setHasInteracted] = useState(false);
@@ -247,6 +250,12 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                 // Fill in content later
             },
         ];
+        // Pulse logic for mobile: pulse closed tabs, staggered by idx
+        const closedMobileTabs = tabs.map((_, idx) => !openTabs.includes(idx) ? idx : null).filter(idx => idx !== null) as number[];
+        const closedMobileTabDelays: Record<number, number> = {};
+        closedMobileTabs.forEach((tabIdx, i) => {
+            closedMobileTabDelays[tabIdx] = i;
+        });
         return (
             <div className="w-screen -mx-[calc((100vw-100%)/2)] px-0">
                 {tabs.map((tab, idx) => {
@@ -263,10 +272,12 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                         >
                             {/* Closed state: only row 1 visible, click to open */}
                             {!isOpen && (
-                                <div className="grid grid-cols-4 min-h-[8vh] items-center px-3 py-2 w-full">
-                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{tab.number}</div>
-                                    <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{tab.title}</div>
-                                </div>
+                                <AccordionPulse pulse delay={closedMobileTabDelays[idx] ?? 0} paused={openTabs.length > 0}>
+                                    <div className="grid grid-cols-4 min-h-[8vh] items-center px-3 py-2 w-full">
+                                        <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{tab.number}</div>
+                                        <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{tab.title}</div>
+                                    </div>
+                                </AccordionPulse>
                             )}
                             {/* Open state: full vertical accordion for tab 1 */}
                             {isOpen && idx === 0 && (

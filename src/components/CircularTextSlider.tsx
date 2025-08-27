@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { PortableText } from '@portabletext/react';
 import { PortableTextBlock } from '@portabletext/types';
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
@@ -245,16 +246,23 @@ export default function CircularTextSlider({
 
       <div className="circular-slider-wrapper">
         {activeSpeaker && (
-          <div className="speaker-info-panel">
-            <Image
-              src={activeSpeaker.image.asset}
-              alt={activeSpeaker.image.alt || activeSpeaker.name}
-              className="speaker-image"
-              width={120}
-              height={360}
-              style={{ objectFit: 'cover' }}
-              priority
-            />
+          <motion.div
+            key={activeSpeaker._id}
+            initial={{ opacity: 0.25 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="speaker-info-panel"
+          >
+            <div className="speaker-image" style={{ width: '14vw', height: '45.2vh', objectFit: 'cover', flexShrink: 0 }}>
+              <Image
+                src={activeSpeaker.image.asset}
+                alt={activeSpeaker.image.alt || activeSpeaker.name}
+                width={120}
+                height={360}
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                priority
+              />
+            </div>
             <div className="flex flex-col justify-between">
               <div className="flex flex-col gap-[2vh]">
                 <h3 className="dt-body-lg">{activeSpeaker.name}</h3>
@@ -286,10 +294,8 @@ export default function CircularTextSlider({
                   )}
                 </div>
               </div>
-
-
             </div>
-          </div>
+          </motion.div>
         )}
 
 
