@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import { PortableTextBlock } from "@portabletext/types";
+import { motion } from "framer-motion";
 
 interface Speaker {
   _id: string;
@@ -118,11 +119,15 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
 
   return (
     activeSpeaker && (
-      <div className="grid grid-cols-4 w-full bg-[#F9F7F2] relative overflow-x-hidden">
+      <motion.div
+        key={activeSpeaker._id}
+        initial={{ opacity: 0.25 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="grid grid-cols-4 w-full bg-[#F9F7F2] relative overflow-x-hidden"
+      >
         {/* Speaker Image - col 1-2, row 1-2 */}
-        <Image
-          src={activeSpeaker.image.asset}
-          alt={activeSpeaker.image.alt || activeSpeaker.name}
+        <div
           className="col-span-2 row-span-2 object-cover"
           style={{
             gridColumn: "1/3",
@@ -132,19 +137,27 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
             maxWidth: 240,
             maxHeight: 360,
             objectPosition: 'top center',
-            marginBottom: 0
+            marginBottom: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
-          width={240}
-          height={360}
-          priority
-        />
-        
+        >
+          <Image
+            src={activeSpeaker.image.asset}
+            alt={activeSpeaker.image.alt || activeSpeaker.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }}
+            width={240}
+            height={360}
+            priority
+          />
+        </div>
+
         {/* Top Right: Read More - col 3-4, row 1 */}
         <div className="col-start-3 col-span-2 row-start-1 flex items-start justify-end p-2">
           <button
             className="text-[2vh] font-bold text-right leading-tight"
             onClick={() => {
-              console.log('activeSpeaker:', activeSpeaker);
               const slugStr = typeof activeSpeaker.slug === 'string'
                 ? activeSpeaker.slug
                 : activeSpeaker.slug?.current;
@@ -155,7 +168,7 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
             </UnderlineOnHoverAnimation>
           </button>
         </div>
-        
+
         {/* Book Button - col 3-4, row 2 */}
         <div className="col-start-3 col-span-2 row-start-2 flex items-end justify-end p-2 mb-15">
           {activeSpeaker.email && (
@@ -171,12 +184,12 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
             </a>
           )}
         </div>
-        
+
         {/* Speaker Name - col 1-2, row 2 */}
         <div className="col-start-1 col-span-2 row-start-2 font-bold text-[2.2vh] self-end pl-2 mt-0">
           {activeSpeaker.name}
         </div>
-        
+
         {/* Speaker Bio - col 1-4, row 3 */}
         <div className="col-start-1 col-span-4 row-start-3 min-h-[15vh] text-[1.7vh] p-2 mt-0">
           <PortableText value={activeSpeaker.summary} />
@@ -241,7 +254,7 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
           {/* Bottom cut-off overlay */}
           <div className="pointer-events-none absolute left-0 bottom-0 w-full h-1/2 bg-[#F9F7F2]" />
         </div>
-      </div>
+  </motion.div>
     )
   );
 };

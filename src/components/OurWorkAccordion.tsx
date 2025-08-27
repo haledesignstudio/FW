@@ -8,9 +8,9 @@ import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import Link from 'next/link';
 import FadeInOnVisible from './FadeInOnVisible';
+import { AccordionPulse } from './AccordionPulse';
 import type { PortableTextBlock, PortableTextSpan } from '@portabletext/types';
 
-// ⬇️ New imports to mirror HomeAccordion’s working setup
 import { client } from '@/sanity/lib/client';
 import { caseStudyQuery } from '@/sanity/lib/queries';
 import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
@@ -102,8 +102,17 @@ const hoverHintWhenClosed = (isActive: boolean) =>
     : "";
 
 export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
-  const { isMobile } = useResponsiveLayout();
+  // ...existing code...
   const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
+
+  // Pulse delay logic for closed tabs (must be after openTabs is initialized)
+  const tabOrder = ['supercharge-tomorrow', 'case-studies'];
+  const closedTabs = tabOrder.filter(tabId => !openTabs.has(tabId));
+  const closedTabDelays: Record<string, number> = {};
+  closedTabs.forEach((tabId, idx) => {
+    closedTabDelays[tabId] = idx;
+  });
+  const { isMobile } = useResponsiveLayout();
 
   // ⬇️ Load case studies via GROQ (same as HomeAccordion)
   const [caseStudies, setCaseStudies] = useState<CaseStudyFromQuery[]>([]);
@@ -406,8 +415,10 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                 {/* Section 1 Title when collapsed */}
                 {!openTabs.has('supercharge-tomorrow') && (
-                  <div className="col-span-4 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden">
-                    <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
+                  <div className="col-span-4 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden relative z-10">
+                    <AccordionPulse pulse delay={closedTabDelays['supercharge-tomorrow'] ?? 0} paused={openTabs.size > 0}>
+                      <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
+                    </AccordionPulse>
                   </div>
                 )}
               </div>
@@ -474,8 +485,10 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                 {/* Section 2 Title when collapsed */}
                 {!openTabs.has('case-studies') && (
-                  <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden">
-                    <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>
+                  <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden relative z-10">
+                    <AccordionPulse pulse delay={closedTabDelays['case-studies'] ?? 0} paused={openTabs.size > 0}>
+                      <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>
+                    </AccordionPulse>
                   </div>
                 )}
               </div>

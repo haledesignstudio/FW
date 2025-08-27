@@ -7,6 +7,7 @@ import type { HomePageContent } from '@/app/home-client';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import FadeInOnVisible from './FadeInOnVisible';
+import { AccordionPulse } from './AccordionPulse';
 import { client } from '@/sanity/lib/client';
 import { caseStudyQuery } from '@/sanity/lib/queries';
 import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
@@ -27,22 +28,22 @@ type GridItem = {
 
 // shape returned by your query
 type CaseStudyFromQuery = {
-    _id: string;
-    title: string;
-    slug?: string | null;
-    image?: { url?: string | null } | null;
-    summary?: PortableTextBlock[] | null; // 👈 typed, not unknown
+  _id: string;
+  title: string;
+  slug?: string | null;
+  image?: { url?: string | null } | null;
+  summary?: PortableTextBlock[] | null; // 👈 typed, not unknown
 };
 
 function extractSummaryText(summary?: PortableTextBlock[] | null): string {
-    if (!summary || summary.length === 0) return '';
-    // find the first "block" and its first span with text
-    const block = summary.find(b => b._type === 'block');
-    if (!block || !Array.isArray(block.children)) return '';
-    const firstSpan = block.children.find(
-        (c): c is PortableTextSpan => c._type === 'span' && typeof c.text === 'string'
-    );
-    return firstSpan?.text ?? '';
+  if (!summary || summary.length === 0) return '';
+  // find the first "block" and its first span with text
+  const block = summary.find(b => b._type === 'block');
+  if (!block || !Array.isArray(block.children)) return '';
+  const firstSpan = block.children.find(
+    (c): c is PortableTextSpan => c._type === 'span' && typeof c.text === 'string'
+  );
+  return firstSpan?.text ?? '';
 }
 
 
@@ -99,7 +100,6 @@ const hoverHintWhenClosed = (isActive: boolean) =>
         ].join(" ")
         : "";
 
-
 export default function HomeAccordion({ data }: HomeAccordionProps) {
     const { isMobile } = useResponsiveLayout();
     const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
@@ -136,9 +136,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
     }, [caseStudies]);
 
     // Helper function to toggle a tab's open state
-    // Helper function to toggle a tab's open state (disabled on mobile)
     const toggleTab = (tabId: string) => {
-        if (isMobile) return; // no expand/contract on mobile
         setOpenTabs(prevOpenTabs => {
             const next = new Set(prevOpenTabs);
             if (next.has(tabId)) next.delete(tabId);
@@ -146,7 +144,6 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
             return next;
         });
     };
-
 
     const tabs: {
         id: string;
@@ -181,7 +178,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         id: 1,
                         content: (
                             <FadeInOnVisible>
-                                <div className="dt-h4 text-[#F9F7F2]">
+                                <div className="dt-h4 text-white">
                                     <PortableText value={data.section1.section1Body} />
                                 </div>
                             </FadeInOnVisible>
@@ -223,8 +220,8 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 4,
                         content: (
-                            <FadeInOnVisible className="h-full flex flex-col justify-center ">
-                                <div className="h-full flex flex-col justify-center ">
+                            <FadeInOnVisible className="h-full flex flex-col justify-end ">
+                                <div className="h-full flex flex-col justify-end ">
                                     <div className="dt-btn">
                                         <a
                                             href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
@@ -276,7 +273,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible className="h-full flex flex-col justify-end mt-[10vh] ">
                                 <div className="h-full flex flex-col justify-end ">
-                                    <div className="dt-h4 text-[#F9F7F2]">
+                                    <div className="dt-h4 text-white">
                                         <PortableText value={data.section2.section2Body} />
                                     </div>
                                 </div>
@@ -411,7 +408,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible className="h-full flex flex-col justify-end">
                                 <div className="h-full flex flex-col justify-end">
-                                    <div className="dt-h4">
+                                    <div className="dt-h4 text-black">
                                         <PortableText value={data.section3.section3Body} />
                                     </div>
                                 </div>
@@ -458,10 +455,15 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
             },
         ];
 
+    // For pulse: find all closed tabs, assign delay by their order
+    const closedTabs = tabs.filter(tab => !openTabs.has(tab.id));
+    const closedTabDelays: Record<string, number> = {};
+    closedTabs.forEach((tab, idx) => {
+        closedTabDelays[tab.id] = idx;
+    });
+
     return (
-        <div style={{
-            background: 'linear-gradient(to bottom, #1B1B1B 33.33%, #DC5A50 33.33% 66.66%, #F9F7F2 66.66%)'
-        }}>
+        <div className="">
             {isMobile ? (
                 /* Mobile Layout - Individual Tab Containers with Overlap */
                 <div className="">
@@ -476,35 +478,33 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     >
                         <div className={[
                             "overflow-hidden transition-[max-height] duration-500",
-                            !(isMobile ? true : openTabs.has('benchmark'))
+                            !openTabs.has('benchmark')
                                 ? "max-h-[16vh]"
                                 : "max-h-[9999px]"
                         ].join(' ')}>
-                            <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]  px-[4.53vw] py-[2.09vh]">
-                                {(isMobile ? true : openTabs.has('benchmark')) && (
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(12.5vh, max-content)' }}>
+                                {openTabs.has('benchmark') && (
                                     <>
-
-                                        <div className="col-span-4 row-start-1 bg-[#1B1B1B]"></div>
                                         {/* Row 1-2: Section Title */}
                                         <div
-                                            className="col-span-4 row-span-2 row-start-2 bg-[#1B1B1B] text-[#F9F7F2] cursor-pointer"
+                                            className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
                                         >
                                             <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
                                         </div>
 
                                         {/* Row 3: Section Body */}
-                                        <div className="col-span-4 bg-[#1B1B1B] text-[#F9F7F2] row-start-4">
+                                        <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-white p-4">
                                             <div className="dt-h4">
                                                 <PortableText value={data.section1.section1Body} />
                                             </div>
                                         </div>
 
                                         {/* Row 4: Empty */}
-                                        <div className="col-span-4 row-start-5 h-[5vh] bg-[#1B1B1B]"></div>
+                                        <div className="col-span-4 row-start-4 h-[5vh] bg-[#1B1B1B]"></div>
 
                                         {/* Row 5: CTA Section */}
-                                        <div className="col-span-4 row-start-6 bg-[#1B1B1B] text-[#F9F7F2] flex items-end">
+                                        <div className="col-span-4 row-start-5 bg-[#1B1B1B] text-white p-4">
                                             <a
                                                 href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
                                                 className="transition cursor-pointer dt-btn"
@@ -515,24 +515,30 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                             </a>
                                         </div>
 
-                                        <div className="col-span-4 row-start-7 bg-[#1B1B1B]"></div>
+                                
+
+                                        {/* Row 7-10: Section Image (iframe for section 1) */}
+                                        <div className="col-span-4 row-start-6 row-span-4 bg-[#1B1B1B] p-4">
+                                            <iframe
+                                                src={data.section1.section1URL}
+                                                className="w-full h-[40vh] bg-white"
+                                                title="Future World Analytics Dashboard"
+                                            />
+                                        </div>
+
+                                        <div className="col-span-4 row-start-7 h-[5vh] bg-[#1B1B1B]"></div>
+                                        <div className="col-span-4 row-start-8 h-[5vh] bg-[#1B1B1B]"></div>
                                     </>
                                 )}
 
                                 {/* Section 1 Title when collapsed */}
-                                {!(isMobile ? true : openTabs.has('benchmark')) && (
-                                    <div className="col-span-4 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer h-[13vh] overflow-hidden">
-                                        <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
+                                {!openTabs.has('benchmark') && (
+                                    <div className="col-span-4 bg-[#1B1B1B] text-white p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden relative z-10">
+                                        <AccordionPulse pulse delay={closedTabDelays['benchmark'] ?? 0} paused={openTabs.size > 0}>
+                                            <h2 className="dt-h1 leading-none">{data.section1.section1Title}</h2>
+                                        </AccordionPulse>
                                     </div>
                                 )}
-                            </div>
-                            {/* Row 7-10: Section Image (iframe for section 1) */}
-                            <div className="col-span-4 row-start-8 row-span-11 bg-[#1B1B1B]">
-                                <iframe
-                                    src={data.section1.section1URL}
-                                    className="w-full h-[105vh] bg-white"
-                                    title="Future World Analytics Dashboard"
-                                />
                             </div>
                         </div>
                     </div>
@@ -548,85 +554,97 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     >
                         <div className={[
                             "overflow-hidden transition-[max-height] duration-500",
-                            !(isMobile ? true : openTabs.has('process'))
+                            !openTabs.has('process')
                                 ? "max-h-[16vh]"
                                 : "max-h-[9999px]"
                         ].join(' ')}>
-                            <div className="grid grid-cols-4 auto-rows-[7.701vh] gap-y-[2.09vh] gap-x-[4.53vw] px-[4.53vw] py-[2.09vh]">
-                                {(isMobile ? true : openTabs.has('process')) && (
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+                                {openTabs.has('process') && (
                                     <>
                                         {/* Row 1: Section 2 Main Title */}
-                                        <div className="col-span-4 row-start-1 bg-[#DC5A50]"></div>
                                         <div
-                                            className="col-span-4 row-start-2 bg-[#DC5A50] text-[#F9F7F2] flex items-center cursor-pointer"
+                                            className="col-span-4 row-start-1 bg-[#DC5A50] text-white p-4 flex items-center cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
                                         >
                                             <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
                                         </div>
 
                                         {/* Row 2: Section Body */}
-                                        <div className="col-span-4 row-start-3 bg-[#DC5A50] text-[#F9F7F2]">
+                                        <div className="col-span-4 row-start-2 bg-[#DC5A50] text-white p-4">
                                             <div className="dt-h4">
                                                 <PortableText value={data.section2.section2Body} />
                                             </div>
                                         </div>
 
                                         {/* Row 3-7: Section Image (Col 2-4) */}
-                                        <div className="row-span-4 row-start-5 col-span-1 bg-[#DC5A50]"></div>
-                                        <div className="row-span-4 row-start-5 col-span-3 bg-[#DC5A50] flex items-center justify-end">
+                                        <div className="col-span-1 row-start-3 row-span-5 bg-[#DC5A50]"></div>
+                                        <div className="col-start-2 col-span-3 row-start-3 row-span-5 bg-[#DC5A50] p-4">
                                             {data.section2?.section2Image?.asset && (
-                                                <div className="w-full h-[44vh] relative ">
+                                                <div className="w-full h-[40vh] relative">
                                                     <Image
                                                         src={urlFor(data.section2.section2Image.asset).url()}
                                                         alt={data.section2.section2Image.alt || 'Process image'}
-                                                        className="w-full h-[44vh] object-contain opacity-50"
+                                                        className="w-full h-full object-contain opacity-50"
                                                         fill
-                                                        sizes="0vw"
+                                                        sizes="75vw"
                                                     />
                                                 </div>
                                             )}
                                         </div>
 
-                                        
+                                        {/* Row 8: Empty */}
+                                        <div className="col-span-4 row-start-8 h-[5vh] bg-[#DC5A50]"></div>
 
                                         {/* Row 9: Section Heading1 */}
-                                        <div className="row-start-10 row-span-9 col-span-4 flex flex-col gap-[7vh]">
-                                            <div className="col-span-4 bg-[#DC5A50] text-[#F9F7F2] flex flex-col gap-[2.09vh]">
-                                                <div className="dt-h5">
-                                                    <PortableText value={data.section2.section2Heading1} />
-                                                </div>
-                                                <div className="dt-body-sm">
-                                                    <PortableText value={data.section2.section2Description1} />
-                                                </div>
+                                        <div className="col-span-4 row-start-9 bg-[#DC5A50] text-white p-4">
+                                            <div className="dt-h5">
+                                                <PortableText value={data.section2.section2Heading1} />
                                             </div>
+                                        </div>
 
-                                            {/* Row 11: Section Heading2 */}
-                                            <div className="col-span-4 bg-[#DC5A50] text-[#F9F7F2] flex flex-col gap-[2.09vh]">
-                                                <div className="dt-h5">
-                                                    <PortableText value={data.section2.section2Heading2} />
-                                                </div>
-                                                <div className="dt-body-sm">
-                                                    <PortableText value={data.section2.section2Description2} />
-                                                </div>
+                                        {/* Row 10: Section Description1 */}
+                                        <div className="col-span-4 row-start-10 bg-[#DC5A50] text-white p-4">
+                                            <div className="dt-body-sm">
+                                                <PortableText value={data.section2.section2Description1} />
                                             </div>
+                                        </div>
 
-                                            {/* Row 13: Section Heading3 */}
-                                            <div className="col-span-4 bg-[#DC5A50] text-[#F9F7F2] flex flex-col gap-[2.09vh]">
-                                                <div className="dt-h5">
-                                                    <PortableText value={data.section2.section2Heading3} />
-                                                </div>
-                                                <div className="dt-body-sm">
-                                                    <PortableText value={data.section2.section2Description3} />
-                                                </div>
+                                        {/* Row 11: Section Heading2 */}
+                                        <div className="col-span-4 row-start-11 bg-[#DC5A50] text-white p-4">
+                                            <div className="dt-h5">
+                                                <PortableText value={data.section2.section2Heading2} />
+                                            </div>
+                                        </div>
+
+                                        {/* Row 12: Section Description2 */}
+                                        <div className="col-span-4 row-start-12 bg-[#DC5A50] text-white p-4">
+                                            <div className="dt-body-sm">
+                                                <PortableText value={data.section2.section2Description2} />
+                                            </div>
+                                        </div>
+
+                                        {/* Row 13: Section Heading3 */}
+                                        <div className="col-span-4 row-start-13 bg-[#DC5A50] text-white p-4">
+                                            <div className="dt-h5">
+                                                <PortableText value={data.section2.section2Heading3} />
+                                            </div>
+                                        </div>
+
+                                        {/* Row 14: Section Description3 */}
+                                        <div className="col-span-4 row-start-14 row-span-3 bg-[#DC5A50] text-white p-4">
+                                            <div className="dt-body-sm">
+                                                <PortableText value={data.section2.section2Description3} />
                                             </div>
                                         </div>
                                     </>
                                 )}
 
                                 {/* Section 2 Title when collapsed */}
-                                {!(isMobile ? true : openTabs.has('process')) && (
-                                    <div className="col-span-4 bg-[#DC5A50] text-[#F9F7F2] p-4 flex items-start cursor-pointer h-[13vh] overflow-hidden">
-                                        <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
+                                {!openTabs.has('process') && (
+                                    <div className="col-span-4 bg-[#DC5A50] text-white p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden relative z-10">
+                                        <AccordionPulse pulse delay={closedTabDelays['process'] ?? 0} paused={openTabs.size > 0}>
+                                            <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
+                                        </AccordionPulse>
                                     </div>
                                 )}
                             </div>
@@ -644,32 +662,30 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     >
                         <div className={[
                             "overflow-hidden transition-[max-height] duration-500",
-                            !(isMobile ? true : openTabs.has('case-studies'))
+                            !openTabs.has('case-studies')
                                 ? "max-h-[20vh]"
                                 : "max-h-[9999px]"
                         ].join(' ')}>
-                            <div className="grid grid-cols-4 auto-rows-[7.701vh] gap-y-[2.09vh] gap-x-[4.53vw] px-[4.53vw] py-[2.09vh]">
-                                {(isMobile ? true : openTabs.has('case-studies')) && (
+                            <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+                                {openTabs.has('case-studies') && (
                                     <>
                                         {/* Row 1: Main Title */}
-                                        <div className="col-span-4 row-start-1 bg-[#F9F7F2]"></div>
-
                                         <div
-                                            className="col-span-4 row-start-2 bg-[#F9F7F2] flex items-center cursor-pointer"
+                                            className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                                         >
                                             <h2 className="dt-h1 leading-none">{data.section3.section3Title}</h2>
                                         </div>
 
                                         {/* Row 2: Section Body */}
-                                        <div className="col-span-4 row-start-3 row-span-2 bg-[#F9F7F2]">
+                                        <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black p-4">
                                             <div className="dt-h4">
                                                 <PortableText value={data.section3.section3Body} />
                                             </div>
                                         </div>
 
                                         {/* Row 3: Keep your existing mobile carousel for now */}
-                                        <div className="col-span-4 row-start-5  row-span-6 bg-[#F9F7F2]">
+                                        <div className="col-span-4 row-start-3 bg-[#F9F7F2] p-4">
                                             <div
                                                 onClick={(e) => e.stopPropagation()}
                                                 onMouseDown={(e) => e.stopPropagation()}
@@ -695,9 +711,11 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 )}
 
                                 {/* Section 3 Title when collapsed */}
-                                {!(isMobile ? true : openTabs.has('case-studies')) && (
-                                    <div className="col-span-4 bg-[#F9F7F2] p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden">
-                                        <h2 className="dt-h1 leading-none">{data.section3.section3Title}</h2>
+                                {!openTabs.has('case-studies') && (
+                                    <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden relative z-10">
+                                        <AccordionPulse pulse delay={closedTabDelays['case-studies'] ?? 0} paused={openTabs.size > 0}>
+                                            <h2 className="dt-h1 leading-none">{data.section3.section3Title}</h2>
+                                        </AccordionPulse>
                                     </div>
                                 )}
                             </div>

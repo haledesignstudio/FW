@@ -225,6 +225,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
 
     if (isMobile) {
         // Mobile vertical accordion layout with animated max-height
+        // Pulse logic for mobile: pulse closed tabs, staggered by idx
+        const closedMobileTabs = data.accordion.items.map((_, idx) => !openTabs.includes(idx) ? idx : null).filter(idx => idx !== null) as number[];
+        const closedMobileTabDelays: Record<number, number> = {};
+        closedMobileTabs.forEach((tabIdx, i) => {
+            closedMobileTabDelays[tabIdx] = i;
+        });
         return (
             <div className="w-screen -mx-[calc((100vw-100%)/2)] px-0">
                 {data.accordion.items.map((item, idx) => {
@@ -241,10 +247,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                         >
                             {/* Closed state: only row 1 visible, click to open */}
                             {!isOpen && (
-                                <div className="grid grid-cols-4 w-full px-[4.53vw] py-[2.09vh]">
-                                    <div className="col-span-1 row-start-1 row-span-1 dt-h1 leading-tight">{idx + 1}</div>
-                                    <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
-                                </div>
+                                <AccordionPulse pulse delay={closedMobileTabDelays[idx] ?? 0} paused={openTabs.length > 0}>
+                                    <div className="grid grid-cols-4 w-full px-[4.53vw] py-[2.09vh]">
+                                        <div className="col-span-1 row-start-1 row-span-1 dt-h1 leading-tight">{idx + 1}</div>
+                                        <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
+                                    </div>
+                                </AccordionPulse>
                             )}
                             {/* Open state: full vertical accordion */}
                             {isOpen && (
@@ -1001,6 +1009,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
         },
     ];
 
+    // No pulse logic for desktop; only mobile closed tabs will pulse
     return (
         <div className="grid grid-cols-6">
             {sections.map(({ key, clickable, bg, fg, items, collapsedItems }) => {
@@ -1009,9 +1018,6 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
 
                 const isActive = active === key;
                 const isCollapsed = key !== 'sec1' && !isActive;
-                // const showContent =
-                //     (key === 'sec1' && active === null) ||
-                //     (key !== 'sec1' && isActive);
 
                 return (
                     <section
