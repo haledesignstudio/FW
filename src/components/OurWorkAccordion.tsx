@@ -346,7 +346,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                   <>
                     {/* Row 1-2: Section Title */}
                     <div
-                      className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer"
+                      className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer z-10"
                       onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
@@ -445,7 +445,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                   <>
                     {/* Row 1: Main Title */}
                     <div
-                      className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer"
+                      className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer z-10"
                       onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>

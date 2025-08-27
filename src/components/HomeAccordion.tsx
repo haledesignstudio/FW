@@ -563,7 +563,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                     <>
                                         {/* Row 1: Section 2 Main Title */}
                                         <div
-                                            className="col-span-4 row-start-1 bg-[#DC5A50] text-white p-4 flex items-center cursor-pointer"
+                                            className="col-span-4 row-start-1 bg-[#DC5A50] text-white p-4 flex items-center cursor-pointer z-10"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
                                         >
                                             <h2 className="dt-h1 leading-none">{data.section2.section2Title}</h2>
@@ -671,7 +671,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                     <>
                                         {/* Row 1: Main Title */}
                                         <div
-                                            className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer"
+                                            className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-center cursor-pointer z-10"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                                         >
                                             <h2 className="dt-h1 leading-none">{data.section3.section3Title}</h2>
