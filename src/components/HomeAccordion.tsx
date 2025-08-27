@@ -730,12 +730,19 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     return (
                         <div
                             key={tab.id}
-                            className="transition-all duration-500 overflow-hidden"
+                            role="button"
+                            aria-expanded={isActive}
+                            tabIndex={0}
+                            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleTab(tab.id)}
+                            onClick={() => toggleTab(tab.id)}
+                            className={[
+                                "group relative transition-all duration-500 overflow-hidden", // existing
+                                hoverHintWhenClosed(isActive),                                // 👈 new
+                            ].join(' ')}
                             style={{
                                 backgroundColor: tab.color,
                                 color: tab.color === '#F9F7F2' ? '#000' : '#fff',
                             }}
-                            onClick={() => toggleTab(tab.id)}
                         >
                             {/* Grid wrapper: collapsed shows exactly one row height */}
                             <div className={[
