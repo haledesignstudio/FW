@@ -250,8 +250,8 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
           {
             id: 6,
             content: (
-              <FadeInOnVisible className="h-full flex flex-col justify-end">
-                <Link href="/supercharge-tomorrow" className="h-full flex flex-col justify-end">
+              <FadeInOnVisible className="h-full flex flex-col justify-center">
+                <Link href="/supercharge-tomorrow" className="h-full flex flex-col justify-center">
                   <div className="dt-btn">
                     <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
                       {data.accordionSection1.cta ?? 'Get in Touch'}

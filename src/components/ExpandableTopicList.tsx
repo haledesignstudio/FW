@@ -7,6 +7,7 @@ import { client } from '@/sanity/lib/client';
 import { topicQuery } from '@/sanity/lib/queries';
 import { urlFor } from '@/sanity/lib/image'; // adjust path if needed
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 
 
@@ -88,10 +89,13 @@ export default function ExpandableTopicList() {
                                         )}
                                     </div>
                                     {/* Row 4: topic heading col-span-4 */}
+                                    <FadeInOnVisible>
                                     <div className="col-span-4 mb-[2vh]">
                                         <h3 className="dt-h3">{topic.topicHeading}</h3>
                                     </div>
+                                    </FadeInOnVisible>
                                     {/* Row 5: contents array, left col 1-2, right col 3-4 */}
+                                    <FadeInOnVisible>
                                     <div className="col-span-2 space-y-[2vh]">
                                         {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`left-${i}`}>
@@ -100,6 +104,8 @@ export default function ExpandableTopicList() {
                                             </div>
                                         ))}
                                     </div>
+                                    </FadeInOnVisible>
+                                    <FadeInOnVisible>
                                     <div className="col-span-2 space-y-[2vh]">
                                         {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`right-${i}`}>
@@ -108,8 +114,10 @@ export default function ExpandableTopicList() {
                                             </div>
                                         ))}
                                     </div>
+                                    </FadeInOnVisible>
                                     {/* Row 11: CTA col 3-4 */}
                                     <div className="col-start-3 col-span-2 flex items-end justify-end mt-[2vh]">
+                                        <FadeInOnVisible>
                                         <a
                                             href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
                                             className="dt-btn underline"
@@ -117,6 +125,7 @@ export default function ExpandableTopicList() {
                                         >
                                             {topic.topicButtonText}
                                         </a>
+                                        </FadeInOnVisible>
                                     </div>
                                 </div>
                             </div>
@@ -160,12 +169,15 @@ export default function ExpandableTopicList() {
                             } className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
                                 {/* td-1: topicHeading */}
                                 <div className="col-span-2 row-span-1 p-[1vh]">
+                                    <FadeInOnVisible>
                                     <p className="dt-h4">{topic.topicHeading}</p>
+                                    </FadeInOnVisible>
                                 </div>
                                 <div className="col-span-2 row-span-1" />
                                 {/* td-3: topicImage */}
                                 <div className="col-span-1 row-span-3 p-[1vh]">
                                     {imageUrl && (
+                                        <FadeInOnVisible>
                                         <Image
                                             src={imageUrl}
                                             alt={topic.topicImage.alt ?? 'Topic Image'}
@@ -173,6 +185,7 @@ export default function ExpandableTopicList() {
                                             height={1080}
                                             className="object-cover w-full h-full"
                                         />
+                                        </FadeInOnVisible>
                                     )}
                                 </div>
                                 <div className="col-span-1 row-span-1" />
@@ -182,8 +195,12 @@ export default function ExpandableTopicList() {
                                     <div className="space-y-[3vh]">
                                         {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`left-${i}`}>
+                                                <FadeInOnVisible>
                                                 <h4 className="dt-h5">{item.heading}</h4>
+                                                </FadeInOnVisible>
+                                                <FadeInOnVisible>
                                                 <p className="dt-body-sm">{item.description}</p>
+                                                </FadeInOnVisible>
                                             </div>
                                         ))}
                                     </div>
@@ -191,8 +208,12 @@ export default function ExpandableTopicList() {
                                     <div className="space-y-[3vh]">
                                         {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`right-${i}`}>
+                                                <FadeInOnVisible>
                                                 <h4 className="dt-h5">{item.heading}</h4>
+                                                </FadeInOnVisible>
+                                                <FadeInOnVisible>
                                                 <p className="dt-body-sm">{item.description}</p>
+                                                </FadeInOnVisible>
                                             </div>
                                         ))}
                                     </div>
@@ -200,6 +221,7 @@ export default function ExpandableTopicList() {
                                 <div className="col-span-1 row-span-1" />
                                 {/* td-7: CTA */}
                                 <div className="col-span-1 row-span-1 p-[1vh] flex items-end justify-end text-right">
+                                    <FadeInOnVisible>
                                     <a
                                         href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
                                         className="dt-btn"
@@ -210,6 +232,7 @@ export default function ExpandableTopicList() {
                                         </UnderlineOnHoverAnimation>
 
                                     </a>
+                                    </FadeInOnVisible>
                                 </div>
                                 <div className="col-span-2 row-span-1" />
                             </div>

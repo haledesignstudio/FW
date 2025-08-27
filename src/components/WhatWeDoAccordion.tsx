@@ -164,15 +164,15 @@ const wrapStrings = (children: React.ReactNode): React.ReactNode => {
 
 const ptComponents: PortableTextComponents = {
     list: {
-        bullet: ({ children }) => <ul className="list-disc pl-6 mb-4">{children}</ul>,
-        number: ({ children }) => <ol className="list-decimal pl-6 mb-4">{children}</ol>,
+        bullet: ({ children }) => <ul className="list-disc pl-[10vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:pl-[7.5%] mb-[0]">{children}</ul>,
+        number: ({ children }) => <ol className="list-decimal pl-[10vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:pl-[7.5%] mb-[0]">{children}</ol>,
     },
     listItem: {
-        bullet: ({ children }) => <li className="mb-1">{wrapStrings(children)}</li>,
-        number: ({ children }) => <li className="mb-1">{wrapStrings(children)}</li>,
+        bullet: ({ children }) => <li className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</li>,
+        number: ({ children }) => <li className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</li>,
     },
     block: {
-        normal: ({ children }) => <p className="mb-2">{wrapStrings(children)}</p>,
+        normal: ({ children }) => <p className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</p>,
     },
 };
 
@@ -240,14 +240,14 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                         >
                             {/* Closed state: only row 1 visible, click to open */}
                             {!isOpen && (
-                                <div className="grid grid-cols-4 min-h-[7vh] items-center px-3 py-2 w-full">
-                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
+                                <div className="grid grid-cols-4 w-full px-[4.53vw] py-[2.09vh]">
+                                    <div className="col-span-1 row-start-1 row-span-1 dt-h1 leading-tight">{idx + 1}</div>
                                     <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
                                 </div>
                             )}
                             {/* Open state: full vertical accordion */}
                             {isOpen && (
-                                <div className="grid grid-cols-4 gap-y-1  items-center auto-rows-[minmax(50px,auto)] px-3 py-2 w-full">
+                                <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] px-[4.53vw] py-[2.09vh]">
                                     {/* Row 5: col 1: number, col 2-4: subheading (first word in row 5, rest in row 6) */}
                                     <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
                                     {/* Subheading split: first word row 5, rest row 6 */}
@@ -256,7 +256,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                         const [firstWord, ...rest] = subheading.split(' ');
                                         return <>
                                             <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight">{firstWord}</div>
-                                            <div className="col-start-2 row-start-2 row-span-1 col-span-3 text-right dt-h3 leading-tight">{rest.join(' ')}</div>
+                                            <div className="col-start-2 row-start-2 row-span-1 col-span-3 text-right text-balance dt-h3">{rest.join(' ')}</div>
                                         </>;
                                     })()}
                                     {/* Row 7-8: Image (col 1-4) */}
@@ -274,28 +274,26 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                         </div>
                                     )}
                                     {/* Row 9-11: Description (col 1-4) */}
-                                    <div className="col-span-4 dt-h4 mt-2 pb-4">
+                                    <div className="col-span-4 row-start-5 row-span-4 dt-h4">
                                         <PortableText value={item.description} components={ptComponents} />
                                     </div>
-                                    {/* Row 12: Empty */}
-                                    <div className="col-span-4 h-[1vh]"></div>
                                     {/* Row 13: col 1-2: prompt, col 3-4: entry 0 */}
-                                    <div className="col-span-2 dt-h5 leading-tight">
+                                    <div className="col-span-2 dt-h5 row-start-9 row-span-2">
                                         <PortableText value={item.prompt} />
                                     </div>
                                     <div className="col-span-2">
-                                        <div className="dt-h5 pb-4"><PortableText value={item.entries[0].title} /></div>
-                                        <div className="dt-body-sm pb-4"><PortableText value={item.entries[0].body} /></div>
+                                        <div className="dt-h5 pb-[2vh] row-span-2 row-start-9"><PortableText value={item.entries[0].title} /></div>
+                                        <div className="dt-body-sm"><PortableText value={item.entries[0].body} /></div>
                                     </div>
                                     {/* Row 15-16: col 3-4: entry 1 */}
-                                    <div className="col-start-3 col-span-2">
-                                        <div className="dt-h5 pb-4"><PortableText value={item.entries[1].title} /></div>
-                                        <div className="dt-body-sm pb-4"><PortableText value={item.entries[1].body} /></div>
+                                    <div className="col-start-3 col-span-2 row-span-2 row-start-11">
+                                        <div className="dt-h5 pb-[2vh]"><PortableText value={item.entries[1].title} /></div>
+                                        <div className="dt-body-sm"><PortableText value={item.entries[1].body} /></div>
                                     </div>
                                     {/* Row 17-18: col 1-2: entry 2 */}
-                                    <div className="col-span-2">
-                                        <div className="dt-h5 pb-4"><PortableText value={item.entries[2].title} /></div>
-                                        <div className="dt-body-sm pb-4"><PortableText value={item.entries[2].body} /></div>
+                                    <div className="col-start-3 col-span-2 row-span-2 row-start-13">
+                                        <div className="dt-h5 pb-[2vh]"><PortableText value={item.entries[2].title} /></div>
+                                        <div className="dt-body-sm"><PortableText value={item.entries[2].body} /></div>
                                     </div>
                                 </div>
                             )}
@@ -509,7 +507,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 5,
                     content:
-                        <div className="flex h-full pt-[14.5vh]">
+                        <div className="flex h-full pt-[12vh]">
                             <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[0].prompt} />
                             </div>
@@ -620,7 +618,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                         </div>,
                     colSpan: 1,
                     rowSpan: 1,
-                    mobileColSpan: 2,
+                    mobileColSpan: 1,
                     mobileRowSpan: 1,
                     landscapeColSpan: 3,
                     landscapeRowSpan: 1,
@@ -630,7 +628,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     content:
                         <></>,
                     colSpan: 1, rowSpan: 6,
-                    mobileColSpan: 2, mobileRowSpan: 1,
+                    mobileColSpan: 1, mobileRowSpan: 1,
                     landscapeColSpan: 3, landscapeRowSpan: 1,
                 },
                 {
@@ -706,14 +704,14 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     colSpan: 3,
                     rowSpan: 4,
                     mobileColSpan: 2,
-                    mobileRowSpan: 1,
+                    mobileRowSpan: 2,
                     landscapeColSpan: 3,
                     landscapeRowSpan: 1,
                 },
                 {
                     id: 5,
                     content:
-                        <div className="flex h-full pt-[14.5vh]">
+                        <div className="flex h-full pt-[12vh]">
                             <div className="dt-h5 text-balance text-[#F9F7F2]">
                                 <PortableText value={data.accordion.items[1].prompt} />
                             </div>
@@ -916,7 +914,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 5,
                     content:
-                        <div className="flex h-full pt-[14.5vh]">
+                        <div className="flex h-full pt-[12vh]">
                             <div className="dt-h5 text-balance text-[#232323]">
                                 <PortableText value={data.accordion.items[2].prompt} />
                             </div>

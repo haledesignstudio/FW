@@ -64,6 +64,8 @@ export default function PartnersMarquee({
     [partners]
   );
 
+  useEffect(() => { setReady(true); }, []);
+
   // Recompute repeats so each half >= container width (prevents gaps)
   useEffect(() => {
     if (!items.length) return;

@@ -95,7 +95,7 @@ const hoverHintWhenClosed = (isActive: boolean) =>
             // smooth + GPU
             "motion-safe:will-change-transform motion-safe:transition-transform motion-safe:duration-300",
             // the hint
-            "hover:-translate-y-[4px] hover:scale-[1.01] ",
+            "hover:scale-[1.01] ",
         ].join(" ")
         : "";
 
@@ -223,8 +223,8 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 4,
                         content: (
-                            <FadeInOnVisible className="h-full flex flex-col justify-end ">
-                                <div className="h-full flex flex-col justify-end ">
+                            <FadeInOnVisible className="h-full flex flex-col justify-center ">
+                                <div className="h-full flex flex-col justify-center ">
                                     <div className="dt-btn">
                                         <a
                                             href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
