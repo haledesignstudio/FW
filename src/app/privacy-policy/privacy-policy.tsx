@@ -272,7 +272,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
     {
       id: 8,
       content: (
-        <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
+        <FadeInOnVisible className="scroll-mask-bottom" key={`content-${selectedCategory}`} threshold={0.05}>
           <div className="h-full max-h-[52vh] overflow-y-auto pr-[1vh] pointer-events-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
             {renderContent()}

@@ -308,3 +308,19 @@ body::-webkit-scrollbar {
     margin-bottom: clamp(0.9vw, 2.5vh, 1.25vw);
   }
 }
+
+.scroll-mask-bottom {
+  --fade: 10px; /* adjust as needed */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black calc(100% - var(--fade)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black calc(100% - var(--fade)),
+    transparent 100%
+  );
+}

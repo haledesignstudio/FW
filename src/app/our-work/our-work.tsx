@@ -334,7 +334,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
         <div className="h-full flex items-center">
           <PartnersMarquee
             partners={data.partners}
-            durationSec={40}     // loop time
+            durationSec={100}     // loop time
             logoHeightVh={21}     // logo height
             gap="5.385vw"            // spacing between logos
             edgeFadeVw={1.795}       // edge fade width; set 0 to disable
