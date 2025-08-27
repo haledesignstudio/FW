@@ -249,7 +249,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             {!isOpen && (
                                 <AccordionPulse pulse delay={closedMobileTabDelays[idx] ?? 0} paused={openTabs.length > 0}>
                                     <div className="grid grid-cols-4 w-full px-[4.53vw] py-[2.09vh]">
-                                        <div className="col-span-1 row-start-1 row-span-1 dt-h1 leading-tight">{idx + 1}</div>
+                                        <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
                                         <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
                                     </div>
                                 </AccordionPulse>
