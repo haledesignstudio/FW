@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import './accordion-animations.css';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
+import { AccordionPulse } from './AccordionPulse';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableTextBlock } from '@portabletext/react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
@@ -240,10 +241,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                         >
                             {/* Closed state: only row 1 visible, click to open */}
                             {!isOpen && (
-                                <div className="grid grid-cols-4 min-h-[7vh] items-center px-3 py-2 w-full">
-                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
-                                    <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
-                                </div>
+                                <AccordionPulse pulse delay={idx * 2.5}>
+                                    <div className="grid grid-cols-4 min-h-[7vh] items-center px-3 py-2 w-full">
+                                        <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
+                                        <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
+                                    </div>
+                                </AccordionPulse>
                             )}
                             {/* Open state: full vertical accordion */}
                             {isOpen && (
