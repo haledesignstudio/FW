@@ -12,6 +12,7 @@ interface FutureTextProps {
   onUpdate?: (animatedText: string) => void; 
 }
 
+
 export function FutureText({
   text,
   className = '',
@@ -20,7 +21,7 @@ export function FutureText({
   triggerOnVisible = false,
   onUpdate,
 }: FutureTextProps) {
-  const [displayText, setDisplayText] = useState('');
+  const [displayWords, setDisplayWords] = useState<string[]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -31,34 +32,38 @@ export function FutureText({
     return chars[Math.floor(Math.random() * chars.length)];
   };
 
+  // Animate by word, not by character
   const animateText = useCallback(async () => {
     setIsAnimating(true);
-    const targetText = text;
-    let currentText = '';
+    const words = text.split(/(\s+)/); // keep spaces as tokens
+    let currentWords: string[] = [];
 
-    for (let i = 0; i < targetText.length; i++) {
-      const targetChar = targetText[i];
-
-      if (targetChar === ' ') {
-        currentText += ' ';
-        setDisplayText(currentText);
-        onUpdate?.(currentText);
+    for (let w = 0; w < words.length; w++) {
+      const word = words[w];
+      if (/^\s+$/.test(word)) {
+        // spaces
+        currentWords.push(word);
+        setDisplayWords([...currentWords]);
+        onUpdate?.(currentWords.join(''));
         continue;
       }
-
-      const cycles = Math.floor(Math.random() * 4) + 3;
-
-      for (let cycle = 0; cycle < cycles; cycle++) {
-        const randomChar = cycle === cycles - 1 ? targetChar : getRandomChar();
-        const updated = currentText + randomChar;
-        setDisplayText(updated);
-        onUpdate?.(updated);
-        await new Promise((resolve) => setTimeout(resolve, speed));
+      let current = '';
+      for (let i = 0; i < word.length; i++) {
+        const targetChar = word[i];
+        const cycles = Math.floor(Math.random() * 4) + 3;
+        for (let cycle = 0; cycle < cycles; cycle++) {
+          const randomChar = cycle === cycles - 1 ? targetChar : getRandomChar();
+          const updated = current + randomChar;
+          setDisplayWords([...currentWords, updated + word.slice(i + 1)]);
+          onUpdate?.([...currentWords, updated + word.slice(i + 1)].join(''));
+          await new Promise((resolve) => setTimeout(resolve, speed));
+        }
+        current += targetChar;
       }
-
-      currentText += targetChar;
+      currentWords.push(current);
+      setDisplayWords([...currentWords]);
+      onUpdate?.(currentWords.join(''));
     }
-
     setIsAnimating(false);
   }, [text, speed, onUpdate]);
 
@@ -113,7 +118,7 @@ export function FutureText({
     if (isAnimating) setFadeKey((k) => k + 1);
   }, [isAnimating]);
 
-  // Render each revealed character in a motion.span for per-letter fade-in
+  // Render each word in a span with white-space: nowrap to prevent word breaks
   return (
     <span
       key={fadeKey}
@@ -121,16 +126,20 @@ export function FutureText({
       className={`${className} ${isAnimating ? 'text-black' : ''}`}
       style={{ whiteSpace: 'pre-wrap' }}
     >
-      {displayText.split('').map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0.15 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, ease: 'easeOut' }}
-          style={{ display: 'inline-block' }}
-        >
-          {char}
-        </motion.span>
+      {displayWords.map((word, i) => (
+        <span key={i} style={{ whiteSpace: /\s+/.test(word) ? undefined : 'nowrap', display: 'inline-block' }}>
+          {word.split('').map((char, j) => (
+            <motion.span
+              key={j}
+              initial={{ opacity: 0.15 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5, ease: 'easeOut' }}
+              style={{ display: 'inline-block' }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
       ))}
       {isAnimating && <span className="animate-pulse">|</span>}
     </span>
