@@ -36,7 +36,7 @@ export function FutureText({
   const animateText = useCallback(async () => {
     setIsAnimating(true);
     const words = text.split(/(\s+)/); // keep spaces as tokens
-    let currentWords: string[] = [];
+  const currentWords: string[] = [];
 
     for (let w = 0; w < words.length; w++) {
       const word = words[w];
