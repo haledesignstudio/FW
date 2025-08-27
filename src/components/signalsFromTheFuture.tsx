@@ -75,6 +75,7 @@ const signalsQuery = `{
     _id,
     title,
     contentText,
+    subheading,
     "mainImage": articleContents[0].image,
     publishedAt,
     "type": "provocative-scenario",
@@ -95,12 +96,12 @@ type GridItem = {
 
 const getGridClasses = (item: GridItem) => {
   const base = ['bg-[#F9F7F2]', 'flex', 'flex-col'];
-  
+
   if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
     base.push('block', '[@media(max-width:767px)]:hidden');
   } else {
     base.push(`col-span-${item.mobileColSpan}`, `row-span-${item.mobileRowSpan}`);
-    
+
     // Add explicit grid positioning for mobile expanded content
     if (item.id === 7) { // Summary content row 2-3 col 3-4
       base.push('col-start-3', 'row-start-2');
@@ -196,8 +197,8 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
           summary: Array.isArray(data.caseStudies.subheading)
             ? data.caseStudies.subheading
             : (typeof data.caseStudies.subheading === 'string' && data.caseStudies.subheading.trim() !== ''
-                ? [{ _type: 'block', _key: Math.random().toString(36).substr(2, 9), children: [{ text: data.caseStudies.subheading }] }]
-                : []),
+              ? [{ _type: 'block', _key: Math.random().toString(36).substr(2, 9), children: [{ text: data.caseStudies.subheading }] }]
+              : []),
           mainImage: data.caseStudies.mainImage,
           publishedAt: data.caseStudies.publishedAt,
           type: data.caseStudies.type,
@@ -217,11 +218,11 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         if (data.provocativeScenarios) pieces.push({
           _id: data.provocativeScenarios._id,
           title: data.provocativeScenarios.title,
-          summary: Array.isArray(data.provocativeScenarios.contentText)
-            ? data.provocativeScenarios.contentText
-            : (typeof data.provocativeScenarios.contentText === 'string' && data.provocativeScenarios.contentText.trim() !== ''
-                ? [{ _type: 'block', _key: Math.random().toString(36).substr(2, 9), children: [{ text: data.provocativeScenarios.contentText }] }]
-                : []),
+          summary: Array.isArray(data.provocativeScenarios.subheading)
+            ? data.provocativeScenarios.subheading
+            : (typeof data.provocativeScenarios.subheading === 'string' && data.provocativeScenarios.subheading.trim() !== ''
+              ? [{ _type: 'block', _key: Math.random().toString(36).substr(2, 9), children: [{ text: data.provocativeScenarios.subheading }] }]
+              : []),
           mainImage: data.provocativeScenarios.mainImage,
           publishedAt: data.provocativeScenarios.publishedAt,
           type: data.provocativeScenarios.type,
@@ -265,13 +266,13 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
     }
   };
 
-//   const handleReadLess = () => {
-//     setExpandedColumn(null);
-//     const isMobileScreen = isClient && window.innerWidth < 768;
-//     if (isMobile || isMobileScreen) {
-//       setMobileAutoplay(true); // Resume autoplay
-//     }
-//   };
+  //   const handleReadLess = () => {
+  //     setExpandedColumn(null);
+  //     const isMobileScreen = isClient && window.innerWidth < 768;
+  //     if (isMobile || isMobileScreen) {
+  //       setMobileAutoplay(true); // Resume autoplay
+  //     }
+  //   };
 
   const getSlugUrl = (piece: SignalPiece) => {
     const typeToPath: Record<string, string> = {
@@ -424,7 +425,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                   {currentPiece.summary && currentPiece.summary.map((block: PortableTextBlock, index: number) => (
                     <div key={index} className="mb-2">
                       <span className="dt-body-sm">
-                        {((block.children || []) as Array<{ text: string }> ).map((child: { text: string }) => child.text).join('') || ''}
+                        {((block.children || []) as Array<{ text: string }>).map((child: { text: string }) => child.text).join('') || ''}
                       </span>
                     </div>
                   ))}
@@ -483,7 +484,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         {
           id: 10,
           content: (
-            <motion.div 
+            <motion.div
               className="flex items-end justify-start h-full"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -511,7 +512,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         {
           id: 11,
           content: (
-            <motion.div 
+            <motion.div
               className="flex items-end justify-end h-full"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -577,13 +578,16 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
     desktopGridItems.push({
       id: columnIndex + 1,
       content: (
-        <div className="flex flex-col h-full">
-          <div className="flex-1 flex flex-col justify-between">
-            <div className="flex items-start min-h-[6vh] justify-start flex-1">
+        <div className="flex flex-col h-full gap-[clamp(0.8vw,2vh,1vw)]">
+          <div className="flex-1 flex flex-col justify-between gap-[clamp(0.8vw,2vh,1vw)]">
+            <div className="flex items-start justify-start flex-1">
               <FutureText
                 text={piece.title}
-                delay={800 + (index * 600)}
-                className="dt-body-sm"
+                delay={800 + index * 600}
+                className={[
+                  'dt-body-sm',
+                  isExpanded ? 'line-clamp-none' : 'line-clamp-1',
+                ].join(' ')}
               />
             </div>
             {!isExpanded && (
@@ -650,13 +654,13 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
 
   function DynamicExpandedContent({ piece, columnIndex, handleReadMore, getSlugUrl }: DynamicExpandedContentProps) {
 
-  const textRef = React.useRef<HTMLDivElement>(null);
-  const imageRef = React.useRef<HTMLDivElement>(null);
+    const textRef = React.useRef<HTMLDivElement>(null);
+    const imageRef = React.useRef<HTMLDivElement>(null);
 
 
     return (
       <motion.div
-        className="mt-4"
+        className=""
         initial={{ height: 0, opacity: 0 }}
         animate={{ height: 'auto', opacity: 1 }}
         exit={{ height: 0, opacity: 0 }}
@@ -682,7 +686,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                 transition={{ duration: 0.4, delay: 0.2 + blockIndex * 0.15, ease: "easeOut" }}
                 className="text-[clamp(0.8vw,1.8vh,1.2vw)] leading-tight"
               >
-                {((block.children || []) as Array<{ text: string }> ).map((child: { text: string }) => child.text).join('') || ''}
+                {((block.children || []) as Array<{ text: string }>).map((child: { text: string }) => child.text).join('') || ''}
               </motion.div>
             ))}
           </div>
@@ -709,19 +713,19 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
           )}
         </div>
         <div className="flex items-end justify-between pt-2">
-            <button
-              onClick={() => handleReadMore(columnIndex)}
-              className="dt-btn-secondary transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
-            >
-              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                <span>Read Less</span>
-              </UnderlineOnHoverAnimation>
-            </button>
-            <a href={getSlugUrl(piece)} className="dt-btn-secondary transition cursor-pointer">
-              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                <span>See Article</span>
-              </UnderlineOnHoverAnimation>
-            </a>
+          <button
+            onClick={() => handleReadMore(columnIndex)}
+            className="dt-btn-secondary transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left"
+          >
+            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+              <span>Read Less</span>
+            </UnderlineOnHoverAnimation>
+          </button>
+          <a href={getSlugUrl(piece)} className="dt-btn-secondary transition cursor-pointer">
+            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+              <span>See Article</span>
+            </UnderlineOnHoverAnimation>
+          </a>
         </div>
       </motion.div>
     );

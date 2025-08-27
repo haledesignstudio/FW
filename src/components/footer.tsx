@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { FutureText } from "./FutureText";
-import UnderlineOnHoverAnimation from "./underlineOnHoverAnimation"; 
+import UnderlineOnHoverAnimation from "./underlineOnHoverAnimation";
 import Link from 'next/link';
 
 
@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
 
         checkMobile();
         window.addEventListener('resize', checkMobile);
-        
+
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
@@ -80,12 +80,10 @@ const Footer: React.FC = () => {
             id: 2,
             content: (
                 <ul className="text-[clamp(0.5vw,1.48vh,0.74vw)] font-roboto leading-[clamp(0.7vw,1.85vh,0.0.925vw)]">
-                    <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="RSS" delay={1000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
-                    <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Instagram" delay={1000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
-                    <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Twitter" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
-                    <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Facebook" delay={1000} speed={30} triggerOnVisible={false} /> : "Facebook"}</a></li>
-                    <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Linkedin" delay={1000} speed={30} triggerOnVisible={false} /> : "Linkedin"}</a></li>
-                    <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Discord" delay={1000} speed={30} triggerOnVisible={false} /> : "Discord"}</a></li>
+                    <li><a href="https://rss.com/podcasts/fast-forward/">{shouldAnimate ? <FutureText text="RSS" delay={1000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
+                    <li><a href="https://www.instagram.com/futureworldint/">{shouldAnimate ? <FutureText text="Instagram" delay={1000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
+                    <li><a href="https://twitter.com/Futureworld_Int">{shouldAnimate ? <FutureText text="Twitter" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
+                    <li><a href="https://www.linkedin.com/company/futureworld-int/">{shouldAnimate ? <FutureText text="Linkedin" delay={1000} speed={30} triggerOnVisible={false} /> : "Linkedin"}</a></li>
                 </ul>
             ),
             colSpan: 1,
@@ -228,8 +226,8 @@ const Footer: React.FC = () => {
 
     // Render mobile layout
     const renderMobileLayout = () => (
-        <footer 
-            ref={footerRef} 
+        <footer
+            ref={footerRef}
             className={`p-[2vh] bg-[#F9F7F2] transition-opacity duration-1000 ${shouldAnimate ? 'opacity-100' : 'opacity-0'}`}
         >
             <div className="grid gap-[2vh] grid-cols-4 auto-rows-[7.701vh]">
@@ -301,12 +299,10 @@ const Footer: React.FC = () => {
                         )}
                     </p>
                     <ul className="dt-body-sm leading-tight space-y-2">
-                        <li><a href="https://www.google.com">{shouldAnimate ? <FutureText text="RSS" delay={1000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
-                        <li><a href="https://www.openai.com">{shouldAnimate ? <FutureText text="Instagram" delay={1000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
-                        <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Twitter" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
-                        <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Facebook" delay={1000} speed={30} triggerOnVisible={false} /> : "Facebook"}</a></li>
-                        <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Linkedin" delay={1000} speed={30} triggerOnVisible={false} /> : "Linkedin"}</a></li>
-                        <li><a href="https://www.github.com">{shouldAnimate ? <FutureText text="Discord" delay={1000} speed={30} triggerOnVisible={false} /> : "Discord"}</a></li>
+                        <li><a href="https://rss.com/podcasts/fast-forward/">{shouldAnimate ? <FutureText text="RSS" delay={1000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
+                        <li><a href="https://www.instagram.com/futureworldint/">{shouldAnimate ? <FutureText text="Instagram" delay={1000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
+                        <li><a href="https://twitter.com/Futureworld_Int">{shouldAnimate ? <FutureText text="Twitter" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
+                        <li><a href="https://www.linkedin.com/company/futureworld-int/">{shouldAnimate ? <FutureText text="Linkedin" delay={1000} speed={30} triggerOnVisible={false} /> : "Linkedin"}</a></li>
                     </ul>
                 </div>
 

@@ -251,10 +251,11 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
             <main className="bg-[#F9F7F2]">
                 {isMobileScreen ? (
                     // MOBILE LAYOUT
-                    <div className="p-[2vh] bg-[#F9F7F2]">
-                        <div className="grid grid-cols-4 gap-[2vh] auto-rows-[6.25vh]">
+                    <div className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
+                        <div className=" grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
                             {/* Row 1: Heading (col 1-3) */}
-                            <div className="col-span-3 row-span-1 flex items-center">
+                            <div className="col-span-4"></div>
+                            <div className="col-span-4 row-span-1 flex items-center">
                                 <FadeInOnVisible>
                                     <MainTitleAnimation
                                         text={data.heading}
@@ -264,13 +265,12 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                     />
                                 </FadeInOnVisible>
                             </div>
-                            <div className="col-span-1"></div>
 
                             {/* Row 2: Empty */}
                             <div className="col-span-4"></div>
 
                             {/* Row 3-4: Subheading (col 1-4) */}
-                            <div className="col-span-4 row-span-2 flex items-center">
+                            <div className="col-span-4 row-span-3">
                                 <FadeInOnVisible>
                                     <div className="dt-h3">
                                         <HighlightText value={data.subheading} />
@@ -279,7 +279,6 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             </div>
 
                             {/* Row 5: Empty */}
-                            <div className="col-span-4"></div>
 
                             {/* Row 6: Statement 1 (col 1-4) */}
                             <div className="col-span-4 row-span-1 flex items-center">
@@ -326,7 +325,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             </div>
 
                             {/* Row 10: Accordion Heading (col 1-3) */}
-                            <div className="col-span-3 row-span-1 flex items-center">
+                            <div className="col-span-4 row-span-1">
                                 <FadeInOnVisible>
                                     <MainTitleAnimation
                                         text={data.accordion.heading}
@@ -336,13 +335,12 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                     />
                                 </FadeInOnVisible>
                             </div>
-                            <div className="col-span-1"></div>
 
                             {/* Row 11: Empty */}
                             <div className="col-span-4"></div>
 
                             {/* Row 12-13: Accordion Subheading (col 1-4) */}
-                            <div className="col-span-4 row-span-2 flex items-center">
+                            <div className="col-span-4 row-span-2">
                                 <FadeInOnVisible>
                                     <div className="dt-h3">
                                         <HighlightText value={data.accordion.subheading} />
@@ -352,7 +350,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                         </div>
 
                         {/* Row 14+: Vertical Accordion Component */}
-                        <div className="mt-[4vh]">
+                        <div className="">
                             <WhatWeDoAccordion data={data} />
                         </div>
 

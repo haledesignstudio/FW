@@ -342,7 +342,7 @@ export default function ShareholderValueAnalytics(props: Props) {
     {
       id: 'analytics-14',
       content: (
-        <div className="flex items-end h-full">
+        <div className="flex items-center h-full">
           <FadeInOnVisible>
             <div className="dt-body-lg">
               {analytics.IQ_subheading}
@@ -368,7 +368,7 @@ export default function ShareholderValueAnalytics(props: Props) {
     {
       id: 'analytics-21',
       content: (
-        <div className="flex items-center h-full">
+        <div className="flex h-full">
           <FadeInOnVisible>
             <div className="dt-btn">
               <a
