@@ -448,7 +448,7 @@ readMore.setAttribute("href", item.href || "/people/apply/");
           {/* Desktop-only control column */}
           {!isMobile && (
             <div
-              className="bg-[#F9F7F2] text-black"
+              className="bg-[#F9F7F2] text-black z-2"
               style={{
                 flex: `0 0 calc(100% / ${TOTAL_COLS})`,
                 height: "auto",
@@ -458,7 +458,7 @@ readMore.setAttribute("href", item.href || "/people/apply/");
                 alignSelf: "stretch",
               }}
             >
-              <div className="relative flex items-end justify-end mr-[4vh]">
+              <div className="relative flex items-end ml-[1vh]">
                 <button
                   type="button"
                   onClick={shiftLeft}

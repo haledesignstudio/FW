@@ -9,7 +9,7 @@ This project is a **Next.js + Sanity** website built for the **FutureWorld** web
    ```sh
    git checkout -b update-readme
    ```
-   Where update-readme is the codename for whatever you are going to be working on.
+   Where update-readme is the codename for whatever you are going to be working on
    
 You can then make whatever changes you want and play around until you are comfortable that your updates are working.
 3. **Commit your branch** to Github:
