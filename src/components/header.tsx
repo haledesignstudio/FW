@@ -9,7 +9,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 
+const DELAY_BY_PATH: Record<string, number> = {
+  "/": 3000,   
+  // '/what-we-do': 600,
+  // add more as needed
+};
 
+const delay = (ms: number) => new Promise<void>(res => setTimeout(res, ms));
 
 const menuItems = [
     {
@@ -82,7 +88,7 @@ const menuItems = [
                             );
                         }} className="flex gap-[10%] hover:underline">
                             <span className="">01</span>
-                            <span>What we do</span>
+                            <span>Why we do this</span>
                         </Link>
                     </li>
                     <li>
@@ -197,11 +203,11 @@ const menuItems = [
                     priority
                 />
                 <Link href="/insights" onClick={(e) => {
-                            e.preventDefault();
-                            document.dispatchEvent(
-                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/insights' } })
-                            );
-                        }}>
+                    e.preventDefault();
+                    document.dispatchEvent(
+                        new CustomEvent('fw:navigateAfterClose', { detail: { href: '/insights' } })
+                    );
+                }}>
                     <span className="dt-btn whitespace-nowrap">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             Explore Shareholder Value Analytics
@@ -220,10 +226,10 @@ const menuItems = [
             <div className="text-left">
                 <ul className="dt-body-lg whitespace-nowrap pb-[15vh]">
                     <li>
-                        <Link href={`/our-work#impact-statistics`} onClick={(e) => {
+                        <Link href={`/our-work`} onClick={(e) => {
                             e.preventDefault();
                             document.dispatchEvent(
-                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#impact-statistics' } })
+                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work' } })
                             );
                         }} className="flex gap-[10%] hover:underline">
                             <span className="">01</span>
@@ -274,11 +280,11 @@ const menuItems = [
                     priority
                 />
                 <Link href={`/our-work#case-studies`} onClick={(e) => {
-                            e.preventDefault();
-                            document.dispatchEvent(
-                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#case-studies' } })
-                            );
-                        }}>
+                    e.preventDefault();
+                    document.dispatchEvent(
+                        new CustomEvent('fw:navigateAfterClose', { detail: { href: '/our-work#case-studies' } })
+                    );
+                }}>
                     <span className="dt-btn whitespace-nowrap">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             See case studies
@@ -351,11 +357,11 @@ const menuItems = [
                     priority
                 />
                 <Link href={`/people#careers`} onClick={(e) => {
-                            e.preventDefault();
-                            document.dispatchEvent(
-                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/people#careers' } })
-                            );
-                        }}>
+                    e.preventDefault();
+                    document.dispatchEvent(
+                        new CustomEvent('fw:navigateAfterClose', { detail: { href: '/people#careers' } })
+                    );
+                }}>
                     <span className="dt-btn whitespace-nowrap">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             See careers
@@ -407,11 +413,11 @@ const menuItems = [
                     priority
                 />
                 <Link href="/keynotes" onClick={(e) => {
-                            e.preventDefault();
-                            document.dispatchEvent(
-                                new CustomEvent('fw:navigateAfterClose', { detail: { href: '/keynotes' } })
-                            );
-                        }}>
+                    e.preventDefault();
+                    document.dispatchEvent(
+                        new CustomEvent('fw:navigateAfterClose', { detail: { href: '/keynotes' } })
+                    );
+                }}>
                     <span className="dt-btn whitespace-nowrap">
                         <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                             Explore Keynote Topics
@@ -509,6 +515,47 @@ const Header: React.FC = () => {
 
     const router = useRouter();
 
+    const PENDING_HASH_KEY = 'fw:pendingHash';
+
+    const normalizePath = (p: string) => (p === "/" ? "/" : p.replace(/\/+$/, ""));
+
+
+    function waitForElementById(id: string, tries = 20): Promise<HTMLElement | null> {
+        return new Promise((resolve) => {
+            let count = 0;
+            const tick = () => {
+                const el = document.getElementById(id);
+                if (el || count >= tries) return resolve(el ?? null);
+                count++;
+                requestAnimationFrame(tick);
+            };
+            tick();
+        });
+    }
+
+
+    function jumpToTopInstant() {
+        // make sure the "top" jump is instant even if global CSS is smooth
+        const root = document.scrollingElement as HTMLElement;
+        const prev = root?.style.scrollBehavior ?? '';
+        if (root) root.style.scrollBehavior = 'auto';
+        window.scrollTo({ top: 0 });
+        if (root) root.style.scrollBehavior = prev;
+    }
+
+    function smoothScrollToHash(hash: string) {
+        const id = hash.replace(/^#/, '');
+        const el = document.getElementById(id);
+        if (!el) return;
+        // rely on CSS `scroll-margin-top` for header offset
+        el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    }
+
+
+    const closePromiseRef = React.useRef<Promise<void> | null>(null);
+    const closeResolveRef = React.useRef<(() => void) | null>(null);
+
+
     // Check if mobile
     const isMobileScreen = isClient && window.innerWidth < 768;
 
@@ -550,37 +597,96 @@ const Header: React.FC = () => {
     };
 
     const closeMenuAndWait = React.useCallback((): Promise<void> => {
-        return new Promise<void>((resolve) => {
-            if (isAnimating) { resolve(); return; }
-            setIsAnimating(true);
-            setStage(1);                    // start closing transition
-            setTimeout(() => setStage(0), 300);
-            setTimeout(() => {
-                setMenuOpen(false);
-                setIsAnimating(false);
-                setActivePair(null);
-                setHovering(false);
-                // ensure the DOM has painted the closed state
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => resolve());
-                });
-            }, 800);                        // <- match your existing close duration
+        // already closed
+        if (!menuOpen) return Promise.resolve();
+
+        // already closing → return the same pending promise
+        if (closePromiseRef.current) return closePromiseRef.current;
+
+        // start closing
+        setIsAnimating(true);
+        setStage(1);
+        setMenuOpen(false); // triggers AnimatePresence exit
+
+        // create a promise resolved by onExitComplete
+        closePromiseRef.current = new Promise<void>((resolve) => {
+            closeResolveRef.current = () => {
+                requestAnimationFrame(() =>
+                    requestAnimationFrame(() => {
+                        setIsAnimating(false);
+                        setStage(0);
+                        setActivePair(null);
+                        setHovering(false);
+                        closePromiseRef.current = null;
+                        closeResolveRef.current = null;
+                        resolve();
+                    })
+                );
+            };
         });
-    }, [isAnimating, setIsAnimating, setStage, setMenuOpen, setActivePair, setHovering]);
+
+        return closePromiseRef.current;
+    }, [menuOpen]);
+
 
 
     useEffect(() => {
         const handler = (e: Event) => {
-            const href = (e as CustomEvent<{ href: string }>).detail?.href;
-            if (!href) return;
-            closeMenuAndWait().then(() => {
-                // navigate only after the close animation + 2 paints
-                router.push(href);
+            const rawHref = (e as CustomEvent<{ href: string }>).detail?.href;
+            if (!rawHref) return;
+
+            closeMenuAndWait().then(async () => {
+                const url = new URL(rawHref, window.location.origin);
+                const targetPath = url.pathname;
+                const targetHash = url.hash; // e.g. "#case-studies"
+
+                if (targetHash) {
+                    const samePath = normalizePath(pathname) === normalizePath(targetPath);
+
+                    if (samePath) {
+  const delayMs = DELAY_BY_PATH[normalizePath(targetPath)] ?? 0;
+  jumpToTopInstant();
+  router.replace(`${targetPath}${targetHash}`, { scroll: false });
+  requestAnimationFrame(async () => {
+    await waitForElementById(targetHash.slice(1));
+    if (delayMs) await delay(delayMs);
+    smoothScrollToHash(targetHash);
+  });
+} else {
+
+                        // CROSS PAGE: land at top, finish scroll after load
+                        sessionStorage.setItem(PENDING_HASH_KEY, targetHash);
+                        router.push(targetPath, { scroll: true });
+                    }
+                } else {
+                    router.push(rawHref, { scroll: true });
+                }
             });
         };
+
         document.addEventListener('fw:navigateAfterClose', handler as EventListener);
         return () => document.removeEventListener('fw:navigateAfterClose', handler as EventListener);
-    }, [closeMenuAndWait, router]);
+    }, [closeMenuAndWait, pathname]);
+
+
+
+    useEffect(() => {
+        const pending = sessionStorage.getItem(PENDING_HASH_KEY);
+        if (!pending) return;
+
+        sessionStorage.removeItem(PENDING_HASH_KEY);
+
+        const delayMs = DELAY_BY_PATH[normalizePath(pathname)] ?? 0;
+jumpToTopInstant();
+router.replace(`${pathname}${pending}`, { scroll: false });
+requestAnimationFrame(async () => {
+  await waitForElementById(pending.slice(1));
+  if (delayMs) await delay(delayMs);
+  smoothScrollToHash(pending);
+});
+
+    }, [pathname]);
+
 
 
 
@@ -682,7 +788,7 @@ const Header: React.FC = () => {
                     </header>
 
                     {/* Mobile Menu Dropdown with conditional styling */}
-                    <AnimatePresence>
+                    <AnimatePresence onExitComplete={() => closeResolveRef.current?.()}>
                         {menuOpen && (
                             <motion.div
                                 key="mobile-menu"
@@ -721,11 +827,17 @@ const Header: React.FC = () => {
                                         >
                                             <Link
                                                 href={item.href}
-                                                className={`dt-h2 dt-btn text-black font-bold hover:underline`}
-                                                onClick={() => setMenuOpen(false)}
+                                                className="dt-h2 dt-btn text-black font-bold hover:underline"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    document.dispatchEvent(
+                                                        new CustomEvent('fw:navigateAfterClose', { detail: { href: item.href } })
+                                                    );
+                                                }}
                                             >
                                                 {item.label}
                                             </Link>
+
                                         </motion.div>
                                     ))}
                                 </div>
@@ -768,7 +880,8 @@ const Header: React.FC = () => {
                     </header>
 
                     {/* Desktop Menu Section with conditional styling */}
-                    <AnimatePresence>
+                    <AnimatePresence onExitComplete={() => closeResolveRef.current?.()}>
+
                         {menuOpen && (
                             <motion.div
                                 key="menu"

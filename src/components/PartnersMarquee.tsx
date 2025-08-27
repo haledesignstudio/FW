@@ -39,20 +39,23 @@ export default function PartnersMarquee({
   durationSec = 30,
   logoHeightVh = 21,
   gap = '4vw',
-  cycleGap="0vw", // optional; uses gap if not provided
+  cycleGap = '0vw',
   edgeFadeVw = 6,
   fadeBg = 'transparent',
   direction = 'left',
 }: PartnersMarqueeProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const measureRef = useRef<HTMLUListElement | null>(null);
-  const [cyclesPerHalf, setCyclesPerHalf] = useState(1);
+  const [cyclesPerHalf, setCyclesPerHalf] = useState(2); // Start with 2 for better coverage
   const [ready, setReady] = useState(false);
 
   // Mobile detection for perf tweaks
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const items = useMemo(
@@ -64,71 +67,52 @@ export default function PartnersMarquee({
     [partners]
   );
 
-  useEffect(() => { setReady(true); }, []);
-
-  // Recompute repeats so each half >= container width (prevents gaps)
+  // Simplified measurement and setup
   useEffect(() => {
     if (!items.length) return;
 
-    const container = containerRef.current;
-    const measure = measureRef.current;
-    if (!container || !measure) return;
+    let mounted = true;
+    
+    const setup = () => {
+      if (!mounted) return;
+      
+      const container = containerRef.current;
+      const measure = measureRef.current;
+      if (!container || !measure) return;
 
-    setReady(false);
+      // Force a layout calculation
+      const containerW = container.getBoundingClientRect().width;
+      const baseW = measure.scrollWidth;
+      
+      if (containerW && baseW) {
+        const needed = Math.max(2, Math.ceil((containerW * 1.5) / baseW)); // 1.5x for safety
+        setCyclesPerHalf(needed);
+      }
 
-    const compute = () => {
-      const containerW = container.offsetWidth;
-      const baseW = measure.scrollWidth; // width of one cycle (plus spacer we include below)
-      if (!containerW || !baseW) return;
-      const needed = Math.max(1, Math.ceil(containerW / baseW));
-      setCyclesPerHalf(needed);
+      // Start animation after a brief delay
+      setTimeout(() => {
+        if (mounted) setReady(true);
+      }, 100);
     };
 
-    const updateReadyIfSettled = () => {
-      const imgs = Array.from(measure.querySelectorAll('img'));
-      if (imgs.length === 0 || imgs.every((i) => i.complete)) {
-        setReady(true);
+    // Initial setup
+    setup();
+
+    // Handle resize
+    const handleResize = () => {
+      if (mounted) {
+        setReady(false);
+        setTimeout(setup, 50);
       }
     };
 
-    let timeoutId: ReturnType<typeof setTimeout>;
-    const throttled = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        compute();
-        updateReadyIfSettled();
-      }, isMobile ? 100 : 50);
-    };
-
-    const ro = new ResizeObserver(throttled);
-    ro.observe(container);
-    ro.observe(measure);
-
-    const imgs = Array.from(measure.querySelectorAll('img'));
-    let pending = imgs.filter((i) => !i.complete).length;
-    if (pending === 0) {
-      compute();
-      setReady(true);
-    } else {
-      imgs.forEach((img) => {
-        if (!img.complete) {
-          const onLoad = () => {
-            compute();
-            pending -= 1;
-            if (pending === 0) setReady(true);
-          };
-          img.addEventListener('load', onLoad, { once: true });
-        }
-      });
-    }
-
-    compute();
-
+    window.addEventListener('resize', handleResize);
+    
     return () => {
-      ro.disconnect();
-      clearTimeout(timeoutId);
+      mounted = false;
+      window.removeEventListener('resize', handleResize);
     };
-  }, [items, isMobile]);
+  }, [items]);
 
   if (!items.length) return null;
 
@@ -149,7 +133,7 @@ export default function PartnersMarquee({
           <Image
             src={src}
             alt={alt}
-            style={{ height: `calc(${logoHeightVh}vh)`, width: 'auto' }}
+            style={{ height: `${logoHeightVh}vh`, width: 'auto' }}
             className="block object-contain"
             loading="lazy"
             decoding="async"
@@ -164,98 +148,101 @@ export default function PartnersMarquee({
   const groupContent = (prefix: string) =>
     Array.from({ length: cyclesPerHalf }).flatMap((_, r) => renderCycle(`${prefix}-r${r}`));
 
-  // seamGap falls back to item gap if not specified
   const seamGap = cycleGap ?? gap;
+  
+  // Generate stable animation names using component props hash
+  const propsHash = `${direction}-${durationSec}-${gap}-${logoHeightVh}`.replace(/[^a-zA-Z0-9]/g, '');
+  const animationName = `marquee-${propsHash}`;
+  const reverseAnimationName = `marquee-reverse-${propsHash}`;
 
   return (
-    <div
-      ref={containerRef}
-      className={['relative overflow-hidden w-full', className].join(' ')}
-      style={
-        {
-          '--pm-duration': `${durationSec}s`,
-          '--pm-gap': gap,
-          '--pm-cycle-gap': seamGap,
-          '--pm-edge': `${edgeFadeVw}vw`,
-          '--pm-fade-bg': fadeBg,
-        } as React.CSSProperties
-      }
-      aria-label="Partner logos"
-    >
-      {/* EDGE FADES */}
-      {edgeFadeVw > 0 && (
-        <>
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0"
-            style={{
-              width: 'var(--pm-edge)',
-              background: `linear-gradient(to right, var(--pm-fade-bg) 0%, transparent 100%)`,
-            }}
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 right-0"
-            style={{
-              width: 'var(--pm-edge)',
-              background: `linear-gradient(to left, var(--pm-fade-bg) 0%, transparent 100%)`,
-            }}
-          />
-        </>
-      )}
-
-      {/* TRACK with two identical halves for a seamless -50% loop */}
-      <div
-        className={`pm-track flex w-max will-change-transform`}
-        style={{
-          animation: `${direction === 'left' ? 'pm-marquee' : 'pm-marquee-rev'} var(--pm-duration) linear infinite`,
-          animationPlayState: ready ? 'running' : 'paused',
-        }}
-      >
-        <ul className="pm-group flex-none flex items-center [gap:var(--pm-gap)]">
-          {groupContent('a')}
-          {/* Spacer to create a visible gap at the seam */}
-          <li
-            className="pm-cycle-spacer shrink-0"
-            aria-hidden="true"
-            style={{ width: 'var(--pm-cycle-gap)' }}
-          />
-        </ul>
-
-        <ul className="pm-group flex-none flex items-center [gap:var(--pm-gap)]" aria-hidden="true">
-          {groupContent('b')}
-          {/* Mirror spacer so both halves have equal width */}
-          <li
-            className="pm-cycle-spacer shrink-0"
-            aria-hidden="true"
-            style={{ width: 'var(--pm-cycle-gap)' }}
-          />
-        </ul>
-      </div>
-
-      {/* Hidden measurer — one cycle + the seam spacer */}
-      <ul
-        ref={measureRef}
-        className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none flex items-center [gap:var(--pm-gap)]"
-        aria-hidden="true"
-      >
-        {renderCycle('m')}
-        <li className="pm-cycle-spacer shrink-0" aria-hidden="true" style={{ width: 'var(--pm-cycle-gap)' }} />
-      </ul>
-
-      <style jsx>{`
-        @keyframes pm-marquee {
+    <>
+      {/* Inject CSS animations */}
+      <style jsx global>{`
+        @keyframes ${animationName} {
           from { transform: translate3d(0, 0, 0); }
           to   { transform: translate3d(-50%, 0, 0); }
         }
-        @keyframes pm-marquee-rev {
+        @keyframes ${reverseAnimationName} {
           from { transform: translate3d(-50%, 0, 0); }
           to   { transform: translate3d(0, 0, 0); }
         }
         @media (prefers-reduced-motion: reduce) {
-          .pm-track { animation: none !important; transform: translateX(0) !important; }
+          .marquee-track { 
+            animation: none !important; 
+            transform: translateX(0) !important; 
+          }
         }
       `}</style>
-    </div>
+
+      <div
+        ref={containerRef}
+        className={`relative overflow-hidden w-full ${className}`}
+        aria-label="Partner logos"
+      >
+        {/* EDGE FADES */}
+        {edgeFadeVw > 0 && (
+          <>
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 left-0 z-10"
+              style={{
+                width: `${edgeFadeVw}vw`,
+                background: `linear-gradient(to right, ${fadeBg} 0%, transparent 100%)`,
+              }}
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 right-0 z-10"
+              style={{
+                width: `${edgeFadeVw}vw`,
+                background: `linear-gradient(to left, ${fadeBg} 0%, transparent 100%)`,
+              }}
+            />
+          </>
+        )}
+
+        {/* TRACK with two identical halves for seamless loop */}
+        <div
+          className="marquee-track flex w-max will-change-transform"
+          style={{
+            animationName: direction === 'left' ? animationName : reverseAnimationName,
+            animationDuration: `${durationSec}s`,
+            animationTimingFunction: 'linear',
+            animationIterationCount: 'infinite',
+            animationPlayState: ready ? 'running' : 'paused',
+          }}
+        >
+          <ul className="flex-none flex items-center" style={{ gap }}>
+            {groupContent('a')}
+            <li
+              className="shrink-0"
+              aria-hidden="true"
+              style={{ width: seamGap }}
+            />
+          </ul>
+
+          <ul className="flex-none flex items-center" style={{ gap }} aria-hidden="true">
+            {groupContent('b')}
+            <li
+              className="shrink-0"
+              aria-hidden="true"
+              style={{ width: seamGap }}
+            />
+          </ul>
+        </div>
+
+        {/* Hidden measurer */}
+        <ul
+          ref={measureRef}
+          className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none flex items-center"
+          style={{ gap }}
+          aria-hidden="true"
+        >
+          {renderCycle('m')}
+          <li className="shrink-0" aria-hidden="true" style={{ width: seamGap }} />
+        </ul>
+      </div>
+    </>
   );
 }

@@ -932,7 +932,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     <div className="flex items-end h-full justify-end text-right pb-[4vh]">
                             <div className="dt-btn">
                                 <a
-                                    href={`mailto:${data.accordionSection2.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
+                                    href={`mailto:${data.accordionSection2.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I would like to get the full Supercharge Tomorrow agenda')}`}
                                     className="transition cursor-pointer"
                                 >
                                     <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#F9F7F2">
@@ -1136,7 +1136,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                         <div className="flex items-end h-full justify-end text-right pb-[4vh]">
                             <div className="dt-btn">
                                 <a
-                                    href={`mailto:${data.accordionSection3.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
+                                    href={`mailto:${data.accordionSection3.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I would like to schedule a team session for the Supercharge Tomorrow programme')}`}
                                     className="transition cursor-pointer"
                                 >
                                     <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#232323">

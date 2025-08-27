@@ -31,14 +31,14 @@ interface TermsData {
 }
 
 type GridItem = {
-    id: number;
-    content: React.ReactNode;
-    colSpan?: number;
-    rowSpan?: number;
-    mobileColSpan?: number;
-    mobileRowSpan?: number;
-    landscapeColSpan?: number;
-    landscapeRowSpan?: number;
+  id: number;
+  content: React.ReactNode;
+  colSpan?: number;
+  rowSpan?: number;
+  mobileColSpan?: number;
+  mobileRowSpan?: number;
+  landscapeColSpan?: number;
+  landscapeRowSpan?: number;
 };
 
 const portableTextComponents: PortableTextComponents = {
@@ -62,37 +62,37 @@ const portableTextComponents: PortableTextComponents = {
 const getGridClasses = (item: GridItem) => {
   const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'items-start', 'relative', 'h-full'];
 
-    // Mobile
-    if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-        baseClasses.push('block', '[@media(max-width:767px)]:hidden');
-    } else {
-        baseClasses.push(`col-span-${item.mobileColSpan}`);
-        if (item.mobileRowSpan && item.mobileRowSpan > 0) {
-            baseClasses.push(`row-span-${item.mobileRowSpan}`);
-        }
+  // Mobile
+  if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
+    baseClasses.push('block', '[@media(max-width:767px)]:hidden');
+  } else {
+    baseClasses.push(`col-span-${item.mobileColSpan}`);
+    if (item.mobileRowSpan && item.mobileRowSpan > 0) {
+      baseClasses.push(`row-span-${item.mobileRowSpan}`);
     }
+  }
 
-    // Landscape
-    if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-        baseClasses.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
-    } else {
-        baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
-        if (item.landscapeRowSpan && item.landscapeRowSpan > 0) {
-            baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
-        }
+  // Landscape
+  if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
+    baseClasses.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+  } else {
+    baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
+    if (item.landscapeRowSpan && item.landscapeRowSpan > 0) {
+      baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
     }
+  }
 
-    // Desktop
-    if (item.colSpan === 0 || item.rowSpan === 0) {
-        baseClasses.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
-    } else {
-        baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
-        if (item.rowSpan && item.rowSpan > 0) {
-            baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
-        }
+  // Desktop
+  if (item.colSpan === 0 || item.rowSpan === 0) {
+    baseClasses.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+  } else {
+    baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+    if (item.rowSpan && item.rowSpan > 0) {
+      baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
     }
+  }
 
-    return baseClasses.join(' ');
+  return baseClasses.join(' ');
 };
 
 const categories = [
@@ -103,8 +103,8 @@ const categories = [
   { key: 'contentLiabilitySection', label: 'Content liability', shortLabel: 'Content liability' },
   { key: 'privacySection', label: 'Your privacy', shortLabel: 'Your privacy' },
   { key: 'reservationOfRightsSection', label: 'Reservation of Rights', shortLabel: 'Reservation of rights' },
-  { key: 'removalOfLinksSection', label: 'Removal of links from our website', shortLabel: 'Removal of links from our website'},
-  { key: 'hyperlinksSection', label: 'Hyperlinking to our content', shortLabel: 'Hyperlinking to our content'}
+  { key: 'removalOfLinksSection', label: 'Removal of links from our website', shortLabel: 'Removal of links from our website' },
+  { key: 'hyperlinksSection', label: 'Hyperlinking to our content', shortLabel: 'Hyperlinking to our content' }
 ]
 
 interface TermsAndConditionsClientProps {
@@ -150,7 +150,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
         <FadeInOnVisible>
           <div className="flex items-center h-full w-full overflow-hidden">
             <div className="w-full max-w-full">
-              <MainTitleAnimation 
+              <MainTitleAnimation
                 text={termsData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
@@ -161,7 +161,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
         </FadeInOnVisible>
       ),
       colSpan: 2,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 0,
       mobileRowSpan: 0,
       landscapeColSpan: 2,
@@ -172,7 +172,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
       id: 2,
       content: <></>,
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 0,
       mobileRowSpan: 0,
       landscapeColSpan: 1,
@@ -182,13 +182,15 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     {
       id: 3,
       content: (
-        <FadeInOnVisible>
-          <div className="flex flex-wrap items-start content-start h-full w-full">
+
+        <div className="h-full w-full flex flex-col justify-between">
+          {/* Buttons at the top */}
+          <div className="flex flex-wrap items-start content-start">
             {categories.map((category) => (
               <button
                 key={category.key}
                 onClick={() => setSelectedCategory(category.key)}
-                className={`transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full flex-shrink-0`}
+                className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full flex-shrink-0"
                 style={{ minWidth: '120px', maxWidth: '100%' }}
               >
                 <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
@@ -199,56 +201,39 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
               </button>
             ))}
           </div>
-        </FadeInOnVisible>
+
+          {/* Title at the bottom */}
+          <FadeInOnVisible>
+            <div>
+              <h2 className="dt-h3 mb-0 pb-0">
+                {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
+              </h2>
+            </div>
+          </FadeInOnVisible>
+        </div>
+
       ),
       colSpan: 2,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 0,
       mobileRowSpan: 0,
       landscapeColSpan: 2,
       landscapeRowSpan: 1,
     },
+
     // Row 1 col 6: Empty cell
     {
       id: 4,
       content: <></>,
       colSpan: 1,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 0,
       mobileRowSpan: 0,
       landscapeColSpan: 1,
       landscapeRowSpan: 1,
     },
     // Row 2 col 1-3: Empty cell
-    {
-      id: 5,
-      content: <></>,
-      colSpan: 3,
-      rowSpan: 1,
-      mobileColSpan: 0,
-      mobileRowSpan: 0,
-      landscapeColSpan: 3,
-      landscapeRowSpan: 1,
-    },
-    // Row 2 col 4: Category header (bottom left aligned)
-    {
-      id: 6,
-      content: (
-        <FadeInOnVisible className="h-full w-full flex flex-col justify-end items-start" key={`header-${selectedCategory}`}>
-          <div className="h-full w-full flex flex-col justify-end items-start">
-            <h2 className="dt-h3 mb-0 pb-0">
-              {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
-            </h2>
-          </div>
-        </FadeInOnVisible>
-      ),
-      colSpan: 3,
-      rowSpan: 1,
-      mobileColSpan: 0,
-      mobileRowSpan: 0,
-      landscapeColSpan: 1,
-      landscapeRowSpan: 1,
-    },
+
     // Row 3-4 col 1-2: Intro text (2 columns)
     {
       id: 8,
@@ -286,9 +271,9 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
     {
       id: 10,
       content: (
-        <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
+        <FadeInOnVisible className="scroll-mask-bottom" key={`content-${selectedCategory}`} threshold={0.05}>
           <div className="h-full max-h-[52vh] overflow-y-auto pr-[1vh] pointer-events-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
+            <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; } `}</style>
             {renderContent()}
           </div>
         </FadeInOnVisible>
@@ -336,7 +321,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
           {/* Row 1: Main title (cols 1-3) */}
           <div className="col-span-3 row-span-1 flex items-end justify-start">
             <FadeInOnVisible>
-              <MainTitleAnimation 
+              <MainTitleAnimation
                 text={termsData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
@@ -350,8 +335,8 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
           <div className="col-span-4 row-span-8 flex items-start justify-start">
             <FadeInOnVisible>
               <div className="prose max-w-full leading-relaxed w-full break-words overflow-y-auto pr-[1vh] h-full dt-body-sm">
-                <PortableText 
-                  value={termsData.pageHeader.introText} 
+                <PortableText
+                  value={termsData.pageHeader.introText}
                   components={{
                     ...portableTextComponents,
                     block: {
@@ -373,10 +358,10 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                       strong: ({ children }) => <strong className="font-bold">{children}</strong>,
                       em: ({ children }) => <em className="italic">{children}</em>,
                       link: ({ children, value }) => (
-                        <a 
-                          href={value?.href} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <a
+                          href={value?.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-blue-600 underline break-words"
                         >
                           {children}
@@ -428,14 +413,14 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
               <div className="prose leading-relaxed break-words dt-body-sm" style={{ maxWidth: '100%', width: '100%' }}>
                 {(() => {
                   const section = termsData[selectedCategory as keyof TermsData] as TermsSection;
-                  
+
                   if (!section || !section.content || section.content.length === 0) {
                     return <div className="text-red-500">No content available for this section.</div>;
                   }
-                  
+
                   return (
-                    <PortableText 
-                      value={section.content} 
+                    <PortableText
+                      value={section.content}
                       components={{
                         ...portableTextComponents,
                         block: {
@@ -443,10 +428,10 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                         },
                         marks: {
                           link: ({ children, value }) => (
-                            <a 
-                              href={value?.href} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
+                            <a
+                              href={value?.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className="text-blue-600 underline break-words"
                               style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
                             >
@@ -479,21 +464,21 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
         <div className="flex justify-end items-center mt-[4vh] mb-[4vh]">
           <div className="cursor-pointer" onClick={handleBackToTop}>
             <FadeInOnVisible>
-                <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    style={{ transform: 'rotate(-45deg)' }}
-                  >
-                    <path d="M12 19V5M5 12l7-7 7 7" />
-                  </svg>
-                  Back to top
-                </span>
-              </FadeInOnVisible>
+              <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  style={{ transform: 'rotate(-45deg)' }}
+                >
+                  <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+                Back to top
+              </span>
+            </FadeInOnVisible>
           </div>
         </div>
       </main>
@@ -502,14 +487,14 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
 
   // Desktop layout
   return (
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
-          {items.map((item) => (
-            <div key={item.id} className={getGridClasses(item)}>
-              {item.content}
-            </div>
-          ))}
-        </div>
-      </main>
+    <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+      <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+        {items.map((item) => (
+          <div key={item.id} className={getGridClasses(item)}>
+            {item.content}
+          </div>
+        ))}
+      </div>
+    </main>
   )
 }

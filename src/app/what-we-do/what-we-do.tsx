@@ -388,7 +388,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                 ))}
                             </div>
                         </div>
-                        <div className="w-full">
+                        <div className="w-full" id="how-we-do-it">
                             <WhatWeDoAccordion data={data} />
                         </div>
                     </>
