@@ -401,7 +401,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                         <div className="p-4"></div>
 
                         {/* Bottom Left (spans 2 cols): CTA Button */}
-                        <div className="col-span-2 p-4 flex items-end justify-start">
+                        <div className="col-span-2 mb-4 p-4 flex items-end justify-start">
                           <Link href="/supercharge-tomorrow" className="dt-btn">
                             <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
                               {data.accordionSection1.cta ?? 'Get in Touch'}
