@@ -32,9 +32,9 @@ export default defineConfig({
     presentationTool({
       previewUrl: {
         previewMode: {
-          enable: 'https://your-cloudflare-domain.pages.dev/api/draft-mode/enable',
+          enable: 'https://fw-hale.pages.dev/api/draft-mode/enable',
         },
-        origin: 'https://your-cloudflare-domain.pages.dev',
+        origin: 'https://fw-hale.pages.dev',
       },
       // presentationTool({
       // previewUrl: {
