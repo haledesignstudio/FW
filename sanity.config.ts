@@ -32,9 +32,9 @@ export default defineConfig({
     presentationTool({
       previewUrl: {
         previewMode: {
-          enable: `${process.env.CF_PAGES_URL || 'http://localhost:3000'}/api/draft-mode/enable`,
+          enable: `${process.env.CF_PAGES_URL || 'https://fw-hale.pages.dev/'}/api/draft-mode/enable`,
         },
-        origin: process.env.CF_PAGES_URL || 'http://localhost:3000',
+        origin: process.env.CF_PAGES_URL || 'https://fw-hale.pages.dev/',
       },
       // presentationTool({
       // previewUrl: {
