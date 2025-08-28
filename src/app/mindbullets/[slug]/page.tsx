@@ -56,13 +56,6 @@ const moreMindbulletsQuery = defineQuery(`
     }
 `);
 
-export async function generateStaticParams() {
-  const slugs = await client.fetch<string[]>(
-    defineQuery(`*[_type == "mindbullet" && defined(slug.current)][].slug.current`)
-  );
-  return slugs.map((slug) => ({ slug }));
-}
-
 export const revalidate = 60;
 
 type PageProps = { params: Promise<{ slug: string }> };

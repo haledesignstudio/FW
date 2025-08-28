@@ -48,13 +48,6 @@ const speakerBySlugQuery = defineQuery(`
   }
 `);
 
-export async function generateStaticParams() {
-    const slugs = await client.fetch<string[]>(
-        defineQuery(`*[_type == "keynoteSpeaker" && defined(slug.current)][].slug.current`)
-    );
-    return slugs.map((slug) => ({ slug }));
-}
-
 export const revalidate = 60;
 
 
