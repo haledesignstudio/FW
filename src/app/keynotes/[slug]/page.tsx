@@ -8,6 +8,8 @@ import Footer from '@/components/footer';
 import SpeakerView from './speakerView'; // Importing SpeakerView component
 import type { SanityImageAsset } from '@/../sanity.types';
 
+export const runtime = 'edge';
+
 type SanityImage = { asset?: SanityImageAsset; alt?: string };
 
 

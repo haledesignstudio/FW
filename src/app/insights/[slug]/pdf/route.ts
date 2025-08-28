@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { client } from '@/sanity/lib/client';
 import { defineQuery } from 'next-sanity';
 
+export const runtime = 'edge';
+
 type ArticlePdfDoc = {
   title: string;
   pdfUrl?: string | null;

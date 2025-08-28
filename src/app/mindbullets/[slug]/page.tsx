@@ -4,6 +4,8 @@ import { client } from '@/sanity/lib/client';
 import MindbulletsView from '@/app/mindbullets/[slug]/MindbulletsView';
 import type { PortableTextBlock } from '@portabletext/types';
 
+export const runtime = 'edge';
+
 type SanityAssetRef = { _type: 'reference'; _ref: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string };
 

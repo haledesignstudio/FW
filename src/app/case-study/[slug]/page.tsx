@@ -7,6 +7,8 @@ import { urlFor } from '@/sanity/lib/image';
 import React, { useState, useEffect } from 'react';
 import { PortableText, PortableTextComponents, PortableTextBlock } from '@portabletext/react';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+
+export const dynamic = 'force-dynamic';
 // Custom PortableText components for better list and block rendering
 const portableTextComponents: PortableTextComponents = {
   list: {
