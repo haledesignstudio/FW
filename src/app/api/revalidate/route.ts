@@ -1,8 +1,17 @@
+export const runtime = 'edge';
+
 import { revalidateTag, revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 import { parseBody } from 'next-sanity/webhook'
 
-export const runtime = 'edge';
+export async function GET(req: NextRequest) {
+  // optional: validate a secret query param to avoid abuse
+  // const secret = new URL(req.url).searchParams.get('secret');
+  // if (secret !== process.env.REVALIDATE_SECRET) return NextResponse.json({ ok: false }, { status: 401 });
+
+  // perform any revalidation logic you need (or simply return OK)
+  return NextResponse.json({ ok: true });
+}
 
 type WebhookPayload = {
   _type: string
