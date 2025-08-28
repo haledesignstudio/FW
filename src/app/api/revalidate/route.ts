@@ -2,7 +2,7 @@ import { revalidateTag, revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 import { parseBody } from 'next-sanity/webhook'
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 type WebhookPayload = {
   _type: string
