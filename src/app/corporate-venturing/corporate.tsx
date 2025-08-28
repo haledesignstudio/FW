@@ -50,7 +50,7 @@ export default function CorporateSection({
   // Map Podcasts -> Carousel items
   const podcastItems: CarouselItem[] = (podcasts ?? []).map((p) => ({
     src: p.headerImage?.asset?.url || '/placeholder-image.png',
-    heading: p.headline? `Podcast: ${p.headline}` : 'Podcast',
+    heading: p.headline ? `Podcast: ${p.headline}` : 'Podcast',
     description: p.description,
     href: p.slug?.current ? `/podcast/${p.slug.current}` : '#',
     readMoreText: 'Listen now',
@@ -62,7 +62,7 @@ export default function CorporateSection({
     heading: a.title ? `Article: ${a.title}` : 'Article',
     description: a.byline,
     href: a.slug?.current ? `/insights/${a.slug.current}` : '#',
-    readMoreText: 'Read article', 
+    readMoreText: 'Read article',
   }));
 
   // Combine Articles + Podcasts
@@ -77,23 +77,22 @@ export default function CorporateSection({
   if (isMobile) {
     // 4 column grid, rows as described
     return (
-      <div className="grid grid-cols-4 gap-y-4 gap-x-2 px-2 w-full">
+      <div className="col-span-4 grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
         {/* Row 1-2: Title (col 1-3) */}
         <div className="col-span-3 row-span-2 flex items-center">
           <FadeInOnVisible>
             <div className="dt-h1">{title}</div>
           </FadeInOnVisible>
         </div>
-        {/* Row 3: Empty (col 1-4) */}
-        <div className="col-span-4 row-span-2" />
+
         {/* Row 4: contentText (col 1-4) */}
-        <div className="col-span-4 row-span-2">
+        <div className="col-span-4">
           <FadeInOnVisible>
             <div className="dt-h4">{contentText}</div>
           </FadeInOnVisible>
         </div>
         {/* Row 5: subheading (col 1-4) */}
-        <div className="col-span-4 row-span-2">
+        <div className="col-span-4">
           <FadeInOnVisible>
             <div className="dt-h3">
               <HighlightText value={subheading} />
@@ -103,7 +102,7 @@ export default function CorporateSection({
         {/* Row 6: Empty (col 1-4) */}
         <div className="col-span-4 row-span-1" />
         {/* Row 7: CTA (col 1-2) */}
-        <div className="col-span-2 row-span-1 flex items-center">
+        <div className="col-span-2 row-span-2">
           <FadeInOnVisible>
             <div className="dt-btn">
               <a
@@ -118,21 +117,23 @@ export default function CorporateSection({
           </FadeInOnVisible>
         </div>
         {/* Row 8+: Carousel (col 1-4) */}
-        <div className="col-span-4 row-end-auto">
+        <div className="col-span-4">
           <FadeInOnVisible>
             <Carousel items={carouselItems} />
           </FadeInOnVisible>
         </div>
         {/* Back to Top Button (col 3-4, right aligned) */}
+        <div className="col-span-4 row-span-1" />
+
         <div
-          className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-4"
+          className="col-span-2 col-start-3 flex justify-end cursor-pointer"
           onClick={handleBackToTop}
         >
           <FadeInOnVisible>
-            <span className="underline dt-btn flex items-center gap-1">
+            <span className="dt-btn flex items-center">
               <svg
-                width="18"
-                height="18"
+                width="clamp(3.5vw,2.35vh,4.7vw)"
+                height="clamp(3.5vw,2.35vh,4.7vw)"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -141,9 +142,13 @@ export default function CorporateSection({
               >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
-              Back to top
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Back to top
+              </UnderlineOnHoverAnimation>
+
             </span>
           </FadeInOnVisible>
+
         </div>
       </div>
     );
@@ -214,7 +219,7 @@ export default function CorporateSection({
       id: 'corporate-9',
       content: (
         <FadeInOnVisible>
-          <Carousel items={carouselItems}/>
+          <Carousel items={carouselItems} />
         </FadeInOnVisible>
       ),
       colSpan: 6,

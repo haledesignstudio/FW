@@ -41,17 +41,17 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
   ].filter(([, url]) => !!url);
 
   return (
-    <div className="grid grid-cols-4 auto-rows-[6.25vh] gap-y-[2vh] w-full px-[2vw] pt-[2vh]">
+    <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-y-[2.09vh]">
       {/* Name rotated, col 1-2, row 1-6 */}
-      <div className="col-span-4 row-span-2"></div>
-      <div className="col-span-2 row-span-2 flex items-start justify-start self-start">
+
+      <div className="col-span-2 flex items-start justify-start self-start">
         <FadeInOnVisible>
           <div className="flex items-start justify-end text-right h-full">
             {(() => {
               const [firstName, ...rest] = data.name.split(' ');
               const lastName = rest.join(' ');
               return (
-                <h1 className="dt-h1" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+                <h1 className="font-graphik-semibold text-[clamp(15vw,10vh,20vw)] leading-[clamp(15vw,10vh,20vw)]" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
                   {firstName}<br />{lastName}
                 </h1>
               );
@@ -60,7 +60,7 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
         </FadeInOnVisible>
       </div>
       {/* Image col 3-4, row 1-6 */}
-      <div className="col-span-2 row-span-6 flex items-start justify-end">
+      <div className="col-span-2 flex items-start justify-end">
         {data.image?.asset && (
           <Image src={typeof data.image.asset === 'string' ? data.image.asset : urlFor(data.image.asset).url()} alt={data.image.alt || data.name} width={200} height={300} className="object-cover w-full max-h-[40vh]" />
         )}
@@ -68,10 +68,10 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
       {/* Row 7: empty */}
       <div className="col-span-4 h-[2vh]" />
       {/* Domains of excellence col 1-3, row 8-10 */}
-      <div className="col-span-3 row-span-3 flex flex-col">
+      <div className="col-span-4 flex flex-col">
         {data.domainsOfExcellence?.length ? (
           <>
-            <div className="dt-h5 mb-[0.5vh]">Domains of excellence</div>
+            <div className="dt-h5 mb-[2vh]">Domains of excellence</div>
             {data.domainsOfExcellence.map((domain: string, i: number) => (
               <span key={i} className="dt-h3">{domain}</span>
             ))}
@@ -79,43 +79,44 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
         ) : null}
       </div>
       {/* Social links col 4, row 11-12, top right */}
-      <div className="col-start-4 row-start-13 col-span-1 row-span-2 flex flex-col font-bold items-end justify-start">
+      <div className="col-start-4 col-span-1 flex flex-col font-bold items-end justify-start mt-[7vh]">
         {socialLinksArr.map(([label, url], i) => (
           <a key={i} href={url as string} target="_blank" rel="noopener noreferrer" className="dt-btn underline">{label}</a>
         ))}
       </div>
       {/* Bio label and content col 1-4, row 13-17 */}
-      <div className="col-span-4 row-span-5 flex flex-col items-start mt-[2vh]">
-        <div className="dt-h5 mb-[1vh]">Bio</div>
+      <div className="col-span-4 flex flex-col items-start mt-[7vh]">
+        <div className="dt-h5 mb-[3vh]">Bio</div>
         <div className="dt-body-sm whitespace-pre-line"><PortableText value={data.bio as PortableTextBlock[]} /></div>
       </div>
       {/* Book button col 1-2, row 18 */}
       <div className="col-span-2 flex items-end justify-start mt-[2vh]">
         <a
           href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.mailtoSubject ?? '')}`}
-          className="dt-btn font-bold underline"
+          className="dt-btn"
         >
-          Book {data.name}
+          <UnderlineOnHoverAnimation hasStaticUnderline={true}>Book {data.name}</UnderlineOnHoverAnimation>
         </a>
       </div>
       {/* Next speaker button col 3-4, row 18 */}
       <div className="col-span-2 flex items-end justify-end mt-[2vh]">
         {nextSlug ? (
-          <Link href={`/keynotes/${nextSlug}`} className="dt-btn font-bold underline">
-            Next speaker
+          <Link href={`/keynotes/${nextSlug}`} className="dt-btn">
+            <UnderlineOnHoverAnimation hasStaticUnderline={true}>Next speaker</UnderlineOnHoverAnimation>
           </Link>
         ) : (
-          <span className="opacity-60 dt-btn font-bold underline">Next speaker</span>
+          <span className="dt-btn">
+             <UnderlineOnHoverAnimation hasStaticUnderline={true}>Next speaker</UnderlineOnHoverAnimation></span>
         )}
       </div>
       {/* Back to top button col 3-4, row 19 */}
       <div className="col-start-3 col-span-2 flex items-end justify-end mt-[2vh]">
         <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
           <FadeInOnVisible>
-            <span className="underline dt-btn flex items-center gap-1 font-bold">
+            <span className="dt-btn flex items-center">
               <svg
-                width="18"
-                height="18"
+                width="clamp(3.5vw,2.35vh,4.7vw)"
+                height="clamp(3.5vw,2.35vh,4.7vw)"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -124,9 +125,13 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
               >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
-              Back to top
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Back to top
+              </UnderlineOnHoverAnimation>
+
             </span>
           </FadeInOnVisible>
+
         </div>
       </div>
     </div>
@@ -147,7 +152,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
   ].filter(([, url]) => !!url);
 
   return (
-    <div className="grid gap-[2vh] grid-cols-2 auto-rows-[25vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+    <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)]  [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
       {/* Name and social links */}
       <div className="col-span-1 row-span-4 h-full flex flex-col justify-between">
         <FadeInOnVisible>
@@ -199,7 +204,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
           </FadeInOnVisible>
         )}
       </div>
-  {/* Domains of excellence */}
+      {/* Domains of excellence */}
       <div className="col-span-3 row-span-4">
         {data.domainsOfExcellence?.length ? (
           <FadeInOnVisible>
@@ -220,7 +225,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
         ) : null}
       </div>
       {/* Bio */}
-      <div className="col-span-1 row-span-3 overflow-y-auto no-scrollbar">
+      <div className="col-span-1 row-span-3 overflow-y-auto no-scrollbar scroll-mask-bottom">
         <FadeInOnVisible>
           <div className="flex flex-col gap-[5vh]">
             <div className="dt-h5">Bio</div>

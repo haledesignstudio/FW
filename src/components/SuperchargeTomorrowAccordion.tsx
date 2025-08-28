@@ -273,25 +273,25 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                             {/* Closed state: only row 1 visible, click to open */}
                             {!isOpen && (
                                 <AccordionPulse pulse delay={closedMobileTabDelays[idx] ?? 0} paused={openTabs.length > 0}>
-                                    <div className="grid grid-cols-4 min-h-[8vh] items-center px-3 py-2 w-full">
-                                        <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{tab.number}</div>
-                                        <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{tab.title}</div>
+                                    <div className="grid grid-cols-4 px-[4.53vw]  items-center w-full">
+                                        <div className="col-span-1 row-span-1 dt-h1">{tab.number}</div>
+                                        <div className="col-span-3 row-span-1 text-right dt-h1 truncate">{tab.title}</div>
                                     </div>
                                 </AccordionPulse>
                             )}
                             {/* Open state: full vertical accordion for tab 1 */}
                             {isOpen && idx === 0 && (
-                                <div className="grid grid-cols-4 gap-y-4 auto-rows-[minmax(32px,auto)] px-3 py-2 w-full">
+                                <div className=" px-[4.53vw] grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
                                     {/* Row 1: col 1: number, col 3-4: title */}
-                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 py-2.5 leading-tight">{tab.number}</div>
-                                    <div className="col-start-3 col-span-2 row-start-1 row-span-1 text-right dt-h1 leading-tight">{tab.title}</div>
+                                    <div className="col-span-1 dt-h1">{tab.number}</div>
+                                    <div className="col-start-3 col-span-2 text-right dt-h1 leading-tight">{tab.title}</div>
                                     {/* Row 2: col 3-4: subheading */}
-                                    <div className="col-start-3 col-span-2 row-start-2 row-span-1 text-right dt-h3 leading-tight">
+                                    <div className="col-start-3 col-span-2 row-start-2 row-span-1 text-right dt-h3 flex flex-col justify-end">
                                         <PortableText value={tab.subheading ?? []} />
                                     </div>
                                     {/* Row 3-4: col 1-4: image */}
                                     {tab.image?.asset && (
-                                        <div className="col-span-4 row-start-3 row-end-5 flex justify-center items-center">
+                                        <div className="col-span-4 flex justify-center items-center">
                                             <Image
                                                 src={urlFor(tab.image.asset).url()}
                                                 alt="Process image"
@@ -303,30 +303,27 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                             />
                                         </div>
                                     )}
-                                    {/* Row 5: empty */}
-                                    <div className="col-span-4 row-start-5 row-span-1 h-[1vh]"></div>
                                     {/* Row 6-7: col 1-4: description */}
-                                    <div className="col-span-4 row-start-6 row-end-8 dt-body mt-2 pb-4">
+                                    <div className="col-span-4 dt-body-lg mt-[2vh]">
                                         <PortableText value={tab.description ?? []} />
                                     </div>
                                     {/* Row 8: col 1-2: statement 0, col 3-4: statement 1 */}
-                                    <div className="col-span-2 row-start-8 row-span-1 dt-body pr-2">
+                                    <div className="col-span-2 row-span-1 dt-body-sm mt-[2vh]">
                                         <PortableText value={tab.statements?.[0]?.body ?? []} />
                                     </div>
-                                    <div className="col-span-2 row-start-8 row-span-1 dt-body pl-2">
+                                    <div className="col-span-2 row-span-1 dt-body-sm mt-[2vh]">
                                         <PortableText value={tab.statements?.[1]?.body ?? []} />
                                     </div>
-                                    {/* Row 9: empty */}
-                                    <div className="col-span-4 row-start-9 row-span-1 h-[1vh]"></div>
+
                                     {/* Row 10: col 1-2: statement 2, col 3-4: statement 3 */}
-                                    <div className="col-span-2 row-start-10 row-span-1 dt-body pr-2">
+                                    <div className="col-span-2 row-span-1 dt-body-sm">
                                         <PortableText value={tab.statements?.[2]?.body ?? []} />
                                     </div>
-                                    <div className="col-span-2 row-start-10 row-span-1 dt-body pl-2">
+                                    <div className="col-span-2 row-span-1 dt-body-sm">
                                         <PortableText value={tab.statements?.[3]?.body ?? []} />
                                     </div>
                                     {/* Row 11: col 1-2: CTA button */}
-                                    <div className="col-span-2 row-start-11 row-span-1 flex items-center">
+                                    <div className="col-span-2 row-span-1 flex items-center">
                                         <a
                                             href={`mailto:${tab.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent('I want to apply to the Supercharge Tomorrow programme')}`}
                                             className="transition cursor-pointer dt-btn"

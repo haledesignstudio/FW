@@ -9,6 +9,7 @@ import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
 import SuperchargeTomorrowAccordion from '@/components/SuperchargeTomorrowAccordion';
 import { PortableTextBlock } from '@portabletext/types';
+import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 
 /** === Types (copied from your original file so the server file stays server-only) === */
 type PT = PortableTextBlock[];
@@ -219,10 +220,10 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
       <Header />
       <main className="bg-[#F9F7F2]">
         {isMobile ? (
-          <div className="w-full px-0 mx-0">
-            <div className="grid grid-cols-4 gap-y-2 auto-rows-[minmax(32px,auto)] px-3 py-2 w-full">
+          <div className="w-full px-[4.53vw] py-[2.09vh]">
+            <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
               {/* Row 1: col 1-4: data.title with MainTitleAnimation */}
-              <div className="col-span-2 row-start-1 row-span-1">
+              <div className="col-span-2 row-span-2 text-balance">
                 <MainTitleAnimation
                   text={data.title}
                   typeSpeed={60}
@@ -230,29 +231,25 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
                   className="dt-h2 text-balance"
                 />
               </div>
-              <div className="col-span-2 row-start-1 row-span-1"></div>
-              {/* Row 2: empty */}
-              <div className="col-span-4 row-start-2 row-span-1 h-[1vh]"></div>
+
               {/* Row 3: col 1-4: data.heading with FadeInOnVisible */}
-              <div className="col-span-4 row-start-3 row-span-1">
+              <div className="col-span-4 row-span-2">
                 <FadeInOnVisible>
                   <div className="dt-h1">{data.heading}</div>
                 </FadeInOnVisible>
               </div>
-              {/* Row 4: empty */}
-              <div className="col-span-4 row-start-4 row-span-1 h-[1vh]"></div>
+
               {/* Row 5: col 1-4: data.subheading with FadeInOnVisible */}
-              <div className="col-span-4 row-start-5 row-span-1">
+              <div className="col-span-4 row-span-2">
                 <FadeInOnVisible>
                   <div className="dt-h3">
                     <HighlightText value={data.subheading} />
                   </div>
                 </FadeInOnVisible>
               </div>
-              {/* Row 6: empty */}
-              <div className="col-span-4 row-start-6 row-span-1 h-[1vh]"></div>
+
               {/* Row 7: col 1-4: SuperchargeTomorrowAccordion */}
-              <div className="col-span-4 row-start-7 row-span-1">
+              <div className="col-span-4">
                 <FadeInOnVisible>
                   <SuperchargeTomorrowAccordion data={data} />
                 </FadeInOnVisible>
@@ -260,10 +257,10 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
               {/* After Accordion: Back to top button in col 3-4 */}
               <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
                 <FadeInOnVisible>
-                  <span className="underline dt-h5 flex items-center gap-1">
+                  <span className="dt-btn flex items-center">
                     <svg
-                      width="18"
-                      height="18"
+                      width="clamp(3.5vw,2.35vh,4.7vw)"
+                      height="clamp(3.5vw,2.35vh,4.7vw)"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -272,16 +269,20 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
                     >
                       <path d="M12 19V5M5 12l7-7 7 7" />
                     </svg>
-                    Back to top
+                    <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                      Back to top
+                    </UnderlineOnHoverAnimation>
+
                   </span>
                 </FadeInOnVisible>
+
               </div>
             </div>
           </div>
         ) : (
           <>
-            <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2] overflow-visible">
-              <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] overflow-visible [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+            <div className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2] overflow-visible">
+              <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
                 {items.map((item) => (
                   <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
                     {item.content}

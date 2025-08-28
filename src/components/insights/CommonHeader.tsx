@@ -37,9 +37,9 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
   if (isMobile) {
     // MOBILE LAYOUT
     return (
-      <div className="grid grid-cols-4 gap-y-2 auto-rows-min w-full">
+      <div className="grid grid-cols-4 auto-rows-[5vh] gap-x-[4.53vw] gap-y-[2.09vh]  w-full">
         {/* Row 1: Title (cols 1-2) */}
-        <div className="col-span-2 row-span-1">
+        <div className="col-span-2 row-span-2">
           <MainTitleAnimation
             text="Insights"
             typeSpeed={60}
@@ -55,12 +55,12 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
         </div> */}
         {/* Each category: new row, cols 2-3 */}
         {categories.map((cat) => (
-          <div key={cat.href} className="col-start-2 col-span-3 row-span-1">
+          <div key={cat.href} className="col-start-2 col-span-3 row-span-1 mt-[-2vh]">
             {cat.comingSoon ? (
               <FadeInOnVisible>
-                <div className="group flex items-center gap-[1vh]">
+                <div className="group flex items-center">
                   <UnderlineOnHoverAnimation>
-                    <span className="text-black">{cat.label}</span>
+                    <span className="">{cat.label}</span>
                   </UnderlineOnHoverAnimation>
                   <div className="overflow-hidden h-[2.5vh] relative w-fit flex items-center">
                     <span className="block text-[2vh] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
@@ -71,7 +71,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
               </FadeInOnVisible>
             ) : (
               <FadeInOnVisible>
-                <Link href={cat.href} className="transition">
+                <Link href={cat.href} className="transition dt-body-lg">
                   <UnderlineOnHoverAnimation isActive={cat.href.endsWith(active)}>
                     {cat.label}
                   </UnderlineOnHoverAnimation>
@@ -80,7 +80,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
             )}
           </div>
         ))}
-        <div className="col-span-4 row-span-4"></div>
+        <div className="col-span-4 row-span-1"></div>
       </div>
     );
   }

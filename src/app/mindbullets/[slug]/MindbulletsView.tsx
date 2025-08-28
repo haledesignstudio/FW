@@ -16,6 +16,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import Link from "next/link";
 import Carousel from "@/components/Carousel";
 
+
 type RelatedStory = { title: string; link: string };
 
 type Mindbullet = {
@@ -78,8 +79,8 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   // --- MOBILE ---
   const mobile = (
     <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
-      <div className="flex-1 grid grid-cols-4 gap-y-5 w-full">
-        <div className="col-span-4 row-span-2 dt-h1">
+      <div className="flex-1 grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
+        <div className="col-span-4 row-span-3 dt-h1">
           Mindbullets: News from the Future
         </div>
 
@@ -97,29 +98,30 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           </div>
         )}
 
-        <div className="col-span-4 row-span-1 dt-h2">
-          {data.title}
+        <div className="col-span-4 flex flex-col gap-[1vh]">
+          <div className="dt-h2">
+            {data.title}
+          </div>
+          <div className=" dt-h3">
+            {data.byLine}
+          </div>
         </div>
 
-        <div className="col-span-4 row-span-1 dt-h3">
-          {data.byLine}
-        </div>
-
-        <div className="col-span-2 row-span-1 flex items-center">
+        <div className="col-span-4 row-span-1 flex items-center">
           <span className="dt-body-lg">
             <div className="flex flex-row items-center gap-[1vw]">
-            <div className="dt-body-lg">
-              Dateline
+              <div className="dt-body-lg">
+                Dateline
+              </div>
+              <div className="dt-body-lg">
+                {new Intl.DateTimeFormat("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                  timeZone: "UTC",
+                }).format(new Date(`${data.dateline}T00:00:00Z`))}
+              </div>
             </div>
-            <div className="dt-body-lg">
-              {new Intl.DateTimeFormat("en-GB", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-                timeZone: "UTC",
-              }).format(new Date(`${data.dateline}T00:00:00Z`))}
-            </div>
-          </div>
           </span>
         </div>
 
@@ -129,9 +131,6 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           <PortableText value={rightBlocks} components={ptComponents} />
         </div>
 
-        <div className="col-span-4 row-span-2 dt-body-sm">
-          <></>
-        </div>
 
         <div className="col-span-2 row-span-1 flex items-center">
           <span className="dt-body-lg">
@@ -175,7 +174,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
                     href={r.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="dt-body-lg"
+                    className="dt-body-lg line-clamp-1"
                   >
                     <UnderlineOnHoverAnimation
                       hasStaticUnderline={true}
@@ -190,9 +189,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           </div>
         </div>
 
+        <div className="col-span-4"></div>
+
         {/* Carousel (mobile) */}
         {carouselItems.length > 0 && (
-          <div className="col-span-4 mt-[25vh]">
+          <div className="col-span-4">
             <FadeInOnVisible>
               <div className="dt-h5 mb-[2vh]">You may also like</div>
               <Carousel
@@ -210,39 +211,38 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           </div>
         )}
 
-        <div className="col-span-2 row-span-1">
-          <FadeInOnVisible>
-            <Link
-              href="/keynotes"
-              className="dt-btn font-bold cursor-pointer"
-            >
+        <div className="col-span-4"></div>
+
+        <div className="col-span-2 row-span-1 flex items-end">
+          <FadeInOnVisible className="text-balance">
+            <Link href="/keynotes" className="dt-btn transition cursor-pointer">
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                 See Keynotes
               </UnderlineOnHoverAnimation>
             </Link>
           </FadeInOnVisible>
         </div>
-
-        <div
-          className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
+        <div className="col-start-3 col-span-2 flex justify-end items-end cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <FadeInOnVisible>
-            <span className="underline dt-btn flex items-center gap-1 font-bold">
+            <span className="dt-btn flex items-center">
               <svg
-                width="18"
-                height="18"
+                width="clamp(3.5vw,2.35vh,4.7vw)"
+                height="clamp(3.5vw,2.35vh,4.7vw)"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                style={{ transform: "rotate(-45deg)" }}
+                style={{ transform: 'rotate(-45deg)' }}
               >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
-              Back to top
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Back to top
+              </UnderlineOnHoverAnimation>
+
             </span>
           </FadeInOnVisible>
+
         </div>
       </div>
     </div>
@@ -330,7 +330,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       <CommonHeader title={data.title} active="mindbullets" />
 
       {/* Top grid */}
-      <div className="grid gap-[2vh] grid-cols-2 auto-rows-[25vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <div className="grid grid-cols-2 auto-rows-[minmax(7.701vh,auto)] gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {gridItems.map((item) => (
           <div
             key={item.id}
@@ -388,7 +388,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
 
       {/* Body + disclaimer */}
       <FadeInOnVisible>
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+        <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           <div className="h-full flex items-center">
             <div className="dt-body-lg">
               {new Intl.DateTimeFormat("en-GB", {
@@ -399,7 +399,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
               }).format(new Date(`${data.publishedAt}T00:00:00Z`))}
             </div>
 
-        </div>
+          </div>
         </div>
       </FadeInOnVisible>
 
@@ -407,7 +407,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       {/* Related links */}
       {data.RelatedStories?.length ? (
         <FadeInOnVisible>
-          <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[10vh]">
+          <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[10vh]">
             <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-6">
               <p className="dt-h5">
                 Links to related stories
@@ -458,7 +458,8 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   return (
     <>
       <Header />
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden"><CommonHeader title={'Insights'} active="mindbullets" /></div>
         {mobile}
         {desktop}
       </main>

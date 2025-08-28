@@ -50,7 +50,7 @@ export default function ExpandableTopicList() {
                         <div key={topic._id} className="w-full">
                             {/* Closed state: 4-column grid, title col-span-3, arrow col-4 bottom right */}
                             <div
-                                className="grid grid-cols-4 items-end cursor-pointer border-b border-[#e0ded7] py-[2vh]"
+                                className="grid grid-cols-4 items-end cursor-pointer py-[2vh]"
                                 onClick={() =>
                                     setOpenIndices((prev) =>
                                         prev.includes(index)
@@ -89,35 +89,35 @@ export default function ExpandableTopicList() {
                                         )}
                                     </div>
                                     {/* Row 4: topic heading col-span-4 */}
-                                    <FadeInOnVisible>
-                                    <div className="col-span-4 mb-[2vh]">
-                                        <h3 className="dt-h3">{topic.topicHeading}</h3>
-                                    </div>
+                                    <FadeInOnVisible className="col-span-4 mb-[2vh]">
+                                        <div className="col-span-4 mb-[2vh]">
+                                            <h3 className="dt-h3">{topic.topicHeading}</h3>
+                                        </div>
                                     </FadeInOnVisible>
                                     {/* Row 5: contents array, left col 1-2, right col 3-4 */}
-                                    <FadeInOnVisible>
-                                    <div className="col-span-2 space-y-[2vh]">
-                                        {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
-                                            <div className="space-y-[1vh]" key={`left-${i}`}>
-                                                <h4 className="dt-h5">{item.heading}</h4>
-                                                <p className="dt-body-sm">{item.description}</p>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    <FadeInOnVisible className="col-span-2 space-y-[2vh]">
+                                        <div className="col-span-2 space-y-[2vh]">
+                                            {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
+                                                <div className="space-y-[1vh]" key={`left-${i}`}>
+                                                    <h4 className="dt-h5">{item.heading}</h4>
+                                                    <p className="dt-body-sm">{item.description}</p>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </FadeInOnVisible>
-                                    <FadeInOnVisible>
-                                    <div className="col-span-2 space-y-[2vh]">
-                                        {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
-                                            <div className="space-y-[1vh]" key={`right-${i}`}>
-                                                <h4 className="dt-h5">{item.heading}</h4>
-                                                <p className="dt-body-sm">{item.description}</p>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    <FadeInOnVisible className="col-span-2 space-y-[2vh]">
+                                        <div className="col-span-2 space-y-[2vh]">
+                                            {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
+                                                <div className="space-y-[1vh]" key={`right-${i}`}>
+                                                    <h4 className="dt-h5">{item.heading}</h4>
+                                                    <p className="dt-body-sm">{item.description}</p>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </FadeInOnVisible>
                                     {/* Row 11: CTA col 3-4 */}
+                                    <FadeInOnVisible className="col-start-3 col-span-2 flex items-end justify-end text-right mt-[2vh]">
                                     <div className="col-start-3 col-span-2 flex items-end justify-end mt-[2vh]">
-                                        <FadeInOnVisible>
                                         <a
                                             href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
                                             className="dt-btn underline"
@@ -125,8 +125,9 @@ export default function ExpandableTopicList() {
                                         >
                                             {topic.topicButtonText}
                                         </a>
-                                        </FadeInOnVisible>
+
                                     </div>
+                                    </FadeInOnVisible>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +171,7 @@ export default function ExpandableTopicList() {
                                 {/* td-1: topicHeading */}
                                 <div className="col-span-2 row-span-1 p-[1vh]">
                                     <FadeInOnVisible>
-                                    <p className="dt-h4">{topic.topicHeading}</p>
+                                        <p className="dt-h4">{topic.topicHeading}</p>
                                     </FadeInOnVisible>
                                 </div>
                                 <div className="col-span-2 row-span-1" />
@@ -178,13 +179,13 @@ export default function ExpandableTopicList() {
                                 <div className="col-span-1 row-span-3 p-[1vh]">
                                     {imageUrl && (
                                         <FadeInOnVisible>
-                                        <Image
-                                            src={imageUrl}
-                                            alt={topic.topicImage.alt ?? 'Topic Image'}
-                                            width={1920}
-                                            height={1080}
-                                            className="object-cover w-full h-full"
-                                        />
+                                            <Image
+                                                src={imageUrl}
+                                                alt={topic.topicImage.alt ?? 'Topic Image'}
+                                                width={1920}
+                                                height={1080}
+                                                className="object-cover w-full h-full"
+                                            />
                                         </FadeInOnVisible>
                                     )}
                                 </div>
@@ -196,10 +197,10 @@ export default function ExpandableTopicList() {
                                         {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`left-${i}`}>
                                                 <FadeInOnVisible>
-                                                <h4 className="dt-h5">{item.heading}</h4>
+                                                    <h4 className="dt-h5">{item.heading}</h4>
                                                 </FadeInOnVisible>
                                                 <FadeInOnVisible>
-                                                <p className="dt-body-sm">{item.description}</p>
+                                                    <p className="dt-body-sm">{item.description}</p>
                                                 </FadeInOnVisible>
                                             </div>
                                         ))}
@@ -209,10 +210,10 @@ export default function ExpandableTopicList() {
                                         {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`right-${i}`}>
                                                 <FadeInOnVisible>
-                                                <h4 className="dt-h5">{item.heading}</h4>
+                                                    <h4 className="dt-h5">{item.heading}</h4>
                                                 </FadeInOnVisible>
                                                 <FadeInOnVisible>
-                                                <p className="dt-body-sm">{item.description}</p>
+                                                    <p className="dt-body-sm">{item.description}</p>
                                                 </FadeInOnVisible>
                                             </div>
                                         ))}
@@ -222,16 +223,16 @@ export default function ExpandableTopicList() {
                                 {/* td-7: CTA */}
                                 <div className="col-span-1 row-span-1 p-[1vh] flex items-end justify-end text-right">
                                     <FadeInOnVisible>
-                                    <a
-                                        href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
-                                        className="dt-btn"
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                                            {topic.topicButtonText}
-                                        </UnderlineOnHoverAnimation>
+                                        <a
+                                            href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
+                                            className="dt-btn"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                                                {topic.topicButtonText}
+                                            </UnderlineOnHoverAnimation>
 
-                                    </a>
+                                        </a>
                                     </FadeInOnVisible>
                                 </div>
                                 <div className="col-span-2 row-span-1" />

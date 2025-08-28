@@ -234,7 +234,7 @@ export default function CircularTextSlider({
           user-select: none;
         }
         .arrow:active {
-          transform: translateY(-50%) scale(0.96);
+          transform: translateY(-30%) scale(1);
         }
         .arrow-left {
           left: 16px;
@@ -326,7 +326,7 @@ export default function CircularTextSlider({
             alt="Next"
             width={36}
             height={36}
-            style={{ width: '100%', height: '100%' }}
+            style={{width: '100%', height: '100%' }}
             priority
           />
         </button>

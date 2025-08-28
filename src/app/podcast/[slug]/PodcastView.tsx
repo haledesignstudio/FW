@@ -22,17 +22,16 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
   // --- MOBILE ---
   const mobile = (
     <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
-      <div className="flex-1 grid grid-cols-4 gap-y-5 w-full">
+      <div className="flex-1 grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
         {/* Brand/section title from main page (was hardcoded "Podcasts") */}
-        <div className="col-span-4 row-span-2"></div>
-        <div className="col-span-3 row-span-2 flex items-center">
+        <div className="col-span-3 row-span-1 flex items-center">
           <FadeInOnVisible>
             <div className="dt-h1">{pageTitle}</div>
           </FadeInOnVisible>
         </div>
 
         {/* Row 3-4: Subheading (col 1-4) */}
-        <div className="col-span-4 row-span-2">
+        <div className="col-span-4 row-span-1">
           <FadeInOnVisible>
             <div className="dt-h3">
               <HighlightText value={pageSubheading} />
@@ -48,7 +47,7 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
         </div>
 
         {/* CTA */}
-        <div className="col-span-2 row-span-1">
+        <div className="col-span-2 flex items-center">
           <FadeInOnVisible>
             <Link href="/keynotes" className="dt-btn font-bold cursor-pointer">
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
@@ -59,17 +58,29 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
         </div>
 
         <div
-          className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
+          className="col-start-3 col-span-2 flex justify-end items-center cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <FadeInOnVisible>
-            <span className="underline dt-btn flex items-center gap-1 font-bold">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: "rotate(-45deg)" }}>
+            <span className="dt-btn flex items-center">
+              <svg
+                width="clamp(3.5vw,2.35vh,4.7vw)"
+                height="clamp(3.5vw,2.35vh,4.7vw)"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                style={{ transform: 'rotate(-45deg)' }}
+              >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
-              Back to top
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Back to top
+              </UnderlineOnHoverAnimation>
+
             </span>
           </FadeInOnVisible>
+
         </div>
       </div>
     </div>
@@ -123,7 +134,7 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
   const desktop = (
     <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
       {/* Use main-page title in the header bar */}
-      <div className="grid gap-[2vh] grid-cols-2 auto-rows-[25vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <div className="grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {gridItems.map((item) => (
           <div
             key={item.id}
@@ -143,8 +154,8 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
   return (
     <>
       <Header />
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-      <CommonHeader title={pageTitle} active="podcast" />
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <CommonHeader title={pageTitle} active="podcast" />
         {mobile}
         {desktop}
       </main>
