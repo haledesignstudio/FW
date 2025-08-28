@@ -318,9 +318,10 @@ export default function Keynotes({
           </div>
           <div className="col-span-2 row-span-2 flex items-end justify-end">
             <Link href={'/keynotes#speakers-mobile'}
-              className="dt-btn font-bold underline"
+              className="dt-btn"
             >
-              {speakerSection.speakerCTA2 || 'See Speakers'}
+               <UnderlineOnHoverAnimation hasStaticUnderline={true}>{speakerSection.speakerCTA2 || 'See Speakers'}</UnderlineOnHoverAnimation>
+              
             </Link>
           </div>
           {/* Empty row */}
@@ -351,29 +352,13 @@ export default function Keynotes({
           <div className="col-span-4 dt-h3 mt-[3vh]">
             <HighlightText value={speakerSection.speakerSectionSubtitle} />
           </div>
-          {/* Row 5: CTA buttons */}
-          <div className="col-span-2 flex items-end justify-start mt-[11vh]">
-            <a
-              href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
-              className="dt-btn underline"
-            >
-              {speakerSection.speakerCTA1 ?? 'Get in Touch'}
-            </a>
-          </div>
-          <div className="col-span-2 flex items-end justify-end mt-[2vh]">
-            <Link href={'/keynotes#speakers'}
-              className="dt-btn font-bold underline"
-            >
-              {speakerSection.speakerCTA2 || 'See Speakers'}
-            </Link>
-          </div>
           {/* Empty row */}
           <div className="col-span-4 h-[2vh]" />
         </div>
 
         {/* Circular Text Slider */}
         <FadeInOnVisible>
-          <div className="w-full mt-[8vh]" id="speakers-mobile">
+          <div className="w-full mt-[8vh]">
             <CircularTextSliderMobile speakers={speakers} />
           </div>
         </FadeInOnVisible>

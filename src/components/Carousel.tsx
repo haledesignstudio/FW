@@ -179,7 +179,7 @@ export default function Carousel({
     (item: CarouselItem) => {
       const col = document.createElement("div");
       (col as unknown as WithRoots).__roots = [];
-      col.className = "col relative bg-[#F9F7F2] text-black overflow-hidden";
+      col.className = "col relative bg-[#F9F7F2] overflow-hidden";
       col.style.display = "grid";
       col.style.gridTemplateRows = `${IMG_H} ${CAP_H}`;
       col.style.rowGap = INNER_GAP;
@@ -398,7 +398,7 @@ export default function Carousel({
           {/* Desktop-only control column */}
           {!isMobile && (
             <div
-              className="bg-[#F9F7F2] text-black"
+              className="bg-[#F9F7F2]"
               style={{
                 flex: "0 0 calc(100% / 6)",
                 height: colHeight,
@@ -411,7 +411,7 @@ export default function Carousel({
                 <button
                   type="button"
                   onClick={shiftLeft}
-                  className="bg-[#F9F7F2] text-black disabled:scale-103 transition-transform duration-300"
+                  className="bg-[#F9F7F2] disabled:scale-103 transition-transform duration-300"
                   disabled={isAnimating}
                   aria-label="Next"
                 >
@@ -471,7 +471,7 @@ export default function Carousel({
               <Image
                 src="/carousel-arrow.png"
                 alt=""
-                className="w-[3vh] h-auto object-contain"
+                className="w-[2.5vh] h-auto object-contain"
                 width={32}
                 height={32}
                 priority

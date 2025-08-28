@@ -46,7 +46,7 @@ export default function AudioVisualiser(props: AudioVisualiserProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [playing, setPlaying] = useState(false);
-  const [audioReady, setAudioReady] = useState(false);
+  const [, setAudioReady] = useState(false);
 
   // 🔹 Keep audioRef in sync with external or internal <audio>
   useEffect(() => {
@@ -287,17 +287,16 @@ export default function AudioVisualiser(props: AudioVisualiserProps) {
         />
         {audioSrc && (
           <>
-            <audio
+            <audio playsInline
               ref={audioRef}
               src={audioSrc}
-              style={{ display: 'none' }}
+              style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
               crossOrigin="anonymous"
               preload="auto"
             />
             <button
               type="button"
               onClick={handlePlayPause}
-              disabled={!audioReady}
               style={{
                 position: 'absolute',
                 left: '50%',
@@ -313,7 +312,7 @@ export default function AudioVisualiser(props: AudioVisualiserProps) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                cursor: audioReady ? 'pointer' : 'not-allowed',
+                cursor: 'pointer',
                 outline: 'none',
                 fontSize: 32,
                 color: color,

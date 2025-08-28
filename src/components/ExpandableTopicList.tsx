@@ -178,7 +178,7 @@ export default function ExpandableTopicList() {
                                 {/* td-3: topicImage */}
                                 <div className="col-span-1 row-span-3 p-[1vh]">
                                     {imageUrl && (
-                                        <FadeInOnVisible>
+                                        <FadeInOnVisible className="h-full">
                                             <Image
                                                 src={imageUrl}
                                                 alt={topic.topicImage.alt ?? 'Topic Image'}

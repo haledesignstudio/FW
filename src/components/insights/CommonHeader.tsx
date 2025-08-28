@@ -118,7 +118,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
                   <FadeInOnVisible>
                     <div className="group flex items-center gap-[1vh]">
                       <UnderlineOnHoverAnimation>
-                        <span className="text-black">{cat.label}</span>
+                        <span className="">{cat.label}</span>
                       </UnderlineOnHoverAnimation>
                       <div className="overflow-hidden h-[2.5vh] relative w-fit flex items-center">
                         <span className="block text-[2vh] text-black/50 transform translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out">

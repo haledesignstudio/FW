@@ -28,14 +28,14 @@ interface PrivacyPolicyData {
 }
 
 type GridItem = {
-    id: number;
-    content: React.ReactNode;
-    colSpan?: number;
-    rowSpan?: number;
-    mobileColSpan?: number;
-    mobileRowSpan?: number;
-    landscapeColSpan?: number;
-    landscapeRowSpan?: number;
+  id: number;
+  content: React.ReactNode;
+  colSpan?: number;
+  rowSpan?: number;
+  mobileColSpan?: number;
+  mobileRowSpan?: number;
+  landscapeColSpan?: number;
+  landscapeRowSpan?: number;
 };
 
 const portableTextComponents: PortableTextComponents = {
@@ -57,63 +57,63 @@ const portableTextComponents: PortableTextComponents = {
 };
 
 const getGridClasses = (item: GridItem) => {
-    const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'items-start', 'relative'];
+  const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'items-start', 'relative'];
 
-    // Mobile
-    if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-        baseClasses.push('block', '[@media(max-width:767px)]:hidden');
-    } else {
-        baseClasses.push(`col-span-${item.mobileColSpan}`);
-        baseClasses.push(`row-span-${item.mobileRowSpan}`);
-    }
+  // Mobile
+  if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
+    baseClasses.push('block', '[@media(max-width:767px)]:hidden');
+  } else {
+    baseClasses.push(`col-span-${item.mobileColSpan}`);
+    baseClasses.push(`row-span-${item.mobileRowSpan}`);
+  }
 
-    // Landscape
-    if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-        baseClasses.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
-    } else {
-        baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
-        baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
-    }
+  // Landscape
+  if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
+    baseClasses.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+  } else {
+    baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
+    baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+  }
 
-    // Desktop
-    if (item.colSpan === 0 || item.rowSpan === 0) {
-        baseClasses.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
-    } else {
-        baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
-        baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
-    }
+  // Desktop
+  if (item.colSpan === 0 || item.rowSpan === 0) {
+    baseClasses.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+  } else {
+    baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+    baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+  }
 
-    return baseClasses.join(' ');
+  return baseClasses.join(' ');
 };
 
 const categories = [
-  { 
-    key: 'interpretationAndDefinitionsSection', 
+  {
+    key: 'interpretationAndDefinitionsSection',
     label: 'Interpretation and Definitions',
     shortLabel: 'Interpretation and Definitions'
   },
-  { 
-    key: 'collectingAndUsingDataSection', 
+  {
+    key: 'collectingAndUsingDataSection',
     label: 'Collecting and Using Your Personal Data',
     shortLabel: 'Collecting and Using Your Personal Data'
   },
-  { 
-    key: 'childrensPrivacySection', 
+  {
+    key: 'childrensPrivacySection',
     label: "Children's Privacy",
     shortLabel: "Children's Privacy"
   },
-  { 
-    key: 'linksToOtherWebsitesSection', 
+  {
+    key: 'linksToOtherWebsitesSection',
     label: 'Links to Other Websites',
     shortLabel: 'Links to Other Websites'
   },
-  { 
-    key: 'changesToPolicySection', 
+  {
+    key: 'changesToPolicySection',
     label: 'Changes to this Privacy Policy',
     shortLabel: 'Changes to this Privacy Policy'
   },
-  { 
-    key: 'contactUsSection', 
+  {
+    key: 'contactUsSection',
     label: 'Contact Us',
     shortLabel: 'Contact Us'
   }
@@ -147,7 +147,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
     const section = privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection;
     return (
       <div className="dt-body-sm">
-        <PortableText value={section.content} components={portableTextComponents}/>
+        <PortableText value={section.content} components={portableTextComponents} />
       </div>
     );
   }
@@ -310,7 +310,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
           {/* Row 1: Main header (cols 1-2) + Category buttons container (cols 3-4) */}
           <div key="mobile-header" className="col-span-2 flex justify-start">
             <FadeInOnVisible>
-              <MainTitleAnimation 
+              <MainTitleAnimation
                 text={privacyData.pageHeader.mainTitle}
                 typeSpeed={60}
                 delay={500}
@@ -353,14 +353,14 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
               <div className="prose leading-relaxed break-words dt-body-sm" style={{ maxWidth: '100%', width: '100%' }}>
                 {(() => {
                   const section = privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection;
-                  
+
                   if (!section || !section.content || section.content.length === 0) {
                     return <div className="text-red-500">No content available for this section.</div>;
                   }
-                  
+
                   return (
-                    <PortableText 
-                      value={section.content} 
+                    <PortableText
+                      value={section.content}
                       components={{
                         ...portableTextComponents,
                         block: {
@@ -368,10 +368,10 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
                         },
                         marks: {
                           link: ({ children, value }) => (
-                            <a 
-                              href={value?.href} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
+                            <a
+                              href={value?.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className="text-blue-600 underline break-words"
                               style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
                             >
@@ -403,25 +403,25 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
         {/* Back to top button - always at bottom */}
         <div className="flex justify-end items-center mt-[11vh]">
           <div className="cursor-pointer" onClick={handleBackToTop}>
-           <FadeInOnVisible>
-                      <span className="dt-btn flex items-center">
-                        <svg
-                          width="clamp(3.5vw,2.35vh,4.7vw)"
-                          height="clamp(3.5vw,2.35vh,4.7vw)"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          style={{ transform: 'rotate(-45deg)' }}
-                        >
-                          <path d="M12 19V5M5 12l7-7 7 7" />
-                        </svg>
-                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                          Back to top
-                        </UnderlineOnHoverAnimation>
+            <FadeInOnVisible>
+              <span className="dt-btn flex items-center">
+                <svg
+                  width="clamp(3.5vw,2.35vh,4.7vw)"
+                  height="clamp(3.5vw,2.35vh,4.7vw)"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  style={{ transform: 'rotate(-45deg)' }}
+                >
+                  <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  Back to top
+                </UnderlineOnHoverAnimation>
 
-                      </span>
-                    </FadeInOnVisible>
+              </span>
+            </FadeInOnVisible>
 
           </div>
         </div>

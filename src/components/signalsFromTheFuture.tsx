@@ -133,6 +133,19 @@ const getGridClasses = (item: GridItem) => {
   return base.join(' ');
 };
 
+const getActionText = (type: string) => {
+  const actionTexts: Record<string, string> = {
+    'mindbullet': 'See Article',
+    'podcast': 'Listen Now',
+    'case-study': 'See Case Study',
+    'article': 'See Article',
+    'provocative-scenario': 'Explore Scenario',
+    'corporate-venturing': 'Learn More'
+  };
+  return actionTexts[type] || 'See Article';
+};
+
+
 export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTheFutureProps) {
   const [signalPieces, setSignalPieces] = useState<SignalPiece[]>([]);
   const [expandedColumn, setExpandedColumn] = useState<number | null>(null);
@@ -527,7 +540,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
             >
               <a href={getSlugUrl(currentPiece)} className="dt-btn-secondary transition cursor-pointer">
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                  <span>See Article</span>
+                  <span>{getActionText(currentPiece.type)}</span>
                 </UnderlineOnHoverAnimation>
               </a>
             </motion.div>
@@ -729,7 +742,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
           </button>
           <a href={getSlugUrl(piece)} className="dt-btn-secondary transition cursor-pointer">
             <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-              <span>See Article</span>
+              <span>{getActionText(piece.type)}</span>
             </UnderlineOnHoverAnimation>
           </a>
         </div>

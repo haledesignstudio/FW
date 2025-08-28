@@ -128,6 +128,7 @@ function addLineBreaksAfterPeriods(blocks: PortableTextBlock[]): PortableTextBlo
   });
 }
 
+
 export default function OurWorkClient({ data }: OurWorkClientProps) {
   const isMobileScreen = useIsMobile();
 
@@ -169,9 +170,9 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 3,
       content: (
-        <FadeInOnVisible>
+        <FadeInOnVisible delay={1.25}>
           <div id="impact-statistics" className="dt-h3">
-            <HighlightText value={data.subheading} />
+            <HighlightText value={data.subheading} delayMs={1250} />
           </div>
         </FadeInOnVisible>
       ),
@@ -198,13 +199,13 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       id: 5,
       content: (
         <div className="h-full flex flex-col gap-[2vh]">
-          <FadeInOnVisible>
+          <FadeInOnVisible delay={3.25}>
             {(inView) => (
               <>
                 <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
-                  <CountingAnimation start={inView} target={data.statistics[0].statisticValue} />
+                  <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[0].statisticValue} />
                 </div>
-                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[0].statisticName}</div>
+                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight">{data.statistics[0].statisticName}</div>
               </>
             )}
           </FadeInOnVisible>
@@ -222,13 +223,13 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       id: 6,
       content: (
         <div className="h-full flex flex-col gap-[2vh]">
-          <FadeInOnVisible>
+          <FadeInOnVisible delay={3.25}>
             {(inView) => (
               <>
                 <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
-                  <CountingAnimation start={inView} target={data.statistics[1].statisticValue} />
+                  <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[1].statisticValue} />
                 </div>
-                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[1].statisticName}</div>
+                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight">{data.statistics[1].statisticName}</div>
               </>
             )}
           </FadeInOnVisible>
@@ -246,13 +247,13 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       id: 7,
       content: (
         <div className="h-full flex flex-col gap-[2vh]">
-          <FadeInOnVisible>
+          <FadeInOnVisible delay={3.25}>
             {(inView) => (
               <>
                 <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
-                  <CountingAnimation start={inView} target={data.statistics[2].statisticValue} />
+                  <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[2].statisticValue} />
                 </div>
-                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[2].statisticName}</div>
+                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight">{data.statistics[2].statisticName}</div>
               </>
             )}
           </FadeInOnVisible>
@@ -271,13 +272,13 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       id: 8,
       content: (
         <div className="h-full flex flex-col gap-[2vh]">
-          <FadeInOnVisible>
+          <FadeInOnVisible delay={3.25}>
             {(inView) => (
               <>
                 <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
-                  <CountingAnimation start={inView} target={data.statistics[3].statisticValue} />
+                  <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[3].statisticValue} />
                 </div>
-                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[3].statisticName}</div>
+                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight">{data.statistics[3].statisticName}</div>
               </>
             )}
           </FadeInOnVisible>
@@ -295,13 +296,13 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       id: 9,
       content: (
         <div className="h-full flex flex-col gap-[2vh]">
-          <FadeInOnVisible>
+          <FadeInOnVisible delay={3.25}>
             {(inView) => (
               <>
                 <div className="text-[clamp(2.8vw,6.6vh,3.3vw)] font-graphik-semibold leading-[clamp(6vw,13.8vh,6.9vw)]">
-                  <CountingAnimation start={inView} target={data.statistics[4].statisticValue} />
+                  <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[4].statisticValue} />
                 </div>
-                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight text-black">{data.statistics[4].statisticName}</div>
+                <div className="text-[clamp(0.75vw,2vh,1vw)] font-roboto leading-tight">{data.statistics[4].statisticName}</div>
               </>
             )}
           </FadeInOnVisible>
@@ -318,28 +319,30 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 11,
       content: (
-        <section id="our-clients" className="h-full flex">
-          <div className="w-full grid grid-cols-3 gap-[6vh]">
-            {data.testimonials.slice(0, 3).map((t, i) => (
-              <div key={i} className="">
-                {/* Quote */}
-                <div className="dt-h4">
-                  <PortableText value={t.quote} />
-                </div>
+        <FadeInOnVisible className="h-full flex">
+          <section id="our-clients" className="h-full flex">
+            <div className="w-full grid grid-cols-3 gap-[6vh]">
+              {data.testimonials.slice(0, 3).map((t, i) => (
+                <div key={i} className="">
+                  {/* Quote */}
+                  <div className="dt-h4">
+                    <PortableText value={t.quote} />
+                  </div>
 
-                {/* Author */}
-                <div className="mt-[2.5vh] text-black">
-                  <div className="dt-h4">
-                    &ndash; {t.name}
-                  </div>
-                  <div className="dt-h4">
-                    {t.jobTitle}{t.company ? `, ${t.company}` : ''}
+                  {/* Author */}
+                  <div className="mt-[2.5vh]">
+                    <div className="dt-h4">
+                      &ndash; {t.name}
+                    </div>
+                    <div className="dt-h4">
+                      {t.jobTitle}{t.company ? `, ${t.company}` : ''}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        </FadeInOnVisible>
       ),
       colSpan: 6,
       rowSpan: 2,
@@ -352,17 +355,17 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
     {
       id: 12,
       content: (
-        <div className="h-full flex items-center">
+        <FadeInOnVisible className="h-full flex items-center">
           <PartnersMarquee
             partners={data.partners}
-            durationSec={100}     // loop time
+            durationSec={30}     // loop time
             logoHeightVh={21}     // logo height
             gap="5.385vw"            // spacing between logos
             edgeFadeVw={1.795}       // edge fade width; set 0 to disable
             fadeBg="#F9F7F2"     // page background for the fades
             direction="left"
           />
-        </div>
+        </FadeInOnVisible>
 
       ),
       colSpan: 6,
@@ -413,9 +416,9 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 {/* Row 1-3: Subheading (col 3-4) */}
 
                 <div className="col-span-2 row-span-4">
-                  <FadeInOnVisible>
+                  <FadeInOnVisible delay={1.25}>
                     <div className="dt-h3 whitespace-pre-line">
-                      <HighlightText value={addLineBreaksAfterPeriods(data.subheading)} />
+                      <HighlightText delayMs={1250} value={addLineBreaksAfterPeriods(data.subheading)} />
                     </div>
                   </FadeInOnVisible>
                 </div>
@@ -424,11 +427,11 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 {/* Row 3-4: Corporate Partners Statistics (col 1-2) */}
                 <div className="col-span-2 row-span-2">
                   <div className="h-full gap-[2vh]">
-                    <FadeInOnVisible>
+                    <FadeInOnVisible delay={3.25}>
                       {(inView) => (
                         <>
                           <div className="dt-h2">
-                            <CountingAnimation start={inView} target={data.statistics[0].statisticValue} />
+                            <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[0].statisticValue} />
                           </div>
                           <div className="dt-body-sm">{data.statistics[0].statisticName}</div>
                         </>
@@ -441,11 +444,11 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 {/* Row 5-6: Game-changing Opportunities (col 1-2) */}
                 <div className="col-span-2 row-span-2">
                   <div className="h-full flex flex-col gap-[2vh]">
-                    <FadeInOnVisible>
+                    <FadeInOnVisible delay={3.25}>
                       {(inView) => (
                         <>
                           <div className="dt-h2">
-                            <CountingAnimation start={inView} target={data.statistics[1].statisticValue} />
+                            <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[1].statisticValue} />
                           </div>
                           <div className="dt-body-sm">{data.statistics[1].statisticName}</div>
                         </>
@@ -457,11 +460,11 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 {/* Row 5-6: Value Propositions (col 3-4) */}
                 <div className="col-span-2 row-span-2">
                   <div className="h-full flex flex-col gap-[2vh]">
-                    <FadeInOnVisible>
+                    <FadeInOnVisible delay={3.25}>
                       {(inView) => (
                         <>
                           <div className="dt-h2">
-                            <CountingAnimation start={inView} target={data.statistics[2].statisticValue} />
+                            <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[2].statisticValue} />
                           </div>
                           <div className="dt-body-sm">{data.statistics[2].statisticName}</div>
                         </>
@@ -473,13 +476,13 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 {/* Row 7-8: Investment Cases (col 1-2) */}
                 <div className="col-span-2 row-span-2">
                   <div className="h-full flex flex-col gap-[2vh]">
-                    <FadeInOnVisible>
+                    <FadeInOnVisible delay={3.25}>
                       {(inView) => (
                         <>
                           <div className="dt-h2">
-                            <CountingAnimation start={inView} target={data.statistics[3].statisticValue} />
+                            <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[3].statisticValue} />
                           </div>
-                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[3].statisticName}</div>
+                          <div className="dt-body-sm font-roboto leading-tightk">{data.statistics[3].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -489,11 +492,11 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 {/* Row 7-8: New Ventures in Commercialisation (col 3-4) */}
                 <div className="col-span-2 row-span-2">
                   <div className="h-full flex flex-col gap-[2vh]">
-                    <FadeInOnVisible>
+                    <FadeInOnVisible delay={3.25}>
                       {(inView) => (
                         <>
                           <div className="dt-h2">
-                            <CountingAnimation start={inView} target={data.statistics[4].statisticValue} />
+                            <CountingAnimation start={inView} startDelayMs={3250} target={data.statistics[4].statisticValue} />
                           </div>
                           <div className="dt-body-sm">{data.statistics[4].statisticName}</div>
                         </>
@@ -507,22 +510,26 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                   <section id="our-clients" className="h-full flex">
                     <div className="w-full grid col-span-4 gap-[9vh]">
                       {data.testimonials.slice(0, 3).map((t, i) => (
-                        <div key={i} className="">
-                          {/* Quote */}
-                          <div className="dt-h4">
-                            <PortableText value={t.quote} />
-                          </div>
 
-                          {/* Author */}
-                          <div className="mt-[1vh] text-black">
+                        <div key={i} className="">
+                          <FadeInOnVisible>
+                            {/* Quote */}
                             <div className="dt-h4">
-                              &ndash; {t.name}
+                              <PortableText value={t.quote} />
                             </div>
-                            <div className="dt-h4">
-                              {t.jobTitle}{t.company ? `, ${t.company}` : ''}
+
+                            {/* Author */}
+                            <div className="mt-[1vh]">
+                              <div className="dt-h4">
+                                &ndash; {t.name}
+                              </div>
+                              <div className="dt-h4">
+                                {t.jobTitle}{t.company ? `, ${t.company}` : ''}
+                              </div>
                             </div>
-                          </div>
+                          </FadeInOnVisible>
                         </div>
+
                       ))}
                     </div>
                   </section>
@@ -532,19 +539,20 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 <div className="col-span-4"></div>
 
                 {/* Row 13: Partners Carousel */}
-                <div className="col-span-4 row-span-1 flex items-center">
+
+                <FadeInOnVisible className="col-span-4 row-span-1 flex items-center">
                   <div className="h-full w-full flex items-center">
                     <PartnersMarquee
                       partners={data.partners}
-                      durationSec={90} // Faster for mobile performance
-                      logoHeightVh={17} // Optimized height for mobile
-                      gap="20vw" // Balanced gap for mobile
-                      edgeFadeVw={8} // Smaller fade for mobile
+                      durationSec={10} // 2x faster than 30
+                      logoHeightVh={17}
+                      gap="20vw"
+                      edgeFadeVw={8}
                       fadeBg="#F9F7F2"
                       direction="left"
                     />
                   </div>
-                </div>
+                </FadeInOnVisible>
 
                 {/* Row 14: Empty */}
                 <div className="col-span-4"></div>
@@ -558,31 +566,31 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
               </FadeInOnVisible>
             </div>
 
-            
+
 
             {/* Back to Top Button After Accordion */}
             <div className="p-[2vh] bg-[#F9F7F2] mt-[10vh]">
               <div className="grid grid-cols-4 gap-[2vh]">
                 <div className="col-start-3 col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
                   <FadeInOnVisible>
-                      <span className="dt-btn flex items-center">
-                        <svg
-                          width="clamp(3.5vw,2.35vh,4.7vw)"
-                          height="clamp(3.5vw,2.35vh,4.7vw)"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          style={{ transform: 'rotate(-45deg)' }}
-                        >
-                          <path d="M12 19V5M5 12l7-7 7 7" />
-                        </svg>
-                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                          Back to top
-                        </UnderlineOnHoverAnimation>
+                    <span className="dt-btn flex items-center">
+                      <svg
+                        width="clamp(3.5vw,2.35vh,4.7vw)"
+                        height="clamp(3.5vw,2.35vh,4.7vw)"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        style={{ transform: 'rotate(-45deg)' }}
+                      >
+                        <path d="M12 19V5M5 12l7-7 7 7" />
+                      </svg>
+                      <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                        Back to top
+                      </UnderlineOnHoverAnimation>
 
-                      </span>
-                    </FadeInOnVisible>
+                    </span>
+                  </FadeInOnVisible>
 
                 </div>
               </div>

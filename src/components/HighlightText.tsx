@@ -8,17 +8,14 @@ const PRIORITY = ['Future', 'Growth', 'Tomorrow'] as const;
 
 const makeWordRegex = (w: string, flags = 'i') => new RegExp(`\\b(${w})\\b`, flags);
 
-
 type TextChild = { text?: string };
 type TextBlock = PortableTextBlock & { children?: TextChild[] };
-
 
 function extractPlainText(blocks: PortableTextBlock[]): string {
   return blocks
     .map((b) => (b as TextBlock).children?.map((c) => c.text ?? '').join('') ?? '')
     .join('\n');
 }
-
 
 function renderWithHighlight(
   text: string,
@@ -39,7 +36,8 @@ function renderWithHighlight(
   );
 }
 
-export function HighlightText({ value }: { value: string | PortableTextBlock[] }) {
+export function HighlightText({ value, delayMs = 0 }: { value: string | PortableTextBlock[]; delayMs?: number }) {
+
   const highlightColor = '#DC5A50';
 
   // 1) Decide ONE word for the entire input (string or all PT blocks)
@@ -52,50 +50,69 @@ export function HighlightText({ value }: { value: string | PortableTextBlock[] }
     return null;
   }, [value]);
 
-
   const HighlightedWord = ({ children }: { children: React.ReactNode }) => {
     const ref = React.useRef<HTMLSpanElement>(null);
     const [isVisible, setIsVisible] = React.useState(false);
 
     React.useEffect(() => {
-      const node = ref.current;
-      if (!node) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            obs.disconnect();
-          }
-        },
-        { threshold: 0.2 }
-      );
-      obs.observe(node);
-      return () => obs.disconnect();
-    }, []);
+  const node = ref.current;
+  if (!node) return;
+
+  let timeout: number | undefined;
+
+  const obs = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        timeout = window.setTimeout(() => {
+          setIsVisible(true);
+          obs.disconnect(); // animate once
+        }, Math.max(0, delayMs));
+      }
+    },
+    { threshold: 0.2 }
+  );
+
+  obs.observe(node);
+  return () => {
+    if (timeout) window.clearTimeout(timeout);
+    obs.disconnect();
+  };
+}, [delayMs]);
+
 
     return (
-      <span ref={ref} className="relative inline-block">
-        <span
-          className={`relative z-10 transition-colors duration-300 ${
-            isVisible ? 'text-black' : 'text-inherit'
-          }`}
-        >
-          {children}
-        </span>
+      <span ref={ref} className="relative inline-block" style={{ isolation: 'isolate' }}>
+        {/* Background bar - now first and with negative z-index */}
         <span
           className={`
-            absolute inset-0 z-0
+            absolute inset-0
             origin-left
             transition-transform duration-800 ease-out
             ${isVisible ? 'scale-x-100' : 'scale-x-0'}
-            transform will-change-transform delay-[1000ms]
+            will-change-transform delay-[1000ms]
           `}
-          style={{ pointerEvents: 'none', backgroundColor: highlightColor }}
+          style={{ 
+            pointerEvents: 'none', 
+            backgroundColor: highlightColor,
+            zIndex: -1,
+            transform: isVisible ? 'scaleX(1)' : 'scaleX(0)'
+          }}
         />
+        {/* Text - now with positive z-index and transform context */}
+        <span
+          className={`relative inline-block transition-colors duration-300 ${
+            isVisible ? 'text-[#232323]' : 'text-inherit'
+          }`}
+          style={{ 
+            zIndex: 1,
+            transform: 'translateZ(0)'
+          }}
+        >
+          {children}
+        </span>
       </span>
     );
   };
-
 
   const wrapStrings = (children: React.ReactNode) =>
     React.Children.map(children, (child) =>
@@ -103,7 +120,6 @@ export function HighlightText({ value }: { value: string | PortableTextBlock[] }
         ? renderWithHighlight(child, HighlightedWord, chosenWord)
         : child
     );
-
 
   const components: PortableTextComponents = {
     list: {

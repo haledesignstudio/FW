@@ -365,10 +365,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                         <PortableText value={data.accordionSection2.section1.statements[1].heading ?? []} />
                                     </div>
                                     {/* Row 7: col 1-2: section1.statements[0].body, col 3-4: section1.statements[1].body */}
-                                    <div className="col-span-2 dt-body">
+                                    <div className="col-span-2 dt-body-sm">
                                         <PortableText value={data.accordionSection2.section1.statements[0].body ?? []} />
                                     </div>
-                                    <div className="col-span-2 dt-body">
+                                    <div className="col-span-2 dt-body-sm">
                                         <PortableText value={data.accordionSection2.section1.statements[1].body ?? []} />
                                     </div>
                                     {/* Row 8: col 1-2: section1.statements[2].heading, col 3-4: section2.statements[0].heading */}
@@ -379,10 +379,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                         <PortableText value={data.accordionSection2.section2.statements[0].heading ?? []} />
                                     </div>
                                     {/* Row 9: col 1-2: section1.statements[2].body, col 3-4: section2.statements[0].body */}
-                                    <div className="col-span-2 dt-body">
+                                    <div className="col-span-2 dt-body-sm">
                                         <PortableText value={data.accordionSection2.section1.statements[2].body ?? []} />
                                     </div>
-                                    <div className="col-span-2 dt-body">
+                                    <div className="col-span-2 dt-body-sm">
                                         <PortableText value={data.accordionSection2.section2.statements[0].body ?? []} />
                                     </div>
                                     {/* Row 10: col 3-4: section2.statements[1].heading */}

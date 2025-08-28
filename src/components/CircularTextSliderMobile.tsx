@@ -7,6 +7,7 @@ import { PortableText } from "@portabletext/react";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import { PortableTextBlock } from "@portabletext/types";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 interface Speaker {
   _id: string;
@@ -145,20 +146,20 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
             justifyContent: 'center',
           }}
         >
-          
-            <Image
-              src={activeSpeaker.image.asset}
-              alt={activeSpeaker.image.alt || activeSpeaker.name}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }}
-              width={240}
-              height={150}
-              priority
-            />
+
+          <Image
+            src={activeSpeaker.image.asset}
+            alt={activeSpeaker.image.alt || activeSpeaker.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }}
+            width={240}
+            height={150}
+            priority
+          />
 
         </div>
 
         {/* Top Right: Read More - col 3-4, row 1 */}
-        <div className="col-start-3 col-span-2 row-start-1 flex items-start justify-end">
+        <div className="col-start-3 col-span-2 row-start-1 flex items-start justify-end" id="speakers-mobile">
           <button
             className="dt-btn text-balance text-right"
             onClick={() => {
@@ -233,26 +234,52 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
               const x = Math.cos(rad) * circleRadius;
               const y = Math.sin(rad) * circleRadius;
               const isActive = index === activeIndex;
+
+              const slug =
+                typeof speaker.slug === "string" ? speaker.slug : speaker.slug?.current;
+              const href = slug ? `/keynotes/${slug}` : undefined;
+
               return (
                 <div
                   key={speaker.__dupKey ?? `${speaker._id}-${index}`}
-                  className={`speaker-item-mobile absolute top-0 left-0 font-semibold whitespace-nowrap transition-colors duration-200 select-none px-2 py-1 ${isActive ? "text-black bg-[#dc5a50] z-10" : "text-black/70"}`}
+                  className={`speaker-item-mobile absolute top-0 left-0 font-semibold whitespace-nowrap transition-colors duration-200 select-none px-2 py-1 ${isActive ? "text-[#232323] bg-[#dc5a50] z-10" : "text-[#232323]/70"
+                    }`}
                   style={{
                     transform: `translate(${x}px, ${y}px) rotate(${angle}deg)`,
                     fontSize: "2.2vh",
                     letterSpacing: "0.15vh",
                   }}
                 >
-                  {speaker.name}
+                  {href ? (
+                    <Link
+                      href={href}
+                      prefetch={false} // avoids prefetching dozens of duplicates
+                      className="speaker-link-mobile"
+                      aria-label={`Read more about ${speaker.name}`}
+                    >
+                      {speaker.name}
+                    </Link>
+                  ) : (
+                    <span className="speaker-link-mobile">{speaker.name}</span>
+                  )}
                 </div>
               );
             })}
+
             <style jsx>{`
-              .speaker-item-mobile {
-                left: 0;
-                transform-origin: left center;
-                text-align: left;
-              }
+            .speaker-item-mobile {
+              left: 0;
+              transform-origin: left center;
+              text-align: left;
+            }
+            .speaker-link-mobile {
+              position: relative;
+              z-index: 1;            /* sit above bg highlight */
+              display: inline-block; /* larger tap target */
+              padding: 0.15rem 0.35rem;
+              color: inherit;
+              text-decoration: none;
+            }
             `}</style>
           </div>
           {/* Bottom cut-off overlay */}

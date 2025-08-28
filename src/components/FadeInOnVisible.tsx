@@ -19,7 +19,9 @@ const FadeInOnVisible: React.FC<FadeInOnVisibleProps> = ({
   threshold = 0.2,
   rootMargin = '0px',
   triggerOnce = true,
+  delay = 0, // seconds
 }) => {
+
   const ref = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
   const [inView, setInView] = useState(false);
@@ -36,7 +38,8 @@ const FadeInOnVisible: React.FC<FadeInOnVisibleProps> = ({
           // Ensure controls.start is only called after mount
           setTimeout(() => {
             if (mounted) controls.start('visible');
-          }, 0);
+          }, Math.max(0, delay * 1000));
+
           if (triggerOnce) observer.disconnect();
         } else if (!triggerOnce) {
           setInView(false);
@@ -50,7 +53,8 @@ const FadeInOnVisible: React.FC<FadeInOnVisibleProps> = ({
       mounted = false;
       observer.disconnect();
     };
-  }, [controls, threshold, rootMargin, triggerOnce]);
+  }, [controls, threshold, rootMargin, triggerOnce, delay]);
+
 
   const content = typeof children === 'function' ? (children as (v: boolean) => React.ReactNode)(inView) : children;
 

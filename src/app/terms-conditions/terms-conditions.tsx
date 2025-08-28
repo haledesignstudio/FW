@@ -385,8 +385,8 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                     onClick={() => setSelectedCategory(category.key)}
                     className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full"
                   >
-                    <UnderlineOnHoverAnimation isActive={selectedCategory === category.key} className="font-normal text-black">
-                      <span className="dt-body-lg leading-tight text-black font-normal text-left">
+                    <UnderlineOnHoverAnimation isActive={selectedCategory === category.key} className="">
+                      <span className="dt-body-lg text-left">
                         {category.shortLabel}
                       </span>
                     </UnderlineOnHoverAnimation>

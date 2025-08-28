@@ -263,7 +263,7 @@ if (isMobile) {
                     value={form.jobTitle}
                     onChange={handleChange}
                     className={`dt-h3 bg-transparent w-full focus:outline-none appearance-none ${
-                      form.jobTitle === '' ? 'text-gray-300' : 'text-black'
+                      form.jobTitle === '' ? 'text-gray-300' : 'text-[#232323]'
                     }`}
                     aria-invalid={!!(triedSubmit && getError('jobTitle'))}
                     aria-describedby="err-jobTitle"
@@ -276,7 +276,7 @@ if (isMobile) {
                   <span
                     id="err-jobTitle"
                     className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
-                    bg-[#DC5A50] text-white shadow transition-opacity ${
+                    bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${
                       triedSubmit && getError('jobTitle') ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
@@ -295,7 +295,7 @@ if (isMobile) {
                     aria-invalid={!!(triedSubmit && getError('name'))}
                   />
                   <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
-                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('name') ? 'opacity-100' : 'opacity-0'}`}>
+                    bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError('name') ? 'opacity-100' : 'opacity-0'}`}>
                     {getError('name')}
                   </span>
                 </div>
@@ -312,7 +312,7 @@ if (isMobile) {
                     aria-invalid={!!(triedSubmit && getError('email'))}
                   />
                   <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
-                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('email') ? 'opacity-100' : 'opacity-0'}`}>
+                    bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError('email') ? 'opacity-100' : 'opacity-0'}`}>
                     {getError('email')}
                   </span>
                 </div>
@@ -329,7 +329,7 @@ if (isMobile) {
                     aria-invalid={!!(triedSubmit && getError('confirmEmail'))}
                   />
                   <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
-                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('confirmEmail') ? 'opacity-100' : 'opacity-0'}`}>
+                    bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError('confirmEmail') ? 'opacity-100' : 'opacity-0'}`}>
                     {getError('confirmEmail')}
                   </span>
                 </div>
@@ -345,7 +345,7 @@ if (isMobile) {
                     aria-invalid={!!(triedSubmit && getError('phone'))}
                   />
                   <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
-                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('phone') ? 'opacity-100' : 'opacity-0'}`}>
+                    bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError('phone') ? 'opacity-100' : 'opacity-0'}`}>
                     {getError('phone')}
                   </span>
                 </div>
@@ -361,7 +361,7 @@ if (isMobile) {
                     aria-invalid={!!(triedSubmit && getError('location'))}
                   />
                   <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
-                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('location') ? 'opacity-100' : 'opacity-0'}`}>
+                    bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError('location') ? 'opacity-100' : 'opacity-0'}`}>
                     {getError('location')}
                   </span>
                 </div>
@@ -383,7 +383,7 @@ if (isMobile) {
                     aria-invalid={!!(triedSubmit && getError('linkedIn'))}
                   />
                   <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
-                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('linkedIn') ? 'opacity-100' : 'opacity-0'}`}>
+                    bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError('linkedIn') ? 'opacity-100' : 'opacity-0'}`}>
                     {getError('linkedIn')}
                   </span>
                 </div>
@@ -425,7 +425,7 @@ if (isMobile) {
                     aria-invalid={!!(triedSubmit && getError('message'))}
                   />
                   <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
-                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('message') ? 'opacity-100' : 'opacity-0'}`}>
+                    bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError('message') ? 'opacity-100' : 'opacity-0'}`}>
                     {getError('message')}
                   </span>
                 </div>
@@ -509,7 +509,7 @@ if (isMobile) {
                     value={form.jobTitle}
                     onChange={handleChange}
                     className={`dt-h3 bg-transparent w-full focus:outline-none appearance-none
-                      ${form.jobTitle === '' ? 'text-gray-300' : 'text-black'}`}
+                      ${form.jobTitle === '' ? 'text-gray-300' : 'text-[#232323]'}`}
                     aria-invalid={!!(triedSubmit && getError('jobTitle'))}
                   >
                     <option value="" disabled>Select a vacancy *</option>
@@ -519,7 +519,7 @@ if (isMobile) {
                   </select>
                   <span
                     className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-                      bg-[#DC5A50] text-white shadow transition-opacity
+                      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity
                       ${triedSubmit && getError('jobTitle') ? 'opacity-100' : 'opacity-0'}`}
                   >
                     {getError('jobTitle')}
@@ -545,7 +545,7 @@ if (isMobile) {
                     />
                     <span
                       className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-                        bg-[#DC5A50] text-white shadow transition-opacity
+                        bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity
                         ${triedSubmit && getError(field) ? 'opacity-100' : 'opacity-0'}`}
                     >
                       {getError(field)}
@@ -570,7 +570,7 @@ if (isMobile) {
                   />
                   <span
                     className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-                      bg-[#DC5A50] text-white shadow transition-opacity
+                      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity
                       ${triedSubmit && getError('linkedIn') ? 'opacity-100' : 'opacity-0'}`}
                   >
                     {getError('linkedIn')}
@@ -613,7 +613,7 @@ if (isMobile) {
                   />
                   <span
                     className={`pointer-events-none absolute -top-[2vh] left-0 rounded font-roboto text-[clamp(0.25vw,1vh,0.5vw)] py-[0.35vh] px-[0.8vh]
-                      bg-[#DC5A50] text-white shadow transition-opacity
+                      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity
                       ${triedSubmit && getError('message') ? 'opacity-100' : 'opacity-0'}`}
                   >
                     {getError('message')}

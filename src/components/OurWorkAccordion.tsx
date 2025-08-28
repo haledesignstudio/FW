@@ -304,7 +304,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
             content: (
               <FadeInOnVisible className="h-full flex flex-col justify-end">
                 <div className="h-full flex flex-col justify-end">
-                  <div className="dt-h4 text-black">
+                  <div className="dt-h4">
                     <PortableText value={data.accordionSection2.body} />
                   </div>
                 </div>
@@ -437,7 +437,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                   <>
                     {/* Row 1: Main Title */}
                     <div
-                      className="py-[2.09vh] col-span-4 row-start-1 bg-[#F9F7F2] text-black flex items-start cursor-pointer z-10"
+                      className="py-[2.09vh] col-span-4 row-start-1 bg-[#F9F7F2] flex items-start cursor-pointer z-10"
                       onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>

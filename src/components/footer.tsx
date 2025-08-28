@@ -240,7 +240,7 @@ const Footer: React.FC = () => {
                         {shouldAnimate ? (
                             <FutureText
                                 text="Subscribe for news from the future"
-                                delay={2500}
+                                delay={1000}
                                 speed={20}
                                 triggerOnVisible={false}
                             />
@@ -253,7 +253,7 @@ const Footer: React.FC = () => {
                     {shouldAnimate && (
                         <FutureText
                             text="Enter your e-mail"
-                            delay={2500}
+                            delay={1000}
                             speed={20}
                             triggerOnVisible={false}
                             onUpdate={setPlaceholder}
@@ -275,7 +275,7 @@ const Footer: React.FC = () => {
                             {shouldAnimate ? (
                                 <FutureText
                                     text="Submit"
-                                    delay={2500}
+                                    delay={1000}
                                     speed={25}
                                     triggerOnVisible={false}
                                 />
@@ -319,13 +319,13 @@ const Footer: React.FC = () => {
                         )}
                     </h2>
                     <ul className="dt-body-sm leading-tight space-y-2">
-                        <li><Link href="/contact">{shouldAnimate ? <FutureText text="Contact" delay={2000} speed={20} triggerOnVisible={false} /> : "Contact"}</Link></li>
-                        <li><Link href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={2000} speed={20} triggerOnVisible={false} /> : "Keynotes"}</Link></li>
-                        <li><Link href="/people">{shouldAnimate ? <FutureText text="Join us" delay={2000} speed={20} triggerOnVisible={false} /> : "Join us"}</Link></li>
-                        <li><Link href="/faq">{shouldAnimate ? <FutureText text="FAQs" delay={2000} speed={20} triggerOnVisible={false} /> : "FAQs"}</Link></li>
-                        <li><Link href="/privacy-policy">{shouldAnimate ? <FutureText text="Privacy policy" delay={2000} speed={20} triggerOnVisible={false} /> : "Privacy policy"}</Link></li>
-                        <li><Link href="/terms-conditions">{shouldAnimate ? <FutureText text="Terms and conditions" delay={2000} speed={20} triggerOnVisible={false} /> : "Terms and conditions"}</Link></li>
-                        <li><Link href="/insights">{shouldAnimate ? <FutureText text="Shareholder Value Analytics" delay={2000} speed={20} triggerOnVisible={false} /> : "Shareholder Value Analytics"}</Link></li>
+                        <li><Link href="/contact">{shouldAnimate ? <FutureText text="Contact" delay={2500} speed={20} triggerOnVisible={false} /> : "Contact"}</Link></li>
+                        <li><Link href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={2500} speed={20} triggerOnVisible={false} /> : "Keynotes"}</Link></li>
+                        <li><Link href="/people">{shouldAnimate ? <FutureText text="Join us" delay={2500} speed={20} triggerOnVisible={false} /> : "Join us"}</Link></li>
+                        <li><Link href="/faq">{shouldAnimate ? <FutureText text="FAQs" delay={2500} speed={20} triggerOnVisible={false} /> : "FAQs"}</Link></li>
+                        <li><Link href="/privacy-policy">{shouldAnimate ? <FutureText text="Privacy policy" delay={2500} speed={20} triggerOnVisible={false} /> : "Privacy policy"}</Link></li>
+                        <li><Link href="/terms-conditions">{shouldAnimate ? <FutureText text="Terms and conditions" delay={2500} speed={20} triggerOnVisible={false} /> : "Terms and conditions"}</Link></li>
+                        <li><Link href="/insights">{shouldAnimate ? <FutureText text="Shareholder Value Analytics" delay={2500} speed={20} triggerOnVisible={false} /> : "Shareholder Value Analytics"}</Link></li>
                     </ul>
                 </div>
             </div>
