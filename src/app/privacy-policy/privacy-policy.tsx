@@ -291,8 +291,8 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
   // Prevent hydration mismatch by showing loading state until client-side JS loads
   if (!isClient) {
     return (
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {items.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}
@@ -305,10 +305,10 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
 
   if (isMobile) {
     return (
-      <main className="p-[2vh] bg-[#F9F7F2]">
-        <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
+      <main className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
           {/* Row 1: Main header (cols 1-2) + Category buttons container (cols 3-4) */}
-          <div key="mobile-header" className="col-span-2 row-span-1 flex items-end justify-start">
+          <div key="mobile-header" className="col-span-2 flex justify-start">
             <FadeInOnVisible>
               <MainTitleAnimation 
                 text={privacyData.pageHeader.mainTitle}
@@ -318,7 +318,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
               />
             </FadeInOnVisible>
           </div>
-          <div key="mobile-buttons" className="col-span-2 row-span-3 flex flex-col gap-[3.5vh] pt-[2vh]">
+          <div key="mobile-buttons" className="col-span-2 flex flex-col gap-[3.5vh] pt-[2vh]">
             {categories.map((category) => (
               <FadeInOnVisible key={`mobile-btn-${category.key}`}>
                 <button
@@ -326,7 +326,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
                   className="transition cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-left w-full"
                 >
                   <UnderlineOnHoverAnimation isActive={selectedCategory === category.key}>
-                    <span className="dt-body-lg leading-tight text-black font-normal text-left">
+                    <span className="dt-body-lg text-left">
                       {category.shortLabel}
                     </span>
                   </UnderlineOnHoverAnimation>
@@ -335,13 +335,11 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
             ))}
           </div>
 
-          {/* Rows 2-5: Empty spaces for category buttons container */}
-          <div key="mobile-spacer" className="col-span-2 row-span-3"></div>
 
           {/* Row 6: Category header (cols 1-4, bottom left aligned) */}
           <div key="mobile-category-header" className="col-span-4 row-span-1 flex items-end justify-start">
             <FadeInOnVisible key={`mobile-header-${selectedCategory}`}>
-              <h2 className="dt-h3 font-graphik">
+              <h2 className="dt-h3">
                 {(privacyData[selectedCategory as keyof PrivacyPolicyData] as PrivacyPolicySection).sectionTitle}
               </h2>
             </FadeInOnVisible>
@@ -403,24 +401,28 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
         </div>
 
         {/* Back to top button - always at bottom */}
-        <div className="flex justify-end items-center mt-[4vh] mb-[4vh]">
+        <div className="flex justify-end items-center mt-[11vh]">
           <div className="cursor-pointer" onClick={handleBackToTop}>
-            <FadeInOnVisible>            
-                  <span className="underline text-[2vh] flex items-center gap-1 font-bold">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      style={{ transform: 'rotate(-45deg)' }}
-                    >
-                      <path d="M12 19V5M5 12l7-7 7 7" />
-                    </svg>
-                    Back to top
-                  </span>
-            </FadeInOnVisible>
+           <FadeInOnVisible>
+                      <span className="dt-btn flex items-center">
+                        <svg
+                          width="clamp(3.5vw,2.35vh,4.7vw)"
+                          height="clamp(3.5vw,2.35vh,4.7vw)"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          style={{ transform: 'rotate(-45deg)' }}
+                        >
+                          <path d="M12 19V5M5 12l7-7 7 7" />
+                        </svg>
+                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                          Back to top
+                        </UnderlineOnHoverAnimation>
+
+                      </span>
+                    </FadeInOnVisible>
+
           </div>
         </div>
       </main>
@@ -430,7 +432,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
   // Desktop layout
   return (
     <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-      <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {items.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
             {item.content}

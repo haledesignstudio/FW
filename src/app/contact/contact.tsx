@@ -186,10 +186,10 @@ export default function Contact({ data }: { data: ContactPageContent }) {
     return (
       <>
         <Header />
-        <main className="p-[2vh] bg-[#F9F7F2]">
-          <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
+        <main className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
+          <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
             {/* Row 1: Main heading (cols 1-3) */}
-            <div className="col-span-3 row-span-1 flex items-end justify-start">
+            <div className="col-span-4 flex items-end justify-start">
               <FadeInOnVisible>
                 <MainTitleAnimation
                   text={data.pageHeader.mainTitle}
@@ -199,11 +199,11 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                 />
               </FadeInOnVisible>
             </div>
-            <div className="col-span-1 row-span-1"></div>
+
 
             {/* Row 2: Subheading (cols 2-4) */}
-            <div className="col-span-1 row-span-1"></div>
-            <div className="col-span-3 row-span-1 flex items-end justify-start">
+            <div className="col-span-1 "></div>
+            <div className="col-span-3 flex items-end justify-start">
               <FadeInOnVisible>
                 <h2 className="dt-h3">{data.contactFormSubheading || 'Get in Touch'}</h2>
               </FadeInOnVisible>
@@ -240,86 +240,150 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             </div>
 
             {/* Row 6-8: Form fields (cols 1-3) - Reduced from 4 rows to 3 rows */}
-            <div className="col-span-3 row-span-3">
+            {/* MOBILE: Contact form — stacked, desktop-styled */}
+            <div className="col-span-4 mt-[2vh]">
               <FadeInOnVisible>
-                <form onSubmit={handleSubmit} className="h-full flex flex-col justify-start gap-[1vh]">
-                  <input
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder={data.contactForm?.namePlaceholder || "Name and Surname"}
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
-                    required
-                  />
-                  <input
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder={data.contactForm?.emailPlaceholder || "Email"}
-                    type="email"
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
-                    required
-                  />
-                  <input
-                    name="phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                    placeholder={data.contactForm?.phonePlaceholder || "Phone Number"}
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
-                  />
-                  <input
-                    name="company"
-                    value={form.company}
-                    onChange={handleChange}
-                    placeholder={data.contactForm?.companyPlaceholder || "Company"}
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
-                  />
-                  <input
-                    name="position"
-                    value={form.position}
-                    onChange={handleChange}
-                    placeholder={data.contactForm?.positionPlaceholder || "Position"}
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh]"
-                  />
-                  <textarea
-                    name="message"
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder={data.contactForm?.messagePlaceholder || "Message"}
-                    className="bg-transparent border-b border-gray-400 text-gray-700 placeholder-gray-400 focus:outline-none py-2 text-[2vh] resize-none"
-                    rows={3}
-                    required
-                  />
-                  {formStatus === 'sent' && <p className="text-green-600 text-[1.5vh]">Message sent!</p>}
-                  {formStatus === 'error' && <p className="text-red-600 text-[1.5vh]">Error sending message. Please try again.</p>}
+                {/* MOBILE: Contact form — 4-column grid, message spans 3, submit in 4th */}
+                <form
+                  noValidate
+                  onSubmit={onSubmitWithUI}
+                  className="grid grid-cols-4 gap-x-[4.53vw] gap-y-[3vh]"
+                >
+                  {/* Name */}
+                  <div className="relative col-span-4">
+                    <input
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      placeholder={`${data.contactForm?.namePlaceholder ?? "Name and Surname"} *`}
+                      className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full ${triedSubmit && getError("name")}`}
+                    />
+                    <span
+                      className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.15vh] px-[0.7vh]
+      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("name") ? "opacity-100" : "opacity-0"}`}
+                    >
+                      {getError("name")}
+                    </span>
+                  </div>
+
+                  {/* Email */}
+                  <div className="relative col-span-4">
+                    <input
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder={`${data.contactForm?.emailPlaceholder ?? "Email"} *`}
+                      className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full ${triedSubmit && getError("email")}`}
+                    />
+                    <span
+                      className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.15vh] px-[0.7vh]
+      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("email") ? "opacity-100" : "opacity-0"}`}
+                    >
+                      {getError("email")}
+                    </span>
+                  </div>
+
+                  {/* Phone */}
+                  <div className="relative col-span-4">
+                    <input
+                      name="phone"
+                      value={form.phone}
+                      onChange={handleChange}
+                      placeholder={`${data.contactForm?.phonePlaceholder ?? "Phone Number"} *`}
+                      className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full ${triedSubmit && getError("phone")}`}
+                    />
+                    <span
+                      className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.15vh] px-[0.7vh]
+      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("phone") ? "opacity-100" : "opacity-0"}`}
+                    >
+                      {getError("phone")}
+                    </span>
+                  </div>
+
+                  {/* Company */}
+                  <div className="relative col-span-4">
+                    <input
+                      name="company"
+                      value={form.company}
+                      onChange={handleChange}
+                      placeholder={`${data.contactForm?.companyPlaceholder ?? "Company"} *`}
+                      className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full ${triedSubmit && getError("company")}`}
+                    />
+                    <span
+                      className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.15vh] px-[0.7vh]
+      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("company") ? "opacity-100" : "opacity-0"}`}
+                    >
+                      {getError("company")}
+                    </span>
+                  </div>
+
+                  {/* Position */}
+                  <div className="relative col-span-4">
+                    <input
+                      name="position"
+                      value={form.position}
+                      onChange={handleChange}
+                      placeholder={`${data.contactForm?.positionPlaceholder ?? "Position"} *`}
+                      className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full ${triedSubmit && getError("position")}`}
+                    />
+                    <span
+                      className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.15vh] px-[0.7vh]
+      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("position") ? "opacity-100" : "opacity-0"}`}
+                    >
+                      {getError("position")}
+                    </span>
+                  </div>
+
+                  {/* Message — span 3 cols */}
+                  <div className="relative col-span-3 mt-[7vh]">
+                    <textarea
+                      name="message"
+                      value={form.message}
+                      onChange={handleChange}
+                      placeholder={`${data.contactForm?.messagePlaceholder ?? "Message"} *`}
+                      rows={6}
+                      className={`dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full resize-none ${triedSubmit && getError("message")}`}
+                    />
+                    <span
+                      className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.15vh] px-[0.7vh]
+      bg-[#DC5A50] text-[#F9F7F2] shadow transition-opacity ${triedSubmit && getError("message") ? "opacity-100" : "opacity-0"}`}
+                    >
+                      {getError("message")}
+                    </span>
+                  </div>
+
+                  {/* Submit — in 4th col, aligned to top/right */}
+                  <div className="col-span-1 flex items-start justify-end mt-[7vh]">
+                    <button
+                      type="submit"
+                      disabled={formStatus === "sent" || formStatus === "sending"}
+                      tabIndex={0}
+                      onClick={() => document.querySelector("form")?.requestSubmit()}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") document.querySelector("form")?.requestSubmit();
+                      }}
+                      className="dt-btn cursor-pointer select-none disabled:opacity-50 disabled:pointer-events-none disabled:cursor-default"
+                    >
+                      <UnderlineOnHoverAnimation hasStaticUnderline>
+                        {formStatus === "sent" ? "Sent!" : formStatus === "sending" ? "Sending…" : "Submit"}
+                      </UnderlineOnHoverAnimation>
+                    </button>
+                  </div>
+
+                  {/* Status row */}
+                  {formStatus === "error" && (
+                    <p className="col-span-4 text-red-600 text-[1.5vh]">
+                      Error sending message. Please try again.
+                    </p>
+                  )}
                 </form>
+
               </FadeInOnVisible>
             </div>
-
-            {/* Row 6-8: Empty space (col 4) to align with form */}
-            <div className="col-span-1 row-span-3"></div>
-
-            {/* Row 9: Submit button (col 4) */}
-            <div className="col-span-3 row-span-1"></div>
-            <div className="col-span-1 row-span-1 flex items-start justify-end">
-              <FadeInOnVisible>
-                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                  <button
-                    type="submit"
-                    onClick={() => document.querySelector('form')?.requestSubmit()}
-                    className="dt-btn bg-transparent border-none outline-none cursor-pointer"
-                  >
-                    Submit
-                  </button>
-                </UnderlineOnHoverAnimation>
-              </FadeInOnVisible>
-            </div>
-
-            {/* Row 10-11: Empty */}
-            <div className="col-span-4 row-span-2"></div>
 
             {/* Row 12: Book a keynote heading (cols 1-3) */}
-            <div className="col-span-3 row-span-1 flex items-end justify-start">
+            <div className="col-span-4 flex items-end justify-start mt-[7vh]">
               <FadeInOnVisible>
                 <MainTitleAnimation
                   text={data.bookingKeynote?.title || "Book a Keynote"}
@@ -329,14 +393,12 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                 />
               </FadeInOnVisible>
             </div>
-            <div className="col-span-1 row-span-1"></div>
-
-            {/* Row 13: Empty */}
             <div className="col-span-4 row-span-1"></div>
+
 
             {/* Row 14: Keynote subheading (cols 2-4) */}
             <div className="col-span-1 row-span-1"></div>
-            <div className="col-span-3 row-span-1 flex items-end justify-start">
+            <div className="col-span-3 flex items-end justify-start">
               <FadeInOnVisible>
                 <h2 className="dt-h3">
                   {data.keynoteSubheading || "Keynote Speakers"}
@@ -348,35 +410,32 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             <div className="col-span-4 row-span-1"></div>
 
             {/* Row 16-17: Keynote section text (cols 1-4) */}
-            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
+            <div className="col-span-4 flex flex-col items-start justify-start gap-[1vh]">
               <FadeInOnVisible>
-                <p className="dt-body-sm text-gray-700">
+                <p className="dt-body-sm">
                   {data.bookingKeynote?.text || "Contact us to book a keynote speaker for your event."}
                 </p>
               </FadeInOnVisible>
             </div>
 
             {/* Row 18: Speaker link (cols 1-3) */}
-            <div className="col-span-4 row-span-1  items-center justify-start">
+            <div className="col-span-4 flex flex-col justify-end">
               <FadeInOnVisible>
                 <Link
                   href="/keynotes"
-                  className="dt-btn underline hover:no-underline"
+                  className="dt-btn"
                 >
-                  Find the right speaker for your executive team
+                  <UnderlineOnHoverAnimation hasStaticUnderline>Find the right speaker for your executive team</UnderlineOnHoverAnimation>
                 </Link>
               </FadeInOnVisible>
             </div>
-            <div className="col-span-1 row-span-1"></div>
 
-            {/* Row 19: Back to top button (col 4) */}
-            <div className="col-span-1 row-span-1"></div>
-            <div className="col-span-2 row-span-1 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
+            <div className="col-span-4 flex justify-end items-center cursor-pointer mt-[4vh]" onClick={handleBackToTop}>
               <FadeInOnVisible>
-                <span className="underline dt-btn flex items-center gap-1 font-bold">
+                <span className="dt-btn flex items-center">
                   <svg
-                    width="18"
-                    height="18"
+                    width="clamp(3.5vw,2.35vh,4.7vw)"
+                    height="clamp(3.5vw,2.35vh,4.7vw)"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -385,9 +444,13 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                   >
                     <path d="M12 19V5M5 12l7-7 7 7" />
                   </svg>
-                  Back to top
+                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                    Back to top
+                  </UnderlineOnHoverAnimation>
+
                 </span>
               </FadeInOnVisible>
+
             </div>
           </div>
         </main>
@@ -400,8 +463,8 @@ export default function Contact({ data }: { data: ContactPageContent }) {
   return (
     <>
       <Header />
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] grid-cols-6 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {/* ROW 2: Main Title (col-span-3) + Subheading (col-span-3) */}
           <div className="col-span-3 row-span-1 flex items-start bg-[#F9F7F2]">
             <MainTitleAnimation
@@ -608,18 +671,18 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="col-span-1 row-span-1 h-full flex flex-col justify-between">
               <FadeInOnVisible>
-              <p className="dt-body-sm">
-                {data.bookingKeynote?.text || "Contact us to book a keynote speaker for your event."}
-              </p>
+                <p className="dt-body-sm">
+                  {data.bookingKeynote?.text || "Contact us to book a keynote speaker for your event."}
+                </p>
               </FadeInOnVisible>
               <Link
                 href="/keynotes"
                 className="dt-btn"
               >
                 <FadeInOnVisible>
-                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                  Find the right speaker for your executive team
-                </UnderlineOnHoverAnimation>
+                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                    Find the right speaker for your executive team
+                  </UnderlineOnHoverAnimation>
                 </FadeInOnVisible>
               </Link>
             </div>
@@ -629,9 +692,9 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="h-full w-full flex items-start justify-start">
               <FadeInOnVisible>
-              <h2 className="dt-h3">
-                {data.keynoteSubheading || "Keynote Speakers"}
-              </h2>
+                <h2 className="dt-h3">
+                  {data.keynoteSubheading || "Keynote Speakers"}
+                </h2>
               </FadeInOnVisible>
             </div>
           </div>
