@@ -12,12 +12,12 @@ command = "npm run build"
 cwd = "."
 watch_dir = "src"
 
-# Cloudflare Pages configuration
-pages_build_output_dir = "/.vercel/output/static"
+# Cloudflare Pages configuration - point to .next directory
+pages_build_output_dir = ".next"
 
 # Ensure static assets are included
 [build.upload]
-dir = "/.vercel/output/static"
+dir = ".next"
 include = ["**/*"]
 exclude = ["node_modules"]
 
