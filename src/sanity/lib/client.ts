@@ -7,4 +7,5 @@ export const client = createClient({
   dataset,
   apiVersion,
   useCdn: false, // Set to false for draft mode and real-time updates
+  token: process.env.SANITY_API_READ_TOKEN,
 })

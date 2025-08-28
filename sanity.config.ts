@@ -29,43 +29,13 @@ export default defineConfig({
     // Color input plugin for color picker fields
     colorInput(),
     // Presentation tool for live preview
-    presentationTool({
-      previewUrl: {
-        previewMode: {
-          enable: `${process.env.CF_PAGES_URL || 'http://localhost:3000'}/api/draft-mode/enable`,
-        },
-        origin: process.env.CF_PAGES_URL || 'http://localhost:3000',
-      },
-      // Alternative preview URLs for different environments
-      // You can switch between these by updating the active configuration above
-      /*
-      // For Netlify deployment:
+      presentationTool({
       previewUrl: {
         previewMode: {
           enable: 'https://hale-fw.netlify.app/api/draft-mode/enable',
         },
         origin: 'https://hale-fw.netlify.app',
       },
-      // For Cloudflare Pages deployment:
-      previewUrl: {
-        previewMode: {
-          enable: 'https://fw-hale.pages.dev/api/draft-mode/enable',
-        },
-        origin: 'https://fw-hale.pages.dev',
-      },
-      // For local development:
-      previewUrl: {
-        previewMode: {
-          enable: 'http://localhost:3000/api/draft-mode/enable',
-        },
-        origin: 'http://localhost:3000',
-      },
-      */
-      //   previewMode: {
-      //     enable: 'https://hale-fw.netlify.app/api/draft-mode/enable',
-      //   },
-      //   origin: 'https://hale-fw.netlify.app',
-      // },
       resolve: {
         mainDocuments: [
           {
@@ -86,7 +56,47 @@ export default defineConfig({
           },
           {
             route: '/insights',
-            filter: `_type == "insightsPage"`,
+            filter: `_type == "shareholderPage"`,
+          },
+          {
+            route: '/insights/[slug]',
+            filter: `_type == "article" && defined(slug.current)`,
+          },
+          {
+            route: '/mindbullets',
+            filter: `_type == "mindbulletsPage"`,
+          },
+          {
+            route: '/mindbullets/[slug]',
+            filter: `_type == "mindbullet" && defined(slug.current)`,
+          },
+          {
+            route: '/podcast',
+            filter: `_type == "podcastPage"`,
+          },
+          {
+            route: '/podcast/[slug]',
+            filter: `_type == "podcast" && defined(slug.current)`,
+          },
+          {
+            route: '/the-edge',
+            filter: `_type == "edgePage"`,
+          },
+          {
+            route: '/the-edge/[slug]',
+            filter: `_type == "provocativeScenarios" && defined(slug.current)`,
+          },
+          {
+            route: '/keynotes',
+            filter: `_type == "keynotesPage"`,
+          },
+          {
+            route: '/keynotes/[slug]',
+            filter: `_type == "keynoteSpeaker" && defined(slug.current)`,
+          },
+          {
+            route: '/corporate-venturing',
+            filter: `_type == "corporatePage"`,
           },
           {
             route: '/contact',

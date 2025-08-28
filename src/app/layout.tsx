@@ -7,6 +7,8 @@ import { PreloaderProvider } from '@/components/PreloaderContext';
 import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import ReloadOnBreakpoint from "@/components/ReloadOnBreakpoint";
+import { DisableDraftMode } from '@/components/DisableDraftMode';
+import { SanityLive } from "@/sanity/lib/live";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +30,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isEnabled } = await draftMode();
+  const isDraftMode = (await draftMode()).isEnabled
 
 
   return (
@@ -45,9 +47,14 @@ export default async function RootLayout({
         <PreloaderProvider>
           <Preloader />
           {children}
-          {isEnabled && (
-            <VisualEditing trailingSlash={false} />
-          )}
+          
+          {isDraftMode ? (
+            <>
+              <SanityLive />
+              <DisableDraftMode />
+              <VisualEditing trailingSlash={false} />
+            </>
+          ) : null}
         </PreloaderProvider>
       </body>
     </html>

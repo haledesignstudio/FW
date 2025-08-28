@@ -28,7 +28,7 @@ type Mindbullet = {
   byLine?: string;
 };
 
-const mindbulletsQuery = defineQuery(`
+const mindbulletsArchiveQuery = defineQuery(`
   *[_type == "mindbullet"] | order(publishedAt desc) {
     _id,
     title,
@@ -72,7 +72,7 @@ const MindbulletArchive = () => {
     (async () => {
       try {
         setLoading(true);
-        const data = await client.fetch<Mindbullet[]>(mindbulletsQuery);
+        const data = await client.fetch<Mindbullet[]>(mindbulletsArchiveQuery);
         if (!cancelled) setMindbullets(data ?? []);
       } finally {
         if (!cancelled) setLoading(false);
