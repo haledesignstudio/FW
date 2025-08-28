@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -H 0.0.0.0",
-    "build": "npx @cloudflare/next-on-pages@1",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typegen": "sanity typegen generate --schema-path=./src/sanity/extract.json"
