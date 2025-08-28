@@ -4,6 +4,8 @@ import { client } from '@/sanity/lib/client';
 import MindbulletsView from '@/app/mindbullets/[slug]/MindbulletsView';
 import type { PortableTextBlock } from '@portabletext/types';
 
+export const runtime = 'edge';
+
 type SanityAssetRef = { _type: 'reference'; _ref: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string };
 
@@ -53,13 +55,6 @@ const moreMindbulletsQuery = defineQuery(`
       "description": pt::text(body)
     }
 `);
-
-export async function generateStaticParams() {
-  const slugs = await client.fetch<string[]>(
-    defineQuery(`*[_type == "mindbullet" && defined(slug.current)][].slug.current`)
-  );
-  return slugs.map((slug) => ({ slug }));
-}
 
 export const revalidate = 60;
 

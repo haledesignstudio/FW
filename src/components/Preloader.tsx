@@ -50,7 +50,7 @@ export default function Preloader() {
     <div className="fixed inset-0 z-[9999] bg-[#F9F7F2] flex items-center justify-center">
       <div className="flex items-center justify-center">
         <Image
-          src="/assets/gifs/Futureworld-Preloader (2).gif"
+          src="/assets/gifs/Futureworld-Preloader.gif"
           alt="Loading..."
           width={200}
           height={200}

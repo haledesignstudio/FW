@@ -318,6 +318,19 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         colSpan: 0,
         rowSpan: 0,
         mobileColSpan: 1,
+        mobileRowSpan: 1,
+        landscapeColSpan: 0,
+        landscapeRowSpan: 0,
+      },
+      {
+        id: 2,
+        content: (
+          <div>
+          </div>
+        ),
+        colSpan: 0,
+        rowSpan: 0,
+        mobileColSpan: 1,
         mobileRowSpan: 2,
         landscapeColSpan: 0,
         landscapeRowSpan: 0,
@@ -325,7 +338,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
       {
         id: 3,
         content: (
-          <div className="flex items-start justify-center h-full text-left">
+          <div className="flex items-start justify-start h-full text-left">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentMobileIndex}
@@ -337,7 +350,10 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                 <FutureText
                   text={currentPiece.title}
                   delay={200}
-                  className="dt-body-sm"
+                  className={[
+                  'dt-body-sm',
+                  expandedColumn === 0 ? 'line-clamp-none' : 'line-clamp-1',
+                ].join(' ')}
                 />
               </motion.div>
             </AnimatePresence>
@@ -345,7 +361,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         ),
         colSpan: 0,
         rowSpan: 0,
-        mobileColSpan: 3,
+        mobileColSpan: 2,
         mobileRowSpan: 1,
         landscapeColSpan: 0,
         landscapeRowSpan: 0,
@@ -365,7 +381,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         id: 5,
         content: expandedColumn !== 0 ? (
           <motion.div
-            className="flex items-end justify-center h-full"
+            className="flex items-end justify-start h-full"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -393,16 +409,6 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         landscapeColSpan: 0,
         landscapeRowSpan: 0,
       },
-      {
-        id: 6,
-        content: <div></div>,
-        colSpan: 0,
-        rowSpan: 0,
-        mobileColSpan: 1,
-        mobileRowSpan: 1,
-        landscapeColSpan: 0,
-        landscapeRowSpan: 0,
-      },
     ];
 
     // Add expanded content if needed
@@ -421,7 +427,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
               style={{ transformOrigin: 'top' }}
             >
               <div className="pt-1">
-                <div className="text-[1.8vh] leading-tight max-h-[23vh] overflow-y-auto pr-1">
+                <div className="text-[1.8vh] leading-tight max-h-[23vh] overflow-y-auto mt-2 pr-1">
                   {currentPiece.summary && currentPiece.summary.map((block: PortableTextBlock, index: number) => (
                     <div key={index} className="mb-2">
                       <span className="dt-body-sm">
@@ -436,7 +442,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
           colSpan: 0,
           rowSpan: 0,
           mobileColSpan: 2,
-          mobileRowSpan: 3, // Spans both row 2 and 3
+          mobileRowSpan: 2, // Spans both row 2 and 3
           landscapeColSpan: 0,
           landscapeRowSpan: 0,
         },
@@ -538,7 +544,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
 
     return (
       <div className="bg-[#F9F7F2] p-[2vh] relative z-10">
-        <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh]">
+        <div className="grid gap-[2vh] grid-cols-4 min-rows-[2vh]">
           {mobileItems.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}

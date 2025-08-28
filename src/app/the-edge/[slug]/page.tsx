@@ -4,6 +4,8 @@ import { client } from '@/sanity/lib/client';
 import type { PortableTextBlock } from '@portabletext/types';
 import EdgeView from '@/app/the-edge/[slug]/edgeView';
 
+export const runtime = 'edge';
+
 type RichText = PortableTextBlock[];
 
 type ArticleContent = {
@@ -49,14 +51,6 @@ const scenarioBySlugQuery = defineQuery(`
     }
   }
 `);
-
-
-export async function generateStaticParams() {
-  const slugs = await client.fetch<string[]>(
-    defineQuery(`*[_type == "provocativeScenario" && defined(slug.current)][].slug.current`)
-  );
-  return slugs.map((slug) => ({ slug }));
-}
 
 export const revalidate = 60;
 

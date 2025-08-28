@@ -54,8 +54,8 @@ export function FutureText({
         for (let cycle = 0; cycle < cycles; cycle++) {
           const randomChar = cycle === cycles - 1 ? targetChar : getRandomChar();
           const updated = current + randomChar;
-          setDisplayWords([...currentWords, updated + word.slice(i + 1)]);
-          onUpdate?.([...currentWords, updated + word.slice(i + 1)].join(''));
+          setDisplayWords([...currentWords, updated]);
+          onUpdate?.([...currentWords, updated].join(''));
           await new Promise((resolve) => setTimeout(resolve, speed));
         }
         current += targetChar;

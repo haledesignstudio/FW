@@ -148,7 +148,7 @@ export default function HomeClient({ data }: HomeClientProps) {
               text={data.headline}
               typeSpeed={40}
               delay={100}
-              className="dt-h2 text-balance"
+              className="dt-h2"
               start={preloaderDone}
             />
           </div>

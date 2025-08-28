@@ -4,6 +4,8 @@ import { client } from '@/sanity/lib/client';
 import PodcastView from './PodcastView';
 import type { PortableTextBlock } from '@portabletext/types';
 
+export const runtime = 'edge';
+
 type SanityAssetRef = { _type: 'reference'; _ref: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string | null };
 
@@ -33,13 +35,6 @@ const podcastPageMetaQuery = defineQuery(`
     subheading
   }
 `);
-
-export async function generateStaticParams() {
-  const slugs = await client.fetch<string[]>(
-    defineQuery(`*[_type == "podcast" && defined(slug.current)][].slug.current`)
-  );
-  return slugs.map((slug) => ({ slug }));
-}
 
 export const revalidate = 60;
 

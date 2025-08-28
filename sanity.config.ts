@@ -32,10 +32,40 @@ export default defineConfig({
     presentationTool({
       previewUrl: {
         previewMode: {
+          enable: `${process.env.CF_PAGES_URL || 'http://localhost:3000'}/api/draft-mode/enable`,
+        },
+        origin: process.env.CF_PAGES_URL || 'http://localhost:3000',
+      },
+      // Alternative preview URLs for different environments
+      // You can switch between these by updating the active configuration above
+      /*
+      // For Netlify deployment:
+      previewUrl: {
+        previewMode: {
           enable: 'https://hale-fw.netlify.app/api/draft-mode/enable',
         },
         origin: 'https://hale-fw.netlify.app',
       },
+      // For Cloudflare Pages deployment:
+      previewUrl: {
+        previewMode: {
+          enable: 'https://fw-hale.pages.dev/api/draft-mode/enable',
+        },
+        origin: 'https://fw-hale.pages.dev',
+      },
+      // For local development:
+      previewUrl: {
+        previewMode: {
+          enable: 'http://localhost:3000/api/draft-mode/enable',
+        },
+        origin: 'http://localhost:3000',
+      },
+      */
+      //   previewMode: {
+      //     enable: 'https://hale-fw.netlify.app/api/draft-mode/enable',
+      //   },
+      //   origin: 'https://hale-fw.netlify.app',
+      // },
       resolve: {
         mainDocuments: [
           {

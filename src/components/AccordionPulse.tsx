@@ -33,7 +33,7 @@ export const AccordionPulse = ({ children, pulse = false, delay = 0, paused = fa
             duration: 1.15,
             repeat: Infinity,
             repeatType: 'reverse',
-            repeatDelay: 9,
+            repeatDelay: 4,
             delay,
           },
         });
