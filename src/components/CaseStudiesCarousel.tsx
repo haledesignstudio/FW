@@ -295,7 +295,7 @@ export default function Carousel({
     const makeMobileUnit = useCallback((item: CarouselItem, itemIndex: number) => {
         const slide = document.createElement("div") as HTMLElement & WithRoots;
         (slide as unknown as WithRoots).__roots = [];
-        slide.className = "mobile-slide grid bg-[#F9F7F2] text-black overflow-hidden";
+        slide.className = "mobile-slide grid bg-[#F9F7F2] overflow-hidden";
         slide.dataset.itemIndex = String(itemIndex);
         slide.style.flex = "0 0 100%"; // one full-viewport slide
         slide.style.height = `calc((2 * ${IMG_H}) + ${READY_H})`;
@@ -414,7 +414,7 @@ export default function Carousel({
         const arrowImg = document.createElement("img");
         arrowImg.src = "/carousel-arrow.png";
         arrowImg.alt = "";
-        arrowImg.className = "w-[3vh] h-auto object-contain";
+        arrowImg.className = "w-[2.5vh] h-auto object-contain";
         nextBtn.appendChild(arrowImg);
         row.appendChild(nextBtn);
 
@@ -451,7 +451,7 @@ export default function Carousel({
         (item: CarouselItem, itemIndex: number) => {
             const col = document.createElement("div") as HTMLElement & WithRoots;
             (col as unknown as WithRoots).__roots = [];
-            col.className = "col relative bg-[#F9F7F2] text-black overflow-hidden";
+            col.className = "col relative bg-[#F9F7F2] overflow-hidden";
             col.dataset.itemIndex = String(itemIndex);
             col.style.display = "grid";
             col.style.gridTemplateRows = `${CAP_H} calc(2 * ${IMG_H}) ${READY_H}`;
@@ -869,7 +869,7 @@ export default function Carousel({
 
                         {/* Control column */}
                         <div
-                            className="bg-[#F9F7F2] text-black"
+                            className="bg-[#F9F7F2]"
                             style={{
                                 flex: "0 0 calc(100% / 6)",
                                 height: colHeight,
@@ -886,7 +886,7 @@ export default function Carousel({
                                 <button
                                     type="button"
                                     onClick={shiftLeft}
-                                    className="bg-[#F9F7F2] text-black disabled:scale-103 transition-transform duration-300"
+                                    className="bg-[#F9F7F2] disabled:scale-103 transition-transform duration-300"
                                     disabled={isAnimating}
                                     aria-label="Next"
                                 >

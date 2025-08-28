@@ -117,12 +117,12 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 9: Empty */}
           <div className="col-span-4 row-span-1"></div>
           {/* Row 10-14: iframe */}
-          <div className="col-span-4 row-span-13">
+          <div className="col-span-4 row-span-11">
             <FadeInOnVisible>
               <iframe
                 src={analytics.iframeSource}
                 title="Futureworld Analytics Dashboard"
-                style={{ width: '100%', height: '120vh', border: 'none' }}
+                style={{ width: '100%', height: '100vh', border: 'none' }}
                 loading="lazy"
                 allowFullScreen
               />

@@ -123,7 +123,7 @@ export function FutureText({
     <span
       key={fadeKey}
       ref={elementRef}
-      className={`${className} ${isAnimating ? 'text-black' : ''}`}
+      className={`${className} ${isAnimating ? 'text-[#232323]' : ''}`}
       style={{ whiteSpace: 'pre-wrap' }}
     >
       {displayWords.map((word, i) => (

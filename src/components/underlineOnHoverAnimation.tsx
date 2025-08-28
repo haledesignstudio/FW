@@ -91,6 +91,17 @@ if (typeof window !== 'undefined' && !document.getElementById('underline-on-hove
       }
     }
 
+    @media (pointer: coarse) {
+  .nav-link:hover {
+    background-size: 0% 100%;
+  }
+  
+  .nav-link.underline-static:hover {
+    background-size: 100% 100%;
+    animation: none;
+  }
+}
+
   `;
   document.head.appendChild(style);
 }

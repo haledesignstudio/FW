@@ -471,7 +471,7 @@ const menuVariantsOtherPages: Variants = {
         }
     },
     visible: {
-        maxHeight: '80vh', // Increased from 75vh for more space
+        maxHeight: '80vh',
         opacity: 1,
         transition: {
             duration: 0.4,
@@ -797,7 +797,7 @@ requestAnimationFrame(async () => {
                                 exit="exit"
                                 variants={isHomepage ? menuVariants : menuVariantsOtherPages}
                                 className="w-screen bg-[#F9F7F2] relative left-0 z-40 overflow-hidden"
-                                style={stage === 2 ? { minHeight: '100vh' } : {}}
+                                style={stage === 2 ? { minHeight: '100vh' } : {minHeight: '100vh'}}
                             >
                                 <div className={`grid grid-cols-4 p-[2vh] min-h-screen ${isHomepage
                                     ? 'gap-[1vh] auto-rows-[5vh]'
@@ -816,7 +816,7 @@ requestAnimationFrame(async () => {
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
-                                    {!isHomepage && <div className="col-span-4"></div>}
+                                    
                                     
 
                                     {/* Menu Items with conditional sizing */}
@@ -926,7 +926,7 @@ requestAnimationFrame(async () => {
                                                 {info.isOdd && (
                                                     <Link
                                                         href={item.href}
-                                                        className={`text-black font-graphik-semibold text-[clamp(3.5vw,8.8vh,4.4vw)] leading-[clamp(3.5vw,8.8vh,4.4vw)] whitespace-nowrap ${isHomepage
+                                                        className={`font-graphik-semibold text-[clamp(3.5vw,8.8vh,4.4vw)] leading-[clamp(3.5vw,8.8vh,4.4vw)] whitespace-nowrap ${isHomepage
                                                             ? 'font-graphik-semibold text-[clamp(3.5vw,8.8vh,4.4vw)] leading-[clamp(3.5vw,8.8vh,4.4vw)]'
                                                             : 'font-graphik-semibold text-[clamp(3.5vw,8.8vh,4.4vw)] leading-[clamp(3.5vw,8.8vh,4.4vw)]'
                                                             }`}

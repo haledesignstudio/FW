@@ -114,7 +114,7 @@ export default function HomeClient({ data }: HomeClientProps) {
     }
     // You can adjust these timings as needed
     const timings = isMobile
-      ? { header: 2500, main: 2800 } // mobile: shorter delays
+      ? { header: 2500, main: 4000 } // mobile: shorter delays
       : { header: 4500, main: 5000 }; // desktop: original delays
 
     setShowSignals(true);
@@ -176,13 +176,13 @@ export default function HomeClient({ data }: HomeClientProps) {
     {
       id: 3,
       content: (
-        <FadeInOnVisible>
+        <FadeInOnVisible delay={5.5}>
           <div className="dt-h3" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'subheading'
           })}>
-            <HighlightText value={data.subheading} />
+            <HighlightText value={data.subheading} delayMs={5500}/>
           </div>
         </FadeInOnVisible>
       ),
@@ -229,7 +229,7 @@ export default function HomeClient({ data }: HomeClientProps) {
     {
       id: 7,
       content: (
-        <FadeInOnVisible>
+        <FadeInOnVisible delay={6.5}>
           <div className="dt-body-sm" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,

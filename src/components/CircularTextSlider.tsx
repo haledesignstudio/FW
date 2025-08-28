@@ -242,6 +242,15 @@ export default function CircularTextSlider({
         .arrow-right {
           right: 16px;
         }
+        .speaker-item .speaker-link,
+        .speaker-item .speaker-name {
+          position: relative;
+          z-index: 1;           /* above the ::before background */
+          display: inline-block;
+          padding: 0.2vh 0.4vh; /* optional: slightly larger hit target */
+          text-decoration: none;
+          color: inherit;
+        }
       `}</style>
 
       <div className="circular-slider-wrapper">
@@ -326,7 +335,7 @@ export default function CircularTextSlider({
             alt="Next"
             width={36}
             height={36}
-            style={{width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%' }}
             priority
           />
         </button>
@@ -347,6 +356,9 @@ export default function CircularTextSlider({
               const y = Math.sin(rad) * circleRadius;
               const isActive = index === activeIndex;
 
+              const slug = getSlug(speaker.slug);
+              const href = slug ? `/keynotes/${slug}` : undefined;
+
               return (
                 <div
                   key={speaker.__dupKey ?? `${speaker._id}-${index}`}
@@ -355,10 +367,22 @@ export default function CircularTextSlider({
                     transform: `translate(${x}px, ${y}px) rotate(${angle}deg)`,
                   }}
                 >
-                  {speaker.name}
+                  {href ? (
+                    <Link
+                      href={href}
+                      prefetch={false}                 // avoids prefetching dozens of duplicates
+                      className="speaker-link"
+                      aria-label={`Read more about ${speaker.name}`}
+                    >
+                      {speaker.name}
+                    </Link>
+                  ) : (
+                    <span className="speaker-name">{speaker.name}</span>
+                  )}
                 </div>
               );
             })}
+
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 'use client';
-
-import React, { useCallback } from 'react';
+import Link from 'next/link';
+import React from 'react';
 import useIsMobile from '@/hooks/useIsMobile';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -129,9 +129,7 @@ const getGridClasses = (item: GridItem) => {
 export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorrowPageContent }) {
   const isMobile = useIsMobile();
   // Back to top handler
-  const handleBackToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+
 
   const items: GridItem[] = [
     {
@@ -255,7 +253,16 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
                 </FadeInOnVisible>
               </div>
               {/* After Accordion: Back to top button in col 3-4 */}
-              <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+              <div className="col-span-2 row-span-1 flex items-end">
+                <FadeInOnVisible className="text-balance">
+                  <Link href="/our-work" className="dt-btn transition cursor-pointer">
+                    <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                      Back to Our Work
+                    </UnderlineOnHoverAnimation>
+                  </Link>
+                </FadeInOnVisible>
+              </div>
+              <div className="col-start-3 col-span-2 flex justify-end items-end cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                 <FadeInOnVisible>
                   <span className="dt-btn flex items-center">
                     <svg

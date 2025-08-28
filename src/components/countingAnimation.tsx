@@ -9,6 +9,8 @@ interface CountingAnimationProps {
   as?: React.ElementType;
   start?: boolean;          // <- only animate when this is true
   triggerOnce?: boolean;    // optional: animate once only
+  startDelayMs?: number;    // optional: wait before starting (ms)
+
 }
 
 function normalizeTarget(t: number | string) {
@@ -32,7 +34,9 @@ export default function CountingAnimation({
   as: Tag = 'span',
   start = false,
   triggerOnce = true,
+  startDelayMs = 0,
 }: CountingAnimationProps) {
+
   const [{ value: targetValue, suffix }, depsKey] = useMemo(() => {
     const norm = normalizeTarget(target);
     return [norm, `${norm.value}|${norm.suffix}`] as const;
@@ -41,6 +45,16 @@ export default function CountingAnimation({
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
 
+  // Delay gate for starting the animation
+  const [delayedStart, setDelayedStart] = useState(start);
+  useEffect(() => {
+    if (!start) { setDelayedStart(false); return; }
+    if (!startDelayMs) { setDelayedStart(true); return; }
+    const id = window.setTimeout(() => setDelayedStart(true), startDelayMs);
+    return () => window.clearTimeout(id);
+  }, [start, startDelayMs, depsKey]);
+
+
   // Detect mobile for performance optimization
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const targetFPS = isMobile ? 30 : 60; // Half the frame rate on mobile
@@ -48,7 +62,8 @@ export default function CountingAnimation({
   const optimizedDuration = isMobile ? Math.min(duration * 0.6, 2000) : duration; // 40% faster on mobile, max 2s
 
   useEffect(() => {
-    if (!start) return;
+    if (!delayedStart) return;
+
     if (triggerOnce && hasAnimated) return;
 
     const startTime = Date.now();
@@ -58,7 +73,7 @@ export default function CountingAnimation({
     const tick = () => {
       const now = Date.now();
       const elapsed = now - startTime;
-      
+
       // Throttle frame rate for mobile performance
       if (now - lastFrameTime < frameInterval) {
         raf = requestAnimationFrame(tick);
@@ -69,12 +84,12 @@ export default function CountingAnimation({
       const progress = Math.min(elapsed / optimizedDuration, 1);
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(easeOut * targetValue);
-      
+
       // Only update if the value actually changed to reduce DOM thrashing
       if (current !== count) {
         setCount(current);
       }
-      
+
       if (progress < 1) {
         raf = requestAnimationFrame(tick);
       } else {
@@ -85,7 +100,8 @@ export default function CountingAnimation({
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [start, depsKey, optimizedDuration, targetValue, triggerOnce, hasAnimated, frameInterval]);
+  }, [delayedStart, depsKey, optimizedDuration, targetValue, triggerOnce, hasAnimated, frameInterval]);
+
 
   return <Tag className={className}>{count}{suffix}</Tag>;
 }

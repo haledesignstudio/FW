@@ -30,7 +30,7 @@ export default defineType({
       name: 'description',
       title: 'Description',
       type: 'string',
-      validation: (Rule) => Rule.max(1000),
+      validation: (Rule) => Rule.required().max(360).error('Max 360 characters'),
     }),
     defineField({
       name: 'embedLink',

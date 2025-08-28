@@ -178,7 +178,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         id: 1,
                         content: (
                             <FadeInOnVisible>
-                                <div className="dt-h4 text-white">
+                                <div className="dt-h4 text-[#F9F7F2]">
                                     <PortableText value={data.section1.section1Body} />
                                 </div>
                             </FadeInOnVisible>
@@ -273,7 +273,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible className="h-full flex flex-col justify-end mt-[10vh] ">
                                 <div className="h-full flex flex-col justify-end ">
-                                    <div className="dt-h4 text-white">
+                                    <div className="dt-h4 text-[#F9F7F2]">
                                         <PortableText value={data.section2.section2Body} />
                                     </div>
                                 </div>
@@ -408,7 +408,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         content: (
                             <FadeInOnVisible className="h-full flex flex-col justify-end">
                                 <div className="h-full flex flex-col justify-end">
-                                    <div className="dt-h4 text-black">
+                                    <div className="dt-h4">
                                         <PortableText value={data.section3.section3Body} />
                                     </div>
                                 </div>
@@ -487,14 +487,14 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                     <>
                                         {/* Row 1-2: Section Title */}
                                         <div
-                                            className="py-[2.09vh] col-span-4 row-start-1 row-span-2 px-[4.53vw] bg-[#1B1B1B] text-white flex items-start cursor-pointer"
+                                            className="py-[2.09vh] col-span-4 row-start-1 row-span-2 px-[4.53vw] bg-[#1B1B1B] text-[#F9F7F2] flex items-start cursor-pointer"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
                                         >
                                             <h2 className="dt-h1">{data.section1.section1Title}</h2>
                                         </div>
 
                                         {/* Row 3: Section Body */}
-                                        <div className="col-span-4 row-start-3 bg-[#1B1B1B] px-[4.53vw] text-white">
+                                        <div className="col-span-4 row-start-3 bg-[#1B1B1B] px-[4.53vw] text-[#F9F7F2]">
                                             <div className="dt-h4">
                                                 <PortableText value={data.section1.section1Body} />
                                             </div>
@@ -504,7 +504,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         <div className="col-span-4 row-start-4 h-[5vh] px-[4.53vw] bg-[#1B1B1B]"></div>
 
                                         {/* Row 5: CTA Section */}
-                                        <div className="col-span-4 row-start-5 bg-[#1B1B1B] px-[4.53vw] text-white">
+                                        <div className="col-span-4 row-start-5 bg-[#1B1B1B] px-[4.53vw] text-[#F9F7F2]">
                                             <a
                                                 href={`mailto:${data.section1.section1Email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.section1.section1CTA ?? '')}`}
                                                 className="transition cursor-pointer dt-btn"
@@ -521,7 +521,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         <div className="col-span-4 row-start-6 row-span-4 bg-[#1B1B1B]">
                                             <iframe
                                                 src={data.section1.section1URL}
-                                                className="w-full h-[110vh] bg-white"
+                                                className="w-full h-[100vh] bg-white"
                                                 title="Future World Analytics Dashboard"
                                             />
                                         </div>
@@ -531,7 +531,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                 {/* Section 1 Title when collapsed */}
                                 {!openTabs.has('benchmark') && (
-                                    <div className="col-span-4 px-[4.53vw] py-[2.09vh] bg-[#1B1B1B] text-white flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
+                                    <div className="col-span-4 px-[4.53vw] py-[2.09vh] bg-[#1B1B1B] text-[#F9F7F2] flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
                                         <AccordionPulse pulse delay={closedTabDelays['benchmark'] ?? 0} paused={openTabs.size > 0}>
                                             <h2 className="dt-h1">{data.section1.section1Title}</h2>
                                         </AccordionPulse>
@@ -561,14 +561,14 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                     <>
                                         {/* Row 1: Section 2 Main Title */}
                                         <div
-                                            className="py-[2.09vh] col-span-4 row-start-1 bg-[#DC5A50] text-white flex items-center cursor-pointer z-10"
+                                            className="py-[2.09vh] col-span-4 row-start-1 bg-[#DC5A50] text-[#F9F7F2] flex items-center cursor-pointer z-10"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
                                         >
                                             <h2 className="dt-h1">{data.section2.section2Title}</h2>
                                         </div>
 
                                         {/* Row 2: Section Body */}
-                                        <div className="col-span-4 row-start-2 bg-[#DC5A50] text-white">
+                                        <div className="col-span-4 row-start-2 bg-[#DC5A50] text-[#F9F7F2]">
                                             <div className="dt-h4">
                                                 <PortableText value={data.section2.section2Body} />
                                             </div>
@@ -592,7 +592,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
 
                                         {/* Row 9: Section Heading1 */}
-                                        <div className="col-span-4 row-start-8 bg-[#DC5A50] text-white flex flex-col gap-[2vh] pb-[4vh]">
+                                        <div className="col-span-4 row-start-8 bg-[#DC5A50] text-[#F9F7F2] flex flex-col gap-[2vh] pb-[4vh]">
                                             <div className="dt-h5 [&>*]:inline [&>*]:pr-1">
                                                 <PortableText value={data.section2.section2Heading1} />
                                             </div>
@@ -603,7 +603,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
 
                                         {/* Row 11: Section Heading2 */}
-                                        <div className="col-span-4 row-start-9 bg-[#DC5A50] text-white flex flex-col gap-[2vh] pb-[4vh]">
+                                        <div className="col-span-4 row-start-9 bg-[#DC5A50] text-[#F9F7F2] flex flex-col gap-[2vh] pb-[4vh]">
                                             <div className="dt-h5 [&>*]:inline [&>*]:pr-1">
                                                 <PortableText value={data.section2.section2Heading2} />
                                             </div>
@@ -615,7 +615,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                     
 
                                         {/* Row 13: Section Heading3 */}
-                                        <div className="col-span-4 row-start-10 bg-[#DC5A50] text-white flex flex-col gap-[2vh]">
+                                        <div className="col-span-4 row-start-10 bg-[#DC5A50] text-[#F9F7F2] flex flex-col gap-[2vh]">
                                             <div className="dt-h5 [&>*]:inline [&>*]:pr-1">
                                                 <PortableText value={data.section2.section2Heading3} />
                                             </div>
@@ -630,7 +630,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                 {/* Section 2 Title when collapsed */}
                                 {!openTabs.has('process') && (
-                                    <div className="py-[2.09vh] col-span-4 bg-[#DC5A50] text-white flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
+                                    <div className="py-[2.09vh] col-span-4 bg-[#DC5A50] text-[#F9F7F2] flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
                                         <AccordionPulse pulse delay={closedTabDelays['process'] ?? 0} paused={openTabs.size > 0}>
                                             <h2 className="dt-h1">{data.section2.section2Title}</h2>
                                         </AccordionPulse>
@@ -660,14 +660,14 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                     <>
                                         {/* Row 1: Main Title */}
                                         <div
-                                            className="py-[2.09vh] col-span-4 row-start-1 bg-[#F9F7F2] text-black flex items-center cursor-pointer z-10"
+                                            className="py-[2.09vh] col-span-4 row-start-1 bg-[#F9F7F2] flex items-center cursor-pointer z-10"
                                             onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                                         >
                                             <h2 className="dt-h1">{data.section3.section3Title}</h2>
                                         </div>
 
                                         {/* Row 2: Section Body */}
-                                        <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black">
+                                        <div className="col-span-4 row-start-2 bg-[#F9F7F2]">
                                             <div className="dt-h4">
                                                 <PortableText value={data.section3.section3Body} />
                                             </div>
@@ -701,7 +701,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                 {/* Section 3 Title when collapsed */}
                                 {!openTabs.has('case-studies') && (
-                                    <div className="py-[2.09vh] col-span-4 bg-[#F9F7F2] text-black flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
+                                    <div className="py-[2.09vh] col-span-4 bg-[#F9F7F2] flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
                                         <AccordionPulse pulse delay={closedTabDelays['case-studies'] ?? 0} paused={openTabs.size > 0}>
                                             <h2 className="dt-h1">{data.section3.section3Title}</h2>
                                         </AccordionPulse>
