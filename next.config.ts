@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
     SANITY_API_TOKEN: process.env.SANITY_API_TOKEN,
   },
+  // Ensure static assets are properly copied for Cloudflare Pages
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  serverExternalPackages: [],
 };
 
 export default nextConfig;
