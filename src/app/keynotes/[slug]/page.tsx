@@ -8,8 +8,6 @@ import Footer from '@/components/footer';
 import SpeakerView from './speakerView'; // Importing SpeakerView component
 import type { SanityImageAsset } from '@/../sanity.types';
 
-export const runtime = 'edge';
-
 type SanityImage = { asset?: SanityImageAsset; alt?: string };
 
 
@@ -47,6 +45,14 @@ const speakerBySlugQuery = defineQuery(`
     mailtoSubject
   }
 `);
+
+// Generate static params for keynote speaker pages
+export async function generateStaticParams() {
+    const slugs = await client.fetch<string[]>(
+        defineQuery(`*[_type == "keynoteSpeaker" && defined(slug.current)][].slug.current`)
+    );
+    return slugs.map((slug) => ({ slug }));
+}
 
 export const revalidate = 60;
 
