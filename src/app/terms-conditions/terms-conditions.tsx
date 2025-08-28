@@ -302,8 +302,8 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
   // Prevent hydration mismatch by showing loading state until client-side JS loads
   if (!isClient) {
     return (
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {items.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}
@@ -316,10 +316,10 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
 
   if (isMobile) {
     return (
-      <main className="p-[2vh] bg-[#F9F7F2]">
-        <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
+      <main className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
           {/* Row 1: Main title (cols 1-3) */}
-          <div className="col-span-3 row-span-1 flex items-end justify-start">
+          <div className="col-span-3 flex items-end justify-start">
             <FadeInOnVisible>
               <MainTitleAnimation
                 text={termsData.pageHeader.mainTitle}
@@ -329,10 +329,10 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
               />
             </FadeInOnVisible>
           </div>
-          <div className="col-span-1 row-span-1"></div>
+          <div className="col-span-1 "></div>
 
           {/* Rows 2-10: Intro text (cols 1-4) */}
-          <div className="col-span-4 row-span-8 flex items-start justify-start">
+          <div className="col-span-4 flex items-start justify-start">
             <FadeInOnVisible>
               <div className="prose max-w-full leading-relaxed w-full break-words overflow-y-auto pr-[1vh] h-full dt-body-sm">
                 <PortableText
@@ -376,7 +376,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
 
           {/* Category buttons section (cols 3-4, multiple rows) */}
           <div className="col-span-2 row-span-1"></div>
-          <div className="col-span-2 row-span-5 flex flex-col justify-start items-start gap-[2.5vh] pt-[3vh]">
+          <div className="col-span-2 flex flex-col justify-start items-start gap-[2.5vh] pt-[3vh]">
             <FadeInOnVisible>
               <div className="flex flex-col gap-[3.5vh] w-full">
                 {categories.map((category) => (
@@ -399,7 +399,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
           {/* Row 16: Category header (cols 1-4, bottom left aligned) */}
           <div className="col-span-4 row-span-1 flex items-end justify-start">
             <FadeInOnVisible key={`header-${selectedCategory}`}>
-              <h2 className="dt-h3 font-graphik">
+              <h2 className="dt-h3">
                 {(termsData[selectedCategory as keyof TermsData] as TermsSection).sectionTitle}
               </h2>
             </FadeInOnVisible>
@@ -410,7 +410,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
         <div className="mt-[2vh] mb-[4vh]">
           <div className="flex items-start justify-start">
             <FadeInOnVisible key={`content-${selectedCategory}`} threshold={0.05}>
-              <div className="prose leading-relaxed break-words dt-body-sm" style={{ maxWidth: '100%', width: '100%' }}>
+              <div className="dt-body-sm" style={{ maxWidth: '100%', width: '100%' }}>
                 {(() => {
                   const section = termsData[selectedCategory as keyof TermsData] as TermsSection;
 
@@ -424,7 +424,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                       components={{
                         ...portableTextComponents,
                         block: {
-                          normal: ({ children }) => <p className="mb-4 leading-relaxed break-words dt-body-sm">{children}</p>,
+                          normal: ({ children }) => <p className="dt-body-sm">{children}</p>,
                         },
                         marks: {
                           link: ({ children, value }) => (
@@ -461,13 +461,13 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
         </div>
 
         {/* Back to top button - always at bottom */}
-        <div className="flex justify-end items-center mt-[4vh] mb-[4vh]">
+        <div className="flex justify-end items-center mt-[10vh]">
           <div className="cursor-pointer" onClick={handleBackToTop}>
             <FadeInOnVisible>
-              <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+              <span className="dt-btn flex items-center">
                 <svg
-                  width="18"
-                  height="18"
+                  width="clamp(3.5vw,2.35vh,4.7vw)"
+                  height="clamp(3.5vw,2.35vh,4.7vw)"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -476,9 +476,13 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
                 >
                   <path d="M12 19V5M5 12l7-7 7 7" />
                 </svg>
-                Back to top
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  Back to top
+                </UnderlineOnHoverAnimation>
+
               </span>
             </FadeInOnVisible>
+
           </div>
         </div>
       </main>
@@ -487,8 +491,8 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
 
   // Desktop layout
   return (
-    <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-      <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+    <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+      <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {items.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
             {item.content}

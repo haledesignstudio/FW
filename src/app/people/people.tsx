@@ -158,10 +158,10 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     return (
       <>
         <Header />
-        <main className="p-[2vh] bg-[#F9F7F2]">
-          <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
+        <main className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
+          <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
             {/* Row 1: Main heading (cols 1-2) */}
-            <div className="col-span-2 row-span-1 flex items=end justify-start">
+            <div className="col-span-2 flex items=end justify-start">
               <FadeInOnVisible>
                 <MainTitleAnimation
                   text={data.pageHeader.mainTitle}
@@ -182,7 +182,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             </div>
 
             {/* Row 3-4: Image (cols 1-4) */}
-            <div className="col-span-4 row-span-2 flex items-center justify-center">
+            <div className="col-span-4 row-span-2 flex items-center">
               <FadeInOnVisible>
                 <img
                   src={data.mainImage ? urlFor(data.mainImage.asset).url() : '/placeholder-image.png'}
@@ -193,7 +193,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             </div>
 
             {/* Row 5-8: Regular text (cols 1-4) */}
-            <div className="col-span-4 row-span-4 flex items-start justify-start">
+            <div className="col-span-4 flex items-start justify-start">
               <FadeInOnVisible>
                 <div className="dt-body-sm">
                   {data.pageHeader.regularText && (
@@ -204,8 +204,8 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             </div>
 
             {/* Row 9-12: Subheading 1 + Side text (cols 2-4) */}
-            <div className="col-span-1 row-span-3"></div>
-            <div className="col-span-3 row-span-3 flex flex-col items-start justify-start gap-[2vh]">
+            <div className="col-span-1 mt-[5vh]"></div>
+            <div className="col-span-3 flex flex-col items-start justify-start gap-[2vh] mt-[5vh]">
               <FadeInOnVisible>
                 <h3 className="dt-h5">{data.sections.subheading1}</h3>
               </FadeInOnVisible>
@@ -218,10 +218,11 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
               </FadeInOnVisible>
             </div>
 
+
             {/* Row 13-15: Left section from row 7 (cols 1-4) */}
-            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
-              <FadeInOnVisible>
-                <h4 className="dt-h5 mb-[1.5vh]">
+            <div className="col-span-4 flex flex-col items-start justify-start mt-[6vh]">
+              <FadeInOnVisible className="col-span-4 flex flex-col items-start justify-start gap-[2vh]">
+                <h4 className="dt-h5">
                   {data.sections.leftSection?.heading}
                 </h4>
                 <div className="dt-body-sm">
@@ -233,8 +234,8 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             </div>
 
             {/* Row 16-18: Right section from row 7 (cols 1-4) */}
-            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
-              <FadeInOnVisible>
+            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start mt-[4vh]">
+              <FadeInOnVisible className="col-span-4 flex flex-col items-start justify-start gap-[2vh]">
                 <h4 className="dt-h5 mb-[1.5vh]">
                   {data.sections.rightSection?.heading}
                 </h4>
@@ -247,8 +248,8 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             </div>
 
             {/* Row 19-21: Left section 2 from row 8 (cols 1-4) */}
-            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
-              <FadeInOnVisible>
+            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start mt-[4vh]">
+              <FadeInOnVisible className="col-span-4 flex flex-col items-start justify-start gap-[2vh]">
                 <h4 className="dt-h5 mb-[1.5vh]">
                   {data.sections.leftSection2?.heading}
                 </h4>
@@ -261,8 +262,8 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             </div>
 
             {/* Row 19-21: right section 2 from row 8 (cols 1-4) */}
-            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start gap-[1vh]">
-              <FadeInOnVisible>
+            <div className="col-span-4 row-span-2 flex flex-col items-start justify-start mt-[4vh]">
+              <FadeInOnVisible className="col-span-4 flex flex-col items-start justify-start gap-[2vh]">
                 <h4 className="dt-h5 mb-[1.5vh]">
                   {data.sections.rightSection2?.heading}
                 </h4>
@@ -278,13 +279,13 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <div className="col-span-4 row-span-1"></div>
 
             {/* Row 23: Why join us main heading (cols 1-4) */}
-            <div className="col-span-2 row-span-1 flex items-end justify-start">
+            <div className="col-span-3 row-span-1 flex items-end justify-start">
               <FadeInOnVisible>
                 <MainTitleAnimation
                   text={data.sections.whyJoinUsSection?.mainHeading || 'Why Join Us'}
                   typeSpeed={60}
                   delay={1500}
-                  className="dt-h2"
+                  className="dt-h3 text-balance"
                 />
               </FadeInOnVisible>
             </div>
@@ -294,9 +295,9 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
 
             {/* Row 25-26: Reason 1 (cols 2-4) */}
             <div className="col-span-1 row-span-1"></div>
-            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
-              <FadeInOnVisible>
-                <h5 className="dt-h5 mb-[1.5vh]">
+            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[2vh]">
+              <FadeInOnVisible className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[2vh]">
+                <h5 className="dt-h5">
                   {data.sections.whyJoinUsSection?.reasons[0]?.heading}
                 </h5>
                 <div className="dt-body-sm">
@@ -312,9 +313,9 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
 
             {/* Row 27-28: Reason 2 (cols 2-4) */}
             <div className="col-span-1 row-span-1"></div>
-            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
-              <FadeInOnVisible>
-                <h5 className="dt-h5 mb-[1.5vh]">
+            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start mt-[5vh]">
+              <FadeInOnVisible className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[2vh]">
+                <h5 className="dt-h5">
                   {data.sections.whyJoinUsSection?.reasons[1]?.heading}
                 </h5>
                 <div className="dt-body-sm">
@@ -330,9 +331,9 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
 
             {/* Row 29-30: Reason 3 (cols 2-4) */}
             <div className="col-span-1 row-span-1"></div>
-            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
-              <FadeInOnVisible>
-                <h5 className="dt-h5 mb-[1.5vh]">
+            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start mt-[5vh]">
+              <FadeInOnVisible className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[2vh]">
+                <h5 className="dt-h5">
                   {data.sections.whyJoinUsSection?.reasons[2]?.heading}
                 </h5>
                 <div className="dt-body-sm">
@@ -348,9 +349,9 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
 
             {/* Row 31-32: Reason 4 (cols 2-4) */}
             <div className="col-span-1 row-span-1"></div>
-            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[1vh]">
-              <FadeInOnVisible>
-                <h5 className="dt-h5 mb-[1.5vh]">
+            <div className="col-span-3 row-span-1 flex flex-col items-start justify-start mt-[5vh]">
+              <FadeInOnVisible className="col-span-3 row-span-1 flex flex-col items-start justify-start gap-[2vh]">
+                <h5 className="dt-h5">
                   {data.sections.whyJoinUsSection?.reasons[3]?.heading}
                 </h5>
                 <div className="dt-body-sm">
@@ -368,12 +369,12 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             <div className="col-span-4 row-span-1"></div>
 
             {/* Row 34: Carousel heading (col 1) */}
-            <div className="col-span-1 row-span-1 flex items-end justify-start">
+            <div className="col-span-4 flex items-center justify-start">
               <FadeInOnVisible>
-                <h3 className="dt-h2">{data.sections.carouselHeading}</h3>
+                <h3 className="dt-h3">{data.sections.carouselHeading}</h3>
               </FadeInOnVisible>
             </div>
-            <div className="col-span-3 row-span-1"></div>
+
           </div>
 
           {/* Row 35-46: Carousel (cols 1-4) */}
@@ -389,17 +390,38 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
             </FadeInOnVisible>
           </div>
 
+          <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
+            <div className="col-span-4 row-span-1"></div>
+            <div className="col-span-1"></div>
+            <FadeInOnVisible className="col-span-3">
+              <div className="">
+                <h3 className="dt-h3">{data.sections.carouselSidebar?.heading}</h3>
+                <p className="dt-body-sm mt-[3vh] mb-[3vh]">{data.sections.carouselSidebar?.text}</p>
+
+                {data.sections.carouselSidebar?.linkText && (
+                  <a
+                    href="mailto:careers@futureworld.org?subject=I want to work at Futureworld"
+                    className="dt-btn mt-auto"
+                  >
+                    <UnderlineOnHoverAnimation hasStaticUnderline>
+                      {data.sections.carouselSidebar.linkText}
+                    </UnderlineOnHoverAnimation>
+                  </a>
+                )}
+              </div>
+            </FadeInOnVisible>
+          </div>
           {/* Row 47: Back to top button (col 4) */}
-          <div className="col-span-2 row-span-1 mt-10"></div>
+
           <div
-            className="col-span-2 row-span-1 flex justify-end items-center cursor-pointer"
+            className="col-span-2 row-span-1 flex justify-end items-center cursor-pointer mt-[15vh]"
             onClick={handleBackToTop}
           >
             <FadeInOnVisible>
-              <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+              <span className="dt-btn flex items-center">
                 <svg
-                  width="18"
-                  height="18"
+                  width="clamp(3.5vw,2.35vh,4.7vw)"
+                  height="clamp(3.5vw,2.35vh,4.7vw)"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -408,9 +430,13 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
                 >
                   <path d="M12 19V5M5 12l7-7 7 7" />
                 </svg>
-                Back to top
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  Back to top
+                </UnderlineOnHoverAnimation>
+
               </span>
             </FadeInOnVisible>
+
           </div>
         </main>
         <Footer />
@@ -868,7 +894,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     <>
       <Header />
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {gridItems.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}

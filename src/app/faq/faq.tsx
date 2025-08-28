@@ -104,10 +104,10 @@ export default function FAQClient({ faqData }: Props) {
     return (
       <>
         <Header />
-        <main className="p-[2vh] bg-[#F9F7F2]">
-          <div className="grid grid-cols-4 gap-y-2 auto-rows-min">
+        <main className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
+          <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
             {/* Row 1: Header (cols 1-4) */}
-            <div className="col-span-2 row-span-1">
+            <div className="col-span-2">
               <div className="flex items-start justify-start w-full">
                 <MainTitleAnimation
                   text={faqData.pageHeader.mainTitle}
@@ -120,8 +120,7 @@ export default function FAQClient({ faqData }: Props) {
             {/* Row 2: Empty */}
             <div className="col-span-4 row-span-1"></div>
             {/* Row 3: Main Title (already rendered above) */}
-            {/* Row 4: Empty */}
-            <div className="col-span-4 row-span-1"></div>
+
             {/* Row 5+: Questions */}
             {faqData.faqs.map((faq, index) => (
               <React.Fragment key={index}>
@@ -129,14 +128,14 @@ export default function FAQClient({ faqData }: Props) {
                 <div className="col-span-4 flex justify-end items-center">
                   <button
                     onClick={() => setSelectedQuestion(selectedQuestion === index ? null : index)}
-                    className="text-right w-full pointer-events-auto cursor-pointer bg-transparent border-none outline-none font-graphik font-normal"
+                    className="text-right w-full pointer-events-auto cursor-pointer bg-transparent border-none outline-none"
                     style={{ background: 'none' }}
                   >
                     <UnderlineOnHoverAnimation
-                      className="text-black font-graphik font-normal"
+                      className=""
                       isActive={selectedQuestion === index}
                     >
-                      <span className="dt-h4 leading-tight">
+                      <span className="dt-h4">
                         {faq.question}
                       </span>
                     </UnderlineOnHoverAnimation>
@@ -145,7 +144,7 @@ export default function FAQClient({ faqData }: Props) {
                 {/* If selected, show answer below, cols 2-4 */}
                 {selectedQuestion === index && (
                   <div className="col-start-2 col-span-3 animate-fade-in mb-5 mt-5">
-                    <p className="dt-body-sm leading-tight text-gray-700">
+                    <p className="dt-body-sm">
                       {faq.answer}
                     </p>
                   </div>
@@ -153,12 +152,12 @@ export default function FAQClient({ faqData }: Props) {
               </React.Fragment>
             ))}
             {/* Back to top button after last FAQ */}
-            <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+            <div className="col-span-4 flex justify-end items-center mt-[10vh] cursor-pointer" onClick={handleBackToTop}>
               <FadeInOnVisible>
-                <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+                <span className="dt-btn flex items-center">
                   <svg
-                    width="18"
-                    height="18"
+                    width="clamp(3.5vw,2.35vh,4.7vw)"
+                    height="clamp(3.5vw,2.35vh,4.7vw)"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -167,12 +166,15 @@ export default function FAQClient({ faqData }: Props) {
                   >
                     <path d="M12 19V5M5 12l7-7 7 7" />
                   </svg>
-                  Back to top
+                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                    Back to top
+                  </UnderlineOnHoverAnimation>
+
                 </span>
               </FadeInOnVisible>
+
             </div>
-            {/* Empty row after back to top */}
-            <div className="col-span-4 row-span-1"></div>
+
           </div>
         </main>
         <Footer />
@@ -304,8 +306,8 @@ export default function FAQClient({ faqData }: Props) {
   return (
     <>
       <Header />
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="grid gap-[2vh] grid-cols-2  auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {items.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}

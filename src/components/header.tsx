@@ -830,7 +830,7 @@ requestAnimationFrame(async () => {
                                         >
                                             <Link
                                                 href={item.href}
-                                                className="dt-h2 dt-btn text-black font-bold hover:underline"
+                                                className="dt-h2"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     document.dispatchEvent(

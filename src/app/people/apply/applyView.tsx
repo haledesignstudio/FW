@@ -221,186 +221,247 @@ export default function ApplyView({ jobTitles }: Props) {
       setFormStatus('error');
     }
   };
+// =========================
+// MOBILE LAYOUT
+// =========================
+if (isMobile) {
+  return (
+    <>
+      <Header />
+      <main className="p-[2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
+          {/* Heading */}
+          <div className="col-span-3 row-span-1 flex items-end">
+            <MainTitleAnimation
+              text="Application Form"
+              typeSpeed={60}
+              delay={500}
+              className="dt-h2"
+            />
+          </div>
 
-  // =========================
-  // MOBILE LAYOUT
-  // =========================
-  if (isMobile) {
-    return (
-      <>
-        <Header />
-        <main className="p-[2vh] bg-[#F9F7F2]">
-          <div className="grid grid-cols-4 gap-y-2 auto-rows-[12.5vh]">
-            {/* Heading */}
-            <div className="col-span-4 row-span-1 flex items-end">
-              <FadeInOnVisible>
-                <h1 className="dt-h2">Apply</h1>
-              </FadeInOnVisible>
-            </div>
+          {/* Intro */}
+          <div className="col-span-4 row-span-1 flex items-end">
+            <FadeInOnVisible>
+              <p className="dt-body-sm text-gray-700">We&apos;d love to connect. We just need to know:</p>
+            </FadeInOnVisible>
+          </div>
 
-            {/* Subheading */}
-            <div className="col-span-4 row-span-1 flex items-end">
-              <FadeInOnVisible>
-                <h2 className="dt-h3">Pick a role &amp; tell us more</h2>
-              </FadeInOnVisible>
-            </div>
+          {/* Form */}
+          <div className="col-span-4 mt-[2vh]">
+            <FadeInOnVisible>
+              <form
+                noValidate
+                onSubmit={onSubmitWithUI}
+                className="grid grid-cols-4 gap-x-[4.53vw] gap-y-[3vh]"
+              >
+                {/* Job Title */}
+                <div className="relative col-span-4">
+                  <select
+                    id="jobTitle"
+                    name="jobTitle"
+                    value={form.jobTitle}
+                    onChange={handleChange}
+                    className={`dt-h3 bg-transparent w-full focus:outline-none appearance-none ${
+                      form.jobTitle === '' ? 'text-gray-300' : 'text-black'
+                    }`}
+                    aria-invalid={!!(triedSubmit && getError('jobTitle'))}
+                    aria-describedby="err-jobTitle"
+                  >
+                    <option value="" disabled>Select a vacancy *</option>
+                    {jobTitles.map((t) => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
+                  <span
+                    id="err-jobTitle"
+                    className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
+                    bg-[#DC5A50] text-white shadow transition-opacity ${
+                      triedSubmit && getError('jobTitle') ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    {getError('jobTitle')}
+                  </span>
+                </div>
 
-            {/* Intro */}
-            <div className="col-span-4 row-span-1 flex items-end">
-              <FadeInOnVisible>
-                <p className="dt-body-sm text-gray-700">We&apos;d love to connect. We just need to know:</p>
-              </FadeInOnVisible>
-            </div>
-
-            {/* Form */}
-            <div className="col-span-4 row-span-3">
-              <FadeInOnVisible>
-                <form noValidate onSubmit={onSubmitWithUI} className="flex flex-col gap-[1.6vh]">
-                  {/* Job Title (select) */}
-                  <div className="flex flex-col">
-                    <label className="dt-body-sm mb-[0.6vh]" htmlFor="jobTitle">Job Title *</label>
-                    <select
-                      id="jobTitle"
-                      name="jobTitle"
-                      value={form.jobTitle}
-                      onChange={handleChange}
-                      className={`bg-transparent border-b border-gray-400 py-2 text-[2vh] focus:outline-none appearance-none
-                        ${form.jobTitle === '' ? 'text-gray-300' : 'text-black'}`}
-                      aria-invalid={!!(triedSubmit && getError('jobTitle'))}
-                      aria-describedby="err-jobTitle"
-                    >
-                      <option value="" disabled>Select a vacancy *</option>
-                      {jobTitles.map((t) => (
-                        <option key={t} value={t}>{t}</option>
-                      ))}
-                    </select>
-                    {triedSubmit && getError('jobTitle') && (
-                      <p id="err-jobTitle" className="text-red-600 text-[1.5vh]">{getError('jobTitle')}</p>
-                    )}
-                  </div>
-
+                {/* Name */}
+                <div className="relative col-span-4">
                   <input
                     name="name"
                     value={form.name}
                     onChange={handleChange}
                     placeholder="Name and Surname *"
-                    className="bg-transparent border-b border-gray-400 py-2 text-[2vh] focus:outline-none"
+                    className="dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full"
+                    aria-invalid={!!(triedSubmit && getError('name'))}
                   />
-                  {triedSubmit && getError('name') && <p className="text-red-600 text-[1.5vh]">{getError('name')}</p>}
+                  <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
+                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('name') ? 'opacity-100' : 'opacity-0'}`}>
+                    {getError('name')}
+                  </span>
+                </div>
 
+                {/* Email */}
+                <div className="relative col-span-4">
                   <input
                     name="email"
                     type="email"
                     value={form.email}
                     onChange={handleChange}
                     placeholder="Email *"
-                    className="bg-transparent border-b border-gray-400 py-2 text-[2vh] focus:outline-none"
+                    className="dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full"
+                    aria-invalid={!!(triedSubmit && getError('email'))}
                   />
-                  {triedSubmit && getError('email') && <p className="text-red-600 text-[1.5vh]">{getError('email')}</p>}
+                  <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
+                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('email') ? 'opacity-100' : 'opacity-0'}`}>
+                    {getError('email')}
+                  </span>
+                </div>
 
+                {/* Confirm Email */}
+                <div className="relative col-span-4">
                   <input
                     name="confirmEmail"
                     type="email"
                     value={form.confirmEmail}
                     onChange={handleChange}
                     placeholder="Confirm email *"
-                    className="bg-transparent border-b border-gray-400 py-2 text-[2vh] focus:outline-none"
+                    className="dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full"
+                    aria-invalid={!!(triedSubmit && getError('confirmEmail'))}
                   />
-                  {triedSubmit && getError('confirmEmail') && <p className="text-red-600 text-[1.5vh]">{getError('confirmEmail')}</p>}
+                  <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
+                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('confirmEmail') ? 'opacity-100' : 'opacity-0'}`}>
+                    {getError('confirmEmail')}
+                  </span>
+                </div>
 
+                {/* Phone */}
+                <div className="relative col-span-4">
                   <input
                     name="phone"
                     value={form.phone}
                     onChange={handleChange}
                     placeholder="Phone Number *"
-                    className="bg-transparent border-b border-gray-400 py-2 text-[2vh] focus:outline-none"
+                    className="dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full"
+                    aria-invalid={!!(triedSubmit && getError('phone'))}
                   />
-                  {triedSubmit && getError('phone') && <p className="text-red-600 text-[1.5vh]">{getError('phone')}</p>}
+                  <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
+                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('phone') ? 'opacity-100' : 'opacity-0'}`}>
+                    {getError('phone')}
+                  </span>
+                </div>
 
+                {/* Location */}
+                <div className="relative col-span-4">
                   <input
                     name="location"
                     value={form.location}
                     onChange={handleChange}
                     placeholder="Location (your city) *"
-                    className="bg-transparent border-b border-gray-400 py-2 text-[2vh] focus:outline-none"
+                    className="dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full"
+                    aria-invalid={!!(triedSubmit && getError('location'))}
                   />
-                  {triedSubmit && getError('location') && <p className="text-red-600 text-[1.5vh]">{getError('location')}</p>}
+                  <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
+                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('location') ? 'opacity-100' : 'opacity-0'}`}>
+                    {getError('location')}
+                  </span>
+                </div>
 
-                  <p className="dt-body-sm text-gray-700 mt-[1vh]">Please share your LinkedIn profile or upload your resume/CV.</p>
+                {/* Helper copy */}
+                <div className="col-span-4">
+                  <p className="dt-body-sm">Please share your LinkedIn profile or upload your resume/CV.</p>
+                </div>
 
-                  {/* LinkedIn URL */}
+                {/* LinkedIn */}
+                <div className="relative col-span-4">
                   <input
                     name="linkedIn"
                     type="url"
                     value={form.linkedIn}
                     onChange={handleChange}
                     placeholder="LinkedIn profile"
-                    className="bg-transparent border-b border-gray-400 py-2 text-[2vh] focus:outline-none"
+                    className="dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full"
+                    aria-invalid={!!(triedSubmit && getError('linkedIn'))}
                   />
-                  {triedSubmit && getError('linkedIn') && <p className="text-red-600 text-[1.5vh]">{getError('linkedIn')}</p>}
+                  <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
+                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('linkedIn') ? 'opacity-100' : 'opacity-0'}`}>
+                    {getError('linkedIn')}
+                  </span>
+                </div>
 
-                  {/* File upload button */}
-                  <div className="flex items-center justify-between">
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                      className="hidden"
-                      onChange={handleFileChange}
-                    />
-                    <button
-                      type="button"
-                      onClick={handleFileClick}
-                      className="dt-btn underline hover:no-underline"
-                    >
-                      {resume ? resume.name : 'Choose file'}
-                    </button>
-                  </div>
-                  {/* Error under file control (cross-field rule) */}
-                  {triedSubmit && getError('resume') && (
-                    <p className="dt-body-sm text-red-600">{getError('resume')}</p>
-                  )}
+                {/* File upload */}
+                <div className="col-span-4 flex items-center justify-between">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleFileClick}
+                    className="dt-btn underline hover:no-underline"
+                  >
+                    {resume ? resume.name : 'Choose file'}
+                  </button>
+                </div>
+                {triedSubmit && getError('resume') && (
+                  <p className="col-span-4 dt-body-sm text-red-600">{getError('resume')}</p>
+                )}
 
+                <div className="col-span-3 mt-[4vh]">
+                  <p className="dt-body-sm">What about Futureworld interests you — why do you want to join our team? .</p>
+                </div>
+
+                {/* Message — span 3 cols */}
+                <div className="relative col-span-4">
                   <textarea
                     name="message"
                     value={form.message}
                     onChange={handleChange}
                     placeholder="Message *"
-                    rows={3}
-                    className="bg-transparent border-b border-gray-400 py-2 text-[2vh] resize-none focus:outline-none"
+                    rows={6}
+                    className="dt-h3 bg-transparent placeholder-gray-300 focus:outline-none w-full resize-none"
+                    aria-invalid={!!(triedSubmit && getError('message'))}
                   />
-                  {triedSubmit && getError('message') && <p className="text-red-600 text-[1.5vh]">{getError('message')}</p>}
-                </form>
-              </FadeInOnVisible>
-            </div>
+                  <span className={`pointer-events-none absolute -top-[2.5vh] left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.35vh] px-[0.8vh]
+                    bg-[#DC5A50] text-white shadow transition-opacity ${triedSubmit && getError('message') ? 'opacity-100' : 'opacity-0'}`}>
+                    {getError('message')}
+                  </span>
+                </div>
 
-            {/* Submit */}
-            <div className="col-span-4 row-span-1 flex items-start justify-end">
-              <FadeInOnVisible>
-                <UnderlineOnHoverAnimation hasStaticUnderline>
+                {/* Submit — 4th column */}
+                <div className="col-span-4 flex items-start">
                   <button
                     type="submit"
-                    onClick={() => document.querySelector('form')?.requestSubmit()}
-                    className="dt-btn bg-transparent border-none outline-none cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
                     disabled={formStatus === 'sent' || formStatus === 'sending'}
+                    className="dt-btn cursor-pointer select-none disabled:opacity-50 disabled:pointer-events-none"
                   >
-                    {formStatus === 'sent' ? 'Sent!' : formStatus === 'sending' ? 'Sending…' : 'Submit'}
+                    <UnderlineOnHoverAnimation hasStaticUnderline>
+                      {formStatus === 'sent' ? 'Sent!' : formStatus === 'sending' ? 'Sending…' : 'Submit'}
+                    </UnderlineOnHoverAnimation>
                   </button>
-                </UnderlineOnHoverAnimation>
-              </FadeInOnVisible>
-            </div>
+                </div>
 
-            {/* Status */}
-            <div className="col-span-4 row-span-1">
-              {formStatus === 'error' && <p className="text-red-600 text-[1.6vh]">Error submitting Application. Please try again.</p>}
-              {formStatus === 'sent' && <p className="text-green-600 text-[1.6vh]">Message sent!</p>}
-            </div>
+                {/* Status */}
+                <div className="col-span-4">
+                  {formStatus === 'error' && (
+                    <p className="text-red-600 text-[1.6vh]">Error submitting Application. Please try again.</p>
+                  )}
+                  {formStatus === 'sent' && (
+                    <p className="text-green-600 text-[1.6vh]">Message sent!</p>
+                  )}
+                </div>
+              </form>
+            </FadeInOnVisible>
           </div>
-        </main>
-        <Footer />
-      </>
-    );
-  }
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
+
 
   // =========================
   // DESKTOP LAYOUT
