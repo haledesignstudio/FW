@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -H 0.0.0.0",
-    "build": "next build && npm run copy-public",
-    "copy-public": "xcopy public .next\\public /E /I /Y",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typegen": "sanity typegen generate --schema-path=./src/sanity/extract.json"
