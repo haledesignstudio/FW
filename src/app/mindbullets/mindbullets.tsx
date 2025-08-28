@@ -32,8 +32,8 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
     return {
       src: mb.mainImage?.asset?.url || '/placeholder-image.png',
       heading: mb.title
-  ? `${mb.title}${mb.byLine ? " / " + mb.byLine : ""}`
-  : 'Untitled',
+        ? `${mb.title}${mb.byLine ? " / " + mb.byLine : ""}`
+        : 'Untitled',
       description: mb.bodyPlain ?? '', // ⬅️ use bodyPlain
       href: slugStr ? `/mindbullets/${slugStr}` : '#',
     };
@@ -59,24 +59,22 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
 
   if (isMobile) {
     return (
-      <main className="p-[2vh] bg-[#F9F7F2]">
-  <div className="grid grid-cols-4 gap-y-2">
+      <main className="bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]
+">
           {/* Row 1-2: Title */}
-          <div className="col-span-4">
+          <div className="col-span-4 row-span-3">
             <FadeInOnVisible>
-              <div className="text-[5vh] font-bold font-graphik leading-tight text-left">
+              <div className="dt-h1 text-left">
                 {title}
               </div>
             </FadeInOnVisible>
           </div>
 
-          {/* Row 3: Empty */}
-          <div className="col-span-4 mt-[2vh] mb-[2vh]" />
-
           {/* Row 4-5: Subheading */}
-          <div className="col-span-4 mt-[2vh] mb-[2vh]">
+          <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
-              <div className="text-[2.5vh] font-bold leading-tight">
+              <div className="dt-h3">
                 <HighlightText value={subheading} />
               </div>
             </FadeInOnVisible>
@@ -100,37 +98,33 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
               />
             </FadeInOnVisible>
           </div>
-
+          <div className="col-span-4"></div>
           {/* Row 13-17: Archive */}
           <div className="col-span-4">
             <FadeInOnVisible>
-              <div className="grid auto-rows-auto">
+
                 <MindbulletArchive />
-              </div>
+
             </FadeInOnVisible>
           </div>
 
-          <div className="col-span-4 mt-[2vh] mb-[2vh]" />
+          <div className="col-span-4" />
 
-          {/* Row 18: See Keynotes + Back to top */}
-          <div className="col-span-2">
-            <FadeInOnVisible>
-              <Link href="/keynotes" className="transition font-bold cursor-pointer">
+          <div className="col-span-2 row-span-1 flex items-end">
+            <FadeInOnVisible className="text-balance">
+              <Link href="/keynotes" className="dt-btn transition cursor-pointer">
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   See Keynotes
                 </UnderlineOnHoverAnimation>
               </Link>
             </FadeInOnVisible>
           </div>
-          <div
-            className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
-            onClick={handleBackToTop}
-          >
+          <div className="col-start-3 col-span-2 flex justify-end items-end cursor-pointer" onClick={handleBackToTop}>
             <FadeInOnVisible>
-              <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+              <span className="dt-btn flex items-center">
                 <svg
-                  width="18"
-                  height="18"
+                  width="clamp(3.5vw,2.35vh,4.7vw)"
+                  height="clamp(3.5vw,2.35vh,4.7vw)"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -139,9 +133,13 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
                 >
                   <path d="M12 19V5M5 12l7-7 7 7" />
                 </svg>
-                Back to top
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  Back to top
+                </UnderlineOnHoverAnimation>
+
               </span>
             </FadeInOnVisible>
+
           </div>
         </div>
       </main>

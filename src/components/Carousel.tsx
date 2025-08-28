@@ -235,7 +235,9 @@ export default function Carousel({
       }
       if (item.description) {
         const d = document.createElement("div");
-        d.className = "dt-body-sm mt-[2vh] line-clamp-3";
+        d.className = isMobile
+          ? "dt-body-sm mt-[2vh] line-clamp-5" // mobile: the single visible card is the "featured" one
+          : "dt-body-sm mt-[2vh] line-clamp-3";
         d.textContent = item.description;
         textWrap.appendChild(d);
       }
@@ -430,7 +432,7 @@ export default function Carousel({
 
         {/* Mobile fixed action bar */}
         {isMobile && (
-          <div className="mt-2 flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between">
             {currentItem?.href ? (
               <a
                 href={currentItem.href}

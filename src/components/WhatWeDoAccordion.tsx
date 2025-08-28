@@ -249,28 +249,30 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             {!isOpen && (
                                 <AccordionPulse pulse delay={closedMobileTabDelays[idx] ?? 0} paused={openTabs.length > 0}>
                                     <div className="grid grid-cols-4 w-full px-[4.53vw] py-[2.09vh]">
-                                        <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
+                                        <div className="col-span-1 row-start-1 row-span-1 dt-h1 leading-tight">{idx + 1}</div>
                                         <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
                                     </div>
                                 </AccordionPulse>
                             )}
                             {/* Open state: full vertical accordion */}
                             {isOpen && (
-                                <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] px-[4.53vw] py-[2.09vh]">
+                                <div className="grid grid-cols-4 auto-rows-[minmax(50px,auto)]  overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] px-[4.53vw] py-[2.09vh]">
                                     {/* Row 5: col 1: number, col 2-4: subheading (first word in row 5, rest in row 6) */}
-                                    <div className="col-span-1 row-start-1 row-span-1 dt-h2 leading-tight">{idx + 1}</div>
+                                    <div className="col-span-1 dt-h1 leading-tight">{idx + 1}</div>
                                     {/* Subheading split: first word row 5, rest row 6 */}
                                     {(() => {
                                         const subheading = item.subheading && item.subheading.length > 0 ? item.subheading[0].children?.[0]?.text || '' : '';
                                         const [firstWord, ...rest] = subheading.split(' ');
                                         return <>
-                                            <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight">{firstWord}</div>
-                                            <div className="col-start-2 row-start-2 row-span-1 col-span-3 text-right text-balance dt-h3">{rest.join(' ')}</div>
+                                            <div className="col-span-3 text-right dt-h1 leading-tight">{firstWord}</div>
+                                            <div className="col-start-2 col-span-3 text-right text-balance dt-h3 flex flex-col justify-end">
+                                                {rest.join(' ').charAt(0).toUpperCase() + rest.join(' ').slice(1)}
+                                            </div>
                                         </>;
                                     })()}
                                     {/* Row 7-8: Image (col 1-4) */}
                                     {item.image?.asset && (
-                                        <div className="col-span-4 row-start-3 row-span-2 flex justify-center items-center">
+                                        <div className="col-span-4 flex justify-center items-center">
                                             <Image
                                                 src={urlFor(item.image.asset).url()}
                                                 alt="Process image"
@@ -283,26 +285,26 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                         </div>
                                     )}
                                     {/* Row 9-11: Description (col 1-4) */}
-                                    <div className="col-span-4 row-start-5 row-span-4 dt-h4">
+                                    <div className="col-span-4 dt-h4 mb-[4vh]">
                                         <PortableText value={item.description} components={ptComponents} />
                                     </div>
                                     {/* Row 13: col 1-2: prompt, col 3-4: entry 0 */}
-                                    <div className="col-span-2 dt-h5 row-start-9 row-span-2">
+                                    <div className="col-span-2 dt-h5 ">
                                         <PortableText value={item.prompt} />
                                     </div>
                                     <div className="col-span-2">
-                                        <div className="dt-h5 pb-[2vh] row-span-2 row-start-9"><PortableText value={item.entries[0].title} /></div>
-                                        <div className="dt-body-sm"><PortableText value={item.entries[0].body} /></div>
+                                        <div className="dt-h5 mb-[2vh]"><PortableText value={item.entries[0].title} /></div>
+                                        <div className="dt-body-sm mb-[4vh]"><PortableText value={item.entries[0].body} /></div>
                                     </div>
                                     {/* Row 15-16: col 3-4: entry 1 */}
-                                    <div className="col-start-3 col-span-2 row-span-2 row-start-11">
-                                        <div className="dt-h5 pb-[2vh]"><PortableText value={item.entries[1].title} /></div>
-                                        <div className="dt-body-sm"><PortableText value={item.entries[1].body} /></div>
+                                    <div className="col-start-3 col-span-2">
+                                        <div className="dt-h5 mb-[2vh]"><PortableText value={item.entries[1].title} /></div>
+                                        <div className="dt-body-sm mb-[4vh]"><PortableText value={item.entries[1].body} /></div>
                                     </div>
                                     {/* Row 17-18: col 1-2: entry 2 */}
-                                    <div className="col-start-3 col-span-2 row-span-2 row-start-13">
-                                        <div className="dt-h5 pb-[2vh]"><PortableText value={item.entries[2].title} /></div>
-                                        <div className="dt-body-sm"><PortableText value={item.entries[2].body} /></div>
+                                    <div className="col-start-3 col-span-2">
+                                        <div className="dt-h5 mb-[2vh]"><PortableText value={item.entries[2].title} /></div>
+                                        <div className="dt-body-sm mb-[4vh]"><PortableText value={item.entries[2].body} /></div>
                                     </div>
                                 </div>
                             )}

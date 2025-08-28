@@ -59,22 +59,21 @@ export default function Edge({
 
   if (isMobile) {
     return (
-      <div className="grid grid-cols-4 gap-y-2 gap-x-2 px-2 w-full">
-        <div className="col-span-4 row-span-2 flex items-center">
+      <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
+        <div className="col-span-4 row-span-3 flex items-center">
           <FadeInOnVisible>
             <div className="dt-h1">{title}</div>
           </FadeInOnVisible>
         </div>
 
-        <div className="col-span-4 row-span-6" />
 
-        <div className="col-span-4 row-span-2">
+        <div className="col-span-4">
           <FadeInOnVisible>
             <div className="dt-h4">{contentText}</div>
           </FadeInOnVisible>
         </div>
 
-        <div className="col-span-4 row-span-2">
+        <div className="col-span-4">
           <FadeInOnVisible>
             <div className="dt-h3">
               <HighlightText value={subheading} />
@@ -82,7 +81,7 @@ export default function Edge({
           </FadeInOnVisible>
         </div>
 
-        <div className="col-span-4 row-span-2" />
+        <div className="col-span-4 row-span-1" />
 
         <div className="col-span-4 row-end-auto">
           <FadeInOnVisible>
@@ -100,33 +99,33 @@ export default function Edge({
           </FadeInOnVisible>
         </div>
 
-        <div className="col-span-4 row-start-auto row-end-auto" style={{ minHeight: '12vh' }} />
+        <div className="col-span-4 row-span-1" />
 
-        <div className="col-span-4 row-end-auto">
-          <div className="relative w-full pb-[56.25%]">
-            {/* 16:9 = 9/16 = 56.25% */}
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src={whatBlewYourMind.embedLink}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              loading="lazy"
-            />
-          </div>
-          <div className="mt-[5vh] dt-h5 font-bold leading-tight">
-            <HighlightText value={whatBlewYourMind.description} />
-          </div>
-          <div className="dt-btn mt-[5vh]">
-            <a href={whatBlewYourMind.ctaLink} target="_blank" rel="noopener noreferrer">
-              <UnderlineOnHoverAnimation hasStaticUnderline color="#232323">
-                {whatBlewYourMind.cta}
-              </UnderlineOnHoverAnimation>
-            </a>
-          </div>
+
+        <div className="col-span-4 relative w-full row-span-3">
+          {/* 16:9 = 9/16 = 56.25% */}
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src={whatBlewYourMind.embedLink}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            loading="lazy"
+          />
+        </div>
+        <div className="col-span-4 mt-[2vh] dt-h3 font-bold leading-tight">
+          <HighlightText value={whatBlewYourMind.description} />
         </div>
 
-        <div className="col-span-4 row-start-auto row-end-auto" style={{ minHeight: '12vh' }} />
+        <div className="col-span-4 dt-btn mt-[2vh]">
+          <a href={whatBlewYourMind.ctaLink} target="_blank" rel="noopener noreferrer">
+            <UnderlineOnHoverAnimation hasStaticUnderline color="#232323">
+              {whatBlewYourMind.cta}
+            </UnderlineOnHoverAnimation>
+          </a>
+        </div>
+
+        <div className="col-span-4 row-span-1" />
 
         <div className="col-span-4">
           <FadeInOnVisible>
@@ -135,14 +134,14 @@ export default function Edge({
         </div>
 
         <div
-          className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-12"
+          className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-[10vh]"
           onClick={handleBackToTop}
         >
           <FadeInOnVisible>
-            <span className="underline dt-btn flex items-center gap-1 font-bold">
+            <span className="dt-btn flex items-center">
               <svg
-                width="18"
-                height="18"
+                width="clamp(3.5vw,2.35vh,4.7vw)"
+                height="clamp(3.5vw,2.35vh,4.7vw)"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -151,9 +150,13 @@ export default function Edge({
               >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
-              Back to top
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Back to top
+              </UnderlineOnHoverAnimation>
+
             </span>
           </FadeInOnVisible>
+
         </div>
       </div>
     );

@@ -25,18 +25,18 @@ type ArticleContent = {
 };
 
 export type EdgeScenario = {
-  _id: string;
-  title: string;
-  slug?: string;
-  subheading: RichText;
-  contentText: RichText;
-  finalStatement: RichText;              
-  pdfMobileUrl?: string | null;
-  pdfDesktopUrl?: string | null;
-  hasAudio: boolean;
-  audioDescription?: RichText;
-  audioFileUrl?: string | null;
-  articleContents: ArticleContent[];
+    _id: string;
+    title: string;
+    slug?: string;
+    subheading: RichText;
+    contentText: RichText;
+    finalStatement: RichText;
+    pdfMobileUrl?: string | null;
+    pdfDesktopUrl?: string | null;
+    hasAudio: boolean;
+    audioDescription?: RichText;
+    audioFileUrl?: string | null;
+    articleContents: ArticleContent[];
 };
 
 
@@ -221,10 +221,10 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
 
     const mobile = (
         <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
-            <CommonHeader title={data.title} active="edge"/>
-            <div className="grid grid-cols-4 gap-y-[1.5vh] gap-y-[4vh] auto-rows-[minmax(0,auto)]">
+            <CommonHeader title={data.title} active="edge" />
+            <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
                 {/* Row 1-2, Col 1-3: Title */}
-                <div className="col-span-3 row-span-2 flex items-end">
+                <div className="col-span-3 flex items-end">
                     <FadeInOnVisible>
                         <h1 className="dt-h1">{data.title}</h1>
                     </FadeInOnVisible>
@@ -232,7 +232,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 {/* Row 3: Empty */}
                 <div className="col-span-4 row-span-1" />
                 {/* Row 4: ContentText */}
-                <div className="col-span-4 row-span-1">
+                <div className="col-span-4">
                     <FadeInOnVisible>
                         <div className="dt-h4">
                             <PortableText value={data.contentText} />
@@ -240,7 +240,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                     </FadeInOnVisible>
                 </div>
                 {/* Row 5-6: Subheading */}
-                <div className="col-span-4 row-span-2">
+                <div className="col-span-4">
                     <FadeInOnVisible>
                         <div className="dt-h3">
                             <HighlightText value={data.subheading} />
@@ -251,7 +251,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 <div className="col-span-4 row-span-1" />
                 {/* Row 8-11: Article 1 */}
                 <div className="col-span-4 row-span-4">
-                    <div className="grid grid-cols-4 gap-x-[2vw] gap-y-[4vh]">
+                    <div className="grid grid-cols-4 gap-x-[4.53vw] gap-y-[2.09vh]">
                         <div className="col-span-4">
                             <div className="w-full h-[25vh] overflow-hidden">
                                 {data.articleContents?.[0]?.image?.url ? (
@@ -266,7 +266,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                                     />
                                 ) : null}
                             </div>
-                            <div className="mt-[1.25vh]">
+                            <div className="mt-[2vh]">
                                 <div className="dt-h5">
                                     {data.articleContents?.[0]?.title}
                                 </div>
@@ -276,7 +276,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             </div>
                         </div>
                         {/* Article 2 */}
-                        <div className="col-span-4">
+                        <div className="col-span-4 mt-[7vh]">
                             <div className="w-full h-[25vh] overflow-hidden">
                                 {data.articleContents?.[1]?.image?.url ? (
                                     <Image
@@ -290,7 +290,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                                     />
                                 ) : null}
                             </div>
-                            <div className="mt-[1.25vh]">
+                            <div className="mt-[2vh]">
                                 <div className="dt-h5">
                                     {data.articleContents?.[1]?.title}
                                 </div>
@@ -300,7 +300,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             </div>
                         </div>
                         {/* Article 3 */}
-                        <div className="col-span-4">
+                        <div className="col-span-4 mt-[7vh]">
                             <div className="w-full h-[25vh] overflow-hidden">
                                 {data.articleContents?.[2]?.image?.url ? (
                                     <Image
@@ -327,7 +327,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 </div>
                 {/* Row 12-19: (Articles already above, so skip extra rows) */}
                 {/* Row 20: Download buttons */}
-                <div className="col-span-1 row-span-1 flex items-center">
+                <div className="col-span-1 row-span-1 flex items-center dt-btn mt-[4vh]">
                     {data.pdfMobileUrl ? (
                         <a href={`/the-edge/${data.slug}/pdf?device=mobile`} target="_blank" rel="noreferrer">
                             <UnderlineOnHoverAnimation hasStaticUnderline>
@@ -336,7 +336,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                         </a>
                     ) : null}
                 </div>
-                <div className="col-start-4 col-span-1 row-span-1 flex justify-end items-center text-right">
+                <div className="col-start-4 col-span-1 row-span-1 flex justify-end items-center text-right dt-btn  mt-[4vh]">
                     {data.pdfDesktopUrl ? (
                         <a href={`/the-edge/${data.slug}/pdf?device=desktop`} target="_blank" rel="noreferrer">
                             <UnderlineOnHoverAnimation hasStaticUnderline>
@@ -345,17 +345,18 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                         </a>
                     ) : null}
                 </div>
+                <div className="col-span-4 row-span-1" />
                 {/* Row 21-24: Audio section if present */}
                 {data.audioDescription?.length ? (
-                    <div className="col-span-4 row-span-4">
+                    <div className="col-span-4">
                         <FadeInOnVisible>
-                            <div className="grid gap-[2vh] grid-cols-4 mt-[5vh]">
+                            <div className=" grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] mt-[5vh]">
                                 <div className="col-span-4">
                                     <div className="dt-h3">
                                         <HighlightText value={data.audioDescription} />
                                     </div>
                                 </div>
-                                <div className="col-span-4 flex items-center justify-center">
+                                <div className="col-span-4 flex row-span-3 items-center justify-center">
                                     {data.audioFileUrl ? (
                                         <AudioVisualiser
                                             audioSrc={data.audioFileUrl}
@@ -373,7 +374,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 {/* Row 25: Empty */}
                 <div className="col-span-4 row-span-1" />
                 {/* Row 26: Mindbullets text */}
-                <div className="col-span-4 row-span-1">
+                <div className="col-span-4 row-span-2">
                     <FadeInOnVisible>
                         <div className="dt-h3">
                             <HighlightText value={data.finalStatement} />
@@ -381,7 +382,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                     </FadeInOnVisible>
                 </div>
                 {/* Row 27-28: Subscribe section */}
-                <div className="col-start-2 col-span-3 row-span-3">
+                <div className="col-start-2 col-span-3">
                     <p className="dt-body-sm">Subscribe for news from the future</p>
                     <input
                         type="email"
@@ -409,17 +410,29 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                 </div>
                 {/* Back to top button */}
                 <div
-                    className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
+                    className="col-start-3 col-span-2 flex justify-end items-center mt-[7vh] cursor-pointer"
                     onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 >
                     <FadeInOnVisible>
-                        <span className="underline dt-btn flex items-center gap-1 font-bold">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: "rotate(-45deg)" }}>
+                        <span className="dt-btn flex items-center">
+                            <svg
+                                width="clamp(3.5vw,2.35vh,4.7vw)"
+                                height="clamp(3.5vw,2.35vh,4.7vw)"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                style={{ transform: 'rotate(-45deg)' }}
+                            >
                                 <path d="M12 19V5M5 12l7-7 7 7" />
                             </svg>
-                            Back to top
+                            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                                Back to top
+                            </UnderlineOnHoverAnimation>
+
                         </span>
                     </FadeInOnVisible>
+
                 </div>
             </div>
         </div>
@@ -432,7 +445,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
             <CommonHeader title={data.title} active="edge" />
 
 
-            <div className="grid gap-[2vh] grid-cols-2 auto-rows-[25vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+            <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
                 {topGrid.map((item) => (
                     <div
                         key={item.id}
@@ -460,15 +473,15 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                         </div>
 
                         <div className="col-span-3 col-start-4 flex items-center justify-center">
-                                {data.audioFileUrl ? (
-                                    <AudioVisualiser
-                                        audioSrc={data.audioFileUrl}
-                                        size={300}
-                                        color="#75c8d6ff"
-                                        backgroundColor="#000000ff"
-                                        className="w-fullflex items-center justify-center"
-                                    />
-                                ) : null}
+                            {data.audioFileUrl ? (
+                                <AudioVisualiser
+                                    audioSrc={data.audioFileUrl}
+                                    size={300}
+                                    color="#75c8d6ff"
+                                    backgroundColor="#000000ff"
+                                    className="w-fullflex items-center justify-center"
+                                />
+                            ) : null}
                         </div>
                     </div>
                 ) : null}
@@ -535,7 +548,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
     return (
         <>
             <Header />
-            <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+            <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
                 {mobile}
                 {desktop}
             </main>

@@ -504,14 +504,14 @@ export default function HomeClient({ data }: HomeClientProps) {
               </FadeInOnVisible>
               {/* Back to Top Button for Mobile */}
               <div className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
-                <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
+                <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] mt-[4vh]">
                   <div className="col-span-2"></div>
                   <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
                     <FadeInOnVisible>
-                      <span className="underline dt-btn flex items-center gap-1">
+                      <span className="dt-btn flex items-center">
                         <svg
-                          width="18"
-                          height="18"
+                          width="clamp(3.5vw,2.35vh,4.7vw)"
+                          height="clamp(3.5vw,2.35vh,4.7vw)"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
@@ -520,7 +520,10 @@ export default function HomeClient({ data }: HomeClientProps) {
                         >
                           <path d="M12 19V5M5 12l7-7 7 7" />
                         </svg>
-                        Back to top
+                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                          Back to top
+                        </UnderlineOnHoverAnimation>
+
                       </span>
                     </FadeInOnVisible>
                   </div>

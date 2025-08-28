@@ -8,6 +8,7 @@ import PodcastCarousel from '@/components/PodcastCarousel';
 import { getGridClasses } from '@/components/insights/grid';
 import useIsMobile from '@/hooks/useIsMobile';
 import { useCallback } from 'react';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 type Podcast = {
   _id: string;
@@ -57,18 +58,16 @@ export default function PodcastSection({
   if (isMobile) {
     // 4 column grid, rows as described
     return (
-      <div className="grid grid-cols-4 gap-y-2 gap-x-2 px-2 w-full">
+      <div className="col-span-4 w-full grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
         {/* Row 1: Title (col 1-3) */}
-        <div className="col-span-4 row-span-2"></div>
+
         <div className="col-span-3 row-span-2 flex items-center">
           <FadeInOnVisible>
             <div className="dt-h1">{title}</div>
           </FadeInOnVisible>
         </div>
-        {/* Row 2: Empty (col 1-4) */}
-        <div className="col-span-4 row-span-2" />
-        {/* Row 3-4: Subheading (col 1-4) */}
-        <div className="col-span-4 row-span-2">
+
+        <div className="col-span-4 row-span-3">
           <FadeInOnVisible>
             <div className="dt-h3">
               <HighlightText value={subheading} />
@@ -78,16 +77,16 @@ export default function PodcastSection({
         {/* Row 5+: Carousel (col 1-4) */}
         <div className="col-span-4 row-end-auto">
           <FadeInOnVisible>
-            <PodcastCarousel items={carouselItems} />
+            <PodcastCarousel items={carouselItems} readMoreText='Listen now' />
           </FadeInOnVisible>
         </div>
         {/* Back to Top Button (col 3-4, right aligned) */}
-        <div className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-4" onClick={handleBackToTop}>
+        <div className="col-span-2 col-start-3 flex justify-end items-center cursor-pointer mt-[10vh]" onClick={handleBackToTop}>
           <FadeInOnVisible>
-            <span className="underline dt-btn flex items-center gap-1 font-bold">
+            <span className="dt-btn flex items-center">
               <svg
-                width="18"
-                height="18"
+                width="clamp(3.5vw,2.35vh,4.7vw)"
+                height="clamp(3.5vw,2.35vh,4.7vw)"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -96,9 +95,13 @@ export default function PodcastSection({
               >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
-              Back to top
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Back to top
+              </UnderlineOnHoverAnimation>
+
             </span>
           </FadeInOnVisible>
+
         </div>
       </div>
     );
@@ -140,7 +143,7 @@ export default function PodcastSection({
       id: 'podcast-4',
       content: (
         <FadeInOnVisible>
-          <PodcastCarousel items={carouselItems} readMoreText='Listen now'/>
+          <PodcastCarousel items={carouselItems} readMoreText='Listen now' />
 
         </FadeInOnVisible>
       ),

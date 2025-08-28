@@ -155,7 +155,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
   const AuthorBlock = (
     <>
       {data.hasAuthor && data.author ? (
-        <div className="mt-[2vh]">
+        <div className="mt-[7vh]">
           {data.author.image?.asset ? (
             <Image
               src={urlFor(data.author.image.asset).url()}
@@ -167,27 +167,22 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
             />
           ) : null}
 
-          {data.author.name ? <div className="font-bold">{data.author.name}</div> : null}
-          {data.author.position ? <div className="opacity-80">{data.author.position}</div> : null}
+          {data.author.name ? <div className="dt-btn">
+            <a
+              href={data.author.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="dt-btn"
+            >{data.author.name}</a></div> : null}
+          {data.author.position ? <div className="dt-body-sm">{data.author.position}</div> : null}
 
           {data.author.bio?.length ? (
-            <div className="mt-[1vh]">
+            <div className="mt-[2vh] dt-body-sm">
               <PortableText value={data.author.bio} components={ptComponents} />
             </div>
           ) : null}
 
-          {data.author.linkedin ? (
-            <div className="mt-[1vh]">
-              <a
-                href={data.author.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline font-bold"
-              >
-                Connect on LinkedIn
-              </a>
-            </div>
-          ) : null}
+
         </div>
       ) : null}
     </>
@@ -197,8 +192,8 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
   const RelatedStoriesBlock = (
     <>
       {data.hasRelatedStories && (data.relatedStories?.length ?? 0) > 0 ? (
-        <div className="mt-[6vh]">
-          <div className="text-[2.5vh] font-graphik leading-tight mb-[2vh]">
+        <div className="mt-[7vh]">
+          <div className="dt-h5 mb-[2vh]">
             Related stories
           </div>
           <ul className="space-y-[1vh]">
@@ -208,7 +203,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                   href={rs.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[2.5vh] leading-relaxed"
+                  className="dt-body-lg line-clamp-1"
                 >
                   <UnderlineOnHoverAnimation hasStaticUnderline={true} color="#232323">
                     {rs.title}
@@ -225,10 +220,8 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
   // --- MOBILE ---
   const mobile = (
     <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
-      <div className="flex-1 grid grid-cols-4 gap-y-5 w-full">
-        <div className="col-span-4 row-span-2 dt-h2">
-          {data.title}
-        </div>
+      <div className="flex-1 grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
+
 
         {data.image?.asset && (
           <div className="col-span-4 row-span-2">
@@ -242,9 +235,11 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
             />
           </div>
         )}
-
+        <div className="col-span-4 dt-h2">
+          {data.title}
+        </div>
         {data.byline ? (
-          <div className="col-span-4 row-span-1 dt-h3">
+          <div className="col-span-4 dt-h3">
             {data.byline}
           </div>
         ) : null}
@@ -267,11 +262,12 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
           <div className="col-span-4 mt-[2vh]">
             <a
               href={data.pdf.url}
-              className="dt-btn inline-block mt-[1vh] underline font-bold"
+              className="dt-btn inline-block mt-[2vh]"
               target="_blank"
               rel="noreferrer"
             >
-              Download article now
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>Download article now</UnderlineOnHoverAnimation>
+
             </a>
           </div>
         ) : null}
@@ -304,36 +300,38 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
           </div>
         )}
 
-        <div className="col-span-2 row-span-1 mt-4">
-          <FadeInOnVisible>
-            <Link href="/keynotes" className="dt-btn transition font-bold cursor-pointer">
+        <div className="col-span-4"></div>
+
+        <div className="col-span-2 row-span-1 flex">
+          <FadeInOnVisible className="text-balance">
+            <Link href="/keynotes" className="dt-btn transition cursor-pointer">
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                 See Keynotes
               </UnderlineOnHoverAnimation>
             </Link>
           </FadeInOnVisible>
         </div>
-
-        <div
-          className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
+        <div className="col-start-3 col-span-2 flex justify-end cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <FadeInOnVisible>
-            <span className="underline dt-btn flex items-center gap-1">
+            <span className="dt-btn flex items-center">
               <svg
-                width="18"
-                height="18"
+                width="clamp(3.5vw,2.35vh,4.7vw)"
+                height="clamp(3.5vw,2.35vh,4.7vw)"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                style={{ transform: "rotate(-45deg)" }}
+                style={{ transform: 'rotate(-45deg)' }}
               >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
-              Back to top
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Back to top
+              </UnderlineOnHoverAnimation>
+
             </span>
           </FadeInOnVisible>
+
         </div>
       </div>
     </div>
@@ -394,7 +392,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
   const desktop = (
     <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
       <CommonHeader title={data.title} active="corporate" />
-      <div className="grid gap-[2vh] grid-cols-2 auto-rows-[25vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <div className="grid grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {gridItems.map((item) => (
           <div
             key={item.id}
@@ -410,7 +408,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
       </div>
 
       <FadeInOnVisible>
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
           <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4">
             <div className="grid grid-cols-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
               <div className="dt-body-sm">
@@ -541,6 +539,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
     <>
       <Header />
       <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden"><CommonHeader title={'Insights'} active="edge" /></div>
         {mobile}
         {desktop}
       </main>

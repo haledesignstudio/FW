@@ -12,6 +12,7 @@ import CountingAnimation from '@/components/countingAnimation';
 import PartnersMarquee from '@/components/PartnersMarquee';
 import OurWorkAccordion from "@/components/OurWorkAccordion";
 import { PortableText } from '@portabletext/react';
+import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 
 
 export type OurWorkContent = {
@@ -106,6 +107,26 @@ interface OurWorkClientProps {
   data: OurWorkContent;
 }
 
+
+function addLineBreaksAfterPeriods(blocks: PortableTextBlock[]): PortableTextBlock[] {
+  return blocks.map(block => {
+    if (block._type === 'block' && block.children) {
+      return {
+        ...block,
+        children: block.children.map(child => {
+          if (child._type === 'span' && typeof child.text === 'string') {
+            return {
+              ...child,
+              text: child.text.replace(/\./g, '.\n\n')
+            };
+          }
+          return child;
+        })
+      };
+    }
+    return block;
+  });
+}
 
 export default function OurWorkClient({ data }: OurWorkClientProps) {
   const isMobileScreen = useIsMobile();
@@ -376,61 +397,57 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
           <>
             {/* MOBILE LAYOUT */}
             <div className="p-[2vh] bg-[#F9F7F2]">
-              <div className="grid grid-cols-4 gap-[2vh] auto-rows-[6.25vh]">
+              <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
                 {/* Row 1: Main Title (col 1) */}
-                <div className="col-span-2 row-span-1 flex items-center">
+                <div className="col-span-2 row-span-2">
                   <FadeInOnVisible>
                     <MainTitleAnimation
                       text={data.title}
                       typeSpeed={60}
                       delay={500}
-                      className="dt-h2"
+                      className="dt-h2 text-balance"
                     />
                   </FadeInOnVisible>
                 </div>
 
                 {/* Row 1-3: Subheading (col 3-4) */}
-                
-                <div className="col-span-2 row-span-3 flex items-center">
+
+                <div className="col-span-2 row-span-4">
                   <FadeInOnVisible>
-                    <div className="prose max-w-none dt-h3 font-bold leading-tight">
-                      <HighlightText value={data.subheading} />
+                    <div className="dt-h3 whitespace-pre-line">
+                      <HighlightText value={addLineBreaksAfterPeriods(data.subheading)} />
                     </div>
                   </FadeInOnVisible>
                 </div>
 
-                {/* Row 2: Empty (col 1-2) */}
-                <div className="col-span-2"></div>
 
                 {/* Row 3-4: Corporate Partners Statistics (col 1-2) */}
-                <div className="col-span-2 row-span-2 flex items-end">
-                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                <div className="col-span-2 row-span-2">
+                  <div className="h-full gap-[2vh]">
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="dt-h4 font-graphik leading-tight">
+                          <div className="dt-h2">
                             <CountingAnimation start={inView} target={data.statistics[0].statisticValue} />
                           </div>
-                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[0].statisticName}</div>
+                          <div className="dt-body-sm">{data.statistics[0].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
                   </div>
                 </div>
 
-                {/* Row 4: Empty (col 3-4) */}
-                <div className="col-span-2"></div>
 
                 {/* Row 5-6: Game-changing Opportunities (col 1-2) */}
-                <div className="col-span-2 row-span-2 flex items-end">
-                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                <div className="col-span-2 row-span-2">
+                  <div className="h-full flex flex-col gap-[2vh]">
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="dt-h4 font-graphik leading-tight">
+                          <div className="dt-h2">
                             <CountingAnimation start={inView} target={data.statistics[1].statisticValue} />
                           </div>
-                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[1].statisticName}</div>
+                          <div className="dt-body-sm">{data.statistics[1].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -438,15 +455,15 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 </div>
 
                 {/* Row 5-6: Value Propositions (col 3-4) */}
-                <div className="col-span-2 row-span-2 flex items-end">
-                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                <div className="col-span-2 row-span-2">
+                  <div className="h-full flex flex-col gap-[2vh]">
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="dt-h4 font-graphik leading-tight">
+                          <div className="dt-h2">
                             <CountingAnimation start={inView} target={data.statistics[2].statisticValue} />
                           </div>
-                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[2].statisticName}</div>
+                          <div className="dt-body-sm">{data.statistics[2].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -454,12 +471,12 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 </div>
 
                 {/* Row 7-8: Investment Cases (col 1-2) */}
-                <div className="col-span-2 row-span-2 flex items-end">
-                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                <div className="col-span-2 row-span-2">
+                  <div className="h-full flex flex-col gap-[2vh]">
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="dt-h4 font-graphik leading-tight">
+                          <div className="dt-h2">
                             <CountingAnimation start={inView} target={data.statistics[3].statisticValue} />
                           </div>
                           <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[3].statisticName}</div>
@@ -470,15 +487,15 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 </div>
 
                 {/* Row 7-8: New Ventures in Commercialisation (col 3-4) */}
-                <div className="col-span-2 row-span-2 flex items-end">
-                  <div className="h-full flex flex-col justify-end gap-[2vh]">
+                <div className="col-span-2 row-span-2">
+                  <div className="h-full flex flex-col gap-[2vh]">
                     <FadeInOnVisible>
                       {(inView) => (
                         <>
-                          <div className="dt-h4 font-graphik leading-tight">
+                          <div className="dt-h2">
                             <CountingAnimation start={inView} target={data.statistics[4].statisticValue} />
                           </div>
-                          <div className="dt-body-sm font-roboto leading-tight text-black">{data.statistics[4].statisticName}</div>
+                          <div className="dt-body-sm">{data.statistics[4].statisticName}</div>
                         </>
                       )}
                     </FadeInOnVisible>
@@ -486,22 +503,22 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                 </div>
 
                 {/* Row 9-11: Testimonials Carousel (placeholder) */}
-                <div className="col-span-4 row-span-17 mt-[8vh] flex items-center justify-center">
+                <div className="col-span-4">
                   <section id="our-clients" className="h-full flex">
-                    <div className="w-full grid col-span-4 gap-[6vh]">
+                    <div className="w-full grid col-span-4 gap-[9vh]">
                       {data.testimonials.slice(0, 3).map((t, i) => (
                         <div key={i} className="">
                           {/* Quote */}
-                          <div className="dt-h4 font-roboto">
+                          <div className="dt-h4">
                             <PortableText value={t.quote} />
                           </div>
 
                           {/* Author */}
-                          <div className="mt-[2.5vh] text-black">
-                            <div className="dt-h4 font-roboto">
+                          <div className="mt-[1vh] text-black">
+                            <div className="dt-h4">
                               &ndash; {t.name}
                             </div>
-                            <div className="dt-h4 font-roboto">
+                            <div className="dt-h4">
                               {t.jobTitle}{t.company ? `, ${t.company}` : ''}
                             </div>
                           </div>
@@ -519,9 +536,9 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
                   <div className="h-full w-full flex items-center">
                     <PartnersMarquee
                       partners={data.partners}
-                      durationSec={25} // Faster for mobile performance
-                      logoHeightVh={5} // Optimized height for mobile
-                      gap="6vw" // Balanced gap for mobile
+                      durationSec={90} // Faster for mobile performance
+                      logoHeightVh={17} // Optimized height for mobile
+                      gap="20vw" // Balanced gap for mobile
                       edgeFadeVw={8} // Smaller fade for mobile
                       fadeBg="#F9F7F2"
                       direction="left"
@@ -541,26 +558,32 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
               </FadeInOnVisible>
             </div>
 
+            
+
             {/* Back to Top Button After Accordion */}
-            <div className="p-[2vh] bg-[#F9F7F2]">
+            <div className="p-[2vh] bg-[#F9F7F2] mt-[10vh]">
               <div className="grid grid-cols-4 gap-[2vh]">
                 <div className="col-start-3 col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
                   <FadeInOnVisible>
-                    <span className="underline dt-btn flex items-center gap-1 font-bold">
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        style={{ transform: 'rotate(-45deg)' }}
-                      >
-                        <path d="M12 19V5M5 12l7-7 7 7" />
-                      </svg>
-                      Back to top
-                    </span>
-                  </FadeInOnVisible>
+                      <span className="dt-btn flex items-center">
+                        <svg
+                          width="clamp(3.5vw,2.35vh,4.7vw)"
+                          height="clamp(3.5vw,2.35vh,4.7vw)"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          style={{ transform: 'rotate(-45deg)' }}
+                        >
+                          <path d="M12 19V5M5 12l7-7 7 7" />
+                        </svg>
+                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                          Back to top
+                        </UnderlineOnHoverAnimation>
+
+                      </span>
+                    </FadeInOnVisible>
+
                 </div>
               </div>
             </div>

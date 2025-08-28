@@ -808,6 +808,7 @@ requestAnimationFrame(async () => {
                                     {isHomepage && <div className="col-span-4"></div>}
                                     {isHomepage && <div className="col-span-4"></div>}
                                     {isHomepage && <div className="col-span-4"></div>}
+                                    {isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
@@ -815,6 +816,8 @@ requestAnimationFrame(async () => {
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
+                                    {!isHomepage && <div className="col-span-4"></div>}
+                                    
 
                                     {/* Menu Items with conditional sizing */}
                                     {mobileMenuItems.map((item, index) => (

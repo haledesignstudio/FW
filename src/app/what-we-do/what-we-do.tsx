@@ -252,10 +252,10 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                 {isMobileScreen ? (
                     // MOBILE LAYOUT
                     <div className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
-                        <div className=" grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
+                        <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
                             {/* Row 1: Heading (col 1-3) */}
-                            <div className="col-span-4"></div>
-                            <div className="col-span-4 row-span-1 flex items-center">
+
+                            <div className="col-span-3 row-span-1 flex items-center">
                                 <FadeInOnVisible>
                                     <MainTitleAnimation
                                         text={data.heading}
@@ -265,12 +265,13 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                     />
                                 </FadeInOnVisible>
                             </div>
+                            <div className="col-span-1"></div>
 
                             {/* Row 2: Empty */}
                             <div className="col-span-4"></div>
 
                             {/* Row 3-4: Subheading (col 1-4) */}
-                            <div className="col-span-4 row-span-3">
+                            <div className="col-span-4 row-span-2">
                                 <FadeInOnVisible>
                                     <div className="dt-h3">
                                         <HighlightText value={data.subheading} />
@@ -279,33 +280,20 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             </div>
 
                             {/* Row 5: Empty */}
+                            <div className="col-span-4"></div>
 
                             {/* Row 6: Statement 1 (col 1-4) */}
-                            <div className="col-span-4 row-span-1 flex items-center">
+                            <div className="col-span-4 row-span-3">
                                 <FadeInOnVisible>
                                     <div className="dt-body-sm">
                                         <PortableText value={data.statement1} />
-                                    </div>
-                                </FadeInOnVisible>
-                            </div>
-
-                            {/* Row 7: Statement 2 (col 1-4) */}
-                            <div className="col-span-4 row-span-1 flex items-center">
-                                <FadeInOnVisible>
-                                    <div className="dt-body-sm">
                                         <PortableText value={data.statement2} />
-                                    </div>
-                                </FadeInOnVisible>
-                            </div>
-
-                            {/* Row 8: Statement 3 (col 1-4) */}
-                            <div className="col-span-4 row-span-1 flex items-center">
-                                <FadeInOnVisible>
-                                    <div className="dt-body-sm">
                                         <PortableText value={data.statement3} />
                                     </div>
                                 </FadeInOnVisible>
                             </div>
+
+                            
 
                             {/* Row 9: CTA Button (col 3-4, right aligned) */}
                             <div className="col-span-2"></div>
@@ -325,7 +313,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                             </div>
 
                             {/* Row 10: Accordion Heading (col 1-3) */}
-                            <div className="col-span-4 row-span-1">
+                            <div className="col-span-3 row-span-1 flex items-center">
                                 <FadeInOnVisible>
                                     <MainTitleAnimation
                                         text={data.accordion.heading}
@@ -335,6 +323,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                     />
                                 </FadeInOnVisible>
                             </div>
+                            <div className="col-span-1"></div>
 
                             {/* Row 11: Empty */}
                             <div className="col-span-4"></div>
@@ -355,13 +344,14 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                         </div>
 
                         {/* Back to Top Button */}
-                        <div className="grid grid-cols-4 gap-[2vh] mt-[4vh]">
-                            <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+                        <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] mt-[4vh]">
+                            <div className="col-span-2"></div>
+                            <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
                                 <FadeInOnVisible>
-                                    <span className="underline dt-btn flex items-center gap-1 font-bold">
+                                    <span className="dt-btn flex items-center">
                                         <svg
-                                            width="18"
-                                            height="18"
+                                            width="clamp(3.5vw,2.35vh,4.7vw)"
+                                            height="clamp(3.5vw,2.35vh,4.7vw)"
                                             viewBox="0 0 24 24"
                                             fill="none"
                                             stroke="currentColor"
@@ -370,7 +360,10 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                                         >
                                             <path d="M12 19V5M5 12l7-7 7 7" />
                                         </svg>
-                                        Back to top
+                                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                                            Back to top
+                                        </UnderlineOnHoverAnimation>
+
                                     </span>
                                 </FadeInOnVisible>
                             </div>

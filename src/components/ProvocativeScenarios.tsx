@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useIsMobile from '@/hooks/useIsMobile';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -26,26 +26,24 @@ export default function ProvocativeScenarios() {
 
   if (isMobile) {
     return (
-      <div className="w-full bg-[#F9F7F2] grid grid-cols-4 gap-y-[2vh]">
+      <div className="w-full bg-[#F9F7F2] grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
         {scenarios.map((scenario) => (
-          <>
+          <React.Fragment key={scenario._id}>
             <div
-              key={scenario._id + '-title'}
-              className="col-span-3 flex items-center text-left font-graphik text-[4vh] leading-[5vh] cursor-pointer px-2 py-4 border-b border-[#e0ded9]"
+              className="col-span-3 flex items-center text-left dt-h2 cursor-pointer "
               onClick={() => window.location.href = `/the-edge/${scenario.slug}`}
               aria-label={`Open ${scenario.title}`}
             >
               {scenario.title}
             </div>
             <div
-              key={scenario._id + '-arrow'}
-              className="col-span-1 flex items-end justify-end pr-2 pb-2 cursor-pointer border-b border-[#e0ded9]"
+              className="col-span-1 flex items-end justify-end pr-2 pb-2 cursor-pointer"
               onClick={() => window.location.href = `/the-edge/${scenario.slug}`}
               aria-label={`Open ${scenario.title}`}
             >
-              <Image src="/accordion-open.png" alt="" width={24} height={24} aria-hidden />
+              <Image src="/accordion-open.png" alt="" width={24} height={24} aria-hidden className='width-[1vw]' />
             </div>
-          </>
+          </React.Fragment>
         ))}
       </div>
     );

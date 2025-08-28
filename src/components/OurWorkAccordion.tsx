@@ -341,33 +341,33 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                 ? "max-h-[16vh]"
                 : "max-h-[9999px]"
             ].join(' ')}>
-              <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+              <div className="grid grid-cols-4 gap-x-[4.53vw] gap-y-[2.09vh]" style={{ gridAutoRows: 'minmax(7.701vh, max-content)' }}>
                 {openTabs.has('supercharge-tomorrow') && (
                   <>
                     {/* Row 1-2: Section Title */}
                     <div
-                      className="col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer z-10"
+                      className="px-[4.53vw] py-[2.09vh] col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-[#F9F7F2] flex items-start cursor-pointer z-10"
                       onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
                     </div>
 
                     {/* Row 3: Section Body */}
-                    <div className="col-span-4 row-start-3 bg-[#1B1B1B] text-[#F9F7F2] p-4">
+                    <div className="px-[4.53vw] col-span-4 row-start-3 bg-[#1B1B1B] text-[#F9F7F2]">
                       <div className="dt-h4">
                         <PortableText value={data.accordionSection1.body} />
                       </div>
                     </div>
 
                     {/* Rows 4-8: Container for overlapping content */}
-                    <div className="col-span-4 row-start-4 row-span-5 bg-[#1B1B1B] relative">
+                    <div className="px-[4.53vw] col-span-4 row-start-4 row-span-4 bg-[#1B1B1B] relative">
                       {/* Background Image - Full container */}
                       {data.accordionSection1.mainImage.asset && (
                         <div className="absolute inset-0">
                           <Image
                             src={urlFor(data.accordionSection1.mainImage.asset).url()}
                             alt={'Main image'}
-                            className="w-[75%] h-full object-cover opacity-50 ml-auto"
+                            className="w-[65%] h-full object-cover opacity-50 ml-auto"
                             width={900}
                             height={900}
                             priority={false}
@@ -378,7 +378,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                       {/* Content Grid - Overlaid on top */}
                       <div className="relative z-10 grid grid-cols-2 h-full">
                         {/* Top Left: Brand Image */}
-                        <div className="p-4 flex items-start">
+                        <div className="flex items-start">
                           {data.accordionSection1.brandImage.asset && (
                             <Image
                               src={urlFor(data.accordionSection1.brandImage.asset).url()}
@@ -391,17 +391,9 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                           )}
                         </div>
 
-                        {/* Top Right: Empty space */}
-                        <div className="p-4"></div>
-
-                        {/* Bottom Left: Empty space */}
-                        <div className="p-4"></div>
-
-                        {/* Bottom Right: Empty space */}
-                        <div className="p-4"></div>
 
                         {/* Bottom Left (spans 2 cols): CTA Button */}
-                        <div className="col-span-2 mb-4 p-4 flex items-end justify-start">
+                        <div className="col-span-2 mb-4 flex items-end justify-start mb-[7vh]">
                           <Link href="/supercharge-tomorrow" className="dt-btn">
                             <UnderlineOnHoverAnimation hasStaticUnderline color="#fff">
                               {data.accordionSection1.cta ?? 'Get in Touch'}
@@ -415,7 +407,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                 {/* Section 1 Title when collapsed */}
                 {!openTabs.has('supercharge-tomorrow') && (
-                  <div className="col-span-4 bg-[#1B1B1B] text-[#F9F7F2] p-4 flex items-start cursor-pointer h-[14vh] overflow-hidden relative z-10">
+                  <div className="col-span-4 bg-[#1B1B1B] text-[#F9F7F2] flex px-[4.53vw] py-[2.09vh] items-start cursor-pointer h-[14vh] overflow-hidden relative z-10">
                     <AccordionPulse pulse delay={closedTabDelays['supercharge-tomorrow'] ?? 0} paused={openTabs.size > 0}>
                       <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
                     </AccordionPulse>
@@ -427,7 +419,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
           {/* Section 2: Case Studies */}
           <div
-            className="transition-all duration-500 overflow-hidden -mt-[2vh]"
+            className="transition-all duration-500 overflow-hidden"
             style={{
               backgroundColor: '#F9F7F2',
               color: '#000',
@@ -440,26 +432,26 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                 ? "max-h-[20vh]"
                 : "max-h-[9999px]"
             ].join(' ')}>
-              <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+              <div className="grid grid-cols-4 gap-x-[4.53vw] px-[4.53vw]" style={{ gridAutoRows: 'minmax(7.701vh, max-content)' }}>
                 {openTabs.has('case-studies') && (
                   <>
                     {/* Row 1: Main Title */}
                     <div
-                      className="col-span-4 row-start-1 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer z-10"
+                      className="py-[2.09vh] col-span-4 row-start-1 bg-[#F9F7F2] text-black flex items-start cursor-pointer z-10"
                       onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>
                     </div>
 
                     {/* Row 2: Section Body */}
-                    <div className="col-span-4 row-start-2 bg-[#F9F7F2] text-black p-4">
+                    <div className="col-span-4 row-start-2 bg-[#F9F7F2]">
                       <div className="dt-h4">
                         <PortableText value={data.accordionSection2.body} />
                       </div>
                     </div>
 
                     {/* Row 3: Case studies carousel (mobile) */}
-                    <div className="col-span-4 row-start-3 bg-[#F9F7F2] p-4">
+                    <div className="col-span-4 row-start-3 bg-[#F9F7F2] mt-[9vh]">
                       <div
                         onClick={(e) => e.stopPropagation()}
                         onMouseDown={(e) => e.stopPropagation()}
@@ -485,7 +477,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
 
                 {/* Section 2 Title when collapsed */}
                 {!openTabs.has('case-studies') && (
-                  <div className="col-span-4 bg-[#F9F7F2] text-black p-4 flex items-start cursor-pointer h-[20vh] overflow-hidden relative z-10">
+                  <div className="col-span-4 py-[2.09vh]  bg-[#F9F7F2] flex items-start cursor-pointer h-[20vh] overflow-hidden relative z-10">
                     <AccordionPulse pulse delay={closedTabDelays['case-studies'] ?? 0} paused={openTabs.size > 0}>
                       <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>
                     </AccordionPulse>

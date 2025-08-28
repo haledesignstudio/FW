@@ -71,28 +71,25 @@ export default function ShareholderValueAnalytics(props: Props) {
 
   if (isMobile) {
     return (
-      <main className="p-[2vh] bg-[#F9F7F2]">
-        <div className="grid grid-cols-4 gap-y-2 auto-rows-[6.25vh]">
+      <main className="bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
           {/* Row 1-2: Title */}
-          <div className="col-span-4 row-span-2">
+          <div className="col-span-4 row-span-3">
             <FadeInOnVisible>
               <div className="dt-h1 text-left">
                 {analytics.title}
               </div>
             </FadeInOnVisible>
           </div>
-          {/* Row 3: Empty */}
-          <div className="col-span-4 row-span-1"></div>
+
           {/* Row 4: ContentText */}
-          <div className="col-span-3 row-span-1">
+          <div className="col-span-3 row-span-2">
             <FadeInOnVisible>
               <div className="dt-h4">
                 {analytics.contentText}
               </div>
             </FadeInOnVisible>
           </div>
-          {/* Row 5: Empty */}
-          <div className="col-span-4 row-span-1"></div>
           {/* Row 6-7: Subheading */}
           <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
@@ -101,9 +98,8 @@ export default function ShareholderValueAnalytics(props: Props) {
               </div>
             </FadeInOnVisible>
           </div>
-          <div className="col-span-4 row-span-1"></div>
           {/* Row 8: CTA1 link */}
-          <div className="col-span-4 row-span-1 flex items-center">
+          <div className="col-span-3 row-span-1 flex items-end text-balance">
             <FadeInOnVisible>
               <a
                 href={`mailto:${analytics.Mail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
@@ -117,15 +113,16 @@ export default function ShareholderValueAnalytics(props: Props) {
               </a>
             </FadeInOnVisible>
           </div>
+          <div className="col-span-1 row-span-1"></div>
           {/* Row 9: Empty */}
           <div className="col-span-4 row-span-1"></div>
           {/* Row 10-14: iframe */}
-          <div className="col-span-4 row-span-10">
+          <div className="col-span-4 row-span-13">
             <FadeInOnVisible>
               <iframe
                 src={analytics.iframeSource}
                 title="Futureworld Analytics Dashboard"
-                style={{ width: '100%', height: '65vh', border: 'none' }}
+                style={{ width: '100%', height: '120vh', border: 'none' }}
                 loading="lazy"
                 allowFullScreen
               />
@@ -148,15 +145,15 @@ export default function ShareholderValueAnalytics(props: Props) {
             </FadeInOnVisible>
           </div>
           {/* Row 19-20: IQ_subheading */}
-          <div className="col-span-4 row-span-3">
+          <div className="col-span-4 row-span-2">
             <FadeInOnVisible>
-              <div className="dt-body-lg">
+              <div className="dt-body-sm">
                 {analytics.IQ_subheading}
               </div>
             </FadeInOnVisible>
           </div>
           {/* Row 21: CTA2 link */}
-          <div className="col-span-2 row-span-1 flex items-center">
+          <div className="col-span-3 row-span-1 flex items-end text-balance">
             <FadeInOnVisible>
               <a
                 href={`mailto:${analytics.Mail2 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(
@@ -173,8 +170,8 @@ export default function ShareholderValueAnalytics(props: Props) {
           {/* Row 22: Empty */}
           <div className="col-span-4 row-span-1"></div>
           {/* Row 22: Mindbullets button col 1-2, Back to top col 4 */}
-          <div className="col-span-2 row-span-1">
-            <FadeInOnVisible>
+          <div className="col-span-2 row-span-1 flex items-end">
+            <FadeInOnVisible className="text-balance">
               <Link href="/mindbullets" className="dt-btn transition cursor-pointer">
                 <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   See Mindbullets: News from the Future
@@ -182,12 +179,12 @@ export default function ShareholderValueAnalytics(props: Props) {
               </Link>
             </FadeInOnVisible>
           </div>
-          <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+          <div className="col-start-3 col-span-2 flex justify-end items-end cursor-pointer" onClick={handleBackToTop}>
             <FadeInOnVisible>
-              <span className="underline dt-btn flex items-center gap-1">
+              <span className="dt-btn flex items-center">
                 <svg
-                  width="18"
-                  height="18"
+                  width="clamp(3.5vw,2.35vh,4.7vw)"
+                  height="clamp(3.5vw,2.35vh,4.7vw)"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -196,9 +193,13 @@ export default function ShareholderValueAnalytics(props: Props) {
                 >
                   <path d="M12 19V5M5 12l7-7 7 7" />
                 </svg>
-                Back to top
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  Back to top
+                </UnderlineOnHoverAnimation>
+
               </span>
             </FadeInOnVisible>
+
           </div>
         </div>
       </main>

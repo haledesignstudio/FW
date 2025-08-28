@@ -287,10 +287,10 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Row 1-2, Col 4: Empty */}
-
+                <div className="col-span-4 row-span-1 bg-[#F9F7F2]"></div>
 
                 {/* Row 3-5, Col 1: Social links */}
-                <div className="col-span-1 row-span-3 bg-[#F9F7F2] flex flex-col justify-start">
+                <div className="col-span-1 row-span-3 bg-[#F9F7F2] flex flex-col justify-end">
                     <p className="dt-h5 mb-[1vh]">
                         {shouldAnimate ? (
                             <FutureText text="Social" delay={0} speed={50} triggerOnVisible={false} />

@@ -7,6 +7,8 @@ import { urlFor } from '@/sanity/lib/image';
 import React, { useState, useEffect } from 'react';
 import { PortableText, PortableTextComponents, PortableTextBlock } from '@portabletext/react';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
+import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+
 // Custom PortableText components for better list and block rendering
 const portableTextComponents: PortableTextComponents = {
   list: {
@@ -222,22 +224,23 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
     <div className="">
       {isMobile ? (
         /* Mobile Layout - Column-based layout */
-        <div className="grid grid-cols-4 gap-0" style={{ gridAutoRows: 'minmax(10vh, max-content)' }}>
+        <div className="grid grid-cols-4 gap-x-[4.53vw] gap-y-[2.09vh]" style={{ gridAutoRows: 'minmax(7.701vh, max-content)' }}>
           {/* Row 1: Main Title */}
-          <div className="col-span-4 row-start-1 p-4 bg-[#F9F7F2] flex items-center">
+          <div className="col-span-4 row-start-1 bg-[#F9F7F2] flex items-center">
             <FadeInOnVisible>
-              <h1 className="text-[8vh] font-bold leading-none">{data.title}</h1>
+              <h1 className="dt-h1">{data.title}</h1>
             </FadeInOnVisible>
           </div>
 
           {/* Row 2: Empty */}
-          <div className="col-span-4 row-start-2 h-[5vh] bg-[#F9F7F2]"></div>
+          <div className="col-span-4 row-start-2 bg-[#F9F7F2]"></div>
 
           {/* Row 3: Subheading (Col 2-4) */}
           <div className="col-span-1 row-start-3 bg-[#F9F7F2]"></div>
-          <div className="col-start-2 col-span-3 row-start-3 p-4 bg-[#F9F7F2] flex justify-end items-center">
+
+          <div className="col-start-2 col-span-3 row-start-3 bg-[#F9F7F2] text-right">
             <FadeInOnVisible>
-              <span className="text-lg font-medium text-right w-full">{data.subheading}</span>
+              <span className="dt-body-lg">{data.subheading}</span>
             </FadeInOnVisible>
           </div>
 
@@ -245,16 +248,16 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
           <div className="col-span-4 row-start-4 h-[5vh] bg-[#F9F7F2]"></div>
 
           {/* Row 5: Heading */}
-          <div className="col-span-4 row-start-5 p-4 bg-[#F9F7F2]">
+          <div className="col-span-4 row-start-5 bg-[#F9F7F2]">
             <FadeInOnVisible>
-              <h2 className="text-2xl font-semibold">{data.heading}</h2>
+              <h2 className="dt-h3">{data.heading}</h2>
             </FadeInOnVisible>
           </div>
 
           {/* Row 6-9: Abstract (Col 1-4) */}
-          <div className="col-span-4 row-start-6 row-span-4 p-4 bg-[#F9F7F2]">
+          <div className="col-span-4 row-start-6 row-span-4 bg-[#F9F7F2]">
             <FadeInOnVisible>
-              <p className="text-base">{data.abstract}</p>
+              <p className="dt-body-lg">{data.abstract}</p>
             </FadeInOnVisible>
           </div>
 
@@ -263,15 +266,15 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
 
           {/* Row 11-12: Main Image (Col 1-4) */}
           {data.mainImage && (
-            <div className="col-span-4 row-start-11 row-span-2 p-4 bg-[#F9F7F2]">
-              <FadeInOnVisible>
+            <div className="col-span-4 row-start-11 row-span-2 bg-[#F9F7F2]">
+              <FadeInOnVisible className="w-full h-full flex justify-center items-center">
                 <div className="w-full h-full flex justify-center items-center">
                   <Image
                     src={urlFor(data.mainImage).width(2560).url()}
                     alt={data.title}
                     width={2560}
                     height={1440}
-                    className="object-cover w-full h-full max-h-[40vh]"
+                    className="object-cover w-full h-full max-h-[80vh]"
                   />
                 </div>
               </FadeInOnVisible>
@@ -282,48 +285,49 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
           <div className="col-span-4 row-start-13 h-[5vh] bg-[#F9F7F2]"></div>
 
           {/* Row 14+: Section Texts with Headings */}
-          <div className="col-span-4 row-start-14 p-4 bg-[#F9F7F2]">
+          <div className="col-span-4 row-start-14 bg-[#F9F7F2]">
             <FadeInOnVisible>
-              <h3 className="font-bold mb-2">The Concept</h3>
-              <PortableText value={data.concept} components={portableTextComponents} />
+              <h3 className="dt-h5 mb-[2vh]">The Concept</h3>
+              <div className="dt-body-sm mb-[2vh]"><PortableText value={data.concept} components={portableTextComponents} /></div>
             </FadeInOnVisible>
           </div>
 
-          <div className="col-span-4 row-start-15 p-4 bg-[#F9F7F2]">
+          <div className="col-span-4 row-start-15 bg-[#F9F7F2]">
             <FadeInOnVisible>
-              <h3 className="font-bold mb-2">Methodology and Execution</h3>
-              <PortableText value={data.methodology} components={portableTextComponents} />
+              <h3 className="dt-h5 mb-[2vh]">Methodology and Execution</h3>
+              <div className="dt-body-sm mb-[2vh]"><PortableText value={data.methodology} components={portableTextComponents} /></div>
             </FadeInOnVisible>
           </div>
 
-          <div className="col-span-4 row-start-16 p-4 bg-[#F9F7F2]">
+          <div className="col-span-4 row-start-16 bg-[#F9F7F2]">
             <FadeInOnVisible>
-              <h3 className="font-bold mb-2">Impact and Outcome</h3>
-              <PortableText value={data.impact} components={portableTextComponents} />
+              <h3 className="dt-h5 mb-[2vh]">Impact and Outcome</h3>
+              <div className="dt-body-sm mb-[2vh]"><PortableText value={data.impact} components={portableTextComponents} /></div>
             </FadeInOnVisible>
           </div>
 
-          <div className="col-span-4 row-start-17 p-4 bg-[#F9F7F2]">
+          <div className="col-span-4 row-start-17 bg-[#F9F7F2]">
             <FadeInOnVisible>
-              <h3 className="font-bold mb-2">Transformation Potential</h3>
-              <PortableText value={data.transformation} components={portableTextComponents} />
+              <h3 className="dt-h5 mb-[2vh]">Transformation Potential</h3>
+              <div className="dt-body-sm mb-[2vh]"><PortableText value={data.transformation} components={portableTextComponents} /></div>
             </FadeInOnVisible>
           </div>
 
-          <div className="col-span-4 row-start-18 p-4 bg-[#F9F7F2]">
+          <div className="col-span-4 row-start-18 bg-[#F9F7F2]">
             <FadeInOnVisible>
-              <h3 className="font-bold mb-2">Conclusion</h3>
-              <PortableText value={data.conclusion} components={portableTextComponents} />
+              <h3 className="dt-h5 mb-[2vh]">Conclusion</h3>
+              <div className="dt-body-sm mb-[2vh]"><PortableText value={data.conclusion} components={portableTextComponents} /></div>
+
             </FadeInOnVisible>
           </div>
 
           {/* Back to Top Button */}
           <div className="col-start-3 col-span-2 row-start-19 flex justify-end items-center mt-2 cursor-pointer bg-[#F9F7F2] p-4" onClick={handleBackToTop}>
             <FadeInOnVisible>
-              <span className="underline text-[2vh] flex items-center gap-1 font-bold">
+              <span className="dt-btn flex items-center">
                 <svg
-                  width="18"
-                  height="18"
+                  width="clamp(3.5vw,2.35vh,4.7vw)"
+                  height="clamp(3.5vw,2.35vh,4.7vw)"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -332,9 +336,13 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
                 >
                   <path d="M12 19V5M5 12l7-7 7 7" />
                 </svg>
-                Back to top
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                  Back to top
+                </UnderlineOnHoverAnimation>
+
               </span>
             </FadeInOnVisible>
+
           </div>
         </div>
       ) : (

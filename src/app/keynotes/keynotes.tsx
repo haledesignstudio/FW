@@ -287,28 +287,28 @@ export default function Keynotes({
   const speakerSection = keynotes?.speakerSection;
 
   const handleBackToTop = useCallback(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   if (isMobile) {
     return (
       <>
         {/* Topic Section */}
-        <div className="grid grid-cols-4 gap-y-[2vh] auto-rows-[6.25vh] w-full px-[2vw] pt-[2vh]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
           {/* Row 1-2: Title */}
           <div className="col-span-3 row-span-2 flex items-start justify-start text-left dt-h1">
             {topicSection.topicSectionTitle}
           </div>
           {/* Row 3: Content Text */}
-          <div className="col-span-4 row-span-2 dt-h4 mt-[1vh]">
+          <div className="col-span-4 dt-h4 mt-[1vh]">
             {topicSection.topicContentText}
           </div>
           {/* Row 4: Subtitle */}
-          <div className="col-span-4 row-span-2 dt-h3 mt-[1vh]">
+          <div className="col-span-4 dt-h3 mt-[1vh]">
             <HighlightText value={topicSection.topicSectionSubtitle} />
           </div>
           {/* Row 5: CTA buttons */}
-          <div className="col-span-2 row-span-2 flex items-end justify-start mt-[2vh]">
+          <div className="col-span-2 row-span-2 flex items-end justify-start">
             <a
               href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
               className="dt-btn underline"
@@ -316,7 +316,7 @@ export default function Keynotes({
               {speakerSection.speakerCTA1 ?? 'Get in Touch'}
             </a>
           </div>
-          <div className="col-span-2 row-span-2 flex items-end justify-end mt-[2vh]">
+          <div className="col-span-2 row-span-2 flex items-end justify-end">
             <Link href={'/keynotes#speakers-mobile'}
               className="dt-btn font-bold underline"
             >
@@ -324,7 +324,7 @@ export default function Keynotes({
             </Link>
           </div>
           {/* Empty row */}
-          <div className="col-span-4 h-[2vh]" />
+          <div className="col-span-4" />
         </div>
 
         {/* Expandable Topic List */}
@@ -335,24 +335,24 @@ export default function Keynotes({
         </FadeInOnVisible>
 
         {/* Empty row */}
-        <div className="col-span-4 h-[2vh]" />
+        <div className="col-span-4 h-[7vh]" />
 
         {/* Speaker Section */}
-        <div className="grid grid-cols-4 gap-y-[2vh] auto-rows-min w-full px-[2vw] pt-[2vh]">
+        <div className="grid grid-cols-4 w-full">
           {/* Row 1-2: Speaker Title */}
           <div className="col-span-3 row-span-2 flex items-start justify-start text-left dt-h1">
             {speakerSection.speakerSectionTitle}
           </div>
           {/* Row 3: Speaker Content Text */}
-          <div className="col-span-4 dt-h4 mt-[1vh]">
+          <div className="col-span-4 dt-h4 mt-[7vh]">
             {speakerSection.speakerContentText}
           </div>
           {/* Row 4: Speaker Subtitle */}
-          <div className="col-span-4 dt-h3 mt-[1vh]">
+          <div className="col-span-4 dt-h3 mt-[3vh]">
             <HighlightText value={speakerSection.speakerSectionSubtitle} />
           </div>
           {/* Row 5: CTA buttons */}
-          <div className="col-span-2 flex items-end justify-start mt-[2vh]">
+          <div className="col-span-2 flex items-end justify-start mt-[11vh]">
             <a
               href={`mailto:${speakerSection.speakerMail1 ?? 'info@futureworld.org'}?subject=${encodeURIComponent(speakerSection.speakerCTA1 ?? '')}`}
               className="dt-btn underline"
@@ -378,24 +378,31 @@ export default function Keynotes({
           </div>
         </FadeInOnVisible>
 
-        <div className="col-start-3 col-span-2 flex justify-end items-center mt-2 cursor-pointer" onClick={handleBackToTop}>
+        <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
+          <div className="col-span-2"></div>
+          <div className="col-span-2 flex justify-end items-center cursor-pointer" onClick={handleBackToTop}>
             <FadeInOnVisible>
-                <span className="underline dt-btn flex items-center gap-1">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    style={{ transform: 'rotate(-45deg)' }}
-                  >
-                    <path d="M12 19V5M5 12l7-7 7 7" />
-                  </svg>
+              <span className="dt-btn flex items-center">
+                <svg
+                  width="clamp(3.5vw,2.35vh,4.7vw)"
+                  height="clamp(3.5vw,2.35vh,4.7vw)"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  style={{ transform: 'rotate(-45deg)' }}
+                >
+                  <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                   Back to top
-                </span>
-              </FadeInOnVisible>
+                </UnderlineOnHoverAnimation>
+
+              </span>
+            </FadeInOnVisible>
           </div>
+        </div>
+
       </>
     );
   }
