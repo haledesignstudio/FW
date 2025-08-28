@@ -13,11 +13,11 @@ cwd = "."
 watch_dir = "src"
 
 # Cloudflare Pages configuration
-pages_build_output_dir = ".next"
+pages_build_output_dir = "/.vercel/output/static"
 
 # Ensure static assets are included
 [build.upload]
-dir = ".next"
+dir = "/.vercel/output/static"
 include = ["**/*"]
 exclude = ["node_modules"]
 
