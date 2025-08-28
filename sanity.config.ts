@@ -32,10 +32,17 @@ export default defineConfig({
     presentationTool({
       previewUrl: {
         previewMode: {
-          enable: 'https://hale-fw.netlify.app/api/draft-mode/enable',
+          enable: 'https://your-cloudflare-domain.pages.dev/api/draft-mode/enable',
         },
-        origin: 'https://hale-fw.netlify.app',
+        origin: 'https://your-cloudflare-domain.pages.dev',
       },
+      // presentationTool({
+      // previewUrl: {
+      //   previewMode: {
+      //     enable: 'https://hale-fw.netlify.app/api/draft-mode/enable',
+      //   },
+      //   origin: 'https://hale-fw.netlify.app',
+      // },
       resolve: {
         mainDocuments: [
           {

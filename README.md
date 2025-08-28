@@ -312,6 +312,29 @@ Since the project is linked to **GitHub + Netlify**, any **push to GitHub** will
 
 ---
 
+## Deployment to Cloudflare Pages
+
+To deploy this Next.js app to Cloudflare Pages:
+
+1. **Connect your GitHub repository** to Cloudflare Pages in the Cloudflare dashboard.
+
+2. **Set build settings**:
+   - Build command: `npm run build`
+   - Build output directory: `.next` (but the adapter will handle it)
+   - Root directory: `/` (leave empty)
+
+3. **Set environment variables** in Cloudflare Pages dashboard:
+   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
+   - `NEXT_PUBLIC_SANITY_DATASET`
+   - `SANITY_API_TOKEN` (if needed for server-side)
+
+4. **Update Sanity Studio preview URLs**:
+   - In `sanity.config.ts`, replace `your-cloudflare-domain.pages.dev` with your actual Cloudflare Pages domain.
+
+5. **Deploy**: Push changes to GitHub, and Cloudflare will auto-deploy.
+
+Note: The app uses @cloudflare/next-on-pages adapter for SSR support on Cloudflare Pages.
+
 ## File Structure from the template code
 
 ### Root Directory
