@@ -4,6 +4,8 @@ import { client } from '@/sanity/lib/client';
 import ArticleView from '@/app/insights/[slug]/ArticleView';
 import type { PortableTextBlock } from '@portabletext/types';
 
+export const runtime = 'edge';
+
 type SanityAssetRef = { _type: 'reference'; _ref: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string };
 
@@ -139,16 +141,6 @@ const mindbulletsQuery = defineQuery(`
 
 function slugifyTitle(t: string) {
   return t.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-}
-
-export async function generateStaticParams() {
-  const items = await client.fetch<Array<{ slug?: string; title: string }>>(
-    defineQuery(`*[_type == "article" && defined(title)]{ "slug": slug.current, title }`)
-  );
-
-  return items.map(({ slug, title }) => ({
-    slug: slug ?? slugifyTitle(title),
-  }));
 }
 
 export const revalidate = 60;
