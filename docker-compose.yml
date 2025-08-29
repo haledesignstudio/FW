@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  nextjs-app:
+    build: 
+      context: .
+      args:
+        - NEXT_PUBLIC_SANITY_PROJECT_ID
+        - NEXT_PUBLIC_SANITY_DATASET
+        - SANITY_API_READ_TOKEN
+        - SANITY_REVALIDATE_SECRET
+    container_name: nextjs-app
+    expose:
+      - "3000"
+    environment:
+      - NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID}
+      - NEXT_PUBLIC_SANITY_DATASET=${NEXT_PUBLIC_SANITY_DATASET}
+      - SANITY_API_READ_TOKEN=${SANITY_API_READ_TOKEN}
+      - SANITY_REVALIDATE_SECRET=${SANITY_REVALIDATE_SECRET}
+    networks:
+      - web
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-reverse-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - nextjs-app
+    networks:
+      - web
+    command: |
+      bash -c "
+      cat > /etc/nginx/conf.d/default.conf << 'EOF'
+      server {
+          listen 80;
+          server_name futureworld.org www.futureworld.org;
+          location / {
+              return 301 https://\$$host\$$request_uri;
+          }
+      }
+      
+      server {
+          listen 443 ssl;
+          server_name futureworld.org www.futureworld.org;
+
+          ssl_certificate /etc/letsencrypt/live/futureworld.org/fullchain.pem;
+          ssl_certificate_key /etc/letsencrypt/live/futureworld.org/privkey.pem;
+          ssl_protocols TLSv1.2 TLSv1.3;
+          ssl_ciphers HIGH:!aNULL:!MD5;
+          
+          location / {
+              proxy_pass http://nextjs-app:3000;
+              proxy_http_version 1.1;
+              proxy_set_header Upgrade \$$http_upgrade;
+              proxy_set_header Connection 'upgrade';
+              proxy_set_header Host \$$host;
+              proxy_set_header X-Real-IP \$$remote_addr;
+              proxy_set_header X-Forwarded-For \$$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto \$$scheme;
+              proxy_cache_bypass \$$http_upgrade;
+          }
+      }
+      EOF
+      
+      nginx -g 'daemon off;'
+      "
+
+networks:
+  web:

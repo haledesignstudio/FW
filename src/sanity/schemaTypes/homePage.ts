@@ -12,6 +12,13 @@ const homePage = defineType({
   ],
   fields: [
     defineField({
+      name: 'title',
+      title: 'Page Title',
+      type: 'string',
+      initialValue: 'Homepage',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'headline',
       title: 'Headline',
       type: 'string',
@@ -103,7 +110,7 @@ const homePage = defineType({
   ],
   preview: {
     select: {
-      title: 'Homepage',
+      title: 'title',
     },
   },
 })
