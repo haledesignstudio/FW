@@ -331,7 +331,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         colSpan: 0,
         rowSpan: 0,
         mobileColSpan: 1,
-        mobileRowSpan: 1,
+        mobileRowSpan: 2,
         landscapeColSpan: 0,
         landscapeRowSpan: 0,
       },
@@ -359,15 +359,22 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="min-w-0 w-full"                 // <-- allow shrink inside flex
               >
-                <FutureText
-                  text={currentPiece.title}
-                  delay={200}
+                <div                                      // <-- put truncate on a block wrapper
                   className={[
-                  'dt-body-sm',
-                  expandedColumn === 0 ? 'line-clamp-none' : 'line-clamp-1',
-                ].join(' ')}
-                />
+                    'dt-body-sm',
+                    expandedColumn === 0
+                      ? ''
+                      : 'block w-full max-w-full overflow-hidden whitespace-nowrap text-ellipsis',
+                  ].join(' ')}
+                >
+                  <FutureText
+                    text={currentPiece.title}
+                    delay={200}
+                    className="contents"                  // or just omit className here
+                  />
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -379,6 +386,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
         landscapeColSpan: 0,
         landscapeRowSpan: 0,
       },
+
       // Row 2: Empty (col 1-2) + Read More button (col 3) + See Article (col 4)
       {
         id: 4,

@@ -381,25 +381,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                         </div>
                     </FadeInOnVisible>
                 </div>
-                {/* Row 27-28: Subscribe section */}
-                <div className="col-start-2 col-span-3">
-                    <p className="dt-body-sm">Subscribe for news from the future</p>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        placeholder={'Enter your e-mail'}
-                        className="dt-h3 outline-none border-none bg-transparent mt-[2vh]"
-                    />
-                    <div className="dt-btn mt-[2vw] font-bold leading-tight">
-                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                            Submit
-                        </UnderlineOnHoverAnimation>
-                    </div>
-                </div>
-                {/* Row 29: Empty */}
-                <div className="col-span-4 row-span-1" />
+                
                 {/* Row 21 col 1-2: Mindbullets you may like */}
                 <div className="col-span-2 row-span-1 mt-[5vh] dt-h5">
                     Mindbullets you may like
@@ -501,29 +483,6 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                     </div>
 
                     <div className="col-span-1" />
-
-                    <div className="col-span-2">
-                        <>
-                            <p className="dt-body-sm">
-                                Subscribe for news from the future
-                            </p>
-
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                required
-                                placeholder="Enter your e-mail"
-                                className="dt-h3 outline-none border-none bg-transparent mt-[2vh]"
-                            />
-
-                            <div className="dt-btn mt-[2vh]">
-                                <UnderlineOnHoverAnimation hasStaticUnderline>
-                                    Submit
-                                </UnderlineOnHoverAnimation>
-                            </div>
-                        </>
-                    </div>
                 </div>
             </FadeInOnVisible>
 

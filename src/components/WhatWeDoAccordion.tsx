@@ -2,10 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-
-import './accordion-animations.css';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
-import { AccordionPulse } from './AccordionPulse';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableTextBlock } from '@portabletext/react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
@@ -191,6 +188,13 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
     const isMobile = useIsMobile();
     const [openTabs, setOpenTabs] = useState<number[]>([]);
 
+    // Auto-open all tabs on mobile and keep them open
+    useEffect(() => {
+        if (isMobile) {
+            setOpenTabs([0, 1, 2]); // Open all three tabs
+        }
+    }, [isMobile]);
+
     const [active, setActive] = useState<Active>(null);
     const toggle = (id: Active) => setActive(prev => (prev === id ? null : id));
 
@@ -234,7 +238,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
         return (
             <div className="w-screen -mx-[calc((100vw-100%)/2)] px-0">
                 {data.accordion.items.map((item, idx) => {
-                    const isOpen = openTabs.includes(idx);
+                    const isOpen = isMobile || openTabs.includes(idx);
                     // Colors
                     const bg = idx === 0 ? '#232323' : idx === 1 ? '#DC5A50' : '#F9F7F2';
                     const fg = idx === 2 ? '#232323' : '#F9F7F2';
@@ -243,19 +247,10 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             key={idx}
                             className={`w-full px-0 mx-0 transition-all duration-800 overflow-hidden`}
                             style={{ background: bg, color: fg, maxHeight: isOpen ? '9999px' : '8vh' }}
-                            onClick={() => setOpenTabs(prev => isOpen ? prev.filter(i => i !== idx) : [...prev, idx])}
+                            onClick={isMobile ? undefined : () => setOpenTabs(prev => isOpen ? prev.filter(i => i !== idx) : [...prev, idx])}
                         >
-                            {/* Closed state: only row 1 visible, click to open */}
-                            {!isOpen && (
-                                <AccordionPulse pulse delay={closedMobileTabDelays[idx] ?? 0} paused={openTabs.length > 0}>
-                                    <div className="grid grid-cols-4 w-full px-[4.53vw] py-[2.09vh]">
-                                        <div className="col-span-1 row-start-1 row-span-1 dt-h1 leading-tight">{idx + 1}</div>
-                                        <div className="col-span-3 row-start-1 row-span-1 text-right dt-h1 leading-tight truncate">{item.heading}</div>
-                                    </div>
-                                </AccordionPulse>
-                            )}
                             {/* Open state: full vertical accordion */}
-                            {isOpen && (
+                            {(isMobile || isOpen) && (
                                 <div className="grid grid-cols-4 auto-rows-[minmax(50px,auto)]  overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] px-[4.53vw] py-[2.09vh]">
                                     {/* Row 5: col 1: number, col 2-4: subheading (first word in row 5, rest in row 6) */}
                                     <div className="col-span-1 dt-h1 leading-tight">{idx + 1}</div>

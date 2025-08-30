@@ -138,7 +138,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
 
 
   const carouselItems = useMemo(() => {
-    return (mindbullets || []).map((m) => {
+    return (mindbullets || []).slice(0, 10).map((m) => {
       const src =
         m.mainImage?.asset ? urlFor(m.mainImage.asset).url() : "/placeholder-image.png";
       const description = toPlainText(m.body).slice(0, 400);

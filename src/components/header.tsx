@@ -145,7 +145,7 @@ const menuItems = [
                             );
                         }} className="flex whitespace-nowrap gap-[10%] hover:underline">
                             <span className="">02</span>
-                            <span>Mindbullets: News From the Future</span>
+                            <span>Mindbullets</span>
                         </Link>
                     </li>
                     <li>
@@ -189,7 +189,7 @@ const menuItems = [
                             );
                         }} className="flex gap-[10%] hover:underline">
                             <span className="">06</span>
-                            <span>The Edge: Insights Driven by Disruption</span>
+                            <span>The Edge</span>
                         </Link>
                     </li>
                 </ul>

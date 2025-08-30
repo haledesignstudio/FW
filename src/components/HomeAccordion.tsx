@@ -7,7 +7,6 @@ import type { HomePageContent } from '@/app/home-client';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import FadeInOnVisible from './FadeInOnVisible';
-import { AccordionPulse } from './AccordionPulse';
 import { client } from '@/sanity/lib/client';
 import { caseStudyQuery } from '@/sanity/lib/queries';
 import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
@@ -103,6 +102,15 @@ const hoverHintWhenClosed = (isActive: boolean) =>
 export default function HomeAccordion({ data }: HomeAccordionProps) {
     const { isMobile } = useResponsiveLayout();
     const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
+
+    // Auto-open all tabs on mobile
+    useEffect(() => {
+        if (isMobile) {
+            setOpenTabs(new Set(['benchmark', 'process', 'case-studies']));
+        } else {
+            setOpenTabs(new Set());
+        }
+    }, [isMobile]);
     const [caseStudies, setCaseStudies] = useState<CaseStudyFromQuery[]>([]);
 
     // Fetch case studies on component mount via your GROQ query
@@ -303,7 +311,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 <Image
                                     src={urlFor(data.section2.section2Image.asset).url()}
                                     alt={data.section2.section2Image.alt || 'Process image'}
-                                    className="w-full h-full object-contain object-top object-center opacity-50"
+                                    className="w-full h-full object-contain object-top object-center"
                                     fill
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
@@ -474,7 +482,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                             backgroundColor: '#1B1B1B',
                             color: '#fff',
                         }}
-                        onClick={() => toggleTab('benchmark')}
+                        onClick={isMobile ? undefined : () => toggleTab('benchmark')}
                     >
                         <div className={[
                             "overflow-hidden transition-[max-height] duration-500",
@@ -483,12 +491,12 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 : "max-h-[9999px]"
                         ].join(' ')}>
                             <div className="grid grid-cols-4 gap-y-[4.53vw]" style={{ gridAutoRows: 'minmax(7.701vh, max-content)' }}>
-                                {openTabs.has('benchmark') && (
+                                {(isMobile || openTabs.has('benchmark')) && (
                                     <>
                                         {/* Row 1-2: Section Title */}
                                         <div
                                             className="py-[2.09vh] col-span-4 row-start-1 row-span-2 px-[4.53vw] bg-[#1B1B1B] text-[#F9F7F2] flex items-start cursor-pointer"
-                                            onClick={(e) => { e.stopPropagation(); toggleTab('benchmark'); }}
+                                            onClick={isMobile ? undefined : (e) => { e.stopPropagation(); toggleTab('benchmark'); }}
                                         >
                                             <h2 className="dt-h1">{data.section1.section1Title}</h2>
                                         </div>
@@ -528,15 +536,6 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                     </>
                                 )}
-
-                                {/* Section 1 Title when collapsed */}
-                                {!openTabs.has('benchmark') && (
-                                    <div className="col-span-4 px-[4.53vw] py-[2.09vh] bg-[#1B1B1B] text-[#F9F7F2] flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
-                                        <AccordionPulse pulse delay={closedTabDelays['benchmark'] ?? 0} paused={openTabs.size > 0}>
-                                            <h2 className="dt-h1">{data.section1.section1Title}</h2>
-                                        </AccordionPulse>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>
@@ -548,7 +547,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                             backgroundColor: '#DC5A50',
                             color: '#fff',
                         }}
-                        onClick={() => toggleTab('process')}
+                        onClick={isMobile ? undefined : () => toggleTab('process')}
                     >
                         <div className={[
                             "overflow-hidden transition-[max-height] duration-500",
@@ -557,12 +556,12 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 : "max-h-[9999px]"
                         ].join(' ')}>
                             <div className="grid grid-cols-4 gap-y-[4.53vw] px-[4.53vw]" style={{ gridAutoRows: 'minmax(7.701vh, max-content)' }}>
-                                {openTabs.has('process') && (
+                                {(isMobile || openTabs.has('process')) && (
                                     <>
                                         {/* Row 1: Section 2 Main Title */}
                                         <div
                                             className="py-[2.09vh] col-span-4 row-start-1 bg-[#DC5A50] text-[#F9F7F2] flex items-center cursor-pointer z-10"
-                                            onClick={(e) => { e.stopPropagation(); toggleTab('process'); }}
+                                            onClick={isMobile ? undefined : (e) => { e.stopPropagation(); toggleTab('process'); }}
                                         >
                                             <h2 className="dt-h1">{data.section2.section2Title}</h2>
                                         </div>
@@ -582,7 +581,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                                     <Image
                                                         src={urlFor(data.section2.section2Image.asset).url()}
                                                         alt={data.section2.section2Image.alt || 'Process image'}
-                                                        className="w-full h-full object-contain opacity-50"
+                                                        className="w-full h-full object-contain"
                                                         fill
                                                         sizes="75vw"
                                                     />
@@ -612,7 +611,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                             </div>
                                         </div>
 
-                                    
+
 
                                         {/* Row 13: Section Heading3 */}
                                         <div className="col-span-4 row-start-10 bg-[#DC5A50] text-[#F9F7F2] flex flex-col gap-[2vh]">
@@ -627,15 +626,6 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                         <div className="col-span-4 row-start-11 bg-[#DC5A50]"></div>
                                     </>
                                 )}
-
-                                {/* Section 2 Title when collapsed */}
-                                {!openTabs.has('process') && (
-                                    <div className="py-[2.09vh] col-span-4 bg-[#DC5A50] text-[#F9F7F2] flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
-                                        <AccordionPulse pulse delay={closedTabDelays['process'] ?? 0} paused={openTabs.size > 0}>
-                                            <h2 className="dt-h1">{data.section2.section2Title}</h2>
-                                        </AccordionPulse>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>
@@ -647,7 +637,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                             backgroundColor: '#F9F7F2',
                             color: '#000',
                         }}
-                        onClick={() => toggleTab('case-studies')}
+                        onClick={isMobile ? undefined : () => toggleTab('case-studies')}
                     >
                         <div className={[
                             "overflow-hidden transition-[max-height] duration-500",
@@ -656,12 +646,12 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 : "max-h-[9999px]"
                         ].join(' ')}>
                             <div className="grid grid-cols-4 gap-y-[4.53vw] px-[4.53vw]" style={{ gridAutoRows: 'minmax(7.701vh, max-content)' }}>
-                                {openTabs.has('case-studies') && (
+                                {(isMobile || openTabs.has('case-studies')) && (
                                     <>
                                         {/* Row 1: Main Title */}
                                         <div
                                             className="py-[2.09vh] col-span-4 row-start-1 bg-[#F9F7F2] flex items-center cursor-pointer z-10"
-                                            onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
+                                            onClick={isMobile ? undefined : (e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                                         >
                                             <h2 className="dt-h1">{data.section3.section3Title}</h2>
                                         </div>
@@ -697,15 +687,6 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
 
                                         </div>
                                     </>
-                                )}
-
-                                {/* Section 3 Title when collapsed */}
-                                {!openTabs.has('case-studies') && (
-                                    <div className="py-[2.09vh] col-span-4 bg-[#F9F7F2] flex items-start cursor-pointer h-[12vh] overflow-hidden relative z-10">
-                                        <AccordionPulse pulse delay={closedTabDelays['case-studies'] ?? 0} paused={openTabs.size > 0}>
-                                            <h2 className="dt-h1">{data.section3.section3Title}</h2>
-                                        </AccordionPulse>
-                                    </div>
                                 )}
                             </div>
                         </div>

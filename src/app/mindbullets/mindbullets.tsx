@@ -21,13 +21,14 @@ type MindbulletDoc = {
 
 type Props = {
   title: string;
+  titleByline: string;
   subheading: PortableTextBlock[];
   mindbullets: MindbulletDoc[];
 };
 
-export default function Mindbullets({ title, subheading, mindbullets }: Props) {
+export default function Mindbullets({ title, titleByline, subheading, mindbullets }: Props) {
   // Map Mindbullet docs -> Carousel items
-  const carouselItems = mindbullets.map((mb) => {
+  const carouselItems = mindbullets.slice(0, 10).map((mb) => {
     const slugStr = typeof mb.slug === 'string' ? mb.slug : mb.slug?.current;
     return {
       src: mb.mainImage?.asset?.url || '/placeholder-image.png',
@@ -63,10 +64,17 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
         <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]
 ">
           {/* Row 1-2: Title */}
-          <div className="col-span-4 row-span-3">
+          <div className="col-span-4">
             <FadeInOnVisible>
               <div className="dt-h1 text-left">
                 {title}
+              </div>
+            </FadeInOnVisible>
+          </div>
+          <div className="col-span-4">
+            <FadeInOnVisible>
+              <div className="dt-h2 text-left flex-col justify-end">
+                {titleByline}
               </div>
             </FadeInOnVisible>
           </div>
@@ -157,10 +165,22 @@ export default function Mindbullets({ title, subheading, mindbullets }: Props) {
           </div>
         </FadeInOnVisible>
       ),
-      colSpan: 5,
-      rowSpan: 3,
+      colSpan: 6,
+      rowSpan: 1,
     },
-    { id: 'mindbullets-2', content: <></>, colSpan: 1, rowSpan: 3 },
+    {
+      id: 'mindbullets-2',
+      content: (
+        <FadeInOnVisible>
+          <div className="dt-h2">
+            {titleByline}
+          </div>
+        </FadeInOnVisible>
+      ),
+      colSpan: 6,
+      rowSpan: 1,
+    },
+
     {
       id: 'mindbullets-3',
       content: (

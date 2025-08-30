@@ -75,7 +75,7 @@ export default function ExpandableTopicList() {
                             <div
                                 className={`transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-[200vh] opacity-100 py-[2vh]' : 'max-h-0 opacity-0 py-0'}`}
                             >
-                                <div className="grid grid-cols-4 gap-[2vw] auto-rows-min">
+                                <div className="grid grid-cols-4 gap-x-[4.53vw] gap-y-[2.09vh] auto-rows-[minmax(7.701vh,auto)]">
                                     {/* Row 2-3: topic image col-span-4 */}
                                     <div className="col-span-4 row-span-2 flex justify-center items-center my-[2vh]">
                                         {imageUrl && (
@@ -116,17 +116,17 @@ export default function ExpandableTopicList() {
                                         </div>
                                     </FadeInOnVisible>
                                     {/* Row 11: CTA col 3-4 */}
-                                    <FadeInOnVisible className="col-start-3 col-span-2 flex items-end justify-end text-right mt-[2vh]">
-                                    <div className="col-start-3 col-span-2 flex items-end justify-end mt-[2vh]">
-                                        <a
-                                            href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
-                                            className="dt-btn underline"
-                                            onClick={e => e.stopPropagation()}
-                                        >
-                                            {topic.topicButtonText}
-                                        </a>
+                                    <FadeInOnVisible className="col-start-3 col-span-2 text-right">
+                                        <div className=" ">
+                                            <a
+                                                href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
+                                                className="dt-btn underline"
+                                                onClick={e => e.stopPropagation()}
+                                            >
+                                                {topic.topicButtonText}
+                                            </a>
 
-                                    </div>
+                                        </div>
                                     </FadeInOnVisible>
                                 </div>
                             </div>
@@ -158,7 +158,7 @@ export default function ExpandableTopicList() {
                         <div
                             className={`
                             transition-all duration-500 ease-in-out overflow-hidden
-                            ${isOpen ? 'max-h-[200vh] opacity-100 mt-[5vh]' : 'max-h-0 opacity-0 mt-0'}
+                            ${isOpen ? 'opacity-100 mt-[5vh]' : 'max-h-0 opacity-0 mt-0'}
                         `}
                         >
                             <div onClick={() =>
@@ -219,21 +219,21 @@ export default function ExpandableTopicList() {
                                         ))}
                                     </div>
                                 </div>
-                                <div className="col-span-1 row-span-1" />
+
                                 {/* td-7: CTA */}
                                 <div className="col-span-1 row-span-1 p-[1vh] flex items-end justify-end text-right">
-                                    <FadeInOnVisible>
-                                        <a
-                                            href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
-                                            className="dt-btn"
-                                            onClick={(e) => e.stopPropagation()}
-                                        >
-                                            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                                                {topic.topicButtonText}
-                                            </UnderlineOnHoverAnimation>
 
-                                        </a>
-                                    </FadeInOnVisible>
+                                    <a
+                                        href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
+                                        className="dt-btn"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                                            {topic.topicButtonText}
+                                        </UnderlineOnHoverAnimation>
+
+                                    </a>
+
                                 </div>
                                 <div className="col-span-2 row-span-1" />
                             </div>

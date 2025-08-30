@@ -8,9 +8,7 @@ import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import Link from 'next/link';
 import FadeInOnVisible from './FadeInOnVisible';
-import { AccordionPulse } from './AccordionPulse';
 import type { PortableTextBlock, PortableTextSpan } from '@portabletext/types';
-
 import { client } from '@/sanity/lib/client';
 import { caseStudyQuery } from '@/sanity/lib/queries';
 import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
@@ -102,8 +100,8 @@ const hoverHintWhenClosed = (isActive: boolean) =>
     : "";
 
 export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
-  // ...existing code...
   const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
+
 
   // Pulse delay logic for closed tabs (must be after openTabs is initialized)
   const tabOrder = ['supercharge-tomorrow', 'case-studies'];
@@ -113,6 +111,12 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
     closedTabDelays[tabId] = idx;
   });
   const { isMobile } = useResponsiveLayout();
+  // Auto-open all tabs on mobile and keep them open
+  useEffect(() => {
+    if (isMobile) {
+      setOpenTabs(new Set(['supercharge-tomorrow', 'case-studies']));
+    }
+  }, [isMobile]);
 
   // ⬇️ Load case studies via GROQ (same as HomeAccordion)
   const [caseStudies, setCaseStudies] = useState<CaseStudyFromQuery[]>([]);
@@ -174,7 +178,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
             <FadeInOnVisible>
               <div
                 className="dt-h1 cursor-pointer"
-                onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
+                onClick={isMobile ? undefined : (e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
               >
                 {data.accordionSection1.heading}
               </div>
@@ -291,7 +295,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
             <FadeInOnVisible>
               <div
                 className="dt-h1 cursor-pointer"
-                onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
+                onClick={isMobile ? undefined : (e) => { e.stopPropagation(); toggleTab('case-studies'); }}
               >
                 {data.accordionSection2.heading}
               </div>
@@ -333,7 +337,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
               backgroundColor: '#1B1B1B',
               color: '#fff',
             }}
-            onClick={() => toggleTab('supercharge-tomorrow')}
+           onClick={isMobile ? undefined : () => toggleTab('supercharge-tomorrow')}
           >
             <div className={[
               "overflow-hidden transition-[max-height] duration-500",
@@ -342,12 +346,12 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                 : "max-h-[9999px]"
             ].join(' ')}>
               <div className="grid grid-cols-4 gap-x-[4.53vw] gap-y-[2.09vh]" style={{ gridAutoRows: 'minmax(7.701vh, max-content)' }}>
-                {openTabs.has('supercharge-tomorrow') && (
+                {(isMobile || openTabs.has('supercharge-tomorrow')) && (
                   <>
                     {/* Row 1-2: Section Title */}
                     <div
                       className="px-[4.53vw] py-[2.09vh] col-span-4 row-start-1 row-span-2 bg-[#1B1B1B] text-[#F9F7F2] flex items-start cursor-pointer z-10"
-                      onClick={(e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
+                      onClick={isMobile ? undefined : (e) => { e.stopPropagation(); toggleTab('supercharge-tomorrow'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
                     </div>
@@ -404,15 +408,6 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                     </div>
                   </>
                 )}
-
-                {/* Section 1 Title when collapsed */}
-                {!openTabs.has('supercharge-tomorrow') && (
-                  <div className="col-span-4 bg-[#1B1B1B] text-[#F9F7F2] flex px-[4.53vw] py-[2.09vh] items-start cursor-pointer h-[14vh] overflow-hidden relative z-10">
-                    <AccordionPulse pulse delay={closedTabDelays['supercharge-tomorrow'] ?? 0} paused={openTabs.size > 0}>
-                      <h2 className="dt-h1 leading-none">{data.accordionSection1.heading}</h2>
-                    </AccordionPulse>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -424,7 +419,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
               backgroundColor: '#F9F7F2',
               color: '#000',
             }}
-            onClick={() => toggleTab('case-studies')}
+            onClick={isMobile ? undefined : () => toggleTab('case-studies')}
           >
             <div className={[
               "overflow-hidden transition-[max-height] duration-500",
@@ -433,12 +428,12 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                 : "max-h-[9999px]"
             ].join(' ')}>
               <div className="grid grid-cols-4 gap-x-[4.53vw] px-[4.53vw]" style={{ gridAutoRows: 'minmax(7.701vh, max-content)' }}>
-                {openTabs.has('case-studies') && (
+                {(isMobile || openTabs.has('case-studies')) && (
                   <>
                     {/* Row 1: Main Title */}
                     <div
                       className="py-[2.09vh] col-span-4 row-start-1 bg-[#F9F7F2] flex items-start cursor-pointer z-10"
-                      onClick={(e) => { e.stopPropagation(); toggleTab('case-studies'); }}
+                      onClick={isMobile ? undefined : (e) => { e.stopPropagation(); toggleTab('case-studies'); }}
                     >
                       <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>
                     </div>
@@ -473,15 +468,6 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                       </div>
                     </div>
                   </>
-                )}
-
-                {/* Section 2 Title when collapsed */}
-                {!openTabs.has('case-studies') && (
-                  <div className="col-span-4 py-[2.09vh]  bg-[#F9F7F2] flex items-start cursor-pointer h-[20vh] overflow-hidden relative z-10">
-                    <AccordionPulse pulse delay={closedTabDelays['case-studies'] ?? 0} paused={openTabs.size > 0}>
-                      <h2 className="dt-h1 leading-none">{data.accordionSection2.heading}</h2>
-                    </AccordionPulse>
-                  </div>
                 )}
               </div>
             </div>

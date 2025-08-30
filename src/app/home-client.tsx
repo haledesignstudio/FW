@@ -14,6 +14,7 @@ import MainTitleAnimation from '@/components/MainTitleAnimation';
 import { usePreloader } from '@/components/PreloaderContext';
 import HomeAccordion from '@/components/HomeAccordion';
 import { HighlightText } from '@/components/HighlightText';
+import useIsMobile from "@/hooks/useIsMobile";
 
 export type HomePageContent = {
   _id: string;
@@ -101,6 +102,7 @@ interface HomeClientProps {
 
 export default function HomeClient({ data }: HomeClientProps) {
   const { preloaderDone } = usePreloader();
+  const isMobile = useIsMobile();
   const [showSignals, setShowSignals] = React.useState(false);
   const [showHeader, setShowHeader] = React.useState(false);
   const [showMain, setShowMain] = React.useState(false);
@@ -131,6 +133,7 @@ export default function HomeClient({ data }: HomeClientProps) {
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  
 
   // Mobile Layout - 4 column grid as specified
   const mobileItems: GridItem[] = [
@@ -168,7 +171,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       colSpan: 1,
       rowSpan: 2,
       mobileColSpan: 4,
-      mobileRowSpan: 1,
+      mobileRowSpan: 0,
       landscapeColSpan: 4,
       landscapeRowSpan: 2,
     },
@@ -176,7 +179,7 @@ export default function HomeClient({ data }: HomeClientProps) {
     {
       id: 3,
       content: (
-        <FadeInOnVisible delay={5.5}>
+        <FadeInOnVisible delay={isMobile ? 5.5 : 5.5}>
           <div className="dt-h3" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
@@ -499,7 +502,7 @@ export default function HomeClient({ data }: HomeClientProps) {
                 </div>
               </div>
               {/* Vertical Accordion for Mobile */}
-              <FadeInOnVisible>
+              <FadeInOnVisible threshold={0.05}>
                 <HomeAccordion data={data} />
               </FadeInOnVisible>
               {/* Back to Top Button for Mobile */}

@@ -5,10 +5,8 @@ import Image from 'next/image';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
-import { AccordionPulse } from './AccordionPulse';
 import type { PortableTextBlock } from '@portabletext/react';
 import useIsMobile from '@/hooks/useIsMobile';
-import './accordion-animations.css';
 
 type PT = PortableTextBlock[];
 
@@ -199,7 +197,8 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
     const isMobile = useIsMobile();
     const [active, setActive] = useState<Active>('sec2');
     const toggle = (id: Active) => setActive(prev => (prev === id ? 'sec2' : id));
-    const [openTabs, setOpenTabs] = useState<number[]>([]);
+    const [openTabs] = useState<number[]>([0, 1, 2]); // keep for any logic that reads length
+
 
     // No pulse logic for desktop; only mobile closed tabs will pulse
 
@@ -259,7 +258,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
         return (
             <div className="w-screen -mx-[calc((100vw-100%)/2)] px-0">
                 {tabs.map((tab, idx) => {
-                    const isOpen = openTabs.includes(idx);
+                    const isOpen = true; // force open on mobile
                     // Colors
                     const bg = idx === 0 ? '#232323' : idx === 1 ? '#DC5A50' : '#F9F7F2';
                     const fg = idx === 2 ? '#232323' : '#F9F7F2';
@@ -267,18 +266,10 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                         <div
                             key={idx}
                             className={`w-full px-0 mx-0 transition-all duration-800 overflow-hidden`}
-                            style={{ background: bg, color: fg, maxHeight: isOpen ? '9999px' : '12vh' }}
-                            onClick={() => setOpenTabs(prev => isOpen ? prev.filter(i => i !== idx) : [...prev, idx])}
+                            style={{ background: bg, color: fg, maxHeight: '9999px' }}
+
                         >
-                            {/* Closed state: only row 1 visible, click to open */}
-                            {!isOpen && (
-                                <AccordionPulse pulse delay={closedMobileTabDelays[idx] ?? 0} paused={openTabs.length > 0}>
-                                    <div className="grid grid-cols-4 px-[4.53vw] py-[2.09vh] gap-x-[4.53vw] gap-y-[2.09vh] items-center w-full">
-                                        <div className="col-span-1 row-span-1 dt-h1">{tab.number}</div>
-                                        <div className="col-span-3 row-span-1 text-right dt-h1 truncate">{tab.title}</div>
-                                    </div>
-                                </AccordionPulse>
-                            )}
+                            
                             {/* Open state: full vertical accordion for tab 1 */}
                             {isOpen && idx === 0 && (
                                 <div className="py-[2.09vh] px-[4.53vw] grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">

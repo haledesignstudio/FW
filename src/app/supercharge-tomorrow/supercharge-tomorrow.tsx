@@ -248,7 +248,7 @@ export default function SuperchargeTomorrow({ data }: { data: SuperchargeTomorro
 
               {/* Row 7: col 1-4: SuperchargeTomorrowAccordion */}
               <div className="col-span-4">
-                <FadeInOnVisible>
+                <FadeInOnVisible threshold={0.05}>
                   <SuperchargeTomorrowAccordion data={data} />
                 </FadeInOnVisible>
               </div>

@@ -27,6 +27,7 @@
     "next-sanity": "^10.0.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-fast-marquee": "^1.6.5",
     "sanity": "^4.4.1",
     "styled-components": "^6.1.19",
     "three": "^0.178.0"

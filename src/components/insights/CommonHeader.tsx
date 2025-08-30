@@ -20,11 +20,11 @@ function useIsMobile(breakpoint = 768) {
 
 const categories = [
   { href: '/insights',  label: 'Shareholder Value Analytics' },
-  { href: '/mindbullets', label: 'Mindbullets: News From the Future' },
+  { href: '/mindbullets', label: 'Mindbullets' },
   { href: '/keynotes',    label: 'Keynotes' },
   { href: '/podcast',     label: 'Podcast' },
   { href: '/corporate-venturing',   label: 'Corporate Venturing', comingSoon: false}, //  { href: '/corporate-venturing',   label: 'Corporate Venturing', comingSoon: true },
-  { href: '/the-edge',        label: 'The Edge: Insights Driven by Disruption' },
+  { href: '/the-edge',        label: 'The Edge' },
 ];
 
 type CommonHeaderProps = {
@@ -55,7 +55,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
         </div> */}
         {/* Each category: new row, cols 2-3 */}
         {categories.map((cat) => (
-          <div key={cat.href} className="col-start-2 col-span-3 row-span-1 mt-[-2vh]">
+          <div key={cat.href} className="col-start-2 col-span-3 row-span-1 mt-[-2vh] ml-[15%]">
             {cat.comingSoon ? (
               <FadeInOnVisible>
                 <div className="group flex items-center">
