@@ -14,6 +14,7 @@ import {presentationTool} from 'sanity/presentation'
 import {apiVersion, dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
 import {structure} from './src/sanity/structure'
+import { locations, mainDocuments } from './src/sanity/presentation/resolve'
 
 export default defineConfig({
   basePath: '/studio',
@@ -30,99 +31,12 @@ export default defineConfig({
     colorInput(),
     // Presentation tool for live preview
       presentationTool({
+      resolve: {locations, mainDocuments},
       previewUrl: {
         previewMode: {
-          enable: 'https://hale-fw.netlify.app/api/draft-mode/enable',
+          enable: '/api/draft-mode/enable',
+          disable: '/api/draft-mode/disable',
         },
-        origin: 'https://hale-fw.netlify.app',
-      },
-      resolve: {
-        mainDocuments: [
-          {
-            route: '/',
-            filter: `_type == "homePage"`,
-          },
-          {
-            route: '/our-work',
-            filter: `_type == "ourWorkPage"`,
-          },
-          {
-            route: '/what-we-do',
-            filter: `_type == "whatWeDoPage"`,
-          },
-          {
-            route: '/people',
-            filter: `_type == "peoplePage"`,
-          },
-          {
-            route: '/insights',
-            filter: `_type == "shareholderPage"`,
-          },
-          {
-            route: '/insights/[slug]',
-            filter: `_type == "article" && defined(slug.current)`,
-          },
-          {
-            route: '/mindbullets',
-            filter: `_type == "mindbulletsPage"`,
-          },
-          {
-            route: '/mindbullets/[slug]',
-            filter: `_type == "mindbullet" && defined(slug.current)`,
-          },
-          {
-            route: '/podcast',
-            filter: `_type == "podcastPage"`,
-          },
-          {
-            route: '/podcast/[slug]',
-            filter: `_type == "podcast" && defined(slug.current)`,
-          },
-          {
-            route: '/the-edge',
-            filter: `_type == "edgePage"`,
-          },
-          {
-            route: '/the-edge/[slug]',
-            filter: `_type == "provocativeScenarios" && defined(slug.current)`,
-          },
-          {
-            route: '/keynotes',
-            filter: `_type == "keynotesPage"`,
-          },
-          {
-            route: '/keynotes/[slug]',
-            filter: `_type == "keynoteSpeaker" && defined(slug.current)`,
-          },
-          {
-            route: '/corporate-venturing',
-            filter: `_type == "corporatePage"`,
-          },
-          {
-            route: '/contact',
-            filter: `_type == "contactPage"`,
-          },
-          {
-            route: '/faq',
-            filter: `_type == "faqPage"`,
-          },
-          {
-            route: '/privacy-policy',
-            filter: `_type == "privacyPolicyPage"`,
-          },
-          {
-            route: '/terms-conditions',
-            filter: `_type == "termsAndConditionsPage"`,
-          },
-          {
-            route: '/supercharge-tomorrow',
-            filter: `_type == "superchargeTomorrowPage"`,
-          },
-          {
-            route: '/case-study/[slug]',
-            filter: `_type == "caseStudy" && defined(slug.current)`,
-          },
-        ],
       },
     }),
   ],

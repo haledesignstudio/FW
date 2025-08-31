@@ -1,0 +1,31 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Add build arguments for environment variables
+ARG NEXT_PUBLIC_SANITY_PROJECT_ID
+ARG NEXT_PUBLIC_SANITY_DATASET
+ARG SANITY_API_READ_TOKEN
+ARG SANITY_REVALIDATE_SECRET
+
+# Set environment variables for build
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID=$NEXT_PUBLIC_SANITY_PROJECT_ID
+ENV NEXT_PUBLIC_SANITY_DATASET=$NEXT_PUBLIC_SANITY_DATASET
+ENV SANITY_API_READ_TOKEN=$SANITY_API_READ_TOKEN
+ENV SANITY_REVALIDATE_SECRET=$SANITY_REVALIDATE_SECRET
+
+# Build the application
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
