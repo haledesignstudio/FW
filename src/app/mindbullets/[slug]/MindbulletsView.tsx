@@ -65,7 +65,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
     const current = data.slug ?? "";
     return (more || [])
       .filter((mb) => (mb.slug ?? "") !== current)
-      .map((mb) => ({
+      .slice(0, 10).map((mb) => ({
         src:
           mb.imageUrl && mb.imageUrl.length > 0
             ? mb.imageUrl
@@ -80,8 +80,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   const mobile = (
     <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
       <div className="flex-1 grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
-        <div className="col-span-4 row-span-3 dt-h1">
-          Mindbullets: News from the Future
+        <div className="col-span-4 dt-h1 flex flex-col justify-end">
+          Mindbullets
+        </div>
+        <div className="col-span-4 dt-h2">
+          News from the Future
         </div>
 
         {data.mainImage?.asset && (
@@ -251,22 +254,28 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   // --- DESKTOP ---
   const gridItems = [
     {
-      id: "mindbullet-1",
+      id: 'mindbullet-1',
       content: (
         <FadeInOnVisible>
-          <h1 className="dt-h1">
-            Mindbullets: News from the Future
-          </h1>
+          <div className="dt-h1">
+            Mindbullets
+          </div>
         </FadeInOnVisible>
       ),
-      colSpan: 5,
-      rowSpan: 3,
+      colSpan: 6,
+      rowSpan: 1,
     },
     {
-      id: "mindbullet-2",
-      content: <></>,
-      colSpan: 1,
-      rowSpan: 3,
+      id: 'mindbullet-2',
+      content: (
+        <FadeInOnVisible>
+          <div className="dt-h2">
+            News from the Future
+          </div>
+        </FadeInOnVisible>
+      ),
+      colSpan: 6,
+      rowSpan: 1,
     },
     {
       id: "mindbullet-3",

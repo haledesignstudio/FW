@@ -12,6 +12,7 @@ import FadeInOnVisible from '@/components/FadeInOnVisible';
 
 type MindbulletsDoc = {
   title: string;
+  titleByline: string;
   subheading: PortableTextBlock[];
 };
 
@@ -26,7 +27,7 @@ type MindbulletDoc = {
 
 export default async function MindbulletsPage() {
   const doc = await client.fetch<MindbulletsDoc | null>(
-    groq`*[_type == "mindbulletsPage"][0]{ title, subheading }`
+    groq`*[_type == "mindbulletsPage"][0]{ title, titleByline, subheading }`
   );
 
   if (!doc) {
@@ -53,6 +54,7 @@ export default async function MindbulletsPage() {
         <div className="grid gap-[2vh] auto-rows-auto overflow-visible [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           <Mindbullets
             title={doc.title}
+            titleByline={doc.titleByline}
             subheading={doc.subheading}
             mindbullets={mindbullets}
           />

@@ -558,6 +558,7 @@ export const mindbulletsQuery = defineQuery(`
 export const mindbulletsPageQuery = defineQuery(`
   *[_type == "mindbulletsPage"][0] {
     title,
+    titleByline,
     subheading
   }
 `);
@@ -587,6 +588,7 @@ export const keynotesPageQuery = defineQuery(`
 export const edgePageQuery = defineQuery(`
   *[_type == "edgePage"][0]{
     title,
+    titleByline,
     subheading,
     contentText,
     whatBlewYourMind{

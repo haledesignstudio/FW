@@ -27,12 +27,14 @@ type WhatBlewYourMind = {
 
 export default function Edge({
   title,
+  titleByline,
   subheading,
   contentText,
   whatBlewYourMind,
   articles = [],
 }: {
   title: string;
+  titleByline: string;
   subheading: PortableTextBlock[];
   contentText: string;
   whatBlewYourMind: WhatBlewYourMind;
@@ -60,12 +62,22 @@ export default function Edge({
   if (isMobile) {
     return (
       <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
-        <div className="col-span-4 row-span-3 flex items-center">
+        {/* Row 1-2: Title */}
+        <div className="col-span-4 flex-col justify-end">
           <FadeInOnVisible>
-            <div className="dt-h1">{title}</div>
+            <div className="dt-h1 text-left">
+              {title}
+            </div>
           </FadeInOnVisible>
         </div>
-
+        <div className="col-span-3">
+          <FadeInOnVisible>
+            <div className="dt-h2 text-left text-balance">
+              {titleByline}
+            </div>
+          </FadeInOnVisible>
+        </div>
+        <div className="col-span-4 row-span-1" />
 
         <div className="col-span-4">
           <FadeInOnVisible>
@@ -173,14 +185,20 @@ export default function Edge({
           </div>
         </FadeInOnVisible>
       ),
-      colSpan: 5,
-      rowSpan: 3,
+      colSpan: 6,
+      rowSpan: 1,
     },
     {
       id: 'edge-2',
-      content: <></>,
-      colSpan: 1,
-      rowSpan: 3,
+      content: (
+        <FadeInOnVisible>
+          <div className="dt-h2">
+            {titleByline}
+          </div>
+        </FadeInOnVisible>
+      ),
+      colSpan: 6,
+      rowSpan: 1,
     },
     {
       id: 'edge-3',

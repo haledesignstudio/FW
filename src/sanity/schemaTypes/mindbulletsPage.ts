@@ -10,7 +10,14 @@ export default defineType({
       name: 'title',
       title: 'Section Title',
       type: 'string',
-      initialValue: 'Mindbullets: News From the Future',
+      initialValue: 'Mindbullets',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'titleByline',
+      title: 'Title Byline',
+      type: 'string',
+      initialValue: 'News From the Future',
       validation: (Rule) => Rule.required(),
     }),
     defineField({

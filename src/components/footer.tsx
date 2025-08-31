@@ -5,7 +5,6 @@ import { FutureText } from "./FutureText";
 import UnderlineOnHoverAnimation from "./underlineOnHoverAnimation";
 import Link from 'next/link';
 
-
 type GridItem = {
     id: number;
     content: React.ReactNode;
@@ -21,6 +20,10 @@ const Footer: React.FC = () => {
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [placeholder, setPlaceholder] = useState('');
+    const [placeholder2, setPlaceholder2] = useState('');
+    const [placeholder3, setPlaceholder3] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [msg, setMsg] = useState<string | null>(null);
     const footerRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -56,6 +59,54 @@ const Footer: React.FC = () => {
         }
     }, [shouldAnimate]);
 
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const fd = new FormData(form);
+
+        // simple honeypot
+        if (String(fd.get("hp") || "")) {
+            return; // bot
+        }
+
+        const firstName = String(fd.get("name") || "").trim();
+        const lastName = String(fd.get("surname") || "").trim();
+        const email = String(fd.get("email") || "").trim();
+
+        if (!firstName || !lastName || !email) {
+            setMsg("Please fill in all fields.");
+            return;
+        }
+
+        setLoading(true);
+        setMsg(null);
+
+        try {
+            const res = await fetch("/api/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firstName, lastName, email }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                setMsg(
+                    data.status === "pending"
+                        ? "Almost done — check your email to confirm."
+                        : "You’re subscribed!"
+                );
+                form.reset();
+            } else {
+                setMsg(data?.error || "Subscription failed.");
+            }
+        } catch {
+            setMsg("Network error. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    }
+
     // Create items function inside component to access hooks
     const items = (shouldAnimate: boolean): GridItem[] => [
         {
@@ -80,9 +131,9 @@ const Footer: React.FC = () => {
             id: 2,
             content: (
                 <ul className="text-[clamp(0.5vw,1.48vh,0.74vw)] font-roboto leading-[clamp(0.7vw,1.85vh,0.0.925vw)]">
+                    <li><a href="https://twitter.com/Futureworld_Int">{shouldAnimate ? <FutureText text="X" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
                     <li><a href="https://rss.com/podcasts/fast-forward/">{shouldAnimate ? <FutureText text="RSS" delay={1000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
                     <li><a href="https://www.instagram.com/futureworldint/">{shouldAnimate ? <FutureText text="Instagram" delay={1000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
-                    <li><a href="https://twitter.com/Futureworld_Int">{shouldAnimate ? <FutureText text="Twitter" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
                     <li><a href="https://www.linkedin.com/company/futureworld-int/">{shouldAnimate ? <FutureText text="Linkedin" delay={1000} speed={30} triggerOnVisible={false} /> : "Linkedin"}</a></li>
                 </ul>
             ),
@@ -134,7 +185,16 @@ const Footer: React.FC = () => {
         {
             id: 5,
             content: (
-                <>
+                <form onSubmit={handleSubmit} noValidate>
+                    {msg && (
+                        <div
+                            className="mb-[1vh] rounded text-[clamp(0.5vw,1.48vh,0.74vw)] font-roboto leading-[clamp(0.7vw,1.85vh,0.0.925vw)]py-[0.35vh] px-[0.8vh] bg-[#DC5A50] text-[#F9F7F2] w-fit"
+                            role="status"
+                            aria-live="polite"
+                        >
+                            {msg}
+                        </div>
+                    )}
                     <p className="text-[clamp(0.5vw,1.48vh,0.74vw)] font-roboto leading-[clamp(0.7vw,1.85vh,0.0.925vw)]">
                         {shouldAnimate ? (
                             <FutureText
@@ -148,10 +208,13 @@ const Footer: React.FC = () => {
                         )}
                     </p>
 
+                    {/* Honeypot */}
+                    <input type="text" name="hp" tabIndex={-1} autoComplete="off" className="hidden" />
+
                     {/* Animate placeholder text */}
                     {shouldAnimate && (
                         <FutureText
-                            text="Enter your e-mail"
+                            text="Name"
                             delay={2500}
                             speed={20}
                             triggerOnVisible={false}
@@ -161,29 +224,82 @@ const Footer: React.FC = () => {
                     )}
 
                     <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        placeholder={shouldAnimate ? placeholder || ' ' : 'Name'}
+                        className="block w-full outline-none border-none bg-transparent dt-h5 font-graphik font-bold placeholder:opacity-40 mt-[0.5vh]"
+                        disabled={loading}
+                    />
+
+                    {/* Animate placeholder text */}
+                    {shouldAnimate && (
+                        <FutureText
+                            text="Surname"
+                            delay={2500}
+                            speed={20}
+                            triggerOnVisible={false}
+                            onUpdate={setPlaceholder2}
+                            className="hidden"
+                        />
+                    )}
+
+                    <input
+                        type="text"
+                        id="surname"
+                        name="surname"
+                        required
+                        placeholder={shouldAnimate ? placeholder2 || ' ' : 'Surname'}
+                        className="block w-full outline-none border-none bg-transparent dt-h5 font-graphik font-bold placeholder:opacity-40 mt-[0.5vh]"
+                        disabled={loading}
+                    />
+
+                    {/* Animate placeholder text */}
+                    {shouldAnimate && (
+                        <FutureText
+                            text="Enter your e-mail"
+                            delay={2500}
+                            speed={20}
+                            triggerOnVisible={false}
+                            onUpdate={setPlaceholder3}
+                            className="hidden"
+                        />
+                    )}
+
+                    <input
                         type="email"
                         id="email"
                         name="email"
                         required
-                        placeholder={shouldAnimate ? placeholder || ' ' : 'Enter your e-mail'}
-                        className="outline-none border-none bg-transparent text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:text-[4vh] text-base placeholder-gray placeholder:font-bold placeholder:text-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:placeholder:text-[3vh] [@media(max-height:600px)_and_(max-width:768px)]:placeholder:text-[4vh]"
+                        placeholder={shouldAnimate ? placeholder3 || ' ' : 'Enter your e-mail'}
+                        className="block w-full outline-none border-none bg-transparent dt-h5 font-graphik font-bold placeholder:opacity-40 mt-[0.5vh]"
+                        disabled={loading}
                     />
 
                     <div className="dt-h5 mt-[2vh]">
-                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-                            {shouldAnimate ? (
-                                <FutureText
-                                    text="Submit"
-                                    delay={2500}
-                                    speed={25}
-                                    triggerOnVisible={false}
-                                />
-                            ) : (
-                                "Submit"
-                            )}
-                        </UnderlineOnHoverAnimation>
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            aria-disabled={loading}
+                            className="disabled:opacity-60"
+                        >
+                            <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                                {shouldAnimate ? (
+                                    <FutureText
+                                        text={loading ? "Submitting..." : "Submit"}
+                                        delay={2500}
+                                        speed={25}
+                                        triggerOnVisible={false}
+                                    />
+                                ) : (
+                                    loading ? "Submitting..." : "Submit"
+                                )}
+                            </UnderlineOnHoverAnimation>
+                        </button>
                     </div>
-                </>
+
+                </form>
             ),
             colSpan: 2,
             rowSpan: 1,
@@ -230,78 +346,144 @@ const Footer: React.FC = () => {
             ref={footerRef}
             className={`p-[2vh] bg-[#F9F7F2] transition-opacity duration-1000 ${shouldAnimate ? 'opacity-100' : 'opacity-0'}`}
         >
-            <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
+            <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">
                 {/* Row 1: Empty */}
                 <div className="col-span-4 row-span-1 bg-[#F9F7F2]"></div>
 
                 {/* Row 1-2, Col 1-3: Subscribe section */}
                 <div className="col-span-4 row-span-2 bg-[#F9F7F2] flex flex-col justify-start">
-                    <p className="dt-body-lg mb-[1vh]">
-                        {shouldAnimate ? (
-                            <FutureText
-                                text="Subscribe for news from the future"
-                                delay={1000}
-                                speed={20}
-                                triggerOnVisible={false}
-                            />
-                        ) : (
-                            "Subscribe for news from the future"
+                    <form onSubmit={handleSubmit} noValidate>
+                        {msg && (
+                            <div
+                                className="mb-[1vh] rounded left-0 rounded font-roboto text-[clamp(1.8vw,1.25vh,2.5vw)] py-[0.15vh] px-[0.7vh] bg-[#DC5A50] text-[#F9F7F2] w-fit"
+                                role="status"
+                                aria-live="polite"
+                            >
+                                {msg}
+                            </div>
                         )}
-                    </p>
-
-                    {/* Animate placeholder text */}
-                    {shouldAnimate && (
-                        <FutureText
-                            text="Enter your e-mail"
-                            delay={1000}
-                            speed={20}
-                            triggerOnVisible={false}
-                            onUpdate={setPlaceholder}
-                            className="hidden"
-                        />
-                    )}
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        placeholder={shouldAnimate ? placeholder || ' ' : 'Enter your e-mail'}
-                        className="outline-none border-none bg-transparent dt-body-sm placeholder:dt-body-sm mb-[4vh]"
-                    />
-
-                    <div className="dt-btn text-left">
-                        <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                        <p className="dt-body-lg mb-[1vh]">
                             {shouldAnimate ? (
                                 <FutureText
-                                    text="Submit"
-                                    delay={1000}
-                                    speed={25}
+                                    text="Subscribe for news from the future"
+                                    delay={0}
+                                    speed={20}
                                     triggerOnVisible={false}
                                 />
                             ) : (
-                                "Submit"
+                                "Subscribe for news from the future"
                             )}
-                        </UnderlineOnHoverAnimation>
-                    </div>
+                        </p>
+
+                        {/* Honeypot */}
+                        <input type="text" name="hp" tabIndex={-1} autoComplete="off" className="hidden" />
+
+                        {/* Animate placeholder text */}
+                        {shouldAnimate && (
+                            <FutureText
+                                text="Name"
+                                delay={0}
+                                speed={20}
+                                triggerOnVisible={false}
+                                onUpdate={setPlaceholder}
+                                className="hidden"
+                            />
+                        )}
+
+                        <input
+                            type="text"
+                            id="m-name"
+                            name="name"
+                            required
+                            placeholder={shouldAnimate ? placeholder || ' ' : 'Enter your name'}
+                            className="block w-full outline-none border-none bg-transparent dt-body-sm placeholder:dt-body-sm mb-[2vh]"
+                            disabled={loading}
+                        />
+
+                        {/* Animate placeholder text */}
+                        {shouldAnimate && (
+                            <FutureText
+                                text="Surname"
+                                delay={0}
+                                speed={20}
+                                triggerOnVisible={false}
+                                onUpdate={setPlaceholder2}
+                                className="hidden"
+                            />
+                        )}
+
+                        <input
+                            type="text"
+                            id="m-surname"
+                            name="surname"
+                            required
+                            placeholder={shouldAnimate ? placeholder2 || ' ' : 'Enter your surname'}
+                            className="block w-full outline-none border-none bg-transparent dt-body-sm placeholder:dt-body-sm mb-[2vh]"
+                            disabled={loading}
+                        />
+
+                        {/* Animate placeholder text */}
+                        {shouldAnimate && (
+                            <FutureText
+                                text="Enter your e-mail"
+                                delay={0}
+                                speed={20}
+                                triggerOnVisible={false}
+                                onUpdate={setPlaceholder3}
+                                className="hidden"
+                            />
+                        )}
+
+                        <input
+                            type="email"
+                            id="m-email"
+                            name="email"
+                            required
+                            placeholder={shouldAnimate ? placeholder3 || ' ' : 'Enter your e-mail'}
+                            className="block w-full outline-none border-none bg-transparent dt-body-sm placeholder:dt-body-sm mb-[2vh]"
+                            disabled={loading}
+                        />
+
+                        <div className="dt-btn text-left">
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                aria-disabled={loading}
+                                className="disabled:opacity-60"
+                            >
+                                <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                                    {shouldAnimate ? (
+                                        <FutureText
+                                            text={loading ? "Submitting..." : "Submit"}
+                                            delay={0}
+                                            speed={25}
+                                            triggerOnVisible={false}
+                                        />
+                                    ) : (
+                                        loading ? "Submitting..." : "Submit"
+                                    )}
+                                </UnderlineOnHoverAnimation>
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 {/* Row 1-2, Col 4: Empty */}
                 <div className="col-span-4 row-span-1 bg-[#F9F7F2]"></div>
 
                 {/* Row 3-5, Col 1: Social links */}
-                <div className="col-span-1 bg-[#F9F7F2] flex flex-col justify-end">
+                <div className="col-span-1 row-span-3 bg-[#F9F7F2] flex flex-col justify-end">
                     <p className="dt-h5 mb-[1vh]">
                         {shouldAnimate ? (
-                            <FutureText text="Social" delay={0} speed={50} triggerOnVisible={false} />
+                            <FutureText text="Social" delay={1000} speed={50} triggerOnVisible={false} />
                         ) : (
                             "Social"
                         )}
                     </p>
                     <ul className="dt-body-sm leading-tight space-y-2">
+                        <li><a href="https://twitter.com/Futureworld_Int">{shouldAnimate ? <FutureText text="X" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
                         <li><a href="https://rss.com/podcasts/fast-forward/">{shouldAnimate ? <FutureText text="RSS" delay={1000} speed={30} triggerOnVisible={false} /> : "RSS"}</a></li>
                         <li><a href="https://www.instagram.com/futureworldint/">{shouldAnimate ? <FutureText text="Instagram" delay={1000} speed={30} triggerOnVisible={false} /> : "Instagram"}</a></li>
-                        <li><a href="https://twitter.com/Futureworld_Int">{shouldAnimate ? <FutureText text="Twitter" delay={1000} speed={30} triggerOnVisible={false} /> : "Twitter"}</a></li>
                         <li><a href="https://www.linkedin.com/company/futureworld-int/">{shouldAnimate ? <FutureText text="Linkedin" delay={1000} speed={30} triggerOnVisible={false} /> : "Linkedin"}</a></li>
                     </ul>
                 </div>
@@ -310,7 +492,7 @@ const Footer: React.FC = () => {
                 <div className="col-span-1 bg-[#F9F7F2]"></div>
 
                 {/* Row 3-5, Col 3-4: Quick links */}
-                <div className="col-span-2 bg-[#F9F7F2] flex flex-col">
+                <div className="col-span-2 row-span-3 bg-[#F9F7F2] flex flex-col justify-end">
                     <h2 className="dt-h5 mb-[1vh]">
                         {shouldAnimate ? (
                             <FutureText text="Quick Links" delay={2000} speed={30} triggerOnVisible={false} />
@@ -319,13 +501,13 @@ const Footer: React.FC = () => {
                         )}
                     </h2>
                     <ul className="dt-body-sm leading-tight space-y-2">
-                        <li><Link href="/contact">{shouldAnimate ? <FutureText text="Contact" delay={2500} speed={20} triggerOnVisible={false} /> : "Contact"}</Link></li>
-                        <li><Link href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={2500} speed={20} triggerOnVisible={false} /> : "Keynotes"}</Link></li>
-                        <li><Link href="/people">{shouldAnimate ? <FutureText text="Join us" delay={2500} speed={20} triggerOnVisible={false} /> : "Join us"}</Link></li>
-                        <li><Link href="/faq">{shouldAnimate ? <FutureText text="FAQs" delay={2500} speed={20} triggerOnVisible={false} /> : "FAQs"}</Link></li>
-                        <li><Link href="/privacy-policy">{shouldAnimate ? <FutureText text="Privacy policy" delay={2500} speed={20} triggerOnVisible={false} /> : "Privacy policy"}</Link></li>
-                        <li><Link href="/terms-conditions">{shouldAnimate ? <FutureText text="Terms and conditions" delay={2500} speed={20} triggerOnVisible={false} /> : "Terms and conditions"}</Link></li>
-                        <li><Link href="/insights">{shouldAnimate ? <FutureText text="Shareholder Value Analytics" delay={2500} speed={20} triggerOnVisible={false} /> : "Shareholder Value Analytics"}</Link></li>
+                        <li><Link href="/contact">{shouldAnimate ? <FutureText text="Contact" delay={1000} speed={30} triggerOnVisible={false} /> : "Contact"}</Link></li>
+                        <li><Link href="/keynotes">{shouldAnimate ? <FutureText text="Keynotes" delay={1000} speed={30} triggerOnVisible={false} /> : "Keynotes"}</Link></li>
+                        <li><Link href="/people">{shouldAnimate ? <FutureText text="Join us" delay={1000} speed={30} triggerOnVisible={false} /> : "Join us"}</Link></li>
+                        <li><Link href="/faq">{shouldAnimate ? <FutureText text="FAQs" delay={1000} speed={30} triggerOnVisible={false} /> : "FAQs"}</Link></li>
+                        <li><Link href="/privacy-policy">{shouldAnimate ? <FutureText text="Privacy policy" delay={1000} speed={30} triggerOnVisible={false} /> : "Privacy policy"}</Link></li>
+                        <li><Link href="/terms-conditions">{shouldAnimate ? <FutureText text="Terms and conditions" delay={1000} speed={30} triggerOnVisible={false} /> : "Terms and conditions"}</Link></li>
+                        <li><Link href="/insights">{shouldAnimate ? <FutureText text="Shareholder Value Analytics" delay={1000} speed={30} triggerOnVisible={false} /> : "Shareholder Value Analytics"}</Link></li>
                     </ul>
                 </div>
             </div>

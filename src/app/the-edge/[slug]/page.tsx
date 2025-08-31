@@ -84,7 +84,7 @@ export default async function EdgeScenarioPage({ params }: PageProps) {
     }
   `);
 
-  const carouselItems = mindbullets.map((mb) => ({
+  const carouselItems = mindbullets.slice(0, 10).map((mb) => ({
     src: mb.imageUrl || '/placeholder-image.png',
     heading: mb.title ?? 'Untitled',
     description: mb.bodyText ?? '',

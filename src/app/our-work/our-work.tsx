@@ -9,10 +9,10 @@ import FadeInOnVisible from '@/components/FadeInOnVisible';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import { HighlightText } from '@/components/HighlightText';
 import CountingAnimation from '@/components/countingAnimation';
-import PartnersMarquee from '@/components/PartnersMarquee';
 import OurWorkAccordion from "@/components/OurWorkAccordion";
 import { PortableText } from '@portabletext/react';
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
+import LogoBelt from '@/components/LogoBelt';
 
 
 export type OurWorkContent = {
@@ -356,13 +356,11 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
       id: 12,
       content: (
         <FadeInOnVisible className="h-full flex items-center">
-          <PartnersMarquee
+          <LogoBelt
             partners={data.partners}
-            durationSec={30}     // loop time
-            logoHeightVh={21}     // logo height
-            gap="5.385vw"            // spacing between logos
-            edgeFadeVw={1.795}       // edge fade width; set 0 to disable
-            fadeBg="#F9F7F2"     // page background for the fades
+            speed={60}          // tweak to taste (px/sec). Try 40–80.
+            gap="5.385vw"
+            fadeBg="#F9F7F2"
             direction="left"
           />
         </FadeInOnVisible>
@@ -542,15 +540,13 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
 
                 <FadeInOnVisible className="col-span-4 row-span-1 flex items-center">
                   <div className="h-full w-full flex items-center">
-                    <PartnersMarquee
-                      partners={data.partners}
-                      durationSec={10} // 2x faster than 30
-                      logoHeightVh={17}
-                      gap="20vw"
-                      edgeFadeVw={8}
-                      fadeBg="#F9F7F2"
-                      direction="left"
-                    />
+                    <LogoBelt
+                    partners={data.partners}
+                    speed={60}          // tweak to taste (px/sec). Try 40–80.
+                    gap="20vw"
+                    fadeBg="#F9F7F2"
+                    direction="left"
+                  />
                   </div>
                 </FadeInOnVisible>
 
@@ -561,7 +557,7 @@ export default function OurWorkClient({ data }: OurWorkClientProps) {
 
             {/* Accordion Section - Full Width Edge-to-Edge */}
             <div className="">
-              <FadeInOnVisible>
+              <FadeInOnVisible threshold={0.05}>
                 <OurWorkAccordion data={data} />
               </FadeInOnVisible>
             </div>

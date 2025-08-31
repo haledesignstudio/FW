@@ -35,6 +35,7 @@ export default async function EdgePage() {
         <div className="grid rid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           <Edge
           title={doc.title}
+          titleByline={doc.titleByline}
           subheading={doc.subheading}
           contentText={doc.contentText}               
           whatBlewYourMind={doc.whatBlewYourMind}
