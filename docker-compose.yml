@@ -9,7 +9,6 @@ services:
         - NEXT_PUBLIC_SANITY_DATASET
         - SANITY_API_READ_TOKEN
         - SANITY_REVALIDATE_SECRET
-    image: haledesignstudio/fw-website-stack-nextjs-app:latest
     container_name: nextjs-app
     expose:
       - "3000"
