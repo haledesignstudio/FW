@@ -4,6 +4,8 @@ import { peoplePageQuery } from '@/sanity/lib/queries';
 import People from './people';
 import type { PortableTextBlock } from '@portabletext/types';
 
+export const revalidate = 60;
+
 type PeoplePageContent = {
   title: string;
   pageHeader: {

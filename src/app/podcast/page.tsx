@@ -8,6 +8,8 @@ import { notFound } from 'next/navigation';
 import type { PortableTextBlock } from '@portabletext/types';
 import PodcastSection from './podcast';
 
+export const revalidate = 60;
+
 type PodcastPageDoc = {
   title: string;              // from podcastPage schema
   subheading: PortableTextBlock[];

@@ -2,6 +2,8 @@ import { sanityFetch } from '@/sanity/lib/fetch'
 import { faqPageQuery } from '@/sanity/lib/queries'
 import FAQClient from './faq'
 
+export const revalidate = 60;
+
 // Type definitions for FAQ data
 interface FAQ {
   question: string

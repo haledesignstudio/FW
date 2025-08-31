@@ -6,6 +6,8 @@ import { client } from '@/sanity/lib/client';
 import { termsAndConditionsQuery } from '@/sanity/lib/queries';
 import TermsAndConditionsClient from './terms-conditions';
 
+export const revalidate = 60;
+
 // Type definition for metadata extraction
 interface TermsAndConditionsMetadata {
   seo?: {

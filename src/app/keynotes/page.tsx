@@ -9,6 +9,8 @@ import type { PortableTextBlock } from '@portabletext/types';
 import Keynotes from './keynotes';
 import { urlFor } from '@/sanity/lib/image';
 
+export const revalidate = 60;
+
 type SanityRef = { _ref: string } | { _id: string };
 type SanityImage = { asset?: SanityRef; alt?: string };
 

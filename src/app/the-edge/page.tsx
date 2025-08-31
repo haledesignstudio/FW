@@ -8,6 +8,8 @@ import Edge from './edge';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import ProvocativeScenarios from '@/components/ProvocativeScenarios';
 
+export const revalidate = 60;
+
 type ArticleCard = {
   _id: string;
   title: string;

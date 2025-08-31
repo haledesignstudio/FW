@@ -6,6 +6,8 @@ import { client } from '@/sanity/lib/client';
 import { privacyPolicyQuery } from '@/sanity/lib/queries';
 import PrivacyPolicyClient from './privacy-policy';
 
+export const revalidate = 60;
+
 // Type definition for metadata extraction
 interface PrivacyPolicyMetadata {
   seo?: {

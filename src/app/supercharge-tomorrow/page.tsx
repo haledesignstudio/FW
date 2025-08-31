@@ -4,8 +4,7 @@ import { client } from '@/sanity/lib/client';
 import { superchargeTomorrowQuery } from '@/sanity/lib/queries';
 import SuperchargeTomorrow from './supercharge-tomorrow';
 
-
-
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

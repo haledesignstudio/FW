@@ -2,6 +2,8 @@ import { sanityFetch } from '@/sanity/lib/fetch';
 import { homePageQuery } from '@/sanity/lib/queries';
 import HomeClient, { type HomePageContent } from './home-client';
 
+export const revalidate = 60;
+
 export default async function HomePage() {
   try {
     const response = await sanityFetch<HomePageContent>({

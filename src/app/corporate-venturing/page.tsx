@@ -8,6 +8,8 @@ import { notFound } from 'next/navigation';
 import type { PortableTextBlock } from '@portabletext/types';
 import CorporateSection from './corporate';
 
+export const revalidate = 60;
+
 type CorporatePageDoc = {
   title: string;
   subheading: PortableTextBlock[];

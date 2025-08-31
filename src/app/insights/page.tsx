@@ -8,6 +8,8 @@ import CommonHeader from '@/components/insights/CommonHeader';
 import ShareholderValueAnalytics from './shareholder-value-analytics';
 import type { PortableTextBlock } from '@portabletext/types';
 
+export const revalidate = 60;
+
 type ShareholderPage = {
   title: string;
   subheading: PortableTextBlock[];

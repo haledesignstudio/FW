@@ -10,6 +10,8 @@ import { groq } from 'next-sanity';
 import MindbulletArchive from '@/components/mindbulletsArchive';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 
+export const revalidate = 60;
+
 type MindbulletsDoc = {
   title: string;
   titleByline: string;

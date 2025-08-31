@@ -2,6 +2,8 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 
+export const revalidate = 60;
+
 export default function CaseStudyLayout({ children }: { children: React.ReactNode }) {
   // Placeholder for main title, can be replaced with dynamic value
   const mainTitle = 'Case Study';

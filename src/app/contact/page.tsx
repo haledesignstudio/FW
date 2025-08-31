@@ -3,6 +3,8 @@ import { client } from '@/sanity/lib/client';
 import { CONTACT_PAGE_QUERY } from '@/sanity/lib/queries';
 import Contact from './contact';
 
+export const revalidate = 60;
+
 type ContactPageData = {
   title: string;
   pageHeader: {
