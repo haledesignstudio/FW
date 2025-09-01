@@ -14,6 +14,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import Link from "next/link";
 import type { PortableTextComponentProps } from "@portabletext/react";
 import Carousel from "@/components/Carousel";
+import { getImageDimensions } from '@sanity/asset-utils';
 
 type SanityAssetRef = { _type: "reference"; _ref: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string };
@@ -84,12 +85,11 @@ const ptComponents: PortableTextComponents = {
     image: ({ value }: PortableTextComponentProps<ImageBlockValue>) =>
       value?.asset ? (
         <Image
-          src={urlFor(value.asset).url()}
+          src={urlFor(value.asset).quality(75).auto('format').url()}
+          width={getImageDimensions(value.asset).width}
+          height={getImageDimensions(value.asset).height}
           alt={value.alt || "Embedded image"}
-          className="my-4 w-full h-auto object-contain"
-          width={800}
-          height={400}
-          priority={false}
+          className="w-full h-auto object-contain"
         />
       ) : null,
 
@@ -158,12 +158,11 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
         <div className="mt-[7vh]">
           {data.author.image?.asset ? (
             <Image
-              src={urlFor(data.author.image.asset).url()}
+              src={urlFor(data.author.image).quality(75).auto('format').url()}
+              width={getImageDimensions(data.author.image.asset).width}
+              height={getImageDimensions(data.author.image.asset).height}
               alt={data.author.image.alt || "Author image"}
               className="w-full h-auto object-cover mb-[1vh]"
-              width={400}
-              height={400}
-              priority={false}
             />
           ) : null}
 
@@ -226,12 +225,11 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
         {data.image?.asset && (
           <div className="col-span-4 row-span-2">
             <Image
-              src={urlFor(data.image.asset).url()}
+              src={urlFor(data.image).quality(75).auto('format').url()}
+              width={getImageDimensions(data.image.asset).width}
+              height={getImageDimensions(data.image.asset).height}
               alt={data.image.alt || "Article image"}
               className="w-full h-full object-cover"
-              width={1200}
-              height={600}
-              priority={false}
             />
           </div>
         )}
@@ -343,12 +341,11 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
       id: "article-1",
       content: data.image?.asset ? (
         <Image
-          src={urlFor(data.image.asset).url()}
+          src={urlFor(data.image).quality(75).auto('format').url()}
+          width={getImageDimensions(data.image.asset).width}
+          height={getImageDimensions(data.image.asset).height}
           alt={data.image.alt || "Article image"}
           className="w-full h-full object-cover"
-          width={1200}
-          height={600}
-          priority={false}
         />
       ) : null,
       colSpan: 6,
@@ -473,12 +470,11 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
             <div className="col-span-3 row-span-1">
               {data.author.image?.asset ? (
                 <Image
-                  src={urlFor(data.author.image.asset).url()}
+                  src={urlFor(data.author.image).quality(75).auto('format').url()}
+                  width={getImageDimensions(data.author.image.asset).width}
+                  height={getImageDimensions(data.author.image.asset).height}
                   alt={data.author.image.alt || "Author image"}
                   className="w-full h-[45.2vh] object-cover mb-[1vh]"
-                  width={400}
-                  height={400}
-                  priority={false}
                 />
               ) : null}
             </div>

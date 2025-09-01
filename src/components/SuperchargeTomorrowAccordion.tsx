@@ -7,6 +7,7 @@ import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import type { PortableTextBlock } from '@portabletext/react';
 import useIsMobile from '@/hooks/useIsMobile';
+import './accordion-animations.css';
 
 type PT = PortableTextBlock[];
 

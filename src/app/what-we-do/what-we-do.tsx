@@ -109,7 +109,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
                     text={data.heading}
                     typeSpeed={60}
                     delay={500}
-                    className="dt-h2"
+                    className="dt-h2 text-balance"
                 />
             ),
             colSpan: 2,

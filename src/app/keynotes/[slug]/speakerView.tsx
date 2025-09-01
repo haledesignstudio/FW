@@ -8,6 +8,7 @@ import type { PortableTextBlock } from '@portabletext/types';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import Link from 'next/link';
 import { urlFor } from '@/sanity/lib/image';
+import { getImageDimensions } from '@sanity/asset-utils';
 
 type SpeakerViewProps = {
   data: {
@@ -62,7 +63,13 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
       {/* Image col 3-4, row 1-6 */}
       <div className="col-span-2 flex items-start justify-end">
         {data.image?.asset && (
-          <Image src={typeof data.image.asset === 'string' ? data.image.asset : urlFor(data.image.asset).url()} alt={data.image.alt || data.name} width={200} height={300} className="object-cover w-full max-h-[40vh]" />
+          <Image
+            src={urlFor(data.image.asset).quality(75).auto('format').url()}
+            width={getImageDimensions(data.image.asset).width}
+            height={getImageDimensions(data.image.asset).height}
+            alt={data.image.alt || 'Process image'}
+            className="w-full h-full object-cover object-[70%]"
+          />
         )}
       </div>
       {/* Row 7: empty */}
@@ -106,7 +113,7 @@ function SpeakerViewMobile({ data, nextSlug }: SpeakerViewProps) {
           </Link>
         ) : (
           <span className="dt-btn">
-             <UnderlineOnHoverAnimation hasStaticUnderline={true}>Next speaker</UnderlineOnHoverAnimation></span>
+            <UnderlineOnHoverAnimation hasStaticUnderline={true}>Next speaker</UnderlineOnHoverAnimation></span>
         )}
       </div>
       {/* Back to top button col 3-4, row 19 */}
@@ -193,13 +200,11 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
         {data.image?.asset && (
           <FadeInOnVisible className="h-full w-full">
             <Image
-              src={typeof data.image.asset === 'string' ? data.image.asset : urlFor(data.image.asset).url()}
+              src={urlFor(data.image.asset).quality(75).auto('format').url()}
+              width={getImageDimensions(data.image.asset).width}
+              height={getImageDimensions(data.image.asset).height}
               alt={data.image.alt || 'Process image'}
               className="w-full h-full object-cover object-[70%]"
-              width={400}
-              height={600}
-              sizes="(max-width: 768px) 100vw, 400px"
-              priority
             />
           </FadeInOnVisible>
         )}

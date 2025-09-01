@@ -8,7 +8,7 @@ import { topicQuery } from '@/sanity/lib/queries';
 import { urlFor } from '@/sanity/lib/image'; // adjust path if needed
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
-
+import { getImageDimensions } from '@sanity/asset-utils';
 
 
 type TopicFromSanity = {
@@ -80,10 +80,10 @@ export default function ExpandableTopicList() {
                                     <div className="col-span-4 row-span-2 flex justify-center items-center my-[2vh]">
                                         {imageUrl && (
                                             <Image
-                                                src={imageUrl}
+                                                src={urlFor(imageUrl).quality(75).auto('format').url()}
+                                                width={getImageDimensions(imageUrl).width}
+                                                height={getImageDimensions(imageUrl).height}
                                                 alt={topic.topicImage.alt ?? 'Topic Image'}
-                                                width={400}
-                                                height={200}
                                                 className="object-cover w-full max-h-[30vh] rounded"
                                             />
                                         )}
@@ -179,12 +179,12 @@ export default function ExpandableTopicList() {
                                 <div className="col-span-1 row-span-3 p-[1vh]">
                                     {imageUrl && (
                                         <FadeInOnVisible className="h-full">
-                                            <Image
-                                                src={imageUrl}
+                                             <Image
+                                                src={urlFor(imageUrl).quality(75).auto('format').url()}
+                                                width={getImageDimensions(imageUrl).width}
+                                                height={getImageDimensions(imageUrl).height}
                                                 alt={topic.topicImage.alt ?? 'Topic Image'}
-                                                width={1920}
-                                                height={1080}
-                                                className="object-cover w-full h-full"
+                                                className="object-cover w-full rounded"
                                             />
                                         </FadeInOnVisible>
                                     )}

@@ -7,6 +7,7 @@ import { urlFor } from '@/sanity/lib/image';
 import { PortableTextBlock } from '@portabletext/react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import { HighlightText } from '@/components/HighlightText';
+import './accordion-animations.css';
 
 export type WhatWeDoEntry = {
     title: PortableTextBlock[];

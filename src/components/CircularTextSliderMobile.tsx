@@ -8,6 +8,7 @@ import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import { PortableTextBlock } from "@portabletext/types";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { urlFor } from '@/sanity/lib/image';
 
 interface Speaker {
   _id: string;
@@ -32,6 +33,13 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
   speakers,
   minItems = 48, // less dense for mobile
 }) => {
+  useEffect(() => {
+    speakers.forEach((speaker) => {
+      const imageUrl = urlFor(speaker.image.asset).quality(75).auto('format').url();
+      const img = new globalThis.Image();
+      img.src = imageUrl;
+    });
+  }, [speakers]);
   const router = useRouter();
   const galleryRef = useRef<HTMLDivElement>(null);
 
@@ -153,7 +161,6 @@ const CircularTextSliderMobile: React.FC<CircularTextSliderMobileProps> = ({
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }}
             width={240}
             height={150}
-            priority
           />
 
         </div>

@@ -9,6 +9,7 @@ import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { urlFor } from '@/sanity/lib/image';
 import Link from 'next/link';
+import { getImageDimensions } from '@sanity/asset-utils';
 
 type ContactPageContent = {
   title: string;
@@ -91,8 +92,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
         body: JSON.stringify(form)
       });
       if (res.ok) {
-        setFormStatus('sent');
-        setForm({ name: '', email: '', phone: '', company: '', position: '', message: '' });
+        setFormStatus('sent'); // keep their entries visible
       } else {
         setFormStatus('error');
       }
@@ -214,11 +214,11 @@ export default function Contact({ data }: { data: ContactPageContent }) {
               <FadeInOnVisible>
                 {data.mainImage?.asset ? (
                   <Image
-                    src={urlFor(data.mainImage).url()}
+                    src={urlFor(data.mainImage).quality(75).auto('format').url()}
+                    width={getImageDimensions(data.mainImage).width}
+                    height={getImageDimensions(data.mainImage).height}
                     alt={data.mainImage?.alt || 'Contact'}
                     className="w-full h-full object-cover"
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 ) : (
                   <Image
@@ -484,11 +484,11 @@ export default function Contact({ data }: { data: ContactPageContent }) {
             {data.mainImage?.asset ? (
               <FadeInOnVisible className="w-full h-full object-cover">
                 <Image
-                  src={urlFor(data.mainImage).url()}
+                  src={urlFor(data.mainImage).quality(75).auto('format').url()}
+                  width={getImageDimensions(data.mainImage).width}
+                  height={getImageDimensions(data.mainImage).height}
                   alt={data.mainImage?.alt || 'Contact'}
                   className="w-full h-full object-cover"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </FadeInOnVisible>
             ) : (
