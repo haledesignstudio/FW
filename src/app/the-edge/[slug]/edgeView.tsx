@@ -15,6 +15,8 @@ import Footer from '@/components/footer';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { HighlightText } from '@/components/HighlightText';
 import Carousel, { type CarouselItem } from '@/components/Carousel';
+import { getImageDimensions } from '@sanity/asset-utils';
+import { urlFor } from '@/sanity/lib/image';
 
 type RichText = PortableTextBlock[];
 
@@ -100,17 +102,15 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             <div className="w-full h-[21vh] overflow-hidden">
                                 {data.articleContents?.[0]?.image?.url ? (
                                     <Image
-                                        src={data.articleContents[0].image.url}
+                                        src={urlFor(data.articleContents[0].image.url).quality(75).auto('format').url()}
+                                        width={getImageDimensions(data.articleContents[0].image.url).width}
+                                        height={getImageDimensions(data.articleContents[0].image.url).height}
                                         alt={
                                             data.articleContents[0].image?.alt ||
                                             data.articleContents[0].title ||
                                             'Article image 1'
                                         }
                                         className="w-full h-full object-cover"
-                                        width={600}
-                                        height={400}
-                                        sizes="(max-width: 768px) 100vw, 600px"
-                                        priority
                                     />
                                 ) : null}
                             </div>
@@ -129,17 +129,15 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             <div className="w-full h-[21vh] overflow-hidden">
                                 {data.articleContents?.[1]?.image?.url ? (
                                     <Image
-                                        src={data.articleContents[1].image.url}
+                                        src={urlFor(data.articleContents[1].image.url).quality(75).auto('format').url()}
+                                        width={getImageDimensions(data.articleContents[1].image.url).width}
+                                        height={getImageDimensions(data.articleContents[1].image.url).height}
                                         alt={
                                             data.articleContents[1].image?.alt ||
                                             data.articleContents[1].title ||
-                                            'Article image 2'
+                                            'Article image 1'
                                         }
                                         className="w-full h-full object-cover"
-                                        width={400}
-                                        height={400}
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                        priority
                                     />
                                 ) : null}
                             </div>
@@ -158,17 +156,15 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             <div className="w-full h-[21vh] overflow-hidden">
                                 {data.articleContents?.[2]?.image?.url ? (
                                     <Image
-                                        src={data.articleContents[2].image.url}
+                                        src={urlFor(data.articleContents[2].image.url).quality(75).auto('format').url()}
+                                        width={getImageDimensions(data.articleContents[2].image.url).width}
+                                        height={getImageDimensions(data.articleContents[2].image.url).height}
                                         alt={
                                             data.articleContents[2].image?.alt ||
                                             data.articleContents[2].title ||
-                                            'Article image 3'
+                                            'Article image 1'
                                         }
                                         className="w-full h-full object-cover"
-                                        width={400}
-                                        height={400}
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                        priority
                                     />
                                 ) : null}
                             </div>
@@ -256,13 +252,15 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             <div className="w-full h-[25vh] overflow-hidden">
                                 {data.articleContents?.[0]?.image?.url ? (
                                     <Image
-                                        src={data.articleContents[0].image.url}
-                                        alt={data.articleContents[0].title || 'Article image 1'}
+                                        src={urlFor(data.articleContents[0].image.url).quality(75).auto('format').url()}
+                                        width={getImageDimensions(data.articleContents[0].image.url).width}
+                                        height={getImageDimensions(data.articleContents[0].image.url).height}
+                                        alt={
+                                            data.articleContents[0].image?.alt ||
+                                            data.articleContents[0].title ||
+                                            'Article image 1'
+                                        }
                                         className="w-full h-full object-cover"
-                                        width={600}
-                                        height={400}
-                                        sizes="(max-width: 768px) 100vw, 600px"
-                                        priority
                                     />
                                 ) : null}
                             </div>
@@ -280,13 +278,15 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             <div className="w-full h-[25vh] overflow-hidden">
                                 {data.articleContents?.[1]?.image?.url ? (
                                     <Image
-                                        src={data.articleContents[1].image.url}
-                                        alt={data.articleContents[1].title || 'Article image 2'}
+                                        src={urlFor(data.articleContents[1].image.url).quality(75).auto('format').url()}
+                                        width={getImageDimensions(data.articleContents[1].image.url).width}
+                                        height={getImageDimensions(data.articleContents[1].image.url).height}
+                                        alt={
+                                            data.articleContents[1].image?.alt ||
+                                            data.articleContents[1].title ||
+                                            'Article image 1'
+                                        }
                                         className="w-full h-full object-cover"
-                                        width={400}
-                                        height={400}
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                        priority
                                     />
                                 ) : null}
                             </div>
@@ -304,13 +304,15 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                             <div className="w-full h-[25vh] overflow-hidden">
                                 {data.articleContents?.[2]?.image?.url ? (
                                     <Image
-                                        src={data.articleContents[2].image.url}
-                                        alt={data.articleContents[2].title || 'Article image 3'}
+                                        src={urlFor(data.articleContents[2].image.url).quality(75).auto('format').url()}
+                                        width={getImageDimensions(data.articleContents[2].image.url).width}
+                                        height={getImageDimensions(data.articleContents[2].image.url).height}
+                                        alt={
+                                            data.articleContents[2].image?.alt ||
+                                            data.articleContents[2].title ||
+                                            'Article image 1'
+                                        }
                                         className="w-full h-full object-cover"
-                                        width={400}
-                                        height={400}
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                        priority
                                     />
                                 ) : null}
                             </div>
@@ -381,7 +383,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
                         </div>
                     </FadeInOnVisible>
                 </div>
-                
+
                 {/* Row 21 col 1-2: Mindbullets you may like */}
                 <div className="col-span-2 row-span-1 mt-[5vh] dt-h5">
                     Mindbullets you may like

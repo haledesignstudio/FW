@@ -7,6 +7,7 @@ import { PortableText } from '@portabletext/react';
 import { PortableTextBlock } from '@portabletext/types';
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import Link from 'next/link';
+import { urlFor } from '@/sanity/lib/image';
 
 interface Speaker {
   _id: string;
@@ -36,6 +37,14 @@ export default function CircularTextSlider({
   speakers,
   minItems = 48,
 }: CircularTextSliderProps) {
+  
+  useEffect(() => {
+  speakers.forEach((speaker) => {
+    const imageUrl = urlFor(speaker.image.asset).quality(75).auto('format').url();
+    const img = new globalThis.Image();
+    img.src = imageUrl;
+  });
+}, [speakers]);
   const galleryRef = useRef<HTMLDivElement>(null);
 
   // rotation (degrees)
@@ -259,17 +268,16 @@ export default function CircularTextSlider({
             key={activeSpeaker._id}
             initial={{ opacity: 0.25 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             className="speaker-info-panel"
           >
             <div className="speaker-image" style={{ width: '14vw', height: '45.2vh', objectFit: 'cover', flexShrink: 0 }}>
               <Image
-                src={activeSpeaker.image.asset}
+                src={urlFor(activeSpeaker.image.asset).quality(75).auto('format').url()}
                 alt={activeSpeaker.image.alt || activeSpeaker.name}
                 width={120}
                 height={360}
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                priority
               />
             </div>
             <div className="flex flex-col justify-between">

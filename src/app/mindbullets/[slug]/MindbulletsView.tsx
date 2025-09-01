@@ -15,6 +15,7 @@ import Footer from "@/components/footer";
 import type { PortableTextBlock } from "@portabletext/types";
 import Link from "next/link";
 import Carousel from "@/components/Carousel";
+import { getImageDimensions } from '@sanity/asset-utils';
 
 
 type RelatedStory = { title: string; link: string };
@@ -90,13 +91,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
         {data.mainImage?.asset && (
           <div className="col-span-4 row-span-2">
             <Image
-              src={urlFor(data.mainImage.asset).url()}
+              src={urlFor(data.mainImage.asset).quality(75).auto('format').url()}
+              width={getImageDimensions(data.mainImage.asset).width}
+              height={getImageDimensions(data.mainImage.asset).height}
               alt={data.mainImage.alt || "Mindbullet image"}
               className="w-full h-full object-cover"
-              width={800}
-              height={400}
-              sizes="(max-width: 768px) 100vw, 800px"
-              priority
             />
           </div>
         )}
@@ -281,13 +280,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       id: "mindbullet-3",
       content: data.mainImage?.asset ? (
         <Image
-          src={urlFor(data.mainImage.asset).url()}
+          src={urlFor(data.mainImage.asset).quality(75).auto('format').url()}
+          width={getImageDimensions(data.mainImage.asset).width}
+          height={getImageDimensions(data.mainImage.asset).height}
           alt={"Process image"}
           className="w-full h-full object-cover"
-          width={1200}
-          height={600}
-          sizes="(max-width: 1200px) 100vw, 1200px"
-          priority
         />
       ) : null,
       colSpan: 6,

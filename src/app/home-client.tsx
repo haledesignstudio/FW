@@ -15,6 +15,7 @@ import { usePreloader } from '@/components/PreloaderContext';
 import HomeAccordion from '@/components/HomeAccordion';
 import { HighlightText } from '@/components/HighlightText';
 import useIsMobile from "@/hooks/useIsMobile";
+import { getImageDimensions } from '@sanity/asset-utils';
 
 export type HomePageContent = {
   _id: string;
@@ -133,7 +134,7 @@ export default function HomeClient({ data }: HomeClientProps) {
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  
+
 
   // Mobile Layout - 4 column grid as specified
   const mobileItems: GridItem[] = [
@@ -185,7 +186,7 @@ export default function HomeClient({ data }: HomeClientProps) {
             _id: data._id,
             _path: 'subheading'
           })}>
-            <HighlightText value={data.subheading} delayMs={5500}/>
+            <HighlightText value={data.subheading} delayMs={5500} />
           </div>
         </FadeInOnVisible>
       ),
@@ -305,13 +306,11 @@ export default function HomeClient({ data }: HomeClientProps) {
       content: data.Image?.asset ? (
         <FadeInOnVisible className="w-full h-full">
           <Image
-            src={urlFor(data.Image.asset).url()}
+            src={urlFor(data.Image.asset).quality(75).auto('format').url()}
+            width={getImageDimensions(data.Image.asset).width}
+            height={getImageDimensions(data.Image.asset).height}
             alt={data.Image.alt || ''}
             className="object-cover w-full h-full"
-            width={800}
-            height={600}
-            priority
-            sizes="(max-width: 767px) 100vw, 50vw"
           />
         </FadeInOnVisible>
       ) : null,
@@ -427,14 +426,14 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 7,
       content: (
         <FadeInOnVisible>
-          <div className="dt-btn" data-sanity={JSON.stringify({
+          <div className="dt-btn text-balance" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'cta'
           })}>
             <a
               href={`mailto:${data.email ?? 'info@futureworld.org'}?subject=${encodeURIComponent(data.cta ?? '')}`}
-              className="transition cursor-pointer"
+              className="transition cursor-pointer text-balance"
             >
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                 {data.cta ?? 'Get in Touch'}
@@ -465,12 +464,11 @@ export default function HomeClient({ data }: HomeClientProps) {
       content: data.Image?.asset ? (
         <FadeInOnVisible className="w-full h-full">
           <Image
-            src={urlFor(data.Image.asset).url()}
+            src={urlFor(data.Image.asset).quality(75).auto('format').url()}
+            width={getImageDimensions(data.Image.asset).width}
+            height={getImageDimensions(data.Image.asset).height}
             alt={data.Image.alt || ''}
             className="object-cover w-full h-full"
-            width={800}
-            height={600}
-            priority
           />
         </FadeInOnVisible>
       ) : null,

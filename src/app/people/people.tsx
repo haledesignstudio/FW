@@ -10,6 +10,8 @@ import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import type { PortableTextBlock } from '@portabletext/types';
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
+import Image from 'next/image';
+import { getImageDimensions } from '@sanity/asset-utils';
 
 type PeoplePageContent = {
   title: string;
@@ -461,24 +463,14 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
               />
             </div>
           </div>
-          <div className="h-full w-full ml-[16.3675vw] mt-[1vh]">
+          <div className="h-full w-[70%] ml-[16.3675vw] mt-[1vh]">
             <p className="dt-h3 text-balance">
               {data.pageHeader.subheading}
             </p>
           </div>
         </FadeInOnVisible>
       ),
-      colSpan: 3,
-      rowSpan: 1,
-      mobileColSpan: 2,
-      mobileRowSpan: 1,
-      landscapeColSpan: 4,
-      landscapeRowSpan: 1,
-    },
-    {
-      id: 2,
-      content: <></>,
-      colSpan: 1,
+      colSpan: 4,
       rowSpan: 1,
       mobileColSpan: 2,
       mobileRowSpan: 1,
@@ -511,10 +503,11 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
       content: (
         <FadeInOnVisible className="w-full h-full">
           <div className="h-full w-full overflow-hidden">
-            <img
-              src={data.mainImage ? urlFor(data.mainImage.asset).url() : '/placeholder-image.png'}
-              alt={data.mainImage?.alt || 'People'}
-              className="w-full h-full object-cover"
+            <Image
+              src={urlFor(data.mainImage).quality(75).auto('format').url()}
+              alt={data.mainImage.alt || 'Image'}
+              width={getImageDimensions(data.mainImage).width}
+              height={getImageDimensions(data.mainImage).height}
             />
           </div>
         </FadeInOnVisible>

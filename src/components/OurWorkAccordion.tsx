@@ -507,7 +507,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                 <div className="grid grid-cols-6 auto-rows-[21vh] overflow-visible gap-x-[1.795vw] gap-y-[3.2vh]">
 
                   {/* Title */}
-                  <div className={`${getGridClasses(tab.titleItem)} p-4`}>
+                  <div className={`${getGridClasses(tab.titleItem)}`}>
                     {tab.titleItem.content}
                   </div>
 
