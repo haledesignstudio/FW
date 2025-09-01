@@ -79,7 +79,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
 
   // --- MOBILE ---
   const mobile = (
-    <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
+    <div className="block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
       <div className="flex-1 grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
         <div className="col-span-4 dt-h1 flex flex-col justify-end">
           Mindbullets
@@ -332,11 +332,11 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   ];
 
   const desktop = (
-    <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
+    <div className="hidden [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block">
       <CommonHeader title={data.title} active="mindbullets" />
 
       {/* Top grid */}
-      <div className="grid grid-cols-2 auto-rows-[minmax(7.701vh,auto)] gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <div className="grid grid-cols-2 auto-rows-[minmax(7.701vh,auto)] gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {gridItems.map((item) => (
           <div
             key={item.id}
@@ -355,9 +355,9 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
 
       {/* Body + disclaimer */}
       <FadeInOnVisible>
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
-          <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4">
-            <div className="grid grid-cols-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
+        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
+          <div className="col-span-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-4">
+            <div className="grid grid-cols-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
               <div className="dt-body-sm">
                 <PortableText value={leftBlocks} components={ptComponents} />
               </div>
@@ -367,7 +367,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
             </div>
           </div>
 
-          <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2">
+          <div className="col-span-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-2">
             <div className="h-full flex items-start">
               <div className="max-w-none">
                 <p className="dt-h5 text-[#DC5A50]">
@@ -388,13 +388,13 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
             </div>
           </div>
 
-          <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
+          <div className="hidden [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
         </div>
       </FadeInOnVisible>
 
       {/* Body + disclaimer */}
       <FadeInOnVisible>
-        <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+        <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           <div className="h-full flex items-center">
             <div className="dt-body-lg">
               {new Intl.DateTimeFormat("en-GB", {
@@ -413,8 +413,8 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       {/* Related links */}
       {data.RelatedStories?.length ? (
         <FadeInOnVisible>
-          <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[10vh]">
-            <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-6">
+          <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[10vh]">
+            <div className="col-span-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-6">
               <p className="dt-h5">
                 Links to related stories
               </p>
@@ -438,7 +438,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
                 ))}
               </ul>
             </div>
-            <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4" />
+            <div className="hidden [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-4" />
           </div>
         </FadeInOnVisible>
       ) : null}
@@ -464,8 +464,8 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
   return (
     <>
       <Header />
-      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden"><CommonHeader title={'Insights'} active="mindbullets" /></div>
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden"><CommonHeader title={'Insights'} active="mindbullets" /></div>
         {mobile}
         {desktop}
       </main>

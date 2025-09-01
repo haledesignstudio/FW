@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react';
 
 export default function ReloadOnBreakpoint() {
-  const BREAKPOINT = 768;
+  const BREAKPOINT = 1080;
   const prevIsMobile = useRef(typeof window !== 'undefined' ? window.innerWidth < BREAKPOINT : false);
 
   useEffect(() => {

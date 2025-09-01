@@ -159,7 +159,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
   ].filter(([, url]) => !!url);
 
   return (
-    <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)]  [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+    <div className="grid gap-x-[4.53vw] gap-y-[2.09vh] grid-cols-2 auto-rows-[minmax(7.701vh,auto)]  [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
       {/* Name and social links */}
       <div className="col-span-1 row-span-4 h-full flex flex-col justify-between">
         <FadeInOnVisible>

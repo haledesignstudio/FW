@@ -70,7 +70,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
   // Mobile check
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1080);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -226,7 +226,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                     alt="Contact"
                     className="w-full h-full object-cover"
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 1080px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 )}
               </FadeInOnVisible>
@@ -463,8 +463,8 @@ export default function Contact({ data }: { data: ContactPageContent }) {
   return (
     <>
       <Header />
-      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {/* ROW 2: Main Title (col-span-3) + Subheading (col-span-3) */}
           <div className="col-span-3 row-span-1 flex items-start bg-[#F9F7F2]">
             <MainTitleAnimation
@@ -497,7 +497,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                 alt="Contact"
                 className="w-full h-full object-cover"
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 1080px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             )}
           </div>
@@ -648,7 +648,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
 
 
           {/* ROW 5: Keynote Title (cols 1-3) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:1080px)]:col-span-4 [@media(max-height:600px)_and_(max-width:1080px)]:row-span-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="h-full w-full flex items-start justify-start">
               <div id="book-keynote" className="w-full max-w-full">
                 <MainTitleAnimation
@@ -663,12 +663,12 @@ export default function Contact({ data }: { data: ContactPageContent }) {
 
           {/* ROW 5: Empty (col 4) */}
 
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:1080px)]:col-span-4 [@media(max-height:600px)_and_(max-width:1080px)]:row-span-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div></div>
           </div>
 
           {/* ROW 5: Text + Link (cols 5-6) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:1080px)]:col-span-4 [@media(max-height:600px)_and_(max-width:1080px)]:row-span-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="col-span-1 row-span-1 h-full flex flex-col justify-between">
               <FadeInOnVisible>
                 <p className="dt-body-sm">
@@ -689,7 +689,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           </div>
 
           {/* ROW 6: Keynote Subheading (cols 1-3) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:1080px)]:col-span-4 [@media(max-height:600px)_and_(max-width:1080px)]:row-span-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div className="h-full w-full flex items-start justify-start">
               <FadeInOnVisible>
                 <h2 className="dt-h3">
@@ -700,7 +700,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           </div>
 
           {/* ROW 6: Empty (cols 4-6) */}
-          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:768px)]:col-span-4 [@media(max-height:600px)_and_(max-width:768px)]:row-span-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-1">
+          <div className="bg-[#F9F7F2] flex flex-col col-span-2 row-span-1 [@media(max-height:600px)_and_(max-width:1080px)]:col-span-4 [@media(max-height:600px)_and_(max-width:1080px)]:row-span-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-3 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-1">
             <div></div>
           </div>
 

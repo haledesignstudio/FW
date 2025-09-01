@@ -43,7 +43,7 @@ const mindbulletsArchiveQuery = defineQuery(`
   }
 `);
 
-function useIsMobile(breakpoint = 768) {
+function useIsMobile(breakpoint = 1080) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < breakpoint);
@@ -118,7 +118,7 @@ const MindbulletArchive = () => {
 
 
   return (
-    <div className="w-full h-auto relative [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:mt-[20vh]">
+    <div className="w-full h-auto relative [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:mt-[20vh]">
       {isMobile ? (
         <div className="grid grid-cols-4  gap-x-[4.53vw] gap-y-[1vh] w-full h-auto">
           {/* Row 1: Headings */}
@@ -226,7 +226,7 @@ const MindbulletArchive = () => {
           </div>
         </div>
       ) : (
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh] w-full">
+        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh] w-full">
           {/* Headings */}
           <div className="col-span-3 dt-h5 flex items-end">
             Mindbullets Archive

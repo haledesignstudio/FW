@@ -54,7 +54,7 @@ export default function Preloader() {
           alt="Loading..."
           width={200}
           height={200}
-          className={`w-[150px] h-[150px] [@media(max-width:768px)]:w-[80px] [@media(max-width:768px)]:h-[80px] object-contain transition-opacity duration-500 ${
+          className={`w-[150px] h-[150px] [@media(max-width:1080px)]:w-[80px] [@media(max-width:1080px)]:h-[80px] object-contain transition-opacity duration-500 ${
             stage === 'fadeOut' ? 'opacity-0' : 'opacity-100'
           }`}
         />

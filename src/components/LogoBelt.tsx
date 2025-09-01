@@ -53,7 +53,7 @@ export default function LogoBelt({
                 alt={alt}
                 width={160}
                 height={64}
-                className="h-[17vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[21vh] w-auto object-contain"
+                className="h-[17vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:h-[21vh] w-auto object-contain"
                 unoptimized
                 priority={i < 6}
               />

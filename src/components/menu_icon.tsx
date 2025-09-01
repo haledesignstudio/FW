@@ -10,7 +10,7 @@ const MenuIcon: React.FC<MenuIconProps> = ({ stage, onClick }) => {
 
     useEffect(() => {
         const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
+            setIsMobile(window.innerWidth < 1080);
         };
         
         checkMobile();

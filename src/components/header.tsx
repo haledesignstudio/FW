@@ -557,7 +557,7 @@ const Header: React.FC = () => {
 
 
     // Check if mobile
-    const isMobileScreen = isClient && window.innerWidth < 768;
+    const isMobileScreen = isClient && window.innerWidth < 1080;
 
 
     // Mobile menu items - simplified for mobile layout
@@ -852,10 +852,10 @@ requestAnimationFrame(async () => {
                 // DESKTOP LAYOUT  
                 <>
                     {/* Desktop Header */}
-                    <header className="grid grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 
-                    gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] 
-                    auto-rows-[20vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[15vh]
-                    items-start bg-[#F9F7F2] px-[2vh] pt-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[4vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:pt-[4vh] 
+                    <header className="grid grid-cols-2 [@media(max-height:600px)_and_(max-width:1080px)]:grid-cols-4 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 
+                    gap-[2vh] [@media(max-height:600px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] 
+                    auto-rows-[20vh] [@media(max-height:600px)_and_(max-width:1080px)]:auto-rows-[15vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[15vh]
+                    items-start bg-[#F9F7F2] px-[2vh] pt-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[4vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:pt-[4vh] 
                     relative top-0 left-0 z-50">
 
                         {/* Logo: always first column */}
@@ -871,12 +871,12 @@ requestAnimationFrame(async () => {
                         </Link>
 
                         {/* Spacer: fills unused middle columns */}
-                        <div className="hidden [@media(max-height:600px)_and_(max-width:768px)]:block [@media(max-height:600px)_and_(max-width:768px)]:col-span-2 
-                          [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4"></div>
+                        <div className="hidden [@media(max-height:600px)_and_(max-width:1080px)]:block [@media(max-height:600px)_and_(max-width:1080px)]:col-span-2 
+                          [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-4"></div>
 
                         {/* MenuIcon: last column */}
                         <div className="col-span-1 flex justify-end items-start">
-                            <div className="relative h-[20vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:h-[25vh]">
+                            <div className="relative h-[20vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:h-[25vh]">
                                 <MenuIcon stage={stage} onClick={toggleMenu} />
                             </div>
                         </div>

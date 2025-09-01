@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
 
     useEffect(() => {
         const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
+            setIsMobile(window.innerWidth < 1080);
         };
 
         checkMobile();
@@ -315,7 +315,7 @@ const Footer: React.FC = () => {
 
         // Mobile
         if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-            baseClasses.push('block', '[@media(max-width:767px)]:hidden');
+            baseClasses.push('block', '[@media(max-width:1080px)]:hidden');
         } else {
             baseClasses.push(`col-span-${item.mobileColSpan}`);
             baseClasses.push(`row-span-${item.mobileRowSpan}`);
@@ -323,18 +323,18 @@ const Footer: React.FC = () => {
 
         // Landscape
         if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-            baseClasses.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+            baseClasses.push('[@media(max-height:600px)_and_(max-width:1080px)]:hidden');
         } else {
-            baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
-            baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+            baseClasses.push(`[@media(max-height:600px)_and_(max-width:1080px)]:col-span-${item.landscapeColSpan}`);
+            baseClasses.push(`[@media(max-height:600px)_and_(max-width:1080px)]:row-span-${item.landscapeRowSpan}`);
         }
 
         // Desktop
         if (item.colSpan === 0 || item.rowSpan === 0) {
-            baseClasses.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+            baseClasses.push('[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden');
         } else {
-            baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
-            baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+            baseClasses.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+            baseClasses.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
         }
 
         return baseClasses.join(' ');
@@ -516,8 +516,8 @@ const Footer: React.FC = () => {
 
     // Render desktop layout
     const renderDesktopLayout = () => (
-        <footer ref={footerRef} className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
-            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+        <footer ref={footerRef} className="p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
+            <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:1080px)]:grid-cols-4 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:1080px)]:auto-rows-[15vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
                 {items(shouldAnimate).map((item) => (
                     <div key={item.id} className={getGridClasses(item)}>
                         {item.content}

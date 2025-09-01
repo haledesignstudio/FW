@@ -75,23 +75,23 @@ type GridItem = {
 const getGridClasses = (item: GridItem) => {
   const base = ['bg-[#F9F7F2]', 'flex', 'flex-col'];
   if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-    base.push('block', '[@media(max-width:767px)]:hidden');
+    base.push('block', '[@media(max-width:1080px)]:hidden');
   } else {
     base.push(`col-span-${item.mobileColSpan}`, `row-span-${item.mobileRowSpan}`);
   }
 
   if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-    base.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+    base.push('[@media(max-height:600px)_and_(max-width:1080px)]:hidden');
   } else {
-    base.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
-    base.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+    base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:col-span-${item.landscapeColSpan}`);
+    base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:row-span-${item.landscapeRowSpan}`);
   }
 
   if (item.colSpan === 0 || item.rowSpan === 0) {
-    base.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+    base.push('[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden');
   } else {
-    base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
-    base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+    base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+    base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
   }
 
   return base.join(' ');
@@ -113,7 +113,7 @@ export default function HomeClient({ data }: HomeClientProps) {
     // Responsive timings
     let isMobile = false;
     if (typeof window !== 'undefined') {
-      isMobile = window.innerWidth < 768;
+      isMobile = window.innerWidth < 1080;
     }
     // You can adjust these timings as needed
     const timings = isMobile
@@ -489,7 +489,7 @@ export default function HomeClient({ data }: HomeClientProps) {
         <>
           <main className="bg-[#F9F7F2]" data-sanity={JSON.stringify({ _type: 'homePage', _id: data._id })}>
             {/* Mobile Layout */}
-            <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden">
+            <div className="block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden">
               <div className="p-[2vh] bg-[#F9F7F2] overflow-visible">
                 <div className="grid gap-[2vh] grid-cols-4 auto-rows-[6.25vh] overflow-visible">
                   {mobileItems.map((item) => (
@@ -533,9 +533,9 @@ export default function HomeClient({ data }: HomeClientProps) {
             </div>
 
             {/* Desktop Layout */}
-            <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
-              <div className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2] overflow-visible">
-                <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] overflow-visible [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+            <div className="hidden [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block">
+              <div className="p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2] overflow-visible">
+                <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] overflow-visible [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
                   {desktopItems.map((item) => (
                     <div key={item.id} className={`${getGridClasses(item)} overflow-visible`}>
                       {item.content}

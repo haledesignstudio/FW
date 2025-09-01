@@ -52,7 +52,7 @@ export default async function TermsAndConditionsPage() {
     return (
       <>
         <Header />
-        <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
+        <main className="p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:p-[4vh] bg-[#F9F7F2]">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Terms & Conditions</h1>
             <p>Sorry, we&apos;re having trouble loading the terms and conditions. Please try again later.</p>

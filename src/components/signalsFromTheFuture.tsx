@@ -98,7 +98,7 @@ const getGridClasses = (item: GridItem) => {
   const base = ['bg-[#F9F7F2]', 'flex', 'flex-col'];
 
   if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-    base.push('block', '[@media(max-width:767px)]:hidden');
+    base.push('block', '[@media(max-width:1080px)]:hidden');
   } else {
     base.push(`col-span-${item.mobileColSpan}`, `row-span-${item.mobileRowSpan}`);
 
@@ -117,17 +117,17 @@ const getGridClasses = (item: GridItem) => {
   }
 
   if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-    base.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+    base.push('[@media(max-height:600px)_and_(max-width:1080px)]:hidden');
   } else {
-    base.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
-    base.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+    base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:col-span-${item.landscapeColSpan}`);
+    base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:row-span-${item.landscapeRowSpan}`);
   }
 
   if (item.colSpan === 0 || item.rowSpan === 0) {
-    base.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+    base.push('[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden');
   } else {
-    base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
-    base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+    base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+    base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
   }
 
   return base.join(' ');
@@ -251,7 +251,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
 
   // Mobile autoplay effect
   useEffect(() => {
-    const isMobileScreen = isClient && window.innerWidth < 768;
+    const isMobileScreen = isClient && window.innerWidth < 1080;
     if (!isClient || (!isMobile && !isMobileScreen) || !mobileAutoplay || signalPieces.length === 0) return;
 
     const interval = setInterval(() => {
@@ -262,7 +262,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
   }, [isClient, isMobile, mobileAutoplay, signalPieces.length]);
 
   const handleReadMore = (columnIndex: number) => {
-    const isMobileScreen = isClient && window.innerWidth < 768;
+    const isMobileScreen = isClient && window.innerWidth < 1080;
     if (isMobile || isMobileScreen) {
       setMobileAutoplay(false); // Stop autoplay when user interacts
     }
@@ -281,7 +281,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
 
   //   const handleReadLess = () => {
   //     setExpandedColumn(null);
-  //     const isMobileScreen = isClient && window.innerWidth < 768;
+  //     const isMobileScreen = isClient && window.innerWidth < 1080;
   //     if (isMobile || isMobileScreen) {
   //       setMobileAutoplay(true); // Resume autoplay
   //     }
@@ -302,15 +302,15 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
   // Prevent hydration mismatch
   if (!isClient) {
     return (
-      <div className="bg-[#F9F7F2] p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh]">
-        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[6.25vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[7.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[12.5vh]">
+      <div className="bg-[#F9F7F2] p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:p-[4vh]">
+        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:1080px)]:grid-cols-4 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[6.25vh] [@media(max-height:600px)_and_(max-width:1080px)]:auto-rows-[7.5vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[12.5vh]">
           <div className="col-span-6 row-span-1 bg-[#F9F7F2]"></div>
         </div>
       </div>
     );
   }
 
-  if (isMobile || window.innerWidth < 768) {
+  if (isMobile || window.innerWidth < 1080) {
     // Mobile Layout
     const currentPiece = signalPieces[currentMobileIndex];
     if (!currentPiece) return null;
@@ -759,8 +759,8 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
   }
 
   return (
-    <div className="bg-[#F9F7F2] p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:p-[4vh] relative z-10">
-      <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-auto">
+    <div className="bg-[#F9F7F2] p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:p-[4vh] relative z-10">
+      <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-auto">
         {desktopGridItems.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
             {item.content}

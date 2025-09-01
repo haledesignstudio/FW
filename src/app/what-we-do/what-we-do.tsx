@@ -60,23 +60,23 @@ type GridItem = {
 const getGridClasses = (item: GridItem) => {
     const base = ['bg-[#F9F7F2]', 'flex', 'flex-col'];
     if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-        base.push('block', '[@media(max-width:767px)]:hidden');
+        base.push('block', '[@media(max-width:1080px)]:hidden');
     } else {
         base.push(`col-span-${item.mobileColSpan}`, `row-span-${item.mobileRowSpan}`);
     }
 
     if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-        base.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+        base.push('[@media(max-height:600px)_and_(max-width:1080px)]:hidden');
     } else {
-        base.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
-        base.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+        base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:col-span-${item.landscapeColSpan}`);
+        base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:row-span-${item.landscapeRowSpan}`);
     }
 
     if (item.colSpan === 0 || item.rowSpan === 0) {
-        base.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+        base.push('[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden');
     } else {
-        base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
-        base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+        base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+        base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
     }
 
     return base.join(' ');
@@ -95,7 +95,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
     }, []);
 
     // Check if mobile
-    const isMobileScreen = isClient && window.innerWidth < 768;
+    const isMobileScreen = isClient && window.innerWidth < 1080;
 
     // Handle back to top functionality
     const handleBackToTop = () => {

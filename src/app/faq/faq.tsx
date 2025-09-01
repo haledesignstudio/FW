@@ -40,7 +40,7 @@ type GridItem = {
   landscapeRowSpan?: number;
 };
 
-function useIsMobile(breakpoint = 768) {
+function useIsMobile(breakpoint = 1080) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < breakpoint);
@@ -56,7 +56,7 @@ const getGridClasses = (item: GridItem) => {
 
   // Mobile
   if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-    baseClasses.push('block', '[@media(max-width:767px)]:hidden');
+    baseClasses.push('block', '[@media(max-width:1080px)]:hidden');
   } else {
     baseClasses.push(`col-span-${item.mobileColSpan}`);
     if (item.mobileRowSpan && item.mobileRowSpan > 0) {
@@ -66,21 +66,21 @@ const getGridClasses = (item: GridItem) => {
 
   // Landscape
   if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-    baseClasses.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+    baseClasses.push('[@media(max-height:600px)_and_(max-width:1080px)]:hidden');
   } else {
-    baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
+    baseClasses.push(`[@media(max-height:600px)_and_(max-width:1080px)]:col-span-${item.landscapeColSpan}`);
     if (item.landscapeRowSpan && item.landscapeRowSpan > 0) {
-      baseClasses.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+      baseClasses.push(`[@media(max-height:600px)_and_(max-width:1080px)]:row-span-${item.landscapeRowSpan}`);
     }
   }
 
   // Desktop
   if (item.colSpan === 0 || item.rowSpan === 0) {
-    baseClasses.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+    baseClasses.push('[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden');
   } else {
-    baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+    baseClasses.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
     if (item.rowSpan && item.rowSpan > 0) {
-      baseClasses.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+      baseClasses.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
     }
   }
 
@@ -306,8 +306,8 @@ export default function FAQClient({ faqData }: Props) {
   return (
     <>
       <Header />
-      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
           {items.map((item) => (
             <div key={item.id} className={getGridClasses(item)}>
               {item.content}

@@ -80,7 +80,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-body-sm {
     font-size: clamp(0.7vw, 1.85vh, 0.925vw);
     line-height: clamp(0.8vw,2vh,1vw);
@@ -106,7 +106,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-body-lg {
     font-size: clamp(0.95vw, 2.3vh, 1.15vw);
     line-height: clamp(1vw, 2.75vh, 1.375vw);
@@ -132,7 +132,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-btn {
     font-size: clamp(0.75vw, 2vh, 1vw);
     line-height: clamp(1vw, 2.5vh, 1.25vw);
@@ -158,7 +158,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-btn-secondary {
     font-size: clamp(0.5vw, 1.6vh, 0.8vw);
     line-height: clamp(1vw, 2.6vh, 1.3vw);
@@ -184,7 +184,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-h1 {
     font-size: clamp(8vw, 18.5vh, 9.25vw);
     line-height: clamp(8.5vw, 19.5vh, 9.75vw);
@@ -209,7 +209,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-h2 {
     font-size: clamp(3.75vw, 9.25vh, 4.625vw);
     line-height: clamp(4vw, 10.18vh, 5.09vw);
@@ -234,7 +234,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-h3 {
     font-size: clamp(1.5vw,4.45vh,2.225vw);
     line-height: clamp(1.9vw,4.9vh,2.45vw);
@@ -259,7 +259,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-h4 {
     font-size: clamp(1vw, 2.75vh, 1.375vw);
     line-height: clamp(1.2vw, 3.42vh, 1.71vw);
@@ -284,7 +284,7 @@ body::-webkit-scrollbar {
   margin-bottom: 0;
 }
 
-@media (min-width:768px) and (min-aspect-ratio:1/1) {
+@media (min-width:1080px) and (min-aspect-ratio:1/1) {
   .dt-h5 {
     font-size: clamp(0.7vw,2vh,1vw);
     line-height: clamp(0.9vw, 2.5vh, 1.25vw);

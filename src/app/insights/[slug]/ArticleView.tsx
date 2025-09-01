@@ -218,7 +218,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
 
   // --- MOBILE ---
   const mobile = (
-    <div className="block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
+    <div className="block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
       <div className="flex-1 grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
 
 
@@ -387,9 +387,9 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
   ];
 
   const desktop = (
-    <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block">
+    <div className="hidden [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block">
       <CommonHeader title={data.title} active="corporate" />
-      <div className="grid grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+      <div className="grid grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {gridItems.map((item) => (
           <div
             key={item.id}
@@ -405,9 +405,9 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
       </div>
 
       <FadeInOnVisible>
-        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
-          <div className="col-span-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-4">
-            <div className="grid grid-cols-1 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
+        <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
+          <div className="col-span-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-4">
+            <div className="grid grid-cols-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
               <div className="dt-body-sm">
                 <PortableText value={leftBlocks} components={ptComponents} />
               </div>
@@ -435,7 +435,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
             </div>
           </div>
 
-          <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
+          <div className="hidden [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
         </div>
       </FadeInOnVisible>
 
@@ -479,7 +479,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
               ) : null}
             </div>
 
-            <div className="hidden [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
+            <div className="hidden [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-2" />
           </div>
         </FadeInOnVisible>
       ) : null}
@@ -534,8 +534,8 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
   return (
     <>
       <Header />
-      <main className="p-[2vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-        <div className="[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden"><CommonHeader title={'Insights'} active="edge" /></div>
+      <main className="p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+        <div className="[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden"><CommonHeader title={'Insights'} active="edge" /></div>
         {mobile}
         {desktop}
       </main>

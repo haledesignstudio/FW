@@ -167,7 +167,7 @@ export default function ExpandableTopicList() {
                                         ? prev.filter((i) => i !== index) // close
                                         : [...prev, index]               // open
                                 )
-                            } className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:768px)]:gap-[3vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:768px)]:grid-cols-4 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:768px)]:auto-rows-[15vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
+                            } className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:1080px)]:grid-cols-4 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[12.5vh] [@media(max-height:600px)_and_(max-width:1080px)]:auto-rows-[15vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[25vh]">
                                 {/* td-1: topicHeading */}
                                 <div className="col-span-2 row-span-1 p-[1vh]">
                                     <FadeInOnVisible>

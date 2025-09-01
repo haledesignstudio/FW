@@ -7,7 +7,7 @@ import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { getGridClasses, GridItem } from '@/components/insights/grid';
 import React, { useState, useEffect } from 'react';
 
-function useIsMobile(breakpoint = 768) {
+function useIsMobile(breakpoint = 1080) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < breakpoint);
@@ -152,7 +152,7 @@ export default function CommonHeader({ active }: CommonHeaderProps) {
 
   return (
     <>
-      <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
+      <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[25vh]">
         {items.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
             {item.content}

@@ -32,7 +32,7 @@ export type WhatWeDoAccordionItem = {
     entries: [WhatWeDoEntry, WhatWeDoEntry, WhatWeDoEntry];
 };
 
-function useIsMobile(breakpoint = 768) {
+function useIsMobile(breakpoint = 1080) {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
         const check = () => setIsMobile(window.innerWidth < breakpoint);
@@ -102,21 +102,21 @@ type GridItem = {
 function getGridClasses(item: GridItem) {
     const base = ['flex', 'flex-col'];
     if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-        base.push('block', '[@media(max-width:767px)]:hidden');
+        base.push('block', '[@media(max-width:1080px)]:hidden');
     } else {
         base.push(`col-span-${item.mobileColSpan}`, `row-span-${item.mobileRowSpan}`);
     }
     if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-        base.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+        base.push('[@media(max-height:600px)_and_(max-width:1080px)]:hidden');
     } else {
-        base.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
-        base.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+        base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:col-span-${item.landscapeColSpan}`);
+        base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:row-span-${item.landscapeRowSpan}`);
     }
     if (item.colSpan === 0 || item.rowSpan === 0) {
-        base.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+        base.push('[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden');
     } else {
-        base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
-        base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+        base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+        base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
     }
     return base.join(' ');
 }
@@ -163,15 +163,15 @@ const wrapStrings = (children: React.ReactNode): React.ReactNode => {
 
 const ptComponents: PortableTextComponents = {
     list: {
-        bullet: ({ children }) => <ul className="list-disc pl-[10vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:pl-[7.5%] mb-[0]">{children}</ul>,
-        number: ({ children }) => <ol className="list-decimal pl-[10vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:pl-[7.5%] mb-[0]">{children}</ol>,
+        bullet: ({ children }) => <ul className="list-disc pl-[10vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:pl-[7.5%] mb-[0]">{children}</ul>,
+        number: ({ children }) => <ol className="list-decimal pl-[10vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:pl-[7.5%] mb-[0]">{children}</ol>,
     },
     listItem: {
-        bullet: ({ children }) => <li className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</li>,
-        number: ({ children }) => <li className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</li>,
+        bullet: ({ children }) => <li className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</li>,
+        number: ({ children }) => <li className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</li>,
     },
     block: {
-        normal: ({ children }) => <p className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</p>,
+        normal: ({ children }) => <p className="mb-[clamp(4.2vw,2.82vh,5.64vw)] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:mb-[2.5%]">{wrapStrings(children)}</p>,
     },
 };
 

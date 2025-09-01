@@ -102,7 +102,7 @@ export default async function KeynoteSpeakerPage({ params }: PageProps) {
     return (
         <>
             <Header />
-            <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
+            <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
                 <CommonHeader title={data.name} active="keynotes" />
                 <SpeakerView data={speakerViewData} nextSlug={nextSlug} />
             </main>

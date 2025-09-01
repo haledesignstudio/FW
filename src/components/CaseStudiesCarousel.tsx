@@ -36,7 +36,7 @@ export type CarouselProps = {
     ariaLabel?: string;
 };
 
-function useIsMobile(breakpoint = 768) {
+function useIsMobile(breakpoint = 1080) {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
         const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
@@ -111,7 +111,7 @@ export default function Carousel({
     rounded = "rounded-2xl",
     ariaLabel = "Five column image carousel",
 }: CarouselProps) {
-    const isMobile = useIsMobile(768);
+    const isMobile = useIsMobile(1080);
 
     // Effective sizes for current breakpoint
     const IMG_H = isMobile ? (mobileImageHeight ?? imageHeight) : imageHeight;

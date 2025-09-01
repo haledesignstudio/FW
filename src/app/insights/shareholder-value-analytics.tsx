@@ -52,7 +52,7 @@ export default function ShareholderValueAnalytics(props: Props) {
     Mail2,
   };
 
-  function useIsMobile(breakpoint = 768) {
+  function useIsMobile(breakpoint = 1080) {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
       const check = () => setIsMobile(window.innerWidth < breakpoint);

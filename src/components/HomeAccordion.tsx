@@ -54,8 +54,8 @@ const useResponsiveLayout = () => {
     useEffect(() => {
         const checkMobile = () => {
             // Mobile: not tablet landscape and not desktop
-            const isTabletLandscape = window.matchMedia('(max-height: 600px) and (max-width: 768px)').matches;
-            const isDesktop = window.matchMedia('(min-width: 768px) and (min-aspect-ratio: 1/1)').matches;
+            const isTabletLandscape = window.matchMedia('(max-height: 600px) and (max-width: 1080px)').matches;
+            const isDesktop = window.matchMedia('(min-width: 1080px) and (min-aspect-ratio: 1/1)').matches;
             setIsMobile(!isTabletLandscape && !isDesktop);
         };
 
@@ -70,21 +70,21 @@ const useResponsiveLayout = () => {
 function getGridClasses(item: GridItem) {
     const base = ['flex', 'flex-col'];
     if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
-        base.push('block', '[@media(max-width:767px)]:hidden');
+        base.push('block', '[@media(max-width:1080px)]:hidden');
     } else {
         base.push(`col-span-${item.mobileColSpan}`, `row-span-${item.mobileRowSpan}`);
     }
     if (item.landscapeColSpan === 0 || item.landscapeRowSpan === 0) {
-        base.push('[@media(max-height:600px)_and_(max-width:768px)]:hidden');
+        base.push('[@media(max-height:600px)_and_(max-width:1080px)]:hidden');
     } else {
-        base.push(`[@media(max-height:600px)_and_(max-width:768px)]:col-span-${item.landscapeColSpan}`);
-        base.push(`[@media(max-height:600px)_and_(max-width:768px)]:row-span-${item.landscapeRowSpan}`);
+        base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:col-span-${item.landscapeColSpan}`);
+        base.push(`[@media(max-height:600px)_and_(max-width:1080px)]:row-span-${item.landscapeRowSpan}`);
     }
     if (item.colSpan === 0 || item.rowSpan === 0) {
-        base.push('[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:hidden');
+        base.push('[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden');
     } else {
-        base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
-        base.push(`[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
+        base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-${item.colSpan}`);
+        base.push(`[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:row-span-${item.rowSpan}`);
     }
     return base.join(' ');
 }
@@ -313,7 +313,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                     alt={data.section2.section2Image.alt || 'Process image'}
                                     className="w-full h-full object-contain object-top object-center"
                                     fill
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    sizes="(max-width: 1080px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                             </div>
                         ) : null,
@@ -716,14 +716,14 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         >
                             {/* Grid wrapper: collapsed shows exactly one row height */}
                             <div className={[
-                                "[@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh]",
+                                "[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh]",
                                 "overflow-hidden transition-[max-height] duration-500",
                                 !isActive
                                     ? "max-h-[34vh]"
                                     : "max-h-[9999px]"
                             ].join(' ')}
                             >
-                                <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:768px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
+                                <div className="grid gap-[2vh] grid-cols-2 auto-rows-[12.5vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
 
                                     {/* Title as a grid item with custom spans */}
                                     <div className={`${getGridClasses(tab.titleItem)}`}>
