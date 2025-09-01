@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import Carousel from '@/components/CareerCarousel';
@@ -12,6 +12,7 @@ import type { PortableTextBlock } from '@portabletext/types';
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import Image from 'next/image';
 import { getImageDimensions } from '@sanity/asset-utils';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type PeoplePageContent = {
   title: string;
@@ -132,17 +133,7 @@ const getGridClasses = (item: GridItem) => {
 };
 
 export default function People({ data, careers = [] }: { data: PeoplePageContent; careers?: CareerDoc[] }) {
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Mobile check
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1080);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useIsMobile();
 
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

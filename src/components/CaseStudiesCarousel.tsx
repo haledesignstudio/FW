@@ -5,6 +5,7 @@ import clsx from "clsx";
 import UnderlineOnHoverAnimation from "@/components/underlineOnHoverAnimation";
 import { createRoot, type Root } from "react-dom/client";
 import Image from "next/image";
+import useIsMobile from "@/hooks/useIsMobile";
 
 export type CarouselItem = {
     src: string;
@@ -35,27 +36,6 @@ export type CarouselProps = {
     rounded?: string;
     ariaLabel?: string;
 };
-
-function useIsMobile(breakpoint = 1080) {
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-        const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
-        const onChange = (ev: MediaQueryListEvent) => setIsMobile(ev.matches);
-
-        setIsMobile(mql.matches);
-
-        if (typeof mql.addEventListener === "function") {
-            mql.addEventListener("change", onChange);
-            return () => mql.removeEventListener("change", onChange);
-        }
-        if (typeof mql.addListener === "function") {
-            mql.addListener(onChange);
-            return () => mql.removeListener(onChange);
-        }
-        return;
-    }, [breakpoint]);
-    return isMobile;
-}
 
 // Helper type to stash mounted React roots on DOM nodes (for cleanup)
 type WithRoots = { __roots?: Root[] };
@@ -111,7 +91,7 @@ export default function Carousel({
     rounded = "rounded-2xl",
     ariaLabel = "Five column image carousel",
 }: CarouselProps) {
-    const isMobile = useIsMobile(1080);
+    const isMobile = useIsMobile();
 
     // Effective sizes for current breakpoint
     const IMG_H = isMobile ? (mobileImageHeight ?? imageHeight) : imageHeight;

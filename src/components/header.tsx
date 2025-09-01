@@ -7,6 +7,7 @@ import MenuIcon from './menu_icon';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { usePathname, useRouter } from 'next/navigation';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
+import useIsMobile from '@/hooks/useIsMobile';
 
 
 const DELAY_BY_PATH: Record<string, number> = {
@@ -497,14 +498,8 @@ const Header: React.FC = () => {
     const pathname = usePathname();
     const isHomepage = pathname === '/';
 
-    // Mobile detection with hydration safety
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-
+    // Use the useIsMobile hook
+    const isMobileScreen = useIsMobile();
 
     const [activePair, setActivePair] = useState<number | null>(null);
     const [hovering, setHovering] = useState(false);
@@ -557,7 +552,7 @@ const Header: React.FC = () => {
 
 
     // Check if mobile
-    const isMobileScreen = isClient && window.innerWidth < 1080;
+    // Removed the isClient logic as it is no longer needed
 
 
     // Mobile menu items - simplified for mobile layout

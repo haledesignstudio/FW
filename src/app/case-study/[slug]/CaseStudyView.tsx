@@ -10,6 +10,7 @@ import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { HighlightText } from '@/components/HighlightText';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { getImageDimensions } from '@sanity/asset-utils';
+import useIsMobile from '@/hooks/useIsMobile';
 
 // Custom PortableText components for better list and block rendering
 const portableTextComponents: PortableTextComponents = {
@@ -64,25 +65,6 @@ interface GridItem {
 }
 
 // Custom hook to detect responsive layout
-const useResponsiveLayout = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      // Mobile: not tablet landscape and not desktop
-      const isTabletLandscape = window.matchMedia('(max-height: 600px) and (max-width: 1080px)').matches;
-      const isDesktop = window.matchMedia('(min-width: 1080px) and (min-aspect-ratio: 1/1)').matches;
-      setIsMobile(!isTabletLandscape && !isDesktop);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  return { isMobile };
-};
-
 const getGridClasses = (item: GridItem) => {
   const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'relative'];
 
@@ -127,7 +109,7 @@ interface CaseStudyViewProps {
 }
 
 export default function CaseStudyView({ slug }: CaseStudyViewProps) {
-  const { isMobile } = useResponsiveLayout();
+  const isMobile = useIsMobile();
   const [data, setData] = useState<CaseStudyData | null>(null);
   const [loading, setLoading] = useState(true);
 

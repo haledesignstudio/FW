@@ -8,7 +8,8 @@ import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import MindbulletArchive from '@/components/mindbulletsArchive';
 import { PortableTextBlock } from '@portabletext/types';
 import { getGridClasses } from '@/components/insights/grid';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type MindbulletDoc = {
   _id: string;
@@ -39,18 +40,6 @@ export default function Mindbullets({ title, titleByline, subheading, mindbullet
       href: slugStr ? `/mindbullets/${slugStr}` : '#',
     };
   });
-
-  // Your existing mobile helper
-  function useIsMobile(breakpoint = 1080) {
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-      const check = () => setIsMobile(window.innerWidth < breakpoint);
-      check();
-      window.addEventListener('resize', check);
-      return () => window.removeEventListener('resize', check);
-    }, [breakpoint]);
-    return isMobile;
-  }
 
   const isMobile = useIsMobile();
 

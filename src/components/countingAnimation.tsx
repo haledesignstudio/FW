@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
+import useIsMobile from '../hooks/useIsMobile';
 
 interface CountingAnimationProps {
   target: number | string;
@@ -56,7 +57,7 @@ export default function CountingAnimation({
 
 
   // Detect mobile for performance optimization
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1080;
+  const isMobile = useIsMobile(); // Replace the custom mobile detection logic
   const targetFPS = isMobile ? 30 : 60; // Half the frame rate on mobile
   const frameInterval = 1000 / targetFPS;
   const optimizedDuration = isMobile ? Math.min(duration * 0.6, 2000) : duration; // 40% faster on mobile, max 2s

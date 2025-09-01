@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import useIsMobile from '@/hooks/useIsMobile';
 
 interface MenuIconProps {
     stage: number;
@@ -6,18 +7,11 @@ interface MenuIconProps {
 }
 
 const MenuIcon: React.FC<MenuIconProps> = ({ stage, onClick }) => {
-    const [isMobile, setIsMobile] = useState(false);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 1080);
-        };
-        
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
+        console.log(`MenuIcon stage changed to: ${stage}`);
+    }, [stage]);
 
     // Helper for transition styles
     const transitionBase = {

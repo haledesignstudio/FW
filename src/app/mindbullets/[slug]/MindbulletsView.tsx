@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -16,6 +15,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import Link from "next/link";
 import Carousel from "@/components/Carousel";
 import { getImageDimensions } from '@sanity/asset-utils';
+import useIsMobile from '@/hooks/useIsMobile';
 
 
 type RelatedStory = { title: string; link: string };
@@ -59,6 +59,8 @@ interface MindbulletsViewProps {
 }
 
 const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
+  const isMobile = useIsMobile();
+
   const [leftBlocks, rightBlocks] = splitPortableBlocks(data.body || []);
 
   // Map 'more' to Carousel items, double-safety exclude current slug
@@ -466,8 +468,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
       <Header />
       <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
         <div className="[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden"><CommonHeader title={'Insights'} active="mindbullets" /></div>
-        {mobile}
-        {desktop}
+        {isMobile ? mobile : desktop}
       </main>
       <Footer />
     </>

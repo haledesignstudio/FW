@@ -1,17 +1,20 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type Props = {
   jobTitles: string[];
 };
 
 export default function ApplyView({ jobTitles }: Props) {
+  const isMobile = useIsMobile();
+
   // ----- Form state -----
   const [form, setForm] = useState({
     jobTitle: '',
@@ -29,15 +32,6 @@ export default function ApplyView({ jobTitles }: Props) {
 
   // File input ref (for the "Choose file" button)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  // ----- Mobile check -----
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1080);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // ----- File constraints -----
   const MAX_FILE_BYTES = 20 * 1024 * 1024; // 20MB

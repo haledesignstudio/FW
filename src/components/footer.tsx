@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FutureText } from "./FutureText";
 import UnderlineOnHoverAnimation from "./underlineOnHoverAnimation";
 import Link from 'next/link';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type GridItem = {
     id: number;
@@ -18,7 +19,6 @@ type GridItem = {
 
 const Footer: React.FC = () => {
     const [shouldAnimate, setShouldAnimate] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
     const [placeholder, setPlaceholder] = useState('');
     const [placeholder2, setPlaceholder2] = useState('');
     const [placeholder3, setPlaceholder3] = useState('');
@@ -26,16 +26,8 @@ const Footer: React.FC = () => {
     const [msg, setMsg] = useState<string | null>(null);
     const footerRef = useRef<HTMLElement>(null);
 
-    useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 1080);
-        };
-
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
+    // Use the useIsMobile hook
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         if (footerRef.current) {

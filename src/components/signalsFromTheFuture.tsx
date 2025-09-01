@@ -8,6 +8,7 @@ import { urlFor } from '@/sanity/lib/image';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { FutureText } from '@/components/FutureText';
 import { PortableTextBlock } from 'sanity';
+import useIsMobile from '@/hooks/useIsMobile';
 
 // Type definitions
 interface SignalPiece {
@@ -147,6 +148,8 @@ const getActionText = (type: string) => {
 
 
 export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTheFutureProps) {
+  const isMobileScreen = useIsMobile();
+
   const [signalPieces, setSignalPieces] = useState<SignalPiece[]>([]);
   const [expandedColumn, setExpandedColumn] = useState<number | null>(null);
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
@@ -155,15 +158,8 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
   // Track if a column was just closed to control reappear delay
   const [justClosedColumn, setJustClosedColumn] = useState<number | null>(null);
 
-  // Mobile detection with hydration safety
   useEffect(() => {
     setIsClient(true);
-    const checkMobile = () => {
-      // Mobile detection handled by window.innerWidth checks where needed
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Fetch signals data
@@ -251,19 +247,17 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
 
   // Mobile autoplay effect
   useEffect(() => {
-    const isMobileScreen = isClient && window.innerWidth < 1080;
-    if (!isClient || (!isMobile && !isMobileScreen) || !mobileAutoplay || signalPieces.length === 0) return;
+    if (!isMobileScreen || !mobileAutoplay || signalPieces.length === 0) return;
 
     const interval = setInterval(() => {
       setCurrentMobileIndex((prev) => (prev + 1) % signalPieces.length);
     }, 8000); // Change every 4 seconds
 
     return () => clearInterval(interval);
-  }, [isClient, isMobile, mobileAutoplay, signalPieces.length]);
+  }, [isMobileScreen, mobileAutoplay, signalPieces.length]);
 
   const handleReadMore = (columnIndex: number) => {
-    const isMobileScreen = isClient && window.innerWidth < 1080;
-    if (isMobile || isMobileScreen) {
+    if (isMobileScreen) {
       setMobileAutoplay(false); // Stop autoplay when user interacts
     }
     const newExpandedState = expandedColumn === columnIndex ? null : columnIndex;
@@ -274,7 +268,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
     }
     setExpandedColumn(newExpandedState);
     // Resume autoplay when closing expanded content on mobile
-    if ((isMobile || isMobileScreen) && newExpandedState === null) {
+    if (isMobileScreen && newExpandedState === null) {
       setMobileAutoplay(true);
     }
   };
@@ -303,7 +297,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
   if (!isClient) {
     return (
       <div className="bg-[#F9F7F2] p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:p-[4vh]">
-        <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:600px)_and_(max-width:1080px)]:grid-cols-4 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[6.25vh] [@media(max-height:600px)_and_(max-width:1080px)]:auto-rows-[7.5vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[12.5vh]">
+        <div className="grid gap-[2vh] [@media(max-height:1920px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-2 [@media(max-height:1920px)_and_(max-width:1080px)]:grid-cols-4 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 auto-rows-[6.25vh] [@media(max-height:1920px)_and_(max-width:1080px)]:auto-rows-[7.5vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[12.5vh]">
           <div className="col-span-6 row-span-1 bg-[#F9F7F2]"></div>
         </div>
       </div>
@@ -760,7 +754,7 @@ export default function SignalsFromTheFuture({ isMobile = false }: SignalsFromTh
 
   return (
     <div className="bg-[#F9F7F2] p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:p-[4vh] relative z-10">
-      <div className="grid gap-[2vh] [@media(max-height:600px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-auto">
+      <div className="grid gap-[2vh] [@media(max-height:1920px)_and_(max-width:1080px)]:gap-[3vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-[4vh] grid-cols-6 auto-rows-auto">
         {desktopGridItems.map((item) => (
           <div key={item.id} className={getGridClasses(item)}>
             {item.content}
