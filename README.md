@@ -1,6 +1,6 @@
 # Next.js & Sanity FutureWorld Website
 
-##  Project Overview
+##  Project Overview:
 This project is a **Next.js + Sanity** website built for the **FutureWorld** website. It integrates a **CMS (Sanity)** for content management and **Next.js (App Router)** for frontend rendering.
 
 ---
