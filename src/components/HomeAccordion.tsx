@@ -12,6 +12,7 @@ import { caseStudyQuery } from '@/sanity/lib/queries';
 import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
 import type { PortableTextBlock, PortableTextSpan } from '@portabletext/types';
 import { getImageDimensions } from '@sanity/asset-utils';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type HomeAccordionProps = { data: HomePageContent };
 
@@ -46,28 +47,6 @@ function extractSummaryText(summary?: PortableTextBlock[] | null): string {
     return firstSpan?.text ?? '';
 }
 
-
-
-// Custom hook to detect responsive layout
-const useResponsiveLayout = () => {
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const checkMobile = () => {
-            // Mobile: not tablet landscape and not desktop
-            const isTabletLandscape = window.matchMedia('(max-height: 600px) and (max-width: 1080px)').matches;
-            const isDesktop = window.matchMedia('(min-width: 1080px) and (min-aspect-ratio: 1/1)').matches;
-            setIsMobile(!isTabletLandscape && !isDesktop);
-        };
-
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
-
-    return { isMobile };
-};
-
 function getGridClasses(item: GridItem) {
     const base = ['flex', 'flex-col'];
     if (item.mobileColSpan === 0 || item.mobileRowSpan === 0) {
@@ -101,7 +80,7 @@ const hoverHintWhenClosed = (isActive: boolean) =>
         : "";
 
 export default function HomeAccordion({ data }: HomeAccordionProps) {
-    const { isMobile } = useResponsiveLayout();
+    const isMobile = useIsMobile();
     const [openTabs, setOpenTabs] = useState<Set<string>>(new Set());
 
     // Auto-open all tabs on mobile

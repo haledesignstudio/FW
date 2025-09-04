@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { PortableText } from '@portabletext/react';
@@ -10,6 +10,7 @@ import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { HighlightText } from '@/components/HighlightText';
 import WhatWeDoAccordion from "@/components/WhatWeDoAccordion";
+import useIsMobile from '@/hooks/useIsMobile';
 
 type AccordionEntry = {
     title: PortableTextBlock[];
@@ -87,15 +88,7 @@ interface WhatWeDoClientProps {
 }
 
 export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
-    // Mobile detection with hydration safety
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    // Check if mobile
-    const isMobileScreen = isClient && window.innerWidth < 1080;
+    const isMobile = useIsMobile();
 
     // Handle back to top functionality
     const handleBackToTop = () => {
@@ -249,7 +242,7 @@ export default function WhatWeDoClient({ data }: WhatWeDoClientProps) {
         <>
             <Header />
             <main className="bg-[#F9F7F2]">
-                {isMobileScreen ? (
+                {isMobile ? (
                     // MOBILE LAYOUT
                     <div className="px-[4.53vw] py-[2.09vh] bg-[#F9F7F2]">
                         <div className="grid grid-cols-4 auto-rows-[7.701vh] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh]">

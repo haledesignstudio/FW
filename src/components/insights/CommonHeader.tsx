@@ -5,18 +5,7 @@ import MainTitleAnimation from '@/components/MainTitleAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { getGridClasses, GridItem } from '@/components/insights/grid';
-import React, { useState, useEffect } from 'react';
-
-function useIsMobile(breakpoint = 1080) {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < breakpoint);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, [breakpoint]);
-  return isMobile;
-}
+import useIsMobile from '../../hooks/useIsMobile';
 
 const categories = [
   { href: '/insights',  label: 'Shareholder Value Analytics' },

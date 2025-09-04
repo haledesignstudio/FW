@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { defineQuery } from 'next-sanity';
 import { urlFor } from '@/sanity/lib/image';
-
+import useIsMobile from '@/hooks/useIsMobile';
 
 const PAGE_SIZE = 10 as const;
 
@@ -16,7 +16,6 @@ type SortDirection = 'asc' | 'desc';
 
 type SanityAssetRef = { _ref: string } | { _id: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string };
-
 
 type Mindbullet = {
   _id: string;
@@ -42,17 +41,6 @@ const mindbulletsArchiveQuery = defineQuery(`
     byLine
   }
 `);
-
-function useIsMobile(breakpoint = 1080) {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < breakpoint);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, [breakpoint]);
-  return isMobile;
-}
 
 const MindbulletArchive = () => {
   const [mindbullets, setMindbullets] = useState<Mindbullet[]>([]);

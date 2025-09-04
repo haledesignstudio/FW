@@ -7,6 +7,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import Image from "next/image";
+import useIsMobile from "@/hooks/useIsMobile";
 
 export type CarouselItem = {
   src: string;
@@ -48,27 +49,6 @@ export type CarouselProps = {
   portableTextComponents?: PortableTextComponents;
 };
 
-function useIsMobile(breakpoint = 1080) {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
-    const onChange = (ev: MediaQueryListEvent) => setIsMobile(ev.matches);
-
-    setIsMobile(mql.matches);
-
-    if (typeof mql.addEventListener === "function") {
-      mql.addEventListener("change", onChange);
-      return () => mql.removeEventListener("change", onChange);
-    }
-    if (typeof mql.addListener === "function") {
-      mql.addListener(onChange);
-      return () => mql.removeListener(onChange);
-    }
-    return;
-  }, [breakpoint]);
-  return isMobile;
-}
-
 // ===== helpers for dynamic line-clamp =====
 const ALL_CLAMPS = [
   "line-clamp-none", // allow unlimited lines
@@ -109,7 +89,7 @@ export default function Carousel({
   readMoreText = "Read More",
   portableTextComponents,
 }: CarouselProps) {
-  const isMobile = useIsMobile(1080);
+  const isMobile = useIsMobile();
 
   // Effective sizes for current breakpoint
   const IMG_H = isMobile ? (mobileImageHeight ?? imageHeight) : imageHeight;

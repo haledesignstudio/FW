@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -17,6 +16,7 @@ import { HighlightText } from '@/components/HighlightText';
 import Carousel, { type CarouselItem } from '@/components/Carousel';
 import { getImageDimensions } from '@sanity/asset-utils';
 import { urlFor } from '@/sanity/lib/image';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type RichText = PortableTextBlock[];
 
@@ -48,6 +48,7 @@ interface EdgeViewProps {
 }
 
 const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
+    const isMobile = useIsMobile();
 
     const topGrid = [
         {
@@ -510,8 +511,7 @@ const EdgeView: React.FC<EdgeViewProps> = ({ data, carouselItems = [] }) => {
         <>
             <Header />
             <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
-                {mobile}
-                {desktop}
+                {isMobile ? mobile : desktop}
             </main>
             <Footer />
         </>

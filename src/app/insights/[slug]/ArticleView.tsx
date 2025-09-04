@@ -15,6 +15,7 @@ import Link from "next/link";
 import type { PortableTextComponentProps } from "@portabletext/react";
 import Carousel from "@/components/Carousel";
 import { getImageDimensions } from '@sanity/asset-utils';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type SanityAssetRef = { _type: "reference"; _ref: string };
 type SanityImage = { asset?: SanityAssetRef; alt?: string };
@@ -140,7 +141,8 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
     if (data.video) return [data.body ?? [], []]; // one solid block
     return splitPortableBlocks(data.body);
   }, [data.body, data.video]);
-
+  
+  const isMobile = useIsMobile();
 
 
   const carouselItems = useMemo(() => {
@@ -226,8 +228,6 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
   const mobile = (
     <div className="block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
       <div className="flex-1 grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
-
-
         {data.image?.asset && (
           <div className="col-span-4 row-span-2">
             <Image
@@ -239,20 +239,11 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
             />
           </div>
         )}
-        <div className="col-span-4 dt-h2">
-          {data.title}
-        </div>
-        {data.byline ? (
-          <div className="col-span-4 dt-h3">
-            {data.byline}
-          </div>
-        ) : null}
-
-        {data.datePublished ? (
+        <div className="col-span-4 dt-h2">{data.title}</div>
+        {data.byline && <div className="col-span-4 dt-h3">{data.byline}</div>}
+        {data.datePublished && (
           <div className="col-span-2 row-span-1 flex items-center">
-            <span className="dt-body-lg">
-              {data.datePublished}
-            </span>
+            <span className="dt-body-lg">{data.datePublished}</span>
           </div>
         ) : null}
 
@@ -277,25 +268,18 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
               target="_blank"
               rel="noreferrer"
             >
-              <UnderlineOnHoverAnimation hasStaticUnderline={true}>Download article now</UnderlineOnHoverAnimation>
-
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                Download article now
+              </UnderlineOnHoverAnimation>
             </a>
           </div>
-        ) : null}
-
-
+        )}
         <div className="col-span-4">{AuthorBlock}</div>
-
-
         <div className="col-span-4">{RelatedStoriesBlock}</div>
-
-
         {carouselItems.length > 0 && (
           <div className="col-span-4 mt-[10vh]">
             <FadeInOnVisible>
-              <div className="dt-h5 mb-[2vh]">
-                You may also like
-              </div>
+              <div className="dt-h5 mb-[2vh]">You may also like</div>
               <Carousel
                 items={carouselItems}
                 imageHeight="25vh"
@@ -310,9 +294,6 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
             </FadeInOnVisible>
           </div>
         )}
-
-        <div className="col-span-4"></div>
-
         <div className="col-span-2 row-span-1 flex">
           <FadeInOnVisible className="text-balance">
             <Link href="/keynotes" className="dt-btn transition cursor-pointer">
@@ -322,7 +303,10 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
             </Link>
           </FadeInOnVisible>
         </div>
-        <div className="col-start-3 col-span-2 flex justify-end cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+        <div
+          className="col-start-3 col-span-2 flex justify-end cursor-pointer"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           <FadeInOnVisible>
             <span className="dt-btn flex items-center">
               <svg
@@ -332,22 +316,19 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                style={{ transform: 'rotate(-45deg)' }}
+                style={{ transform: "rotate(-45deg)" }}
               >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
               <UnderlineOnHoverAnimation hasStaticUnderline={true}>
                 Back to top
               </UnderlineOnHoverAnimation>
-
             </span>
           </FadeInOnVisible>
-
         </div>
       </div>
     </div>
   );
-
   // --- DESKTOP ---
   const gridItems = [
     {
@@ -541,8 +522,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
       <Header />
       <main className="p-[2vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
         <div className="[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden"><CommonHeader title={'Insights'} active="edge" /></div>
-        {mobile}
-        {desktop}
+        {isMobile ? mobile : desktop}
       </main>
       <Footer />
     </>

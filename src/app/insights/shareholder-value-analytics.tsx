@@ -7,7 +7,7 @@ import { getGridClasses } from '@/components/insights/grid';
 import type { PortableTextBlock } from '@portabletext/types';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import { useCallback } from 'react';
-import { useState, useEffect } from 'react';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type Props = {
   title: string;
@@ -51,17 +51,6 @@ export default function ShareholderValueAnalytics(props: Props) {
     CTA2,
     Mail2,
   };
-
-  function useIsMobile(breakpoint = 1080) {
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-      const check = () => setIsMobile(window.innerWidth < breakpoint);
-      check();
-      window.addEventListener('resize', check);
-      return () => window.removeEventListener('resize', check);
-    }, [breakpoint]);
-    return isMobile;
-  }
 
   const isMobile = useIsMobile();
 

@@ -11,6 +11,7 @@ import Link from "next/link";
 import type { PodcastDoc } from "./page";
 import type { PortableTextBlock } from "@portabletext/types";
 import { HighlightText } from '@/components/HighlightText';
+import useIsMobile from '@/hooks/useIsMobile';
 
 interface PodcastViewProps {
   data: PodcastDoc;
@@ -19,6 +20,8 @@ interface PodcastViewProps {
 }
 
 const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheading }) => {
+  const isMobile = useIsMobile();
+
   // --- MOBILE ---
   const mobile = (
     <div className="block [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:hidden min-h-screen flex flex-col">
@@ -158,8 +161,7 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
       <Header />
       <main className="px-[4.53vw] py-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh] bg-[#F9F7F2]">
         <CommonHeader title={pageTitle} active="podcast" />
-        {mobile}
-        {desktop}
+        {isMobile ? mobile : desktop}
       </main>
       <Footer />
     </>

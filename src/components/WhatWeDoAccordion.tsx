@@ -10,6 +10,7 @@ import { HighlightText } from '@/components/HighlightText';
 import './accordion-animations.css';
 import FadeInOnVisible from './FadeInOnVisible';
 import { getImageDimensions } from '@sanity/asset-utils';
+import useIsMobile from '@/hooks/useIsMobile';
 
 export type WhatWeDoEntry = {
     title: PortableTextBlock[];
@@ -33,17 +34,6 @@ export type WhatWeDoAccordionItem = {
     prompt: PortableTextBlock[];
     entries: [WhatWeDoEntry, WhatWeDoEntry, WhatWeDoEntry];
 };
-
-function useIsMobile(breakpoint = 1080) {
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-        const check = () => setIsMobile(window.innerWidth < breakpoint);
-        check();
-        window.addEventListener('resize', check);
-        return () => window.removeEventListener('resize', check);
-    }, [breakpoint]);
-    return isMobile;
-}
 
 /**
  * Represents the `accordion` object.

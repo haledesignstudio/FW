@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { getImageDimensions } from '@sanity/asset-utils';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useRef } from 'react';
+import useIsMobile from '@/hooks/useIsMobile';
 
 type ContactPageContent = {
   title: string;
@@ -67,17 +68,7 @@ export default function Contact({ data }: { data: ContactPageContent }) {
     message: ''
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Mobile check
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1080);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useIsMobile(); // Replace the custom mobile detection logic
 
   // Handlers
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -6,6 +6,7 @@ import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { PortableTextBlock } from 'sanity';
+import useIsMobile from '@/hooks/useIsMobile';
 
 // Type definitions for the terms & conditions data
 interface TermsSection {
@@ -112,19 +113,13 @@ interface TermsAndConditionsClientProps {
 }
 
 export default function TermsAndConditionsClient({ termsData }: TermsAndConditionsClientProps) {
-  const [selectedCategory, setSelectedCategory] = useState(categories[0].key)
-  const [isMobile, setIsMobile] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(categories[0].key);
+  const isMobile = useIsMobile();
   const [isClient, setIsClient] = useState(false);
 
-  // Mobile check with hydration safety
+  // Hydration safety
   useEffect(() => {
     setIsClient(true);
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1080);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const handleBackToTop = () => {

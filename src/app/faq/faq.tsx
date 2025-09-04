@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import MainTitleAnimation from '@/components/MainTitleAnimation'
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation'
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { motion, AnimatePresence } from 'framer-motion';
+import useIsMobile from '@/hooks/useIsMobile';
 
 // Type definitions for FAQ data
 interface FAQ {
@@ -39,17 +40,6 @@ type GridItem = {
   landscapeColSpan?: number;
   landscapeRowSpan?: number;
 };
-
-function useIsMobile(breakpoint = 1080) {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < breakpoint);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, [breakpoint]);
-  return isMobile;
-}
 
 const getGridClasses = (item: GridItem) => {
   const baseClasses = ['bg-[#F9F7F2]', 'flex', 'flex-col', 'items-end', 'relative'];
