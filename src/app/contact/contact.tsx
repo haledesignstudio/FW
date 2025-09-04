@@ -10,6 +10,8 @@ import FadeInOnVisible from '@/components/FadeInOnVisible';
 import { urlFor } from '@/sanity/lib/image';
 import Link from 'next/link';
 import { getImageDimensions } from '@sanity/asset-utils';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useRef } from 'react';
 import useIsMobile from '@/hooks/useIsMobile';
 
 type ContactPageContent = {
@@ -73,24 +75,6 @@ export default function Contact({ data }: { data: ContactPageContent }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus('sending');
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
-      });
-      if (res.ok) {
-        setFormStatus('sent'); // keep their entries visible
-      } else {
-        setFormStatus('error');
-      }
-    } catch {
-      setFormStatus('error');
-    }
-  };
 
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -98,6 +82,10 @@ export default function Contact({ data }: { data: ContactPageContent }) {
 
   // state + helpers (put near your other state)
   const [triedSubmit, setTriedSubmit] = useState(false);
+  const [showCaptcha, setShowCaptcha] = useState(false);
+const captchaRef = useRef<ReCAPTCHA | null>(null);
+const [captchaError, setCaptchaError] = useState<string | null>(null);
+
 
   // length limits (tweak as you like)
   const LIMITS = {
@@ -152,23 +140,57 @@ export default function Contact({ data }: { data: ContactPageContent }) {
 
   // in your submit handler, prevent submit if invalid and show tooltips
   const onSubmitWithUI: React.FormEventHandler<HTMLFormElement> = (e) => {
-    const hasErrors = !!(
-      getError("name") ||
-      getError("email") ||
-      getError("phone") ||
-      getError("company") ||
-      getError("position") ||
-      getError("message")
-    );
-    if (hasErrors) {
-      e.preventDefault();
-      setTriedSubmit(true);
-      return;
-    }
-    setTriedSubmit(false);
-    handleSubmit(e);
-  };
+  const hasErrors = !!(
+    getError("name") ||
+    getError("email") ||
+    getError("phone") ||
+    getError("company") ||
+    getError("position") ||
+    getError("message")
+  );
+  if (hasErrors) {
+    e.preventDefault();
+    setTriedSubmit(true);
+    return;
+  }
+  // No errors → show captcha overlay and stop normal submit
+  e.preventDefault();
+  setTriedSubmit(false);
+  setCaptchaError(null);
+  setShowCaptcha(true);
+};
 
+const actuallySubmit = async (recaptchaToken: string) => {
+  setFormStatus('sending');
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      // Include the token:
+      body: JSON.stringify({ ...form, recaptchaToken }),
+    });
+    if (res.ok) {
+      setFormStatus('sent');
+    } else {
+      setFormStatus('error');
+    }
+  } catch {
+    setFormStatus('error');
+  } finally {
+    setShowCaptcha(false);
+    // Optionally reset the captcha widget for next time:
+    captchaRef.current?.reset();
+  }
+};
+
+const onCaptchaChange = async (token: string | null) => {
+  if (!token) {
+    // The user closed it or it expired
+    setCaptchaError('Please complete the verification to continue.');
+    return;
+  }
+  await actuallySubmit(token);
+};
 
 
 
@@ -216,8 +238,6 @@ export default function Contact({ data }: { data: ContactPageContent }) {
                     src="/placeholder-image.png"
                     alt="Contact"
                     className="w-full h-full object-cover"
-                    fill
-                    sizes="(max-width: 1080px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 )}
               </FadeInOnVisible>
@@ -444,6 +464,49 @@ export default function Contact({ data }: { data: ContactPageContent }) {
 
             </div>
           </div>
+          {showCaptcha && (
+  <div
+    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div className="bg-[#F9F7F2] rounded-2xl shadow-xl p-6 w-[min(92vw,480px)]">
+      <h3 className="dt-h3 mb-4">Verification required</h3>
+      <p className="dt-body-sm mb-4">
+        Please confirm you’re not a robot to send your message.
+      </p>
+
+      <div className="mb-4">
+        <ReCAPTCHA
+          ref={captchaRef}
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+          onChange={onCaptchaChange}
+          theme="light"
+        />
+      </div>
+
+      {captchaError && (
+        <p className="text-red-600 text-sm mb-2">{captchaError}</p>
+      )}
+
+      <div className="gap-3">
+        <button
+          type="button"
+          className="dt-btn cursor-pointer"
+          onClick={() => {
+            setShowCaptcha(false);
+            setCaptchaError(null);
+            captchaRef.current?.reset();
+          }}
+        >
+          <UnderlineOnHoverAnimation hasStaticUnderline={true}>Cancel</UnderlineOnHoverAnimation>
+          
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
         </main>
         <Footer />
       </>
@@ -696,6 +759,48 @@ export default function Contact({ data }: { data: ContactPageContent }) {
           </div>
 
         </div >
+        {showCaptcha && (
+  <div
+    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div className="bg-[#F9F7F2] rounded-2xl shadow-xl p-6 w-[min(92vw,480px)]">
+      <h3 className="dt-h3 mb-4">Verification required</h3>
+      <p className="dt-body-sm mb-4">
+        Please confirm you’re not a robot to send your message.
+      </p>
+
+      <div className="mb-4">
+        <ReCAPTCHA
+          ref={captchaRef}
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+          onChange={onCaptchaChange}
+          theme="light"
+        />
+      </div>
+
+      {captchaError && (
+        <p className="text-red-600 text-sm mb-2">{captchaError}</p>
+      )}
+
+      <div className="gap-3">
+        <button
+          type="button"
+          className="dt-btn cursor-pointer"
+          onClick={() => {
+            setShowCaptcha(false);
+            setCaptchaError(null);
+            captchaRef.current?.reset();
+          }}
+        >
+          <UnderlineOnHoverAnimation hasStaticUnderline={true}>Cancel</UnderlineOnHoverAnimation>
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
       </main >
       <Footer />
     </>

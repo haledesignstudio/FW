@@ -11,6 +11,7 @@ import { client } from '@/sanity/lib/client';
 import { caseStudyQuery } from '@/sanity/lib/queries';
 import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
 import type { PortableTextBlock, PortableTextSpan } from '@portabletext/types';
+import { getImageDimensions } from '@sanity/asset-utils';
 import useIsMobile from '@/hooks/useIsMobile';
 
 type HomeAccordionProps = { data: HomePageContent };
@@ -179,23 +180,6 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     },
                     {
                         id: 2,
-                        content: (
-                            <iframe
-                                src={data.section1.section1URL}
-                                className="w-full h-full bg-white"
-                                title="Future World Analytics Dashboard"
-                                style={{ minHeight: '300px' }}
-                            />
-                        ),
-                        colSpan: 3,
-                        rowSpan: 3,
-                        mobileColSpan: 2,
-                        mobileRowSpan: 1,
-                        landscapeColSpan: 3,
-                        landscapeRowSpan: 1,
-                    },
-                    {
-                        id: 3,
                         content: <></>,
                         colSpan: 3,
                         rowSpan: 1,
@@ -204,6 +188,24 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                         landscapeColSpan: 3,
                         landscapeRowSpan: 1,
                     },
+                    {
+                        id: 3,
+                        content: (
+                            <iframe
+                                src={data.section1.section1URL}
+                                className="w-full h-full bg-white"
+                                title="Future World Analytics Dashboard"
+                                style={{ minHeight: '300px' }}
+                            />
+                        ),
+                        colSpan: 6,
+                        rowSpan: 5,
+                        mobileColSpan: 2,
+                        mobileRowSpan: 1,
+                        landscapeColSpan: 3,
+                        landscapeRowSpan: 1,
+                    },
+
                     {
                         id: 4,
                         content: (
@@ -286,13 +288,13 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                     {
                         id: 3,
                         content: data.section2?.section2Image?.asset ? (
-                            <div className="w-full h-full relative mt-[10vh]">
+                            <div className="w-full h-full relative mt-[10vh] pb-[10vh]">
                                 <Image
-                                    src={urlFor(data.section2.section2Image.asset).url()}
+                                    src={urlFor(data.section2.section2Image.asset).quality(75).auto('format').url()}
+                                    width={getImageDimensions(data.section2.section2Image.asset).width}
+                                    height={getImageDimensions(data.section2.section2Image.asset).height}
                                     alt={data.section2.section2Image.alt || 'Process image'}
                                     className="w-full h-full object-contain object-top object-center"
-                                    fill
-                                    sizes="(max-width: 1080px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                             </div>
                         ) : null,
@@ -416,19 +418,21 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 onMouseDown={(e) => e.stopPropagation()}
                                 onPointerDown={(e) => e.stopPropagation()}
                             >
-                                <CaseStudiesCarousel
-                                    items={carouselItems}
-                                    imageHeight="25vh"
-                                    captionHeight="25vh"
-                                    innerRowGap="4vh"
-                                    gap="4vh"
-                                    mobileImageHeight="25vh"
-                                    mobileCaptionHeight="25vh"
-                                    mobileInnerRowGap="2vh"
-                                    mobileGap="0"
-                                    rounded="rounded-2xl"
-                                    ariaLabel="Case studies carousel"
-                                />
+                                <FadeInOnVisible>
+                                    <CaseStudiesCarousel
+                                        items={carouselItems}
+                                        imageHeight="25vh"
+                                        captionHeight="25vh"
+                                        innerRowGap="4vh"
+                                        gap="4vh"
+                                        mobileImageHeight="25vh"
+                                        mobileCaptionHeight="25vh"
+                                        mobileInnerRowGap="2vh"
+                                        mobileGap="0"
+                                        rounded="rounded-2xl"
+                                        ariaLabel="Case studies carousel"
+                                    />
+                                </FadeInOnVisible>
                             </div>
                         ),
                         colSpan: 6,
@@ -558,11 +562,11 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                             {data.section2?.section2Image?.asset && (
                                                 <div className="w-full h-[40vh] relative">
                                                     <Image
-                                                        src={urlFor(data.section2.section2Image.asset).url()}
+                                                        src={urlFor(data.section2.section2Image.asset).quality(75).auto('format').url()}
+                                                        width={getImageDimensions(data.section2.section2Image.asset).width}
+                                                        height={getImageDimensions(data.section2.section2Image.asset).height}
                                                         alt={data.section2.section2Image.alt || 'Process image'}
                                                         className="w-full h-full object-contain"
-                                                        fill
-                                                        sizes="75vw"
                                                     />
                                                 </div>
                                             )}
@@ -698,7 +702,7 @@ export default function HomeAccordion({ data }: HomeAccordionProps) {
                                 "[@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:px-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:py-[3.2vh]",
                                 "overflow-hidden transition-[max-height] duration-500",
                                 !isActive
-                                    ? "max-h-[34vh]"
+                                    ? (tab.id === 'benchmark' ? "max-h-[47.5vh]" : "max-h-[34vh]")
                                     : "max-h-[9999px]"
                             ].join(' ')}
                             >

@@ -47,7 +47,14 @@ const termsAndConditionsPage = defineType({
           name: 'introText',
           title: 'Introduction Text',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Text below the main heading',
           validation: (Rule) => Rule.required()
         },
@@ -74,7 +81,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]
@@ -94,7 +108,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]
@@ -114,7 +135,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]
@@ -134,7 +162,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]
@@ -154,7 +189,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]
@@ -174,7 +216,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]
@@ -194,7 +243,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]
@@ -214,7 +270,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]
@@ -234,7 +297,14 @@ const termsAndConditionsPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required()
         }
       ]

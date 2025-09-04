@@ -683,7 +683,7 @@ export const careerQuery = defineQuery(`
 
 export const articlesForEdgeCarouselQuery = defineQuery(`
   *[_type == "article" && defined(slug.current)]
-  | order(publishedAt desc)[0...12]{
+  | order(_createdAt desc){
     _id,
     title,
     byline,

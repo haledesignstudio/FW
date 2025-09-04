@@ -267,7 +267,7 @@ export default function TermsAndConditionsClient({ termsData }: TermsAndConditio
       id: 10,
       content: (
         <FadeInOnVisible className="scroll-mask-bottom" key={`content-${selectedCategory}`} threshold={0.05}>
-          <div className="h-full max-h-[52vh] overflow-y-auto pr-[1vh] pointer-events-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="h-[45.2vh] overflow-y-auto pr-[1vh] pointer-events-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; } `}</style>
             {renderContent()}
           </div>

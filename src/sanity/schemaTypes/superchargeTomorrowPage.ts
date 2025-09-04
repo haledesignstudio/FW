@@ -36,7 +36,14 @@ export default defineType({
             name: 'subheading',
             title: 'Subheading',
             type: 'array',
-            of: [{ type: 'block' }],
+            of: [
+                {
+                    type: 'block',
+                    styles: [
+                        { title: 'Normal', value: 'normal' },
+                    ]
+                }
+            ],
             fieldset: 'intro',
             validation: (Rule) => Rule.required().min(1),
         }),
@@ -60,14 +67,28 @@ export default defineType({
                     name: 'subheading',
                     title: 'Subheading',
                     type: 'array',
-                    of: [{ type: 'block' }],
+                    of: [
+                        {
+                            type: 'block',
+                            styles: [
+                                { title: 'Normal', value: 'normal' },
+                            ]
+                        }
+                    ],
                     validation: (Rule) => Rule.required().min(1),
                 }),
                 defineField({
                     name: 'description',
                     title: 'Description',
                     type: 'array',
-                    of: [{ type: 'block' }],
+                    of: [
+                        {
+                            type: 'block',
+                            styles: [
+                                { title: 'Normal', value: 'normal' },
+                            ]
+                        }
+                    ],
                     validation: (Rule) => Rule.required().min(1),
                 }),
                 defineField({
@@ -110,7 +131,14 @@ export default defineType({
                                     name: 'body',
                                     title: 'Body',
                                     type: 'array',
-                                    of: [{ type: 'block' }],
+                                    of: [
+                                        {
+                                            type: 'block',
+                                            styles: [
+                                                { title: 'Normal', value: 'normal' },
+                                            ]
+                                        }
+                                    ],
                                     validation: (Rule) => Rule.required().min(1),
                                 }),
                             ],
@@ -139,7 +167,14 @@ export default defineType({
                     name: 'subheading',
                     title: 'Subheading',
                     type: 'array',
-                    of: [{ type: 'block' }],
+                    of: [
+                        {
+                            type: 'block',
+                            styles: [
+                                { title: 'Normal', value: 'normal' },
+                            ]
+                        }
+                    ],
                     validation: (Rule) => Rule.required().min(1),
                 }),
                 defineField({
@@ -169,7 +204,14 @@ export default defineType({
                             name: 'description',
                             title: 'Description',
                             type: 'array',
-                            of: [{ type: 'block' }],
+                            of: [
+                                {
+                                    type: 'block',
+                                    styles: [
+                                        { title: 'Normal', value: 'normal' },
+                                    ]
+                                }
+                            ],
                             validation: (Rule) => Rule.required().min(1),
                         }),
                         defineField({
@@ -187,14 +229,28 @@ export default defineType({
                                             name: 'heading',
                                             title: 'Heading',
                                             type: 'array',
-                                            of: [{ type: 'block' }],
+                                            of: [
+                                                {
+                                                    type: 'block',
+                                                    styles: [
+                                                        { title: 'Normal', value: 'normal' },
+                                                    ]
+                                                }
+                                            ],
                                             validation: (Rule) => Rule.required().min(1),
                                         }),
                                         defineField({
                                             name: 'body',
                                             title: 'Body',
                                             type: 'array',
-                                            of: [{ type: 'block' }],
+                                            of: [
+                                                {
+                                                    type: 'block',
+                                                    styles: [
+                                                        { title: 'Normal', value: 'normal' },
+                                                    ]
+                                                }
+                                            ],
                                             validation: (Rule) => Rule.required().min(1),
                                         }),
                                     ],
@@ -214,7 +270,14 @@ export default defineType({
                             name: 'description',
                             title: 'Description',
                             type: 'array',
-                            of: [{ type: 'block' }],
+                            of: [
+                                {
+                                    type: 'block',
+                                    styles: [
+                                        { title: 'Normal', value: 'normal' },
+                                    ]
+                                }
+                            ],
                             validation: (Rule) => Rule.required().min(1),
                         }),
                         defineField({
@@ -232,14 +295,28 @@ export default defineType({
                                             name: 'heading',
                                             title: 'Heading',
                                             type: 'array',
-                                            of: [{ type: 'block' }],
+                                            of: [
+                                                {
+                                                    type: 'block',
+                                                    styles: [
+                                                        { title: 'Normal', value: 'normal' },
+                                                    ]
+                                                }
+                                            ],
                                             validation: (Rule) => Rule.required().min(1),
                                         }),
                                         defineField({
                                             name: 'body',
                                             title: 'Body',
                                             type: 'array',
-                                            of: [{ type: 'block' }],
+                                            of: [
+                                                {
+                                                    type: 'block',
+                                                    styles: [
+                                                        { title: 'Normal', value: 'normal' },
+                                                    ]
+                                                }
+                                            ],
                                             validation: (Rule) => Rule.required().min(1),
                                         }),
                                     ],
@@ -270,14 +347,28 @@ export default defineType({
                     name: 'subheading',
                     title: 'Subheading',
                     type: 'array',
-                    of: [{ type: 'block' }],
+                    of: [
+                        {
+                            type: 'block',
+                            styles: [
+                                { title: 'Normal', value: 'normal' },
+                            ]
+                        }
+                    ],
                     validation: (Rule) => Rule.required().min(1),
                 }),
                 defineField({
                     name: 'description',
                     title: 'Description',
                     type: 'array',
-                    of: [{ type: 'block' }],
+                    of: [
+                        {
+                            type: 'block',
+                            styles: [
+                                { title: 'Normal', value: 'normal' },
+                            ]
+                        }
+                    ],
                     validation: (Rule) => Rule.required().min(1),
                 }),
                 defineField({

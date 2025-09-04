@@ -18,7 +18,14 @@ const ourWorkPage = defineType({
       name: 'subheading',
       title: 'Subheading',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required().min(1),
     }),
 
@@ -64,7 +71,14 @@ const ourWorkPage = defineType({
               name: 'quote',
               title: 'Quote',
               type: 'array',
-              of: [{ type: 'block' }],
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    { title: 'Normal', value: 'normal' },
+                  ]
+                }
+              ],
               validation: (Rule) => Rule.required(),
             },
             {
@@ -136,7 +150,14 @@ const ourWorkPage = defineType({
           name: 'body',
           title: 'Body',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required().min(1),
         },
         {
@@ -179,7 +200,14 @@ const ourWorkPage = defineType({
           name: 'body',
           title: 'Body',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required().min(1),
         },
       ],

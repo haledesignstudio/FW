@@ -301,26 +301,6 @@ export default function HomeClient({ data }: HomeClientProps) {
       landscapeRowSpan: 2,
     },
     // Row 12, Col 1-4: Image
-    {
-      id: 11,
-      content: data.Image?.asset ? (
-        <FadeInOnVisible className="w-full h-full">
-          <Image
-            src={urlFor(data.Image.asset).quality(75).auto('format').url()}
-            width={getImageDimensions(data.Image.asset).width}
-            height={getImageDimensions(data.Image.asset).height}
-            alt={data.Image.alt || ''}
-            className="object-cover w-full h-full"
-          />
-        </FadeInOnVisible>
-      ) : null,
-      colSpan: 6,
-      rowSpan: 3,
-      mobileColSpan: 4,
-      mobileRowSpan: 2,
-      landscapeColSpan: 3,
-      landscapeRowSpan: 2,
-    },
 
   ];
 
@@ -396,7 +376,7 @@ export default function HomeClient({ data }: HomeClientProps) {
       id: 5,
       content: (
         <FadeInOnVisible>
-          <div className="dt-body-lg" data-sanity={JSON.stringify({
+          <div className="dt-h4" data-sanity={JSON.stringify({
             _type: 'homePage',
             _id: data._id,
             _path: 'body'
@@ -459,26 +439,6 @@ export default function HomeClient({ data }: HomeClientProps) {
       landscapeColSpan: 4,
       landscapeRowSpan: 2,
     },
-    {
-      id: 9,
-      content: data.Image?.asset ? (
-        <FadeInOnVisible className="w-full h-full">
-          <Image
-            src={urlFor(data.Image.asset).quality(75).auto('format').url()}
-            width={getImageDimensions(data.Image.asset).width}
-            height={getImageDimensions(data.Image.asset).height}
-            alt={data.Image.alt || ''}
-            className="object-cover w-full h-full"
-          />
-        </FadeInOnVisible>
-      ) : null,
-      colSpan: 6,
-      rowSpan: 3,
-      mobileColSpan: 0,
-      mobileRowSpan: 0,
-      landscapeColSpan: 3,
-      landscapeRowSpan: 2,
-    },
   ];
 
   return (
@@ -500,6 +460,17 @@ export default function HomeClient({ data }: HomeClientProps) {
                 </div>
               </div>
               {/* Vertical Accordion for Mobile */}
+              {data.Image?.asset && (
+                  <FadeInOnVisible className="w-full h-[17.5vh]">
+                    <Image
+                      src={urlFor(data.Image.asset).quality(75).auto('format').url()}
+                      width={getImageDimensions(data.Image.asset).width}
+                      height={getImageDimensions(data.Image.asset).height}
+                      alt={data.Image.alt || ''}
+                      className="object-cover w-full h-full"
+                    />
+                  </FadeInOnVisible>
+                )}
               <FadeInOnVisible threshold={0.05}>
                 <HomeAccordion data={data} />
               </FadeInOnVisible>
@@ -544,6 +515,19 @@ export default function HomeClient({ data }: HomeClientProps) {
                 </div>
               </div>
               <FadeInOnVisible>
+
+                {data.Image?.asset && (
+                  <FadeInOnVisible className="w-full h-[80vh]">
+                    <Image
+                      src={urlFor(data.Image.asset).quality(75).auto('format').url()}
+                      width={getImageDimensions(data.Image.asset).width}
+                      height={getImageDimensions(data.Image.asset).height}
+                      alt={data.Image.alt || ''}
+                      className="object-cover w-full h-full"
+                    />
+                  </FadeInOnVisible>
+                )}
+
                 <div id="tab">
                   <HomeAccordion data={data} />
                 </div>

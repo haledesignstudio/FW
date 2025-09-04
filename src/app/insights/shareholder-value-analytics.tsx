@@ -285,7 +285,7 @@ export default function ShareholderValueAnalytics(props: Props) {
         </FadeInOnVisible>
       ),
       colSpan: 6,
-      rowSpan: 3,
+      rowSpan: 5,
     },
     {
       id: 'analytics-9',

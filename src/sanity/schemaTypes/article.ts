@@ -13,10 +13,6 @@ const RICH_TEXT_OF = [
     type: 'block',
     styles: [
       { title: 'Normal', value: 'normal' },
-      { title: 'H1', value: 'h1' },
-      { title: 'H2', value: 'h2' },
-      { title: 'H3', value: 'h3' },
-      { title: 'Quote', value: 'blockquote' },
     ],
     marks: {
       decorators: [
@@ -254,6 +250,12 @@ const article = defineType({
     defineField({
       name: 'corporate',
       title: 'Should this article be included on the Corporate Venturing page?',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'video',
+      title: 'Does this article contain a video?',
       type: 'boolean',
       initialValue: false,
     }),

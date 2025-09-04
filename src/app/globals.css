@@ -296,7 +296,7 @@ body::-webkit-scrollbar {
 }
 
 .scroll-mask-bottom {
-  --fade: 10px; /* adjust as needed */
+  --fade: 20px; /* adjust as needed */
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0,

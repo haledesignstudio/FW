@@ -8,6 +8,8 @@ import { PortableTextBlock } from '@portabletext/react';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
 import { HighlightText } from '@/components/HighlightText';
 import './accordion-animations.css';
+import FadeInOnVisible from './FadeInOnVisible';
+import { getImageDimensions } from '@sanity/asset-utils';
 import useIsMobile from '@/hooks/useIsMobile';
 
 export type WhatWeDoEntry = {
@@ -260,13 +262,12 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                                     {item.image?.asset && (
                                         <div className="col-span-4 flex justify-center items-center">
                                             <Image
-                                                src={urlFor(item.image.asset).url()}
+                                                src={urlFor(item.image.asset).quality(75).auto('format').url()}
+                                                width={getImageDimensions(item.image.asset).width}
+                                                height={getImageDimensions(item.image.asset).height}
                                                 alt="Process image"
                                                 className="w-full max-h-[160px] h-full object-cover"
                                                 style={{ aspectRatio: '16/9' }}
-                                                width={320}
-                                                height={160}
-                                                priority={false}
                                             />
                                         </div>
                                     )}
@@ -337,7 +338,7 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                             text={data.accordion.heading}
                             typeSpeed={40}
                             delay={500}
-                            className="dt-h2 text-balance text-[#232323]"
+                            className="dt-h2 text-[#232323] pr-[15%]"
                         />
 
                     ),
@@ -361,9 +362,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                 {
                     id: 4,
                     content:
-                        <div className="dt-h3 text-[#232323]">
-                            <HighlightText value={data.accordion.subheading} />
-                        </div>
+                        <FadeInOnVisible>
+                            <div className="dt-h3 text-[#232323]">
+                                <HighlightText value={data.accordion.subheading} />
+                            </div>
+                        </FadeInOnVisible>
                     ,
                     colSpan: 4,
                     rowSpan: 2,
@@ -486,12 +489,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 4,
                     content: data.accordion.items[0].image.asset ? (
                         <Image
-                            src={urlFor(data.accordion.items[0].image.asset).url()}
+                            src={urlFor(data.accordion.items[0].image.asset).quality(75).auto('format').url()}
+                            width={getImageDimensions(data.accordion.items[0].image.asset).width}
+                            height={getImageDimensions(data.accordion.items[0].image.asset).height}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
-                            width={640}
-                            height={360}
-                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,
@@ -690,12 +692,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 4,
                     content: data.accordion.items[1].image.asset ? (
                         <Image
-                            src={urlFor(data.accordion.items[1].image.asset).url()}
+                            src={urlFor(data.accordion.items[1].image.asset).quality(75).auto('format').url()}
+                            width={getImageDimensions(data.accordion.items[1].image.asset).width}
+                            height={getImageDimensions(data.accordion.items[1].image.asset).height}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
-                            width={640}
-                            height={360}
-                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,
@@ -893,12 +894,11 @@ export default function WhatWeDoAccordion({ data }: WhatWeDoAccordionProps) {
                     id: 4,
                     content: data.accordion.items[2].image.asset ? (
                         <Image
-                            src={urlFor(data.accordion.items[2].image.asset).url()}
+                            src={urlFor(data.accordion.items[2].image.asset).quality(75).auto('format').url()}
+                            width={getImageDimensions(data.accordion.items[2].image.asset).width}
+                            height={getImageDimensions(data.accordion.items[2].image.asset).height}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
-                            width={640}
-                            height={360}
-                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,

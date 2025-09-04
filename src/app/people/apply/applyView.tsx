@@ -6,6 +6,7 @@ import Footer from '@/components/footer';
 import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import FadeInOnVisible from '@/components/FadeInOnVisible';
 import MainTitleAnimation from '@/components/MainTitleAnimation';
+import ReCAPTCHA from 'react-google-recaptcha';
 import useIsMobile from '@/hooks/useIsMobile';
 
 type Props = {
@@ -32,6 +33,10 @@ export default function ApplyView({ jobTitles }: Props) {
 
   // File input ref (for the "Choose file" button)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [showCaptcha, setShowCaptcha] = useState(false);
+  const [captchaError, setCaptchaError] = useState<string | null>(null);
+  const captchaRef = useRef<ReCAPTCHA | null>(null);
 
   // ----- File constraints -----
   const MAX_FILE_BYTES = 20 * 1024 * 1024; // 20MB
@@ -160,8 +165,8 @@ export default function ApplyView({ jobTitles }: Props) {
       getError('confirmEmail') ||
       getError('phone') ||
       getError('location') ||
-      getError('linkedIn') ||  // cross-field requirement
-      getError('resume') ||  // cross-field requirement
+      getError('linkedIn') ||
+      getError('resume') ||
       getError('message')
     );
     if (hasErrors) {
@@ -169,15 +174,17 @@ export default function ApplyView({ jobTitles }: Props) {
       setTriedSubmit(true);
       return;
     }
+    // valid → stop native submit and show captcha overlay
+    e.preventDefault();
     setTriedSubmit(false);
-    handleSubmit(e);
+    setCaptchaError(null);
+    setShowCaptcha(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+
+  const actuallySubmit = async (recaptchaToken: string) => {
     setFormStatus('sending');
     try {
-      // Build FormData so we can include the file
       const fd = new FormData();
       fd.append('jobTitle', form.jobTitle);
       fd.append('name', form.name);
@@ -187,23 +194,44 @@ export default function ApplyView({ jobTitles }: Props) {
       fd.append('location', form.location);
       fd.append('linkedIn', form.linkedIn);
       fd.append('message', form.message);
+      fd.append('recaptchaToken', recaptchaToken);
       if (resume) fd.append('resume', resume);
 
-      const res = await fetch('/api/apply', {
-        method: 'POST',
-        body: fd, // DO NOT set Content-Type; browser adds proper multipart boundary
-      });
+      const res = await fetch('/api/apply', { method: 'POST', body: fd });
 
       if (res.ok) {
-        setFormStatus('sent'); // keep their entries visible
+        setFormStatus('sent');
+        setShowCaptcha(false);
+        // Don't reset captcha on success - let it complete naturally
       } else {
         setFormStatus('error');
+        setShowCaptcha(false);
+        captchaRef.current?.reset(); // Only reset on error
       }
-
     } catch {
       setFormStatus('error');
+      setShowCaptcha(false);
+      captchaRef.current?.reset(); // Only reset on error
     }
   };
+
+  const onCaptchaChange = async (token: string | null) => {
+    if (!token) {
+      setCaptchaError('Please complete the verification to continue.');
+      return;
+    }
+    await actuallySubmit(token);
+  };
+
+  const onCaptchaErrored = () => {
+    setCaptchaError('reCAPTCHA failed to load. Disable blockers or try again.');
+  };
+
+  const onCaptchaExpired = () => {
+    setCaptchaError('Verification expired. Please check the box again.');
+  };
+
+
   // =========================
   // MOBILE LAYOUT
   // =========================
@@ -423,20 +451,50 @@ export default function ApplyView({ jobTitles }: Props) {
                       </UnderlineOnHoverAnimation>
                     </button>
                   </div>
-
-                  {/* Status */}
-                  <div className="col-span-4">
-                    {formStatus === 'error' && (
-                      <p className="text-red-600 text-[1.6vh]">Error submitting Application. Please try again.</p>
-                    )}
-                    {formStatus === 'sent' && (
-                      <p className="text-green-600 text-[1.6vh]">Message sent!</p>
-                    )}
-                  </div>
                 </form>
               </FadeInOnVisible>
             </div>
           </div>
+          {showCaptcha && (
+            <div
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+              aria-modal="true"
+              role="dialog"
+            >
+              <div className="bg-[#F9F7F2] rounded-2xl shadow-xl p-6 w-[min(92vw,480px)]">
+                <h3 className="dt-h3 mb-4">Verification required</h3>
+                <p className="dt-body-sm mb-4">Please confirm you’re not a robot to submit your application.</p>
+
+                <div className="mb-4">
+                  <ReCAPTCHA
+                    ref={captchaRef}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+                    onChange={onCaptchaChange}
+                    onErrored={onCaptchaErrored}
+                    onExpired={onCaptchaExpired}
+                    theme="light"
+                  />
+                </div>
+
+                {captchaError && <p className="text-red-600 text-sm mb-2">{captchaError}</p>}
+
+                <div className="gap-3">
+                  <button
+                    type="button"
+                    className="dt-btn cursor-pointer"
+                    onClick={() => {
+                      setShowCaptcha(false);
+                      setCaptchaError(null);
+                      captchaRef.current?.reset();
+                    }}
+                  >
+                    <UnderlineOnHoverAnimation hasStaticUnderline={true}>Cancel</UnderlineOnHoverAnimation>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
         </main>
         <Footer />
       </>
@@ -620,14 +678,49 @@ export default function ApplyView({ jobTitles }: Props) {
                 </button>
               </div>
 
-              {/* Status */}
-              <div className="col-span-6">
-                {formStatus === 'error' && <p className="text-red-600">Error submitting Application. Please try again.</p>}
-                {formStatus === 'sent' && <p className="text-green-700">Message sent!</p>}
-              </div>
             </form>
           </FadeInOnVisible>
         </div>
+        {showCaptcha && (
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            aria-modal="true"
+            role="dialog"
+          >
+            <div className="bg-[#F9F7F2] rounded-2xl shadow-xl p-6 w-[min(92vw,480px)]">
+              <h3 className="dt-h3 mb-4">Verification required</h3>
+              <p className="dt-body-sm mb-4">Please confirm you’re not a robot to submit your application.</p>
+
+              <div className="mb-4">
+                <ReCAPTCHA
+                  ref={captchaRef}
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+                  onChange={onCaptchaChange}
+                  onErrored={onCaptchaErrored}
+                  onExpired={onCaptchaExpired}
+                  theme="light"
+                />
+              </div>
+
+              {captchaError && <p className="text-red-600 text-sm mb-2">{captchaError}</p>}
+
+              <div className="gap-3">
+                <button
+                  type="button"
+                  className="dt-btn cursor-pointer"
+                  onClick={() => {
+                    setShowCaptcha(false);
+                    setCaptchaError(null);
+                    captchaRef.current?.reset();
+                  }}
+                >
+                  <UnderlineOnHoverAnimation hasStaticUnderline={true}>Cancel</UnderlineOnHoverAnimation>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </main>
       <Footer />
     </>

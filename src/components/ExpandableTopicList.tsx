@@ -193,7 +193,7 @@ export default function ExpandableTopicList() {
                                 {/* td-5: contents array */}
                                 <div className="col-span-4 row-span-2 grid grid-cols-2 gap-[3vh]">
                                     {/* Left Column */}
-                                    <div className="space-y-[3vh]">
+                                    <div className="space-y-[7vh]">
                                         {topic.contents?.slice(0, Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`left-${i}`}>
                                                 <FadeInOnVisible>
@@ -206,7 +206,7 @@ export default function ExpandableTopicList() {
                                         ))}
                                     </div>
                                     {/* Right Column */}
-                                    <div className="space-y-[3vh]">
+                                    <div className="space-y-[7vh]">
                                         {topic.contents?.slice(Math.ceil(topic.contents.length / 2)).map((item, i) => (
                                             <div className="space-y-[1vh]" key={`right-${i}`}>
                                                 <FadeInOnVisible>
@@ -221,8 +221,8 @@ export default function ExpandableTopicList() {
                                 </div>
 
                                 {/* td-7: CTA */}
-                                <div className="col-span-1 row-span-1 p-[1vh] flex items-end justify-end text-right">
-
+                                <div className="col-span-1 row-span-2 p-[1vh] flex items-end justify-end text-right text-balance">
+                                        <FadeInOnVisible>
                                     <a
                                         href={`mailto:${topic.topicMail}?subject=${encodeURIComponent(topic.topicButtonText)}`}
                                         className="dt-btn"
@@ -233,6 +233,7 @@ export default function ExpandableTopicList() {
                                         </UnderlineOnHoverAnimation>
 
                                     </a>
+                                    </FadeInOnVisible>
 
                                 </div>
                                 <div className="col-span-2 row-span-1" />

@@ -34,7 +34,14 @@ const peoplePage = defineType({
           name: 'regularText',
           title: 'Regular Text',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Rich formatted content for regular text section',
           validation: (Rule) => Rule.required()
         }
@@ -73,7 +80,14 @@ const peoplePage = defineType({
               name: 'text',
               title: 'Text',
               type: 'array',
-              of: [{ type: 'block' }],
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    { title: 'Normal', value: 'normal' },
+                  ]
+                }
+              ],
               description: 'Text in column 2, anchored to top left'
             }
           ]
@@ -93,7 +107,14 @@ const peoplePage = defineType({
               name: 'text',
               title: 'Text',
               type: 'array',
-              of: [{ type: 'block' }],
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    { title: 'Normal', value: 'normal' },
+                  ]
+                }
+              ],
               description: 'Text in column 4, anchored to top left'
             }
           ]
@@ -102,7 +123,14 @@ const peoplePage = defineType({
           name: 'sideText',
           title: 'Side Text (Row 7)',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Rich formatted content for side text section',
           validation: (Rule) => Rule.required()
         },
@@ -121,7 +149,14 @@ const peoplePage = defineType({
               name: 'text',
               title: 'Text',
               type: 'array',
-              of: [{ type: 'block' }],
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    { title: 'Normal', value: 'normal' },
+                  ]
+                }
+              ],
               description: 'Text in column 2, anchored to top left'
             }
           ]
@@ -141,7 +176,14 @@ const peoplePage = defineType({
               name: 'text',
               title: 'Text',
               type: 'array',
-              of: [{ type: 'block' }],
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    { title: 'Normal', value: 'normal' },
+                  ]
+                }
+              ],
               description: 'Text in column 4, anchored to top left'
             }
           ]
@@ -174,7 +216,14 @@ const peoplePage = defineType({
                       name: 'text',
                       title: 'Text',
                       type: 'array',
-                      of: [{ type: 'block' }],
+                      of: [
+                        {
+                          type: 'block',
+                          styles: [
+                            { title: 'Normal', value: 'normal' },
+                          ]
+                        }
+                      ],
                       description: 'Rich formatted content for this reason',
                       validation: (Rule) => Rule.required()
                     }
@@ -217,7 +266,7 @@ const peoplePage = defineType({
         }
       ]
     }),
-    
+
   ],
   preview: {
     select: {

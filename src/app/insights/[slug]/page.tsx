@@ -36,6 +36,8 @@ type Article = {
 
   hasRelatedStories?: boolean;
   relatedStories?: RelatedStory[];
+
+  video?: boolean;
 };
 
 
@@ -83,7 +85,9 @@ const articleBySlugQuery = defineQuery(`
     "relatedStories": select(
       hasRelatedStories == true => relatedStories[]{ title, link },
       true => []
-    )
+    ),
+
+    video
   }
 `);
 
@@ -121,7 +125,9 @@ const articleByIdQuery = defineQuery(`
     "relatedStories": select(
       hasRelatedStories == true => relatedStories[]{ title, link },
       true => []
-    )
+    ),
+
+    video
   }
 `);
 

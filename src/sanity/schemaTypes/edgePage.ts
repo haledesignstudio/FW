@@ -24,8 +24,15 @@ export default defineType({
       name: 'subheading',
       title: 'Subheading',
       type: 'array',
-      of: [{ type: 'block' }],
-      validation: (Rule) => Rule.required().min(1), 
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'contentText',
@@ -68,9 +75,16 @@ export default defineType({
           name: 'description',
           title: 'Description',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Short blurb shown next to the embed (Portable Text).',
-          validation: (Rule) => Rule.required().min(1), 
+          validation: (Rule) => Rule.required().min(1),
         }),
       ],
     }),

@@ -30,13 +30,27 @@ export default defineType({
       name: 'subheading',
       title: 'Subheading',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
     }),
     defineField({
       name: 'contentText',
       title: 'Short Statement',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
     }),
 
     // --- ArticleContents (exactly 3 items) ---
@@ -67,7 +81,14 @@ export default defineType({
               name: 'description',
               title: 'Description',
               type: 'array',
-              of: [{ type: 'block' }],
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    { title: 'Normal', value: 'normal' },
+                  ]
+                }
+              ],
               validation: (Rule) => Rule.required(),
             }),
           ],
@@ -115,7 +136,14 @@ export default defineType({
       name: 'audioDescription',
       title: 'Description',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       hidden: ({ document }) => getHasAudio(document) !== 'yes',
       validation: (Rule) =>
         Rule.custom((val, ctx) => {
@@ -145,7 +173,14 @@ export default defineType({
       name: 'finalStatement',
       title: 'Final Statement',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required(),
     }),
   ],

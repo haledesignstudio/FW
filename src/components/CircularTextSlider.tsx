@@ -45,6 +45,7 @@ export default function CircularTextSlider({
     img.src = imageUrl;
   });
 }, [speakers]);
+
   const galleryRef = useRef<HTMLDivElement>(null);
 
   // rotation (degrees)

@@ -71,6 +71,7 @@ const MindbulletArchive = () => {
     };
   }, []);
 
+
   const handleSort = (field: SortField) => {
     if (sortBy === field) {
       setSortDirection((d) => (d === 'asc' ? 'desc' : 'asc'));
@@ -155,7 +156,7 @@ const MindbulletArchive = () => {
             <>
               {displayed.map((mb) => {
                 const imgUrl = mb.mainImage?.asset
-                  ? urlFor(mb.mainImage).width(480).height(270).fit('crop').url()
+                  ? urlFor(mb.mainImage).width(240).height(135).quality(75).fit('crop').auto('format').url()
                   : null;
                 return (
                   <React.Fragment key={mb._id}>
@@ -163,7 +164,14 @@ const MindbulletArchive = () => {
                     <div className="col-span-2 flex items-center pr-[1vw]">
                       <Link
                         href={`/mindbullets/${mb.slug}`}
-                        className="cursor-pointer dt-body-sm line-clamp-1"
+                        className="cursor-pointer dt-body-lg line-clamp-1"
+                        onMouseEnter={() => {
+                          // Preload the image immediately on mouse enter
+                          if (imgUrl) {
+                            const img = document.createElement('img');
+                            img.src = imgUrl;
+                          }
+                        }}
                         onMouseMove={(e) => {
                           setMousePos({ x: e.clientX, y: e.clientY });
                           if (imgUrl) {
@@ -278,6 +286,13 @@ const MindbulletArchive = () => {
                       <Link
                         href={`/mindbullets/${mb.slug}`}
                         className="cursor-pointer dt-body-lg line-clamp-1"
+                        onMouseEnter={() => {
+                          // Preload the image immediately on mouse enter
+                          if (imgUrl) {
+                            const img = document.createElement('img');
+                            img.src = imgUrl;
+                          }
+                        }}
                         onMouseMove={(e) => {
                           setMousePos({ x: e.clientX, y: e.clientY });
                           if (imgUrl) {
@@ -356,6 +371,7 @@ const MindbulletArchive = () => {
           alt={hoveredAlt}
           width={1920}
           height={1080}
+          priority
           style={{
             position: 'fixed',
             top: mousePos.y + 10,
