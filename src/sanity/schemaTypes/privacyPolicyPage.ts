@@ -73,7 +73,14 @@ const privacyPolicyPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Rich formatted content for this section',
           validation: (Rule) => Rule.required()
         }
@@ -94,7 +101,14 @@ const privacyPolicyPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Rich formatted content for this section',
           validation: (Rule) => Rule.required()
         }
@@ -115,7 +129,14 @@ const privacyPolicyPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Rich formatted content for this section',
           validation: (Rule) => Rule.required()
         }
@@ -136,7 +157,14 @@ const privacyPolicyPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Rich formatted content for this section',
           validation: (Rule) => Rule.required()
         }
@@ -157,7 +185,14 @@ const privacyPolicyPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Rich formatted content for this section',
           validation: (Rule) => Rule.required()
         }
@@ -178,7 +213,14 @@ const privacyPolicyPage = defineType({
           name: 'content',
           title: 'Section Content',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           description: 'Rich formatted content for this section',
           validation: (Rule) => Rule.required()
         }

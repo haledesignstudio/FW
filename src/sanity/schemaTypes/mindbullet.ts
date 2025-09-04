@@ -55,7 +55,14 @@ export default defineType({
       name: 'body',
       title: 'Body',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required(),
     }),
 
@@ -93,6 +100,12 @@ export default defineType({
           },
         },
       ],
+    }),
+    defineField({
+      name: 'corporate',
+      title: 'Should this article be included on the Corporate Venturing page?',
+      type: 'boolean',
+      initialValue: false,
     }),
   ],
 

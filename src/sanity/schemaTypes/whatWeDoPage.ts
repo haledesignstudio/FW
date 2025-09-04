@@ -27,7 +27,14 @@ export default defineType({
       name: 'subheading',
       title: 'Subheading',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       fieldset: 'intro',
       validation: (Rule) => Rule.required().min(1),
     }),
@@ -59,7 +66,14 @@ export default defineType({
       name: 'statement1',
       title: 'Statement 1',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       fieldset: 'statements',
       validation: (Rule) => Rule.required().min(1),
     }),
@@ -69,7 +83,14 @@ export default defineType({
       name: 'statement2',
       title: 'Statement 2',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       fieldset: 'statements',
       validation: (Rule) => Rule.required().min(1),
     }),
@@ -79,7 +100,14 @@ export default defineType({
       name: 'statement3',
       title: 'Statement 3',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       fieldset: 'statements',
       validation: (Rule) => Rule.required().min(1),
     }),
@@ -102,7 +130,14 @@ export default defineType({
           name: 'subheading',
           title: 'Subheading',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required().min(1),
         },
 
@@ -127,14 +162,28 @@ export default defineType({
                   name: 'subheading',
                   title: 'Subheading',
                   type: 'array',
-                  of: [{ type: 'block' }],
+                  of: [
+                    {
+                      type: 'block',
+                      styles: [
+                        { title: 'Normal', value: 'normal' },
+                      ]
+                    }
+                  ],
                   validation: (Rule) => Rule.required().min(1),
                 },
                 {
                   name: 'description',
                   title: 'Description',
                   type: 'array',
-                  of: [{ type: 'block' }],
+                  of: [
+                    {
+                      type: 'block',
+                      styles: [
+                        { title: 'Normal', value: 'normal' },
+                      ]
+                    }
+                  ],
                   validation: (Rule) => Rule.required().min(1),
                 },
                 {
@@ -148,7 +197,14 @@ export default defineType({
                   name: 'prompt',
                   title: 'Prompt',
                   type: 'array',
-                  of: [{ type: 'block' }],
+                  of: [
+                    {
+                      type: 'block',
+                      styles: [
+                        { title: 'Normal', value: 'normal' },
+                      ]
+                    }
+                  ],
                   validation: (Rule) => Rule.required().min(1),
                 },
 
@@ -167,14 +223,28 @@ export default defineType({
                           name: 'title',
                           title: 'Title',
                           type: 'array',
-                          of: [{ type: 'block' }],
+                          of: [
+                            {
+                              type: 'block',
+                              styles: [
+                                { title: 'Normal', value: 'normal' },
+                              ]
+                            }
+                          ],
                           validation: (Rule) => Rule.required().min(1),
                         },
                         {
                           name: 'body',
                           title: 'Body',
                           type: 'array',
-                          of: [{ type: 'block' }],
+                          of: [
+                            {
+                              type: 'block',
+                              styles: [
+                                { title: 'Normal', value: 'normal' },
+                              ]
+                            }
+                          ],
                           validation: (Rule) => Rule.required().min(1),
                         },
                       ],

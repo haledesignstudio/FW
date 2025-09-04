@@ -122,9 +122,11 @@ const PodcastView: React.FC<PodcastViewProps> = ({ data, pageTitle, pageSubheadi
     {
       id: "podcast-4",
       content: (
+        <FadeInOnVisible className="w-full h-full">
         <div className="w-full h-full">
           {data.embedLink ? <iframe src={data.embedLink} width="100%" height="100%" /> : null}
         </div>
+        </FadeInOnVisible>
       ),
       colSpan: 6,
       rowSpan: 2,

@@ -10,12 +10,31 @@ import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 
 
 const DELAY_BY_PATH: Record<string, number> = {
-  "/": 3000,   
-  // '/what-we-do': 600,
-  // add more as needed
+    "/": 3000,
+    // '/what-we-do': 600,
+    // add more as needed
 };
 
 const delay = (ms: number) => new Promise<void>(res => setTimeout(res, ms));
+
+// Add this custom hook after the delay function
+const useImagePreloader = () => {
+    useEffect(() => {
+        const imagesToPreload = [
+            '/menu-home.png',
+            '/menu-what-we-do.png', 
+            '/menu-insights.png',
+            '/menu-our-work.png',
+            '/menu-people.png',
+            '/menu-contact.png'
+        ];
+
+        imagesToPreload.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+        });
+    }, []);
+};
 
 const menuItems = [
     {
@@ -64,8 +83,8 @@ const menuItems = [
                     width={600}
                     height={400}
                     className="w-[60%] h-auto"
-                    loading="eager"
                     priority
+                    unoptimized={false}
                 />
 
 
@@ -109,8 +128,8 @@ const menuItems = [
                     width={600}
                     height={400}
                     className="w-[60%] h-auto"
-                    loading="eager"
                     priority
+                    unoptimized={false}
                 />
 
             </div>
@@ -199,8 +218,8 @@ const menuItems = [
                     width={600}
                     height={400}
                     className="w-[60%] pb-[7.5vh]"
-                    loading="eager"
                     priority
+                    unoptimized={false}
                 />
                 <Link href="/insights" onClick={(e) => {
                     e.preventDefault();
@@ -276,8 +295,8 @@ const menuItems = [
                     width={600}
                     height={400}
                     className="w-[60%] pb-[7.5vh]"
-                    loading="eager"
                     priority
+                    unoptimized={false}
                 />
                 <Link href={`/our-work#case-studies`} onClick={(e) => {
                     e.preventDefault();
@@ -353,8 +372,8 @@ const menuItems = [
                     width={600}
                     height={400}
                     className="w-[60%] pb-[7.5vh]"
-                    loading="eager"
                     priority
+                    unoptimized={false}
                 />
                 <Link href={`/people#careers`} onClick={(e) => {
                     e.preventDefault();
@@ -409,8 +428,8 @@ const menuItems = [
                     width={600}
                     height={400}
                     className="w-[60%] pb-[7.5vh]"
-                    loading="eager"
                     priority
+                    unoptimized={false}
                 />
                 <Link href="/keynotes" onClick={(e) => {
                     e.preventDefault();
@@ -504,7 +523,7 @@ const Header: React.FC = () => {
         setIsClient(true);
     }, []);
 
-
+    useImagePreloader();
 
     const [activePair, setActivePair] = useState<number | null>(null);
     const [hovering, setHovering] = useState(false);
@@ -644,15 +663,15 @@ const Header: React.FC = () => {
                     const samePath = normalizePath(pathname) === normalizePath(targetPath);
 
                     if (samePath) {
-  const delayMs = DELAY_BY_PATH[normalizePath(targetPath)] ?? 0;
-  jumpToTopInstant();
-  router.replace(`${targetPath}${targetHash}`, { scroll: false });
-  requestAnimationFrame(async () => {
-    await waitForElementById(targetHash.slice(1));
-    if (delayMs) await delay(delayMs);
-    smoothScrollToHash(targetHash);
-  });
-} else {
+                        const delayMs = DELAY_BY_PATH[normalizePath(targetPath)] ?? 0;
+                        jumpToTopInstant();
+                        router.replace(`${targetPath}${targetHash}`, { scroll: false });
+                        requestAnimationFrame(async () => {
+                            await waitForElementById(targetHash.slice(1));
+                            if (delayMs) await delay(delayMs);
+                            smoothScrollToHash(targetHash);
+                        });
+                    } else {
 
                         // CROSS PAGE: land at top, finish scroll after load
                         sessionStorage.setItem(PENDING_HASH_KEY, targetHash);
@@ -677,13 +696,13 @@ const Header: React.FC = () => {
         sessionStorage.removeItem(PENDING_HASH_KEY);
 
         const delayMs = DELAY_BY_PATH[normalizePath(pathname)] ?? 0;
-jumpToTopInstant();
-router.replace(`${pathname}${pending}`, { scroll: false });
-requestAnimationFrame(async () => {
-  await waitForElementById(pending.slice(1));
-  if (delayMs) await delay(delayMs);
-  smoothScrollToHash(pending);
-});
+        jumpToTopInstant();
+        router.replace(`${pathname}${pending}`, { scroll: false });
+        requestAnimationFrame(async () => {
+            await waitForElementById(pending.slice(1));
+            if (delayMs) await delay(delayMs);
+            smoothScrollToHash(pending);
+        });
 
     }, [pathname]);
 
@@ -797,7 +816,7 @@ requestAnimationFrame(async () => {
                                 exit="exit"
                                 variants={isHomepage ? menuVariants : menuVariantsOtherPages}
                                 className="w-screen bg-[#F9F7F2] relative left-0 z-40 overflow-hidden"
-                                style={stage === 2 ? { minHeight: '100vh' } : {minHeight: '100vh'}}
+                                style={stage === 2 ? { minHeight: '100vh' } : { minHeight: '100vh' }}
                             >
                                 <div className={`grid grid-cols-4 p-[2vh] min-h-screen ${isHomepage
                                     ? 'gap-[1vh] auto-rows-[5vh]'
@@ -816,8 +835,8 @@ requestAnimationFrame(async () => {
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
                                     {!isHomepage && <div className="col-span-4"></div>}
-                                    
-                                    
+
+
 
                                     {/* Menu Items with conditional sizing */}
                                     {mobileMenuItems.map((item, index) => (

@@ -25,7 +25,14 @@ const caseStudy = defineType({
       name: 'summary',
       title: 'Summary',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       description: 'Summary for the carousel'
     }),
     defineField({
@@ -57,35 +64,70 @@ const caseStudy = defineType({
       name: 'concept',
       title: 'The Concept',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       description: 'Section 1: The Concept (col 1)'
     }),
     defineField({
       name: 'methodology',
       title: 'Methodology and Execution',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       description: 'Section 2: Methodology and Execution (col 2)'
     }),
     defineField({
       name: 'impact',
       title: 'Impact and Outcome',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       description: 'Section 3: Impact and Outcome (col 3)'
     }),
     defineField({
       name: 'transformation',
       title: 'Transformation Potential',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       description: 'Section 4: Transformation Potential (col 4)'
     }),
     defineField({
       name: 'conclusion',
       title: 'Conclusion',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       description: 'Section 5: Conclusion (col 5)'
     }),
 

@@ -201,7 +201,7 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
         </FadeInOnVisible>
       ),
       colSpan: 2,
-      rowSpan: 1,
+      rowSpan: 2,
       mobileColSpan: 0,
       mobileRowSpan: 0,
       landscapeColSpan: 2,
@@ -258,22 +258,12 @@ export default function PrivacyPolicyClient({ privacyData }: PrivacyPolicyClient
       landscapeRowSpan: 1,
     },
     // Row 3-4 col 1-3: Empty cell
+
     {
-      id: 7,
-      content: <></>,
-      colSpan: 3,
-      rowSpan: 2,
-      mobileColSpan: 0,
-      mobileRowSpan: 0,
-      landscapeColSpan: 3,
-      landscapeRowSpan: 2,
-    },
-    // Row 3-4 col 4-6: Content (scrollable, hidden scrollbar)
-    {
-      id: 8,
+      id: 9,
       content: (
         <FadeInOnVisible className="scroll-mask-bottom" key={`content-${selectedCategory}`} threshold={0.05}>
-          <div className="h-full max-h-[52vh] overflow-y-auto pr-[1vh] pointer-events-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="h-[45.2vh] overflow-y-auto pr-[1vh] pointer-events-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
             {renderContent()}
           </div>

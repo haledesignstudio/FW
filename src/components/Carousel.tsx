@@ -185,8 +185,7 @@ export default function Carousel({
       col.style.rowGap = INNER_GAP;
       col.style.height = colHeight;
 
-      // IMAGE
-      // IMAGE (clickable if href)
+      // IMAGE (clickable if href) — now rendered with Next.js <Image />
       let imgWrap: HTMLElement;
 
       if (item.href) {
@@ -195,32 +194,63 @@ export default function Carousel({
         link.target = "_self";
         link.className = "relative w-full h-full block";
 
-        const img = document.createElement("img");
-        img.src = item.src;
-        img.alt = item.heading || "Carousel image";
-        img.decoding = "async";
-        img.loading = "lazy";
-        img.className = "w-full h-full object-cover";
-        img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
-        img.style.filter = "grayscale(100%)";
+        const mount = document.createElement("span");
+        link.appendChild(mount);
 
-        link.appendChild(img);
+        const root = createRoot(mount);
+        (col as unknown as WithRoots).__roots!.push(root);
+        root.render(
+          <Image
+            src={item.src}
+            alt={item.heading || "Carousel image"}
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority={false}
+          />
+        );
+
+        // Ensure initial filter & transition on the underlying <img> once mounted
+        setTimeout(() => {
+          const img = link.querySelector("img") as HTMLImageElement | null;
+          if (img) {
+            img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
+            img.style.filter = isMobile ? "none" : "grayscale(100%)";
+          }
+        }, 0);
+
         imgWrap = link;
       } else {
         const div = document.createElement("div");
         div.className = "relative w-full h-full";
-        const img = document.createElement("img");
-        img.src = item.src;
-        img.alt = item.heading || "Carousel image";
-        img.decoding = "async";
-        img.loading = "lazy";
-        img.className = "w-full h-full object-cover";
-        img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
-        img.style.filter = "grayscale(100%)";
-        div.appendChild(img);
+
+        const mount = document.createElement("span");
+        div.appendChild(mount);
+
+        const root = createRoot(mount);
+        (col as unknown as WithRoots).__roots!.push(root);
+        root.render(
+          <Image
+            src={item.src}
+            alt={item.heading || "Carousel image"}
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority={false}
+          />
+        );
+
+        // Ensure initial filter & transition on the underlying <img> once mounted
+        setTimeout(() => {
+          const img = div.querySelector("img") as HTMLImageElement | null;
+          if (img) {
+            img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
+            img.style.filter = isMobile ? "none" : "grayscale(100%)";
+          }
+        }, 0);
+
         imgWrap = div;
       }
-
 
       // TEXT
       const textWrap = document.createElement("div");

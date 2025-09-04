@@ -128,7 +128,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
         </div>
 
         {/* Body */}
-        <div className="col-span-4 dt-body-sm">
+        <div className="col-span-4 dt-body-lg">
           <PortableText value={leftBlocks} components={ptComponents} />
           <PortableText value={rightBlocks} components={ptComponents} />
         </div>
@@ -279,6 +279,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
     {
       id: "mindbullet-3",
       content: data.mainImage?.asset ? (
+        <FadeInOnVisible className="w-full h-full">
         <Image
           src={urlFor(data.mainImage.asset).quality(75).auto('format').url()}
           width={getImageDimensions(data.mainImage.asset).width}
@@ -286,6 +287,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
           alt={"Process image"}
           className="w-full h-full object-cover"
         />
+        </FadeInOnVisible>
       ) : null,
       colSpan: 6,
       rowSpan: 3,
@@ -310,6 +312,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
     {
       id: "mindbullet-5",
       content: (
+        <FadeInOnVisible className="h-full flex items-center">
         <div className="h-full flex items-center">
           <div className="flex flex-row items-center gap-[2vh]">
             <div className="dt-body-lg">
@@ -325,6 +328,7 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
             </div>
           </div>
         </div>
+        </FadeInOnVisible>
       ),
       colSpan: 6,
       rowSpan: 1,
@@ -355,13 +359,13 @@ const MindbulletsView: React.FC<MindbulletsViewProps> = ({ data, more }) => {
 
       {/* Body + disclaimer */}
       <FadeInOnVisible>
-        <div className="grid gap-[2vh] grid-cols-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
+        <div className="grid gap-[10vh] grid-cols-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
           <div className="col-span-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-4">
-            <div className="grid grid-cols-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
-              <div className="dt-body-sm">
+            <div className="grid grid-cols-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[10vh]">
+              <div className="dt-body-lg">
                 <PortableText value={leftBlocks} components={ptComponents} />
               </div>
-              <div className="dt-body-sm">
+              <div className="dt-body-lg">
                 <PortableText value={rightBlocks} components={ptComponents} />
               </div>
             </div>

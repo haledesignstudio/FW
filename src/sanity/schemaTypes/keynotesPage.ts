@@ -29,7 +29,14 @@ export default defineType({
           name: 'topicSectionSubtitle',
           title: 'Topic Section Subtitle',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required(),
         }),
         defineField({
@@ -74,7 +81,14 @@ export default defineType({
           name: 'speakerSectionSubtitle',
           title: 'Speakers Section Subtitle',
           type: 'array',
-          of: [{ type: 'block' }],
+          of: [
+            {
+              type: 'block',
+              styles: [
+                { title: 'Normal', value: 'normal' },
+              ]
+            }
+          ],
           validation: (Rule) => Rule.required(),
         }),
         defineField({

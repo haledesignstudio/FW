@@ -49,6 +49,8 @@ type Article = {
 
   hasRelatedStories?: boolean;
   relatedStories?: RelatedStory[];
+
+  video?: boolean;
 };
 
 
@@ -134,7 +136,11 @@ interface ArticleViewProps {
 }
 
 const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => {
-  const [leftBlocks, rightBlocks] = splitPortableBlocks(data.body);
+  const [leftBlocks, rightBlocks] = useMemo(() => {
+    if (data.video) return [data.body ?? [], []]; // one solid block
+    return splitPortableBlocks(data.body);
+  }, [data.body, data.video]);
+
 
 
   const carouselItems = useMemo(() => {
@@ -250,10 +256,17 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
           </div>
         ) : null}
 
-        <div className="col-span-4 dt-body-sm">
-          <PortableText value={leftBlocks} components={ptComponents} />
-          <PortableText value={rightBlocks} components={ptComponents} />
+        <div className="col-span-4 dt-body-lg">
+          {data.video ? (
+            <PortableText value={data.body ?? []} components={ptComponents} />
+          ) : (
+            <>
+              <PortableText value={leftBlocks} components={ptComponents} />
+              <PortableText value={rightBlocks} components={ptComponents} />
+            </>
+          )}
         </div>
+
 
 
         {data.hasPdf && data.pdf?.url ? (
@@ -340,55 +353,24 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
     {
       id: "article-1",
       content: data.image?.asset ? (
-        <Image
-          src={urlFor(data.image).quality(75).auto('format').url()}
-          width={getImageDimensions(data.image.asset).width}
-          height={getImageDimensions(data.image.asset).height}
-          alt={data.image.alt || "Article image"}
-          className="w-full h-full object-cover"
-        />
+        <FadeInOnVisible className="w-full h-full">
+          <Image
+            src={urlFor(data.image).quality(75).auto('format').url()}
+            width={getImageDimensions(data.image.asset).width}
+            height={getImageDimensions(data.image.asset).height}
+            alt={data.image.alt || "Article image"}
+            className="w-full h-full object-cover"
+          />
+        </FadeInOnVisible>
       ) : null,
       colSpan: 6,
       rowSpan: 3,
-    },
-    {
-      id: "article-2",
-      content: <></>,
-      colSpan: 6,
-      rowSpan: 1,
-    },
-    {
-      id: "article-3",
-      content: (
-        <FadeInOnVisible>
-          <div className="h-full flex flex-col gap-[7.5vh]">
-            <div className="dt-h2 text-balance">
-              {data.title}
-            </div>
-            <div className="dt-h3">
-              {data.byline}
-            </div>
-          </div>
-        </FadeInOnVisible>
-      ),
-      colSpan: 5,
-      rowSpan: 3,
-    },
-    {
-      id: "article-4",
-      content: (
-        <div className="dt-body-lg">
-          {data.datePublished}
-        </div>
-      ),
-      colSpan: 6,
-      rowSpan: 1,
     },
   ];
 
   const desktop = (
     <div className="hidden [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:block">
-      <CommonHeader title={data.title} active="corporate" />
+      <CommonHeader title={data.title} active="edge" />
       <div className="grid grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:auto-rows-[21vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-x-[1.795vw] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:gap-y-[3.2vh]">
         {gridItems.map((item) => (
           <div
@@ -405,16 +387,39 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
       </div>
 
       <FadeInOnVisible>
+          <div className="h-full flex flex-col gap-[3.5vh] mt-[3.5vh]">
+            <div className="dt-h2 text-balance">
+              {data.title}
+            </div>
+            <div className="dt-h3">
+              {data.byline}
+            </div>
+          </div>
+        </FadeInOnVisible>
+        <FadeInOnVisible>
+          <div className="dt-body-lg mt-[20vh] mb-[20vh]">
+            {data.datePublished}
+          </div>
+        </FadeInOnVisible>
+
+      <FadeInOnVisible>
         <div className="grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-6 mt-[4vh]">
           <div className="col-span-2 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:col-span-4">
-            <div className="grid grid-cols-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[2vh]">
-              <div className="dt-body-sm">
-                <PortableText value={leftBlocks} components={ptComponents} />
+            {data.video ? (
+              <div className="dt-body-lg">
+                <PortableText value={data.body ?? []} components={ptComponents} />
               </div>
-              <div className="dt-body-sm">
-                <PortableText value={rightBlocks} components={ptComponents} />
+            ) : (
+              <div className="grid grid-cols-1 [@media(min-width:1080px)_and_(min-aspect-ratio:1/1)]:grid-cols-2 gap-[10vh]">
+                <div className="dt-body-lg">
+                  <PortableText value={leftBlocks} components={ptComponents} />
+                </div>
+                <div className="dt-body-lg">
+                  <PortableText value={rightBlocks} components={ptComponents} />
+                </div>
               </div>
-            </div>
+            )}
+
           </div>
 
 

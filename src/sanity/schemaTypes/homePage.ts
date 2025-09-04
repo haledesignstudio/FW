@@ -29,7 +29,14 @@ const homePage = defineType({
       name: 'subheading',
       title: 'Subheading',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required(),
       fieldset: 'mainContent',
     }),
@@ -37,7 +44,14 @@ const homePage = defineType({
       name: 'body',
       title: 'Body',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required(),
       fieldset: 'mainContent',
     }),
@@ -72,7 +86,14 @@ const homePage = defineType({
       fieldset: 'section1',
       fields: [
         defineField({ name: 'section1Title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section1Body', title: 'Body', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section1Body', title: 'Body', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
         defineField({ name: 'section1CTA', title: 'CTA', type: 'string', validation: (Rule) => Rule.required() }),
         defineField({ name: 'section1Email', title: 'Email', type: 'string', validation: (Rule) => Rule.required() }),
         defineField({ name: 'section1URL', title: 'iframe URL', type: 'url', validation: (Rule) => Rule.required() }),
@@ -86,13 +107,62 @@ const homePage = defineType({
       fieldset: 'section2',
       fields: [
         defineField({ name: 'section2Title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section2Body', title: 'Body', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section2Heading1', title: 'Heading 1', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section2Description1', title: 'Description 1', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section2Heading2', title: 'Heading 2', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section2Description2', title: 'Description 2', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section2Heading3', title: 'Heading 3', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section2Description3', title: 'Description 3', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Body', title: 'Body', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Heading1', title: 'Heading 1', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Description1', title: 'Description 1', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Heading2', title: 'Heading 2', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Description2', title: 'Description 2', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Heading3', title: 'Heading 3', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section2Description3', title: 'Description 3', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
         defineField({ name: 'section2Image', title: 'Image', type: 'image', options: { hotspot: true }, validation: (Rule) => Rule.required() }),
       ],
     }),
@@ -104,7 +174,14 @@ const homePage = defineType({
       fieldset: 'section3',
       fields: [
         defineField({ name: 'section3Title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
-        defineField({ name: 'section3Body', title: 'Body', type: 'array', of: [{ type: 'block' }], validation: (Rule) => Rule.required() }),
+        defineField({ name: 'section3Body', title: 'Body', type: 'array', of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ], validation: (Rule) => Rule.required() }),
       ],
     }),
   ],

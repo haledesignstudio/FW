@@ -25,14 +25,28 @@ export default defineType({
       name: 'summary',
       title: 'Summary',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'bio',
       title: 'Bio',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({

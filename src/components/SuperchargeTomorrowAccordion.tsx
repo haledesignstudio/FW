@@ -8,6 +8,8 @@ import UnderlineOnHoverAnimation from '@/components/underlineOnHoverAnimation';
 import type { PortableTextBlock } from '@portabletext/react';
 import useIsMobile from '@/hooks/useIsMobile';
 import './accordion-animations.css';
+import { getImageDimensions } from '@sanity/asset-utils';
+
 
 type PT = PortableTextBlock[];
 
@@ -270,7 +272,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                             style={{ background: bg, color: fg, maxHeight: '9999px' }}
 
                         >
-                            
+
                             {/* Open state: full vertical accordion for tab 1 */}
                             {isOpen && idx === 0 && (
                                 <div className="py-[2.09vh] px-[4.53vw] grid grid-cols-4 auto-rows-[minmax(7.701vh,auto)] overflow-visible gap-x-[4.53vw] gap-y-[2.09vh] w-full">
@@ -287,13 +289,12 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                     {tab.image?.asset && (
                                         <div className="col-span-4 flex justify-center items-center">
                                             <Image
-                                                src={urlFor(tab.image.asset).url()}
+                                                src={urlFor(tab.image.asset).quality(75).auto('format').url()}
+                                                width={getImageDimensions(tab.image.asset).width}
+                                                height={getImageDimensions(tab.image.asset).height}
                                                 alt="Process image"
                                                 className="w-full max-h-[160px] h-full object-cover"
                                                 style={{ aspectRatio: '16/9' }}
-                                                width={320}
-                                                height={160}
-                                                priority={false}
                                             />
                                         </div>
                                     )}
@@ -395,7 +396,7 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                     <div className="col-span-2 dt-body-sm -mt-[2vh] pb-[4vh]">
                                         <PortableText value={data.accordionSection2.section2.statements[1].body ?? []} />
                                     </div>
-                                    
+
                                 </div>
                             )}
                             {/* Open state: full vertical accordion for tab 3 */}
@@ -414,13 +415,12 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                                     {data.accordionSection3.image?.asset && (
                                         <div className="col-span-4 row-span-2 flex justify-center items-center">
                                             <Image
-                                                src={urlFor(data.accordionSection3.image.asset).url()}
+                                                src={urlFor(data.accordionSection3.image.asset).quality(75).auto('format').url()}
+                                                width={getImageDimensions(data.accordionSection3.image.asset).width}
+                                                height={getImageDimensions(data.accordionSection3.image.asset).height}
                                                 alt="Process image"
                                                 className="w-full max-h-[160px] h-full object-cover"
                                                 style={{ aspectRatio: '16/9' }}
-                                                width={320}
-                                                height={160}
-                                                priority={false}
                                             />
                                         </div>
                                     )}
@@ -555,12 +555,11 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 4,
                     content: data.accordionSection1.image.asset ? (
                         <Image
-                            src={urlFor(data.accordionSection1.image.asset).url()}
+                            src={urlFor(data.accordionSection1.image.asset).quality(75).auto('format').url()}
+                            width={getImageDimensions(data.accordionSection1.image.asset).width}
+                            height={getImageDimensions(data.accordionSection1.image.asset).height}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
-                            width={640}
-                            height={360}
-                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,
@@ -1064,12 +1063,11 @@ export default function SuperchargeTomorrowAccordion({ data }: SuperchargeTomorr
                     id: 4,
                     content: data.accordionSection3.image.asset ? (
                         <Image
-                            src={urlFor(data.accordionSection3.image.asset).url()}
+                            src={urlFor(data.accordionSection3.image.asset).quality(75).auto('format').url()}
+                            width={getImageDimensions(data.accordionSection3.image.asset).width}
+                            height={getImageDimensions(data.accordionSection3.image.asset).height}
                             alt={'Process image'}
                             className="w-full h-full object-cover"
-                            width={640}
-                            height={360}
-                            priority={false}
                         />
                     ) : null,
                     colSpan: 3,

@@ -463,14 +463,27 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
               />
             </div>
           </div>
-          <div className="h-full w-[70%] ml-[16.3675vw] mt-[1vh]">
+        </FadeInOnVisible>
+      ),
+      colSpan: 2,
+      rowSpan: 1,
+      mobileColSpan: 2,
+      mobileRowSpan: 1,
+      landscapeColSpan: 4,
+      landscapeRowSpan: 1,
+    },
+    {
+      id: 2,
+      content: (
+        <FadeInOnVisible>
+          <div className="h-full">
             <p className="dt-h3 text-balance">
               {data.pageHeader.subheading}
             </p>
           </div>
         </FadeInOnVisible>
       ),
-      colSpan: 4,
+      colSpan: 2,
       rowSpan: 1,
       mobileColSpan: 2,
       mobileRowSpan: 1,
@@ -823,7 +836,7 @@ export default function People({ data, careers = [] }: { data: PeoplePageContent
     {
       id: 26,
       content: (
-        <FadeInOnVisible>
+        <FadeInOnVisible className="h-full w-full">
           <div className="h-full w-full">
             <Carousel
               items={carouselItems}

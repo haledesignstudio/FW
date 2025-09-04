@@ -7,17 +7,78 @@ export const dynamic = 'force-dynamic';    // don't cache this route
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
+// simple HTML escape
 function esc(s: string) {
-  return s
+  return String(s ?? '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+type RecaptchaVerifyResponse = {
+  success: boolean;
+  challenge_ts?: string;
+  hostname?: string;
+  'error-codes'?: string[];
+};
+
+async function verifyRecaptcha(token: string, req: NextRequest) {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) return { ok: false as const, reason: 'recaptcha_not_configured' };
+
+  // Best-effort client IP (optional for Google, but useful)
+  const xff = req.headers.get('x-forwarded-for') || '';
+  const remoteip = xff.split(',')[0]?.trim();
+
+  // Add a timeout so we don't hang if Google is unreachable
+  const controller = new AbortController();
+  const to = setTimeout(() => controller.abort(), 15_000);
+
+  try {
+    const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret,
+        response: token,
+        ...(remoteip ? { remoteip } : {}),
+      }).toString(),
+      cache: 'no-store',
+      signal: controller.signal,
+    });
+
+    clearTimeout(to);
+    const data = (await res.json()) as RecaptchaVerifyResponse;
+
+    if (!data.success) {
+      return { ok: false as const, reason: 'recaptcha_failed', details: data['error-codes'] ?? [] };
+    }
+    return { ok: true as const };
+  } catch (e) {
+    clearTimeout(to);
+    console.error('reCAPTCHA verify error:', e);
+    return { ok: false as const, reason: 'recaptcha_error' };
+  }
 }
 
 export async function POST(req: NextRequest) {
   try {
     const fd = await req.formData();
 
+    // Verify captcha BEFORE any processing
+    const recaptchaToken = fd.get('recaptchaToken');
+    if (!recaptchaToken || typeof recaptchaToken !== 'string' || !recaptchaToken.trim()) {
+      return Response.json({ error: 'missing_recaptcha' }, { status: 400 });
+    }
+    const verify = await verifyRecaptcha(recaptchaToken, req);
+    if (!verify.ok) {
+      return Response.json(
+        { ok: false, error: verify.reason, details: 'details' in verify ? verify.details : [] },
+        { status: 400 }
+      );
+    }
+
+    // Extract fields
     const jobTitle     = String(fd.get('jobTitle') ?? '').trim();
     const name         = String(fd.get('name') ?? '').trim();
     const email        = String(fd.get('email') ?? '').trim();
@@ -34,12 +95,13 @@ export async function POST(req: NextRequest) {
     if (email.toLowerCase() !== confirmEmail.toLowerCase()) {
       return Response.json({ error: 'emails_mismatch' }, { status: 400 });
     }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return Response.json({ error: 'bad_email' }, { status: 400 });
+    }
 
-    // Optional resume file
+    // Optional resume file (keep uploads reasonable for your host)
     const file = fd.get('resume') as File | null;
 
-    // Note: Vercel Serverless Functions cap request body to ~4.5MB.
-    // Keep uploads below that if you deploy on Vercel. :contentReference[oaicite:1]{index=1}
     let attachments:
       | Array<{ filename: string; content: Buffer | string; content_type?: string }>
       | undefined;
@@ -49,7 +111,7 @@ export async function POST(req: NextRequest) {
       attachments = [
         {
           filename: file.name,
-          content: buf,                 // Resend accepts Buffer or Base64
+          content: buf, // Resend Node SDK accepts Buffer or Base64 string
           content_type: file.type || undefined,
         },
       ];
@@ -83,18 +145,17 @@ export async function POST(req: NextRequest) {
     ].join('\n');
 
     const { error } = await resend.emails.send({
-      from: process.env.RESEND_FROM || 'Careers <onboarding@resend.dev>',
+      from: process.env.RESEND_FROM_APPLY || 'Careers <onboarding@resend.dev>',
       to: (process.env.RESEND_TO_APPLY || 'mat@haledesign.co.za').split(','),
       subject: `Application • ${jobTitle} • ${name}`,
-      replyTo: email,                           // Node SDK uses camelCase 'replyTo' :contentReference[oaicite:2]{index=2}
+      replyTo: email,
       html,
       text,
-      attachments,                              // accepts Buffer/Base64; up to 40MB total attachments :contentReference[oaicite:3]{index=3}
-            tags: [
+      attachments,
+      tags: [
         { name: 'source', value: 'apply-form' },
         { name: 'job', value: (jobTitle || 'unspecified').replace(/[^A-Za-z0-9_-]/g, '_') },
       ],
-
     });
 
     if (error) {

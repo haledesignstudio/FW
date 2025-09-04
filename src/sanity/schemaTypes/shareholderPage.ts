@@ -17,7 +17,14 @@ const shareholderPage = defineType({
       name: 'subheading',
       title: 'Subheading',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -48,7 +55,14 @@ const shareholderPage = defineType({
       name: 'IQ_heading',
       title: 'IQ Heading',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ]
+        }
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({

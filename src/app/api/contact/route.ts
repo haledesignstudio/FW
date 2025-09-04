@@ -33,10 +33,53 @@ function errorMessage(e: unknown, fallback = 'email_failed'): string {
   return fallback;
 }
 
+type RecaptchaVerifyResponse = {
+  success: boolean;
+  challenge_ts?: string;
+  hostname?: string;
+  'error-codes'?: string[];
+};
+
+async function verifyRecaptcha(token: string, req: NextRequest): Promise<{ ok: true } | { ok: false; reason: string; details?: string[] }> {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) {
+    console.error('Missing RECAPTCHA_SECRET_KEY env var.');
+    return { ok: false, reason: 'recaptcha_not_configured' };
+  }
+
+  // Best-effort client IP (optional for Google, but helpful)
+  const xff = req.headers.get('x-forwarded-for') || '';
+  const remoteIp = xff.split(',')[0]?.trim() || undefined;
+
+  try {
+    const params = new URLSearchParams({
+      secret,
+      response: token,
+      ...(remoteIp ? { remoteip: remoteIp } : {}),
+    });
+
+    const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString(),
+      cache: 'no-store',
+    });
+
+    const data = (await res.json()) as RecaptchaVerifyResponse;
+
+    if (!data.success) {
+      return { ok: false, reason: 'recaptcha_failed', details: data['error-codes'] };
+    }
+    return { ok: true };
+  } catch (e) {
+    console.error('reCAPTCHA verify error:', e);
+    return { ok: false, reason: 'recaptcha_error' };
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, phone, company, position, message } = await req.json();
+    const { name, email, phone, company, position, message, recaptchaToken } = await req.json();
 
     // Basic server-side validation (mirrors the client)
     const required = { name, email, phone, company, position, message };
@@ -47,6 +90,18 @@ export async function POST(req: NextRequest) {
     }
     if (!/\S+@\S+\.\S+/.test(String(email))) {
       return Response.json({ error: 'bad_email' }, { status: 400 });
+    }
+
+    // Require and verify reCAPTCHA BEFORE sending email
+    if (!recaptchaToken || String(recaptchaToken).trim() === '') {
+      return Response.json({ error: 'missing_recaptcha' }, { status: 400 });
+    }
+    const recaptcha = await verifyRecaptcha(String(recaptchaToken), req);
+    if (!recaptcha.ok) {
+      return Response.json(
+        { ok: false, error: recaptcha.reason, details: recaptcha['details'] ?? [] },
+        { status: 400 }
+      );
     }
 
     const html = `
@@ -82,7 +137,7 @@ export async function POST(req: NextRequest) {
     ];
 
     const { error } = await resend.emails.send({
-      from: process.env.RESEND_FROM || 'Website <onboarding@resend.dev>',
+      from: process.env.RESEND_FROM_CONTACT || 'Website <onboarding@resend.dev>',
       to: (process.env.RESEND_TO_CONTACT || 'mat@haledesign.co.za').split(','),
       subject: `Contact • ${name}${company ? ` • ${company}` : ''}`,
       replyTo: String(email),
@@ -100,8 +155,8 @@ export async function POST(req: NextRequest) {
     }
 
     return Response.json({ ok: true });
-} catch (err: unknown) {
-  console.error('Contact route error:', err);
-  return Response.json({ ok: false, error: errorMessage(err) }, { status: 500 });
-}
+  } catch (err: unknown) {
+    console.error('Contact route error:', err);
+    return Response.json({ ok: false, error: errorMessage(err) }, { status: 500 });
+  }
 }

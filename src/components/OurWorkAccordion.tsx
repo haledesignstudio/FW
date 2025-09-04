@@ -12,6 +12,7 @@ import type { PortableTextBlock, PortableTextSpan } from '@portabletext/types';
 import { client } from '@/sanity/lib/client';
 import { caseStudyQuery } from '@/sanity/lib/queries';
 import CaseStudiesCarousel, { type CarouselItem } from '@/components/CaseStudiesCarousel';
+import { getImageDimensions } from '@sanity/asset-utils';
 
 type OurWorkAccordionProps = { data: OurWorkContent };
 
@@ -216,12 +217,11 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
             id: 3,
             content: data.accordionSection1.mainImage.asset ? (
               <Image
-                src={urlFor(data.accordionSection1.mainImage.asset).url()}
+                src={urlFor(data.accordionSection1.mainImage.asset).quality(75).auto('format').url()}
+                width={getImageDimensions(data.accordionSection1.mainImage.asset).width}
+                height={getImageDimensions(data.accordionSection1.mainImage.asset).height}
                 alt={'Process image'}
                 className="w-[80vw] h-[100vh] object-contain mt-[-30vh]"
-                width={1200}
-                height={900}
-                priority={false}
               />
             ) : null,
             colSpan: 3,
@@ -234,14 +234,15 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
           {
             id: 4,
             content: data.accordionSection1.brandImage.asset ? (
-              <Image
-                src={urlFor(data.accordionSection1.brandImage.asset).url()}
-                alt={'Process image'}
-                className="w-[70%] h-auto object-contain"
-                width={600}
-                height={300}
-                priority={false}
-              />
+              <FadeInOnVisible className="w-full object-contain">
+                <Image
+                  src={urlFor(data.accordionSection1.brandImage.asset).quality(75).auto('format').url()}
+                  width={getImageDimensions(data.accordionSection1.brandImage.asset).width}
+                  height={getImageDimensions(data.accordionSection1.brandImage.asset).height}
+                  alt={'Process image'}
+                  className="w-[70%] h-auto object-contain"
+                />
+              </FadeInOnVisible>
             ) : null,
             colSpan: 2,
             rowSpan: 1,
@@ -337,7 +338,7 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
               backgroundColor: '#1B1B1B',
               color: '#fff',
             }}
-           onClick={isMobile ? undefined : () => toggleTab('supercharge-tomorrow')}
+            onClick={isMobile ? undefined : () => toggleTab('supercharge-tomorrow')}
           >
             <div className={[
               "overflow-hidden transition-[max-height] duration-500",
@@ -369,12 +370,11 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                       {data.accordionSection1.mainImage.asset && (
                         <div className="absolute inset-0">
                           <Image
-                            src={urlFor(data.accordionSection1.mainImage.asset).url()}
+                            src={urlFor(data.accordionSection1.mainImage.asset).quality(75).auto('format').url()}
+                            width={getImageDimensions(data.accordionSection1.mainImage.asset).width}
+                            height={getImageDimensions(data.accordionSection1.mainImage.asset).height}
                             alt={'Main image'}
                             className="w-[65%] h-full object-cover opacity-50 ml-auto"
-                            width={900}
-                            height={900}
-                            priority={false}
                           />
                         </div>
                       )}
@@ -385,12 +385,11 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                         <div className="flex items-start">
                           {data.accordionSection1.brandImage.asset && (
                             <Image
-                              src={urlFor(data.accordionSection1.brandImage.asset).url()}
+                              src={urlFor(data.accordionSection1.brandImage.asset).quality(75).auto('format').url()}
+                              width={getImageDimensions(data.accordionSection1.brandImage.asset).width}
+                              height={getImageDimensions(data.accordionSection1.brandImage.asset).height}
                               alt={'Brand image'}
                               className="w-full h-auto object-contain max-h-[15vh]"
-                              width={400}
-                              height={120}
-                              priority={false}
                             />
                           )}
                         </div>
@@ -527,19 +526,21 @@ export default function OurWorkAccordion({ data }: OurWorkAccordionProps) {
                           onMouseDown={(e) => e.stopPropagation()}
                           onPointerDown={(e) => e.stopPropagation()}
                         >
-                          <CaseStudiesCarousel
-                            items={carouselItems}
-                            imageHeight="25vh"
-                            captionHeight="25vh"
-                            innerRowGap="4vh"
-                            gap="4vh"
-                            mobileImageHeight="25vh"
-                            mobileCaptionHeight="25vh"
-                            mobileInnerRowGap="2vh"
-                            mobileGap="0"
-                            rounded="rounded-2xl"
-                            ariaLabel="Case studies carousel"
-                          />
+                          <FadeInOnVisible>
+                            <CaseStudiesCarousel
+                              items={carouselItems}
+                              imageHeight="25vh"
+                              captionHeight="25vh"
+                              innerRowGap="4vh"
+                              gap="4vh"
+                              mobileImageHeight="25vh"
+                              mobileCaptionHeight="25vh"
+                              mobileInnerRowGap="2vh"
+                              mobileGap="0"
+                              rounded="rounded-2xl"
+                              ariaLabel="Case studies carousel"
+                            />
+                          </FadeInOnVisible>
                         </div>
 
 

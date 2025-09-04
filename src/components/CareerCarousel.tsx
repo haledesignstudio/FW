@@ -181,7 +181,6 @@ export default function Carousel({
     []
   );
 
-
   const setColSpan = useCallback(
     (el: HTMLElement, span: 1 | 2) => {
       // Span is only meaningful on desktop
@@ -211,6 +210,7 @@ export default function Carousel({
 
       if (img) {
         img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
+        // No grayscale on mobile; desktop non-featured are grayscale
         img.style.filter = s === 2 || isMobile ? "none" : "grayscale(100%)";
       }
       if (heading) {
@@ -246,20 +246,36 @@ export default function Carousel({
       col.style.rowGap = INNER_GAP;
       col.style.height = colHeight; // may be overridden by setColSpan when featured
 
-      // IMAGE
+      // IMAGE — now rendered with Next.js <Image />
       const imgWrap = document.createElement("a");
-imgWrap.setAttribute("href", item.href || "/people/apply/");
-imgWrap.setAttribute("target", "_self");
-imgWrap.className = "relative w-full h-full block";
-const img = document.createElement("img");
-      img.src = item.src;
-      img.alt = item.heading || "Carousel image";
-      img.decoding = "async";
-      img.loading = "lazy";
-      img.className = "w-full h-full object-cover";
-      img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
-      img.style.filter = "grayscale(100%)";
-      imgWrap.appendChild(img);
+      imgWrap.setAttribute("href", item.href || "/people/apply/");
+      imgWrap.setAttribute("target", "_self");
+      imgWrap.className = "relative w-full h-full block";
+
+      const mount = document.createElement("span");
+      imgWrap.appendChild(mount);
+
+      const imgRoot = createRoot(mount);
+      (col as unknown as WithRoots).__roots!.push(imgRoot);
+      imgRoot.render(
+        <Image
+          src={item.src}
+          alt={item.heading || "Carousel image"}
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority={false}
+        />
+      );
+
+      // Ensure initial filter state on the underlying <img> that Next/Image renders
+      setTimeout(() => {
+        const img = imgWrap.querySelector("img") as HTMLImageElement | null;
+        if (img) {
+          img.style.transition = "filter 450ms cubic-bezier(.22,.61,.36,1)";
+          img.style.filter = isMobile ? "none" : "grayscale(100%)";
+        }
+      }, 0);
 
       // TEXT
       const textWrap = document.createElement("div");
@@ -299,8 +315,8 @@ const img = document.createElement("img");
         actions.className = "mt-auto"; // stick to bottom; will be pushed down by growing text
 
         const readMore = document.createElement("a");
-readMore.setAttribute("href", item.href || "/people/apply/");
-(readMore as HTMLAnchorElement).target = "_self";
+        readMore.setAttribute("href", item.href || "/people/apply/");
+        (readMore as HTMLAnchorElement).target = "_self";
         readMore.className = "inline-flex items-center dt-btn";
 
         // pick per-item label first, then fallback prop
@@ -484,18 +500,18 @@ readMore.setAttribute("href", item.href || "/people/apply/");
         {/* Mobile fixed action bar */}
         {isMobile && (
           <div className="mt-2 flex items-center justify-between gap-3">
-           <a href={currentItem?.href || "/people/apply/"}
-  className="inline-flex items-center dt-btn"
-  aria-label={
-    currentItem?.heading
-      ? `${(currentItem.readMoreText ?? readMoreText)}: ${currentItem.heading}`
-      : (currentItem.readMoreText ?? readMoreText)
-  }
->
-  <UnderlineOnHoverAnimation hasStaticUnderline={true}>
-    {currentItem.readMoreText ?? readMoreText}
-  </UnderlineOnHoverAnimation>
-</a>
+            <a href={currentItem?.href || "/people/apply/"}
+              className="inline-flex items-center dt-btn"
+              aria-label={
+                currentItem?.heading
+                  ? `${(currentItem.readMoreText ?? readMoreText)}: ${currentItem.heading}`
+                  : (currentItem.readMoreText ?? readMoreText)
+              }
+            >
+              <UnderlineOnHoverAnimation hasStaticUnderline={true}>
+                {currentItem.readMoreText ?? readMoreText}
+              </UnderlineOnHoverAnimation>
+            </a>
 
             <button
               type="button"

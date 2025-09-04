@@ -198,7 +198,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
       {/* Image */}
       <div className="col-span-1 row-span-4 h-full overflow-hidden">
         {data.image?.asset && (
-          <FadeInOnVisible className="h-full w-full">
+          <FadeInOnVisible threshold={0.05} className="h-full w-full">
             <Image
               src={urlFor(data.image.asset).quality(75).auto('format').url()}
               width={getImageDimensions(data.image.asset).width}
@@ -231,7 +231,7 @@ function SpeakerViewDesktop({ data, nextSlug }: SpeakerViewProps) {
       </div>
       {/* Bio */}
       <div className="col-span-1 row-span-3 overflow-y-auto no-scrollbar scroll-mask-bottom">
-        <FadeInOnVisible>
+        <FadeInOnVisible threshold={0.05}>
           <div className="flex flex-col gap-[5vh]">
             <div className="dt-h5">Bio</div>
             <div className="flex flex-col flex-wrap gap-[1vh] dt-body-sm">

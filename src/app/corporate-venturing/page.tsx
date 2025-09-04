@@ -36,21 +36,39 @@ type Article = {
   image?: { asset: { url: string }; alt?: string };
 };
 
+type Mindbullet = {
+  _id: string;
+  title?: string;
+  byLine?: string;
+  slug?: { current: string };
+  mainImage?: { asset: { url: string }; alt?: string };
+};
+
 export default async function CorporateVenturingPage() {
-  const [doc, podcasts, articles] = await Promise.all([
+  const [doc, podcasts, articles, mindbullets] = await Promise.all([
     client.fetch<CorporatePageDoc | null>(corporatePageQuery),
-    // Podcasts where Corporate == true
+
+    // Podcasts where corporate == true (handles either "corporate" or "Corporate")
     client.fetch<Podcast[]>(
       `*[_type == "podcast" && coalesce(corporate, Corporate) == true]{
         _id, headline, description, embedLink, slug, 
         headerImage{asset->{url}, alt}
       }`
     ),
-    // Articles where Corporate == true
+
+    // Articles where corporate == true
     client.fetch<Article[]>(
       `*[_type == "article" && coalesce(corporate, Corporate) == true]{
         _id, title, byline, slug, 
         image{asset->{url}, alt}
+      }`
+    ),
+
+    // Mindbullets where corporate == true
+    client.fetch<Mindbullet[]>(
+      `*[_type == "mindbullet" && coalesce(corporate, Corporate) == true]{
+        _id, title, byLine, slug, 
+        mainImage{asset->{url}, alt}
       }`
     ),
   ]);
@@ -71,6 +89,7 @@ export default async function CorporateVenturingPage() {
             Mail={doc.Mail}
             podcasts={podcasts}
             articles={articles}
+            mindbullets={mindbullets}   // NEW
           />
         </div>
       </main>

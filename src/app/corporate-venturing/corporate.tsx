@@ -28,6 +28,14 @@ type Article = {
   image?: { asset: { url: string }; alt?: string };
 };
 
+type Mindbullet = {
+  _id: string;
+  title?: string;
+  byLine?: string;
+  slug?: { current: string };
+  mainImage?: { asset: { url: string }; alt?: string };
+};
+
 export default function CorporateSection({
   title,
   subheading,
@@ -36,6 +44,7 @@ export default function CorporateSection({
   Mail,
   podcasts,
   articles,
+  mindbullets, // NEW
 }: {
   title: string;
   subheading: PortableTextBlock[];
@@ -44,8 +53,10 @@ export default function CorporateSection({
   Mail: string;
   podcasts: Podcast[];
   articles: Article[];
+  mindbullets: Mindbullet[]; // NEW
 }) {
   const isMobile = useIsMobile();
+
 
   // Map Podcasts -> Carousel items
   const podcastItems: CarouselItem[] = (podcasts ?? []).map((p) => ({
@@ -65,8 +76,17 @@ export default function CorporateSection({
     readMoreText: 'Read article',
   }));
 
+  const mindbulletItems: CarouselItem[] = (mindbullets ?? []).map((m) => ({
+    src: m.mainImage?.asset?.url || '/placeholder-image.png',
+    heading: m.title ? `Mindbullet: ${m.title}` : 'Mindbullet',
+    description: m.byLine,
+    // Adjust the route if your Mindbullets live elsewhere (e.g. `/insights/mindbullets/...`)
+    href: m.slug?.current ? `/mindbullets/${m.slug.current}` : '#',
+    readMoreText: 'Read Mindbullet',
+  }));
+
   // Combine Articles + Podcasts
-  const carouselItems: CarouselItem[] = [...podcastItems, ...articleItems];
+  const carouselItems: CarouselItem[] = [...podcastItems, ...articleItems, ...mindbulletItems,];
 
   const handleBackToTop = useCallback(() => {
     if (typeof window !== 'undefined') {
