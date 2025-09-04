@@ -245,22 +245,12 @@ const ArticleView: React.FC<ArticleViewProps> = ({ data, mindbullets = [] }) => 
           <div className="col-span-2 row-span-1 flex items-center">
             <span className="dt-body-lg">{data.datePublished}</span>
           </div>
-        ) : null}
-
-        <div className="col-span-4 dt-body-lg">
-          {data.video ? (
-            <PortableText value={data.body ?? []} components={ptComponents} />
-          ) : (
-            <>
-              <PortableText value={leftBlocks} components={ptComponents} />
-              <PortableText value={rightBlocks} components={ptComponents} />
-            </>
-          )}
+        )}
+        <div className="col-span-4 dt-body-sm">
+          <PortableText value={leftBlocks} components={ptComponents} />
+          <PortableText value={rightBlocks} components={ptComponents} />
         </div>
-
-
-
-        {data.hasPdf && data.pdf?.url ? (
+        {data.hasPdf && data.pdf?.url && (
           <div className="col-span-4 mt-[2vh]">
             <a
               href={data.pdf.url}

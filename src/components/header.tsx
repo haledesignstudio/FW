@@ -517,6 +517,8 @@ const Header: React.FC = () => {
     const pathname = usePathname();
     const isHomepage = pathname === '/';
 
+    useImagePreloader();
+
     // Use the useIsMobile hook
     const isMobileScreen = useIsMobile();
 
